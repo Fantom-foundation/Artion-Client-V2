@@ -1,2 +1,43 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
 .page404 {
+
+	&_body {
+		display: flex;
+		align-items: center;
+		gap: var(--f-spacer-9);
+		padding-top: var(--f-spacer-9);
+	}
+
+	&_col {
+		h1 {
+			margin-top: 0;
+			font-size: 250px;
+			letter-spacing: 10px;
+			line-height: 0.7;
+			color: var(--f-headings-color);
+		}
+		p {
+			color: var(--f-color-grey-5);
+		}
+	}
 }
+
+
+@include media.media-max(900px) {
+	.page404 {
+
+		&_body {
+			flex-direction: column-reverse;
+			gap: 0;
+		}
+	
+		&_col {
+			text-align: center;
+			h1 {
+				font-size: 100px;
+			}
+		}
+	}
+}
+
+
