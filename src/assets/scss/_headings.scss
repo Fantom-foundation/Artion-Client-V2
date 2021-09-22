@@ -1,0 +1,21 @@
+@use "fantom-vue-components/src/assets/scss/elements/headings/tools" as headingTools;
+
+:root {
+    @include headingTools.headings() {
+        --f-h1-font-size: var(--f-font-size-9);
+        --f-h1-font-weight: 700;
+        --f-h1-letter-spacing: -0.2px;
+
+        --f-h2-font-size: var(--f-font-size-8);
+        --f-h2-font-weight: 600;
+        --f-h2-letter-spacing: -0.2px;
+
+        --f-h3-font-size: var(--f-font-size-7);
+        --f-h3-font-weight: 700;
+        --f-h3-letter-spacing: -0.25px;
+
+        --f-h4-font-size: var(--f-font-size-5);
+        --f-h4-font-weight: 600;
+        --f-h4-letter-spacing: -0.25px;
+    }
+}

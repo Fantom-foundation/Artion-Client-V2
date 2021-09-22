@@ -1,0 +1,12 @@
+.appsearchbar {
+    width: 100%;
+
+    &_magnifier {
+        opacity: 0.5;
+    }
+
+    .finput, .finput_inputcont {
+        width: 100%;
+        max-width: 400px;
+    }
+}

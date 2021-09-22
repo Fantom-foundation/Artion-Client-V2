@@ -1,0 +1,17 @@
+:root {
+    .fwindow {
+        --fwindow-header-padding: var(--f-spacer-3) var(--fwindow-padding);
+        //--fwindow-body-padding: 50px;
+
+        &_header {
+            text-align: center;
+            border-bottom: 1px solid var(--f-color-grey-2);
+        }
+
+        &-withheader {
+            .fwindow_body {
+                padding-top: var(--fwindow-padding) !important;
+            }
+        }
+    }
+}

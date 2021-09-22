@@ -1,0 +1,177 @@
+@use "fantom-vue-components/src/assets/scss/elements/links/tools" as linkTools;
+@use "fantom-vue-components/src/assets/scss/components/button/tools" as btnTools;
+@use "fantom-vue-components/src/assets/scss/settings/components" as componentsSettings;
+
+:root.theme-dark {
+    --card-shadow: 0 20.5814px 82.3256px #2c2c2f;
+
+    --theme-dark-color-9: #222431;
+    --theme-dark-color-8: #252736;
+    --theme-dark-color-7: #2C2E3F;
+    --theme-dark-color-6: #33364a;
+    //--theme-dark-color-5: #41455e;
+    --theme-dark-color-5: #3e425b;
+    --theme-dark-color-4: #8997b1;
+    --theme-dark-invalid-color: var(--f-color-red-4);
+
+    --f-color-primary-5-orig: hsl(var(--f-color-primary-h), var(--f-color-primary-s), 55%);
+    --f-color-primary-5: hsl(var(--f-color-primary-h), var(--f-color-primary-s), 64%);
+    //--f-color-primary-5-l: hsl(var(--f-color-primary-h), var(--f-color-primary-s), 64%);
+    --f-doc-color: #fff;
+    --f-doc-background-color: var(--theme-dark-color-9);
+    --f-select-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><path style="fill: rgb(146,153,166);" d="M207.029 381.476L12.686 187.132c-9.373-9.373-9.373-24.569 0-33.941l22.667-22.667c9.357-9.357 24.522-9.375 33.901-.04L224 284.505l154.745-154.021c9.379-9.335 24.544-9.317 33.901.04l22.667 22.667c9.373 9.373 9.373 24.569 0 33.941L240.971 381.476c-9.373 9.372-24.569 9.372-33.942 0z"/></svg>');
+    --f-inputs-border-color: var(--theme-dark-color-5) !important;
+    --f-inputs-background: var(--theme-dark-color-6);
+    --f-inputs-disabled-background-color: var(--theme-dark-color-7);
+    //--f-inputs-disabled-text-color: red;
+    //--f-input-active-border-color: var(--f-lighter-color);
+    //--f-outline-shadow: 0 0 0 2px rgba(87,92,128, 0.9);
+    --color-light: var(--theme-dark-color-4);
+
+    .appheader {
+        --appheader-background: var(--f-doc-background-color);
+        --appheader-border-bottom: 1px solid var(--theme-dark-color-5);
+    }
+
+    .fplaceholder {
+        --fplaceholder-bg-color2: var(--theme-dark-color-6);
+    }
+
+    @include linkTools.links() {
+        --f-link-color: var(--f-color-primary-5);
+    }
+
+    .#{componentsSettings.$input} {
+        --f-input-color: #fff;
+        --f-input-hover-border: var(--f-inputs-border) var(--theme-dark-color-5);
+        //--f-input-focus-border: var(--f-inputs-border) var(--f-color-primary-5-l);
+        --f-input-focus-box-shadow: var(--f-inputs-focus-box-shadow) hsla(var(--f-color-primary-h), var(--f-color-primary-s), 64%, 0.35);
+        --f-input-invalid-color: var(--theme-dark-invalid-color);
+        --f-input-invalid-border: var(--f-inputs-border) var(--theme-dark-invalid-color);
+        --f-input-invalid-focus-box-shadow: var(--f-inputs-focus-box-shadow) hsla(var(--f-color-red-h), var(--f-color-red-s), 63%, 0.35);
+        --f-input-readonly-background: var(--f-inputs-background);
+        --f-input-background: var(--theme-dark-color-6);
+    }
+
+    .cr {
+        --f-cr-hover-border: var(--f-inputs-border) var(--theme-dark-color-5);
+    }
+
+    .sel {
+        --f-sel-invalid-icon-color: var(--theme-dark-invalid-color);
+    }
+
+    .fcard {
+        --fcard-background: var(--theme-dark-color-7);
+        --fcard-box-shadow: none;
+    }
+
+    .faccordionnavigation {
+        color: var(--theme-dark-color-4);
+    }
+
+    .fnavigationnode {
+        --fnavigationnode-item-color: var(--theme-dark-color-4);
+        --fnavigationnode-active-item-color: #fff;
+    }
+
+    .ftabs {
+        --ftabs-border-color: var(--theme-dark-color-7);
+    }
+
+    .fwindow:not(.ferrormessagespopover) {
+        //--fwindow-background: var(--theme-dark-color-7);
+        --fwindow-background: var(--theme-dark-color-7);
+        --fwindow-body-background: var(--theme-dark-color-7);
+        --fwindow-popover-box-shadow: none;
+
+        .fwindow-popover {
+            --fwindow-popover-background: var(--theme-dark-color-6);
+            --fwindow-body-background: var(--theme-dark-color-6);
+        }
+    }
+
+    .fnotifications {
+        .fmessage {
+            --fmessage-info-color: var(--f-color-grey-9);
+        }
+    }
+
+    /*.foverlay {
+        --foverlay-background-color: rgba(43, 50, 77, 0.8);
+    }*/
+
+    @include btnTools.button() {
+        --f-btn-hover-background: var(--f-color-primary-5-orig);
+
+        &-secondary:not(.btn-red):not(.btn-green):not(.btn-orange):not(.btn-grey):not(.btn-light) {
+            --f-btn-secondary-color: var(--f-doc-color);
+            --f-btn-secondary-border-color: var(--theme-dark-color-5);
+            --f-btn-secondary-background: var(--theme-dark-color-7);
+            --f-btn-hover-color: var(--f-doc-color);
+            --f-btn-hover-background: var(--theme-dark-color-6);
+            --f-btn-hover-border-color: var(--theme-dark-color-4);
+        }
+
+        &-grey {
+            --f-btn-hover-background: transparent;
+        }
+
+        /*&-tertiary:not(.btn-red):not(.btn-green):not(.btn-orange):not(.btn-grey):not(.btn-light) {
+        }*/
+    }
+
+    .togglebtn-v1 {
+        --f-togglebtn-background: var(--f-inputs-background);
+        --f-togglebtn-border: 1px solid var(--f-inputs-border-color);
+        --f-togglebtn-hover-border: var(--f-togglebtn-border);
+        //--f-togglebtn-disabled-border: var(--f-togglebtn-border);
+        --f-togglebtn-disabled-switch-border: 1px solid transparent;
+        --f-togglebtn-switch-background: var(--theme-dark-color-4);
+        --f-togglebtn-checked-switch-background: #fff;
+        --f-togglebtn-checked-switch-border: 1px solid #fff;
+        --f-togglebtn-focus-switch-border: 1px solid transparent;
+    }
+
+    .fdatagrid {
+        --fdatagrid-cell-background-color: var(--theme-dark-color-7);
+        --fdatagrid-cell-hover-background-color: none;
+        //--fdatagrid-cell-hover-background-color: var(--theme-dark-color-6);
+        --fdatagrid-mw-row-border-bottom: 1px solid var(--theme-dark-color-5);
+        --fdatagrid-sortcolumn-background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path style="fill: rgb(62,66,91);" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"/></svg>');
+
+        --fdatagrid-row-active-background: var(--theme-dark-color-5);
+        --fdatagrid-row-active-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+
+        &-rowedit tbody {
+            --fdatagrid-cell-hover-background-color: var(--theme-dark-color-6);
+        }
+
+        &_loader {
+            color: #fff;
+            background-color: var(--theme-dark-color-9);
+        }
+    }
+
+    .flistbox {
+        --flistbox-item-color: #fff;
+        --flistbox-item-hover-color: #fff;
+        --flistbox-item-background-color: var(--theme-dark-color-6);
+        --flistbox-item-hover-background-color: var(--theme-dark-color-5);
+        --flistbox-item-selected-background-color: var(--theme-dark-color-5);
+    }
+
+    .fform {
+        --fform-buttons-background: var(--theme-dark-color-7);
+    }
+
+    hr {
+        border: 1px dashed var(--theme-dark-color-5);
+    }
+
+    /*
+    @include buttons {
+        --f-button-light-hover-background-color: var(--theme-dark-color-5);
+    }
+    */
+}

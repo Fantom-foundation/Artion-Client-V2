@@ -1,0 +1,19 @@
+@mixin aspectratio-1-1($c) {
+    #{$c} {
+        aspect-ratio: 1 / 1;
+    }
+
+    @supports not (aspect-ratio: 1 / 1) {
+        #{$c}::before {
+            float: left;
+            padding-top: 100%;
+            content: '';
+        }
+
+        #{$c}::after {
+            display: block;
+            content: '';
+            clear: both;
+        }
+    }
+}

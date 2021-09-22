@@ -1,0 +1,37 @@
+{
+    "explore": "Explore",
+    "create": "Create",
+    "home": "Home",
+
+    "navigation": {
+        "explore": "@:explore",
+        "create": "@:create"
+    },
+
+    "page": {
+        "explore": {
+            "title": "Browse NFT's"
+        },
+        "account": {
+            "title": "Your profile"
+        }
+    },
+
+    "appsectionnft": {
+        "title": "Trade without platform fees on Artion",
+        "text": "Artion is an NFT marketplace built on Fantom. Create and trade NFTs instantly with low network costs."
+    },
+
+    "appsectionabout": {
+        "title": "Why Artion"
+    },
+
+    "appsectioncategories": {
+        "title": "Browse by category"
+    },
+
+    "appsearchbar": {
+        "label": "Search bar",
+        "placeholder": "Search items, collections and accounts"
+    }
+}

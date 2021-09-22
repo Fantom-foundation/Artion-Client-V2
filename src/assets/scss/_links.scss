@@ -1,0 +1,5 @@
+@use "fantom-vue-components/src/assets/scss/elements/links/tools";
+
+@include tools.links() {
+    text-decoration: none;
+}

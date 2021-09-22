@@ -1,0 +1,15 @@
+@use "variables";
+@use "fantom-vue-components/src/assets/scss/settings" with (
+    $breakpoint-mw: variables.$breakpoint-mw,
+    $custom-colors: (
+        "primary": (
+            "hsl": 219 100% 55%,
+            "lightness": 99% 96% 92% 73% 40% 30% 20% 13%,
+        ),
+        "grey": (
+            //"hsl": 240 20% 50%,
+            "hsl": 0 0% 50%,
+            "lightness": 99% 93% 85% 73%   40% 30% 20% 10%,
+        ),
+    ),
+);

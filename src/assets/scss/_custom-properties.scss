@@ -1,0 +1,59 @@
+:root {
+    // global settings (document)
+    --f-doc-font-family: 'proxima-nova', sans-serif, Helvetica;
+    --f-doc-color: var(--f-color-grey-9);
+    --f-doc-background-color: #fff; // var(--f-color-grey-1);
+    --f-doc-font-size: 18px;
+    --f-doc-line-height: 25px;
+    --f-doc-line-width: 40em;
+
+    // font sizes
+    --f-font-size-1: 10px;
+    --f-font-size-2: 12px;
+    --f-font-size-3: 14px;
+    --f-font-size-4: 16px;
+    --f-font-size-5: 18px;
+    --f-font-size-6: 20px;
+    --f-font-size-7: 22px;
+    --f-font-size-8: 40px;
+    --f-font-size-9: 58px;
+
+    // line heights
+    --f-line-height-1: 1.3;
+    --f-line-height-2: 1.3;
+    --f-line-height-3: 1.4;
+    --f-line-height-4: 1.45;
+    --f-line-height-6: 1.3;
+    --f-line-height-7: 1.11;
+    --f-line-height-8: 1.11;
+    --f-line-height-9: 1.11;
+
+    // border radius
+    --f-border-radius-1: 3px;
+    --f-border-radius-2: 6px;
+    --f-border-radius-3: 10px;
+    --f-border-radius-4: 15px;
+    --f-border-radius-5: 18px;
+    --f-border-radius-6: 22px;
+    --f-border-radius-7: 27px;
+    --f-border-radius-8: 32px;
+    --f-border-radius-9: 40px;
+
+    // spacers (for padding and margin)
+    --f-spacer-1: 5px;
+    --f-spacer-2: 10px;
+    --f-spacer-3: 15px;
+    --f-spacer-4: 20px;
+    --f-spacer-6: 30px;
+    --f-spacer-7: 40px;
+    --f-spacer-8: 60px;
+    --f-spacer-9: 80px;
+
+    //--color-light: var(--f-color-grey-5);
+    //--color-light-hover: var(--f-color-grey-5);
+    --curr-sticky-top: 0px;
+    //--font-family-headings: 'proxima-nova', sans-serif, Helvetica;
+
+    --hover-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+    --card-shadow: 0 20.5814px 82.3256px #f2f1fa;
+}

@@ -1,0 +1,10 @@
+.home {
+    &_shadow {
+        background: linear-gradient(180deg, #f9f9ff, rgba(234, 234, 241, 0));
+    }
+
+    section {
+        padding-top: var(--f-spacer-9);
+        padding-bottom: var(--f-spacer-9);
+    }
+}

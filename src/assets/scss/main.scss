@@ -1,0 +1,57 @@
+/*
+@use "settings";
+@use "generic";
+@use "elements";
+@use "layouts";
+
+//@use "components";
+//@forward "components/button";
+//@forward "components/checkbox-radio";
+//@forward "components/toggle-button";
+//@forward "components/input-field";
+//@forward "components/select";
+//@forward "components/textarea";
+@forward "components/list";
+
+
+@use "utilities";
+@use "external";*/
+
+@use "settings";
+
+//@use "fonts";
+
+@use "custom-properties";
+@use "fantom-vue-components/src/assets/scss/generic";
+@use "fantom-vue-components/src/assets/scss/elements";
+@use "fantom-vue-components/src/assets/scss/components/list";
+@use "fantom-vue-components/src/assets/scss/layouts";
+
+@use "links";
+@use "headings";
+@use "inputs";
+@use "container";
+
+//@use "letter-spacing";
+@use "colors";
+@use "scrollbar";
+@use "buttons";
+@use "fwindow";
+@use "fplaceholder";
+@use "aspect-ratio";
+//@use "headings";
+//@use "form";
+//@use "apptitle";
+//@use "fbutton";
+//@use "fcard";
+//@use "fdatagrid";
+//@use "offline";
+//@use "fhamburgerswitch";
+//@use "faccordionnavigation";
+//@use "notifications";
+//@use "hr";
+//@use "utils";
+
+@use "themes/theme-dark";
+
+@use "fantom-vue-components/src/assets/scss/utilities";

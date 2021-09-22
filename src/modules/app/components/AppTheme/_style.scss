@@ -1,0 +1,8 @@
+@use "custom-properties";
+
+.theme-transition,
+.theme-transition * {
+    will-change: background-color, border-color;
+    transition: background-color var(--apptheme-transition-length) var(--apptheme-transition-func),
+        border-color var(--apptheme-transition-length) var(--apptheme-transition-func);
+}

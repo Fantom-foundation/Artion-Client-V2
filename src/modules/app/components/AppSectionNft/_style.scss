@@ -1,0 +1,32 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
+.appsectionnft {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--f-spacer-9);
+    align-items: center;
+
+    &_text {
+        color: var(--f-color-grey-5);
+        font-weight: 600;
+    }
+
+    &_col {
+        width: 100%;
+    }
+
+    h1 {
+        margin-top: 0;
+    }
+}
+
+@include media.media-min(900px) {
+    .appsectionnft {
+        flex-direction: row;
+
+        &_col:last-child {
+            width: auto;
+            min-width: 496px;
+        }
+    }
+}

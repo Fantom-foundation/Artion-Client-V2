@@ -1,0 +1,31 @@
+@use "/src/assets/scss/aspect-ratio";
+
+.appsectionnftcard {
+    border-radius: var(--f-border-radius-5);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+
+    &_text {
+        padding: var(--f-spacer-5) var(--f-spacer-6);
+    }
+
+    &_collection {
+        color: var(--f-color-grey-5);
+        padding-bottom: var(--f-spacer-1);
+    }
+
+    &_title {
+        margin: 0;
+    }
+
+    * {
+        font-size: var(--f-font-size-4);
+    }
+
+    @include aspect-ratio.aspectratio-1-1('.fimage:not(.fimage-loaded)');
+
+    .fimage:not(.fimage-loaded) {
+        //height: 500px;
+        //aspect-ratio: 1 / 1;
+    }
+}
