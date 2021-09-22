@@ -7,12 +7,7 @@
             <app-section-category />
         </div>
 
-        <!-- TMP -->
-        <!--        <ul>
-            <li><router-link :to="{ name: 'explore' }">Explore</router-link></li>
-            <li><router-link :to="{ name: 'account' }">Account</router-link></li>
-            <li><router-link :to="{ name: 'collection' }">Collection</router-link></li>
-        </ul>-->
+        <app-footer />
     </div>
 </template>
 
@@ -20,11 +15,12 @@
 import AppSectionNft from '@/modules/app/components/AppSectionNft/AppSectionNft.vue';
 import AppSectionAbout from '@/modules/app/components/AppSectionAbout/AppSectionAbout.vue';
 import AppSectionCategory from '@/modules/app/components/AppSectionCategories/AppSectionCategories.vue';
+import AppFooter from '@/modules/app/components/AppFooter/AppFooter.vue';
 
 export default {
     name: 'Home',
 
-    components: { AppSectionCategory, AppSectionAbout, AppSectionNft },
+    components: { AppFooter, AppSectionCategory, AppSectionAbout, AppSectionNft },
 
     data() {
         return {
