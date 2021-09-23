@@ -1,5 +1,5 @@
 <template>
-    <div class="explore">Explore</div>
+    <div class="explore">Explore {{ this.$route.query }}</div>
 </template>
 
 <script>
