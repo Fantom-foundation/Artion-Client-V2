@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import { mount } from '@vue/test-utils';
-import WalletButton from '@/modules/account/components/WalletButton/WalletButton.vue';
+import WalletButton from '@/modules/wallet/components/WalletButton/WalletButton.vue';
 import FPlaceholder from 'fantom-vue-components/src/components/FPlaceholder/FPlaceholder.vue';
 // import { vueMock } from '../mocks/vue.js';
 // import { store } from '../mocks/appStore.js';
