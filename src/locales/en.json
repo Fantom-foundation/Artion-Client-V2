@@ -43,5 +43,11 @@
     "appsearchbar": {
         "label": "Search bar",
         "placeholder": "Search items, collections and accounts"
+    },
+
+    "view_not_found": {
+        "404": "404",
+        "text": "Oooooops! We couldn’t find the page you’re looking for :(",
+        "link_title": "Back to home"
     }
 }

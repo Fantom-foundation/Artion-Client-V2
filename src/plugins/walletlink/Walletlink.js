@@ -52,7 +52,7 @@ export class Walletlink {
             this._provider = this._walletLink.makeWeb3Provider(appConfig.mainnet.rpc, appConfig.mainnet.chainId);
             this._web3 = new Web3(this._provider);
 
-            this._provider.on('chainChanged', (chainId) => {
+            this._provider.on('chainChanged', chainId => {
                 this._setChainId(chainId);
             });
 

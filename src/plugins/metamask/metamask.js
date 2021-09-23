@@ -76,10 +76,10 @@ export class Metamask {
                 this._web3 = new Web3(provider);
 
                 provider.autoRefreshOnNetworkChange = false;
-                provider.on('chainChanged', (_chainId) => {
+                provider.on('chainChanged', _chainId => {
                     this._onChainChange(_chainId);
                 });
-                provider.on('accountsChanged', (_account) => {
+                provider.on('accountsChanged', _account => {
                     this._onAccountsChange(_account);
                 });
                 provider.on('disconnect', () => {
