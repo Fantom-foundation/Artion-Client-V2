@@ -8,6 +8,16 @@
         "create": "@:create"
     },
 
+    "category": {
+        "art": "Art",
+        "collectibles": "Collectibles",
+        "sports": "Sports",
+        "utility": "Utility",
+        "trading_cards": "Trading Cards",
+        "virtual_worlds": "Virtual Worlds",
+        "domain_names": "Domain Names"
+    },
+
     "page": {
         "explore": {
             "title": "Browse NFT's"
