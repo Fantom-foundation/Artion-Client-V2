@@ -20,6 +20,8 @@ import IconMonster from '@/assets/vue-icons/IconMonster.vue';
 import IconSoccerball from '@/assets/vue-icons/IconSoccerball.vue';
 import IconRainbow from '@/assets/vue-icons/IconRainbow.vue';
 import IconTools from '@/assets/vue-icons/IconTools.vue';
+import IconMetamask from '@/assets/vue-icons/IconMetamask.vue';
+import IconCoinbase from '@/assets/vue-icons/IconCoinbase.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -43,6 +45,8 @@ export default {
         IconSoccerball,
         IconRainbow,
         IconTools,
+        IconMetamask,
+        IconCoinbase,
     },
 
     props: {

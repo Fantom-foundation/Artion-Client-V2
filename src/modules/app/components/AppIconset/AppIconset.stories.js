@@ -19,6 +19,8 @@ const iconList = [
     'soccerball',
     'rainbow',
     'tools',
+    'metamask',
+    'coinbase',
 ];
 
 export const Default = () => ({
