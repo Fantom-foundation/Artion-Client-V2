@@ -33,13 +33,7 @@ export default {
     computed: {
         data() {
             return this.wallets.map(item => {
-                const wallet = clone(item);
-
-                /*if (!('value' in wallet)) {
-                    wallet.value = wallet.code;
-                }*/
-
-                return { label: wallet.label, value: wallet };
+                return { label: item.label, value: clone(item) };
             });
         },
     },

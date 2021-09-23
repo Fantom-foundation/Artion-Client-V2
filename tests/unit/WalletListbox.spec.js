@@ -58,11 +58,6 @@ describe('WalletListbox', () => {
 
         expect(emitted).toBeTruthy();
         expect(emitted[0]).toEqual([WALLETS[0]]);
-        /*expect(emitted[0]).toEqual([
-            WALLETS.map(wallet => {
-                return { ...wallet, id: undefined };
-            })[0],
-        ]);*/
     });
 });
 
