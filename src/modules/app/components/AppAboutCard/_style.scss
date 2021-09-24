@@ -1,2 +1,24 @@
 .appaboutcard {
+	padding: var(--f-spacer-6) var(--f-spacer-4);
+	border-radius: var(--f-border-radius-7);
+	box-shadow: var(--card-shadow);
+	background: var(--f-doc-background-color);
+	&_item {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		p {
+			color: var(--f-color-grey-5);
+			font-size: var(--f-font-size-3);
+			line-height: var(--f-line-height-4);
+			margin-top: var(--f-spacer-2);
+		}
+		span.fsvgicon {
+			box-shadow: var(--card-shadow);
+			border-radius: 50%;
+    		padding: 13px;
+		}
+	}
 }

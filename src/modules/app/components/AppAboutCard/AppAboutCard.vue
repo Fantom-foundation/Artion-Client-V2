@@ -1,10 +1,34 @@
 <template>
-    <div class="appaboutcard">AppAboutCard</div>
+    <div class="appaboutcard">
+        <div class="appaboutcard_item">
+            <app-iconset :icon="info.icon" style="width: auto; height: auto;" original />
+        </div>
+        <div class="appaboutcard_item">
+            <h3>{{ info.title }}</h3>
+        </div>
+        <div class="appaboutcard_item">
+            <p>{{ info.text }}</p>
+        </div>
+    </div>
 </template>
 
 <script>
+import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 export default {
     name: 'AppAboutCard',
+    components: { AppIconset },
+    props: {
+        info: {
+            type: Object,
+            default() {
+                return {
+                    icon: '',
+                    title: '',
+                    text: '',
+                };
+            },
+        },
+    },
 };
 </script>
 

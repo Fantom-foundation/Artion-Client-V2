@@ -38,7 +38,23 @@
     },
 
     "appsectionabout": {
-        "title": "Why Artion"
+        "title": "Why Artion",
+        "card1": {
+            "title": "Easy Connect",
+            "text": "Using Metamask or CoinBase Wallet. Just click 'Connect Wallet' on the top right to start."
+        },
+        "card2": {
+            "title": "Super Fast",
+            "text": "Since Artion runs on the Fantom Opera Network, transactions are usually confirmed within 1-2 seconds."
+        },
+        "card3": {
+            "title": "Low Transaction Fees",
+            "text": "Transactions are usually just a few cents, allowing users to create and trade many NFTs without prohibitively high network fees."
+        },
+        "card4": {
+            "title": "Zero Platform Fees",
+            "text": "Trade NFTs via auction or direct offer without any fees taken by Artion."
+        }
     },
 
     "appsectioncategories": {

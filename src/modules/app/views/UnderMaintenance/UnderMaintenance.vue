@@ -7,7 +7,9 @@
                 </div>
                 <div class="undermaintenance_col">
                     <h1>{{ $t('undermaintenance.text') }}</h1>
-                    <router-link :to="{ name: 'main' }" class="btn btn-lg">{{$t('undermaintenance.link_title')}}</router-link> 
+                    <router-link :to="{ name: 'main' }" class="btn btn-lg">{{
+                        $t('undermaintenance.link_title')
+                    }}</router-link>
                 </div>
             </div>
         </div>
