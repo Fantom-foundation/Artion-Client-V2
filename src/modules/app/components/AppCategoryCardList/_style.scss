@@ -1,2 +1,19 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
 .appcategorycardlist {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: var(--f-spacer-6) var(--f-spacer-7);
+	margin-top: var(--f-spacer-8);
+}
+
+@include media.media-max(930px) {
+	.appcategorycardlist {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@include media.media-max(670px ) {
+	.appcategorycardlist {
+		grid-template-columns: 1fr;
+	}
 }

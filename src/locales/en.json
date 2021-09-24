@@ -58,7 +58,8 @@
     },
 
     "appsectioncategories": {
-        "title": "Browse by category"
+        "title": "Browse by category",
+        "allCategories": "Explore All NFTs"
     },
 
     "appsearchbar": {

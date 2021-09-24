@@ -10,7 +10,7 @@ export const Default = () => ({
     //language=HTML
     template: `
         <div>
-            <app-category-card />
+            <app-category-card no-category />
         </div>
     `,
 });
