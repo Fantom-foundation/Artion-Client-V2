@@ -29,6 +29,10 @@
     //--f-outline-shadow: 0 0 0 2px rgba(87,92,128, 0.9);
     --color-light: var(--theme-dark-color-4);
 
+    .appcategorycard {
+        --f-label-background: var(--theme-dark-color-9);
+    }
+
     .appheader {
         --appheader-background: var(--f-doc-background-color);
         --appheader-border-bottom: 1px solid var(--theme-dark-color-5);
