@@ -7,7 +7,6 @@ import FButton from 'fantom-vue-components/src/components/FButton/FButton.vue';
 import FForm from 'fantom-vue-components/src/components/FForm/FForm.vue';
 import FFormInput from 'fantom-vue-components/src/components/FFormInput/FFormInput.vue';
 import FDataGrid from 'fantom-vue-components/src/components/FDataGrid/FDataGrid.vue';
-import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow.vue';
 import FCard from 'fantom-vue-components/src/components/FCard/FCard.vue';
 import FComboBox from 'fantom-vue-components/src/components/FComboBox/FComboBox.vue';
 import FErrorMessagesPopover from 'fantom-vue-components/src/components/FErrorMessagesPopover/FErrorMessagesPopover.vue';
@@ -18,6 +17,7 @@ import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
 
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 import APlaceholder from '@/common/components/APlaceholder/APlaceholder.vue';
+import AWindow from '@/common/components/AWindow/AWindow.vue';
 
 // install global components
 Vue.component('FIconset', FIconset);
@@ -29,7 +29,6 @@ Vue.component('FDataGrid', FDataGrid);
 // Vue.component('DataGridRowEdit', DataGridRowEdit);
 // Vue.component('FSearchField', FSearchField);
 Vue.component('FFormInput', FFormInput);
-Vue.component('FWindow', FWindow);
 Vue.component('FCard', FCard);
 Vue.component('FComboBox', FComboBox);
 Vue.component('FInput', FInput);
@@ -40,3 +39,4 @@ Vue.component('FImage', FImage);
 
 Vue.component('AppIconset', AppIconset);
 Vue.component('APlaceholder', APlaceholder);
+Vue.component('AWindow', AWindow);
