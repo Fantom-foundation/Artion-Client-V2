@@ -22,6 +22,7 @@ import IconRainbow from '@/assets/vue-icons/IconRainbow.vue';
 import IconTools from '@/assets/vue-icons/IconTools.vue';
 import IconMetamask from '@/assets/vue-icons/IconMetamask.vue';
 import IconCoinbase from '@/assets/vue-icons/IconCoinbase.vue';
+import IconClose from '@/assets/vue-icons/IconClose.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -47,6 +48,7 @@ export default {
         IconTools,
         IconMetamask,
         IconCoinbase,
+        IconClose,
     },
 
     props: {

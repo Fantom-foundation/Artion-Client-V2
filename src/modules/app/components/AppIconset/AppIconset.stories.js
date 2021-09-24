@@ -21,6 +21,7 @@ const iconList = [
     'tools',
     'metamask',
     'coinbase',
+    'close',
 ];
 
 export const Default = () => ({
