@@ -9,6 +9,10 @@
 		cursor: pointer;
 	}
 
+    a:not(.btn) {
+        color: var(--f-doc-color);
+    }
+
 	&_img {
 		display: flex;
 		justify-content: center;

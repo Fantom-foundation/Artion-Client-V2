@@ -1,6 +1,6 @@
 <template>
     <div class="appcategorycard">
-        <router-link :to="link" tag="div">
+        <router-link :to="link">
             <div class="appcategorycard_img">
                 <div class="appcategorycard_img_wrap">
                     <app-iconset :icon="category.icon || noCategoryData.icon" size="66px" original />
