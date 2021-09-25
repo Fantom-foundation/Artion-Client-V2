@@ -1,6 +1,6 @@
 .home {
     &_shadow {
-        background: linear-gradient(180deg, #f9f9ff, rgba(234, 234, 241, 0));
+        background: var(--homepage-gradient);
     }
 
     section {

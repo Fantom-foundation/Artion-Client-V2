@@ -3,7 +3,7 @@
         <div class="appsectionnft_col">
             <h1>{{ $t('appsectionnft.title') }}</h1>
             <p class="appsectionnft_text">{{ $t('appsectionnft.text') }}</p>
-            <div class="flex gap-3">
+            <div class="appsectionnft_links">
                 <router-link :to="{ name: 'explore' }" class="btn btn-lg">{{ $t('explore') }}</router-link>
                 <router-link :to="{ name: 'collection-create' }" class="btn btn-lg btn-secondary">
                     {{ $t('create') }}

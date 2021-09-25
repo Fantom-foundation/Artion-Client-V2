@@ -11,6 +11,12 @@
         font-weight: 600;
     }
 
+    &_links {
+        display: flex;
+        gap: var(--f-spacer-3);
+        justify-content: center;
+    }
+
     &_col {
         width: 100%;
     }
@@ -27,6 +33,10 @@
         &_col:last-child {
             width: auto;
             min-width: 496px;
+        }
+
+        &_links {
+            justify-content: start;
         }
     }
 }

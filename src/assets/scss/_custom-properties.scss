@@ -1,3 +1,6 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+@use "fantom-vue-components/src/assets/scss/settings/breakpoints";
+
 :root {
     // global settings (document)
     --f-doc-font-family: 'proxima-nova', sans-serif, Helvetica;
@@ -57,4 +60,12 @@
 
     --hover-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
     --card-shadow: 0 20.5814px 82.3256px #f2f1fa;
+    --homepage-gradient: linear-gradient(180deg, #f9f9ff, rgba(234, 234, 241, 0));
+    --main-lr-padding: var(--f-spacer-3);
+}
+
+@include media.media-min(breakpoints.$breakpoint-md) {
+    :root {
+        --main-lr-padding: var(--f-spacer-5);
+    }
 }

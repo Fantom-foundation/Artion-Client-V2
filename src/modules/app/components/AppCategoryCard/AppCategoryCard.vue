@@ -2,7 +2,9 @@
     <div class="appcategorycard">
         <router-link :to="link" tag="div">
             <div class="appcategorycard_img">
-                <app-iconset :icon="category.icon || noCategoryData.icon" style="width: 84px; height: 84px;" original />
+                <div class="appcategorycard_img_wrap">
+                    <app-iconset :icon="category.icon || noCategoryData.icon" size="66px" original />
+                </div>
             </div>
             <div class="appcategorycard_label" v-if="!noCategory">
                 <h3>{{ $t(category.label) }}</h3>

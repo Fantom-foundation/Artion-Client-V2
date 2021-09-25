@@ -23,9 +23,4 @@
     }
 
     @include aspect-ratio.aspectratio-1-1('.fimage:not(.fimage-loaded)');
-
-    .fimage:not(.fimage-loaded) {
-        //height: 500px;
-        //aspect-ratio: 1 / 1;
-    }
 }

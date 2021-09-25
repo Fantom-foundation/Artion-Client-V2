@@ -1,7 +1,9 @@
 <template>
     <header class="appheader">
         <div class="appheader_col">
-            <router-link to="/"><img src="artion-logo.svg" height="35px" alt="artion logo"/></router-link>
+            <router-link to="/" class="appheader_logo">
+                <img src="artion-logo-2.svg" height="35px" alt="artion logo" />
+            </router-link>
             <app-search-bar />
         </div>
         <div class="appheader_col">

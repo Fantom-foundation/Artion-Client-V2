@@ -13,11 +13,12 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		span.fsvgicon {
-			box-shadow: var(--card-shadow);
-			border-radius: 50%;
-    		padding: 13px;
-		}
+
+        &_wrap {
+            box-shadow: var(--card-shadow);
+            border-radius: 50%;
+            padding: var(--f-spacer-6);
+        }
 	}
 
 	&_label {
@@ -25,8 +26,8 @@
 		justify-content: space-between;
 		align-items: center;
 		background: #f6f7f9; // TODO change
-		//background: var(--f-color-grey-2); 
-		background: var(--f-label-background); 
+		//background: var(--f-color-grey-2);
+		background: var(--f-label-background);
 		padding: var(--f-spacer-3) 0;
 		padding-inline-start: var(--f-spacer-6);
 		padding-inline-end: var(--f-spacer-2);

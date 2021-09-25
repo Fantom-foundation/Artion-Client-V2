@@ -3,7 +3,7 @@
 
 .appheader {
     --appheader-background: #fff;
-    --appheader-border-bottom: 1px solid var(--f-color-grey-2);
+    --appheader-border-bottom: 1px solid var(--f-color-grey-3);
 
     position: sticky;
     top: 0;
@@ -15,7 +15,7 @@
     justify-content: space-between;
     gap: var(--f-spacer-2);
 
-    padding: var(--f-spacer-3) var(--f-spacer-3);
+    padding: var(--f-spacer-3) var(--main-lr-padding);
     border-bottom: var(--appheader-border-bottom);
     background: var(--appheader-background);
 
@@ -46,6 +46,16 @@
 @include media.media-min(900px) {
     .appheader {
         flex-direction: row;
+        gap: var(--f-spacer-5);
+    }
+}
+
+@include media.media-min(1200px) {
+    .appheader {
         gap: var(--f-spacer-9);
+
+        &_logo {
+            padding-right: 160px;
+        }
     }
 }

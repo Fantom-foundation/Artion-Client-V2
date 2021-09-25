@@ -1,11 +1,12 @@
 @use "fantom-vue-components/src/assets/scss/tools/media";
 
 .appfooter {
-	padding: var(--f-spacer-5) var(--f-spacer-3);
+	padding: var(--f-spacer-5) var(--main-lr-padding);
 	background: var(--f-doc-footer-color);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
 	&_item {
 		display: flex;
 		justify-content: center;
@@ -15,6 +16,10 @@
 			color: #fff !important;
 		}
 	}
+
+    img {
+        display: block;
+    }
 }
 
 @include media.media-max(848px) {
