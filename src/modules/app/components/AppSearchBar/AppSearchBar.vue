@@ -1,28 +1,19 @@
 <template>
     <div class="appsearchbar">
-        <f-input
+        <a-search-field
             field-size="large"
             :aria-label="$t('appsearchbar.label')"
             :placeholder="$t('appsearchbar.placeholder')"
             no-label
-        >
-            <!-- copy slots -->
-            <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
-                <slot :name="name" v-bind="data"></slot>
-            </template>
-
-            <template #prefix>
-                <app-iconset width="2.3em" height="1em" icon="magnifier" class="appsearchbar_magnifier" />
-            </template>
-        </f-input>
+        />
     </div>
 </template>
 
 <script>
-import FInput from 'fantom-vue-components/src/components/FInput/FInput.vue';
+import ASearchField from '@/common/components/ASearchField/ASearchField.vue';
 
 export default {
-    components: { FInput },
+    components: { ASearchField },
 
     name: 'AppSearchBar',
 };
