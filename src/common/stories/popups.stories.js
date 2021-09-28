@@ -6,11 +6,10 @@ export const Popups = () => ({
     //language=HTML
     template: `
         <div>
-            <f-window
+            <a-window
                 modal
                 title="Default window"
-                style="max-width: 500px;"
-
+                class="fwindow-width-5"
                 ref="win"
             >
                 <div>
@@ -18,7 +17,7 @@ export const Popups = () => ({
                     <f-input name="t2" label="Input 2" />
                 </div>
                 <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus dolor ducimus enim impedit minima molestias quae qui! At culpa cum debitis explicabo harum ipsa, ipsam modi nemo, nostrum porro rerum.</div><div>Deleniti eaque error, eum incidunt ipsum labore nobis obcaecati omnis qui sequi soluta unde. Accusamus, dignissimos doloremque, enim, est eveniet excepturi in iusto maiores odit officiis ratione repudiandae velit voluptatibus!</div><div>Ab aliquam architecto consectetur culpa delectus deserunt dicta doloremque esse facere illo iure libero maiores modi, quis reprehenderit sunt vel vero voluptas. A cumque, eius fuga officiis quo soluta vitae!</div><div>Ab accusamus aspernatur cum cupiditate debitis delectus dignissimos dolores ea eaque, exercitationem facere in libero neque nobis non numquam pariatur perspiciatis porro ratione recusandae sint suscipit tempora tempore voluptates voluptatum!</div><div>Incidunt officia, rem repellendus sapiente velit vero. Blanditiis consequuntur delectus distinctio dolores doloribus eius, esse est impedit in ipsam laudantium natus odio perferendis possimus saepe sit soluta velit voluptate voluptatem?</div>
-            </f-window>
+            </a-window>
 
             <div style="padding-top: 100px">
                 <f-button @click.native="$refs.win.show()">show</f-button>

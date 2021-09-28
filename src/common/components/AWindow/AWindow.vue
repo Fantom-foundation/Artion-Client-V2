@@ -1,5 +1,5 @@
 <template>
-    <f-window ref="window" v-bind="$attrs" aria-label="bitch window">
+    <f-window ref="window" v-bind="$attrs">
         <!-- copy slots -->
         <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>
