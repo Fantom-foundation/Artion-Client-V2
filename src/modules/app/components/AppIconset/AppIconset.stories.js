@@ -5,25 +5,6 @@ export default {
     component: AppIconset,
 };
 
-const iconList = [
-    'card1',
-    'card2',
-    'card3',
-    'card4',
-    'magnifier',
-    'bear',
-    'cardboard',
-    'domain',
-    'joystick',
-    'monster',
-    'soccerball',
-    'rainbow',
-    'tools',
-    'metamask',
-    'coinbase',
-    'close',
-];
-
 export const Default = () => ({
     components: { AppIconset },
     template: `
@@ -36,7 +17,24 @@ export const Default = () => ({
     `,
     data() {
         return {
-            iconList,
+            iconList: [
+                'card1',
+                'card2',
+                'card3',
+                'card4',
+                'magnifier',
+                'bear',
+                'cardboard',
+                'domain',
+                'joystick',
+                'monster',
+                'soccerball',
+                'rainbow',
+                'tools',
+                'metamask',
+                'coinbase',
+                'close',
+            ]
         };
     },
 });
