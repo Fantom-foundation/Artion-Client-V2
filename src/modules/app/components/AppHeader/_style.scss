@@ -19,6 +19,8 @@
     border-bottom: var(--appheader-border-bottom);
     background: var(--appheader-background);
 
+    z-index: 10;
+
     //flex ali-center gap-2 juc-space-between
 
     &_col {

@@ -1,0 +1,146 @@
+.nftcard {
+	padding: var(--f-spacer-4) 0;
+	border: 1px solid var(--f-color-grey-3);
+	& a > * {
+		padding-left: var(--f-spacer-4);
+		padding-right: var(--f-spacer-4);
+	}
+
+	a:not(.btn) {
+		color: inherit;
+	}
+
+	&:hover {
+		box-shadow: rgb(4 17 29 / 25%) 0px 0px 8px 0px;
+		transform: translateY(-2px);
+    	transition: all 0.1s ease 0s;
+		border: 0;
+	}
+
+	&_header {
+		display: flex;
+		justify-content: flex-end;
+		padding-bottom: var(--f-spacer-2);
+		gap: var(--f-spacer-1);
+		color: var(--f-color-grey-5);
+
+		button {
+			padding: 0;
+			border: none;
+			font: inherit;
+			color: inherit;
+			background-color: transparent;
+			cursor: pointer;
+		}
+
+		svg {
+			color: var(--f-color-grey-5);
+			&:hover,
+			&:focus {
+				color: var(--f-doc-footer-color);
+			}
+		}
+
+		.icon-liked {
+			svg {
+				color: var(--f-doc-footer-color);
+			}
+		}
+	}
+
+	&_image {
+		position: relative;
+		padding-bottom: calc(100% - var(--f-spacer-4));
+		border-bottom: 1px solid var(--f-color-grey-3);
+	}
+
+	&_box {
+		position: absolute;
+		top: 0;
+		left: 16px;
+		width: calc(100% - var(--f-spacer-6));
+		height: calc(100% - var(--f-spacer-4));
+		overflow: hidden;
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			background-size: contain;
+		}
+	}
+
+	&_content {
+		padding-top: var(--f-spacer-4);
+	}
+
+	&_top, &_bottom {
+		display: flex;
+		justify-content: space-between;
+	}
+
+
+	&_label {
+		color: var(--f-color-grey-5);
+		font-size: var(--f-font-size-3);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&_itemName {
+		flex: 1;
+		overflow: hidden;
+		margin-right: 16px;
+		& .nftcard_label {
+			display: flex;
+			align-items: center;
+			gap: var(--f-spacer-1);
+			svg {
+				width: 1em;
+			}
+		}
+		span {
+			color: var(--f-doc-footer-color);
+		}
+	}
+
+	&_crypto {
+		display: flex;
+		align-items: center;
+		gap: var(--f-spacer-1);
+		font-weight: bold;
+		img {
+			max-width: 1em;
+		}
+	}
+
+	&_name {
+		font-weight: bold;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		font-size: var(--f-font-size-4);
+	}
+
+	&_price {
+		flex: .5;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		& .nftcard_crypto {
+			font-size: var(--f-font-size-4);
+		}
+	}
+
+	&_bottom {
+		margin-top: var(--f-spacer-4);
+		.nftcard_label {
+			font-size: var(--f-font-size-2);
+		}
+		font-size: var(--f-font-size-2);
+	}
+
+	&_term {
+		font-weight: bold;
+	}
+}
