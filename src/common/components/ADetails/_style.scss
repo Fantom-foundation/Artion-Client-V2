@@ -1,0 +1,9 @@
+.adetails {
+    --fdetails-transitions-length: 150ms;
+
+    &.fdetails {
+        .fdetails_label {
+            font-weight: 700;
+        }
+    }
+}
