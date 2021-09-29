@@ -19,7 +19,7 @@
     border-bottom: var(--appheader-border-bottom);
     background: var(--appheader-background);
 
-    z-index: 10;
+    z-index: var(--f-zindex-sticky);
 
     //flex ali-center gap-2 juc-space-between
 

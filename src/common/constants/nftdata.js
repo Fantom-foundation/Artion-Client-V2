@@ -63,4 +63,20 @@ export const nftData = [
             cryptoLogo: 'img/tmp/fantom.svg',
         },
     },
+    {
+        id: 5,
+        likes: 15,
+        liked: false,
+        nftImage: 'https://picsum.photos/id/237/800/400',
+        nftName: 'Digital Cobalt Blue (AF)',
+        crypto: 0.05,
+        cryptoName: 'Fantom',
+        cryptoLogo: 'img/tmp/fantom.svg',
+        timeLeft: '22 hours',
+        lastPrice: {
+            crypto: 0.05,
+            cryptoName: 'Fantom',
+            cryptoLogo: 'img/tmp/fantom.svg',
+        },
+    },
 ];

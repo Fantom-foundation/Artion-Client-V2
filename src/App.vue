@@ -5,7 +5,7 @@
         <router-view />
 
         <f-app-theme />
-        <f-tooltip />
+        <f-tooltip with-arrow />
         <f-notifications
             strategy="newest-first"
             with-icon

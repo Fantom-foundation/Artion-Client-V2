@@ -67,6 +67,10 @@
         "placeholder": "Search items, collections and accounts"
     },
 
+    "nftcard": {
+        "favorite": "Favorite"
+    },
+
     "view_not_found": {
         "404": "404",
         "text": "Oooooops! We couldn’t find the page you’re looking for :(",

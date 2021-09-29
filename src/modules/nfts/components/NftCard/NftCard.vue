@@ -2,10 +2,11 @@
     <div class="nftcard">
         <router-link :to="'/explore/' + nftData.id">
             <div class="nftcard_header">
-                <button aria-label="Like" data-tooltip="Like">
+                <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
                     <app-iconset
                         :icon="liked ? 'liked' : 'like'"
                         :class="{ 'icon-liked': liked }"
+                        size="20px"
                         @click.native.prevent="onLikeClick"
                     />
                 </button>
