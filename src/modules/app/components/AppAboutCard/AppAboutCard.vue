@@ -1,7 +1,7 @@
 <template>
     <div class="appaboutcard">
         <div class="appaboutcard_item">
-            <app-iconset :icon="info.icon" style="width: auto; height: auto;" original />
+            <app-iconset :icon="info.icon" size="110px" original />
         </div>
         <div class="appaboutcard_item">
             <h3>{{ info.title }}</h3>

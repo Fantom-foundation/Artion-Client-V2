@@ -34,7 +34,10 @@ export const Default = () => ({
                 'metamask',
                 'coinbase',
                 'close',
-            ]
+                'like',
+                'liked',
+                'check',
+            ],
         };
     },
 });
