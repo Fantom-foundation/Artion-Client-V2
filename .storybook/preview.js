@@ -2,13 +2,11 @@ import '../src/assets/scss/storybook.scss';
 import Vue from 'vue';
 import { addDecorator, addParameters } from '@storybook/vue';
 import { withDirection } from 'storybook-rtl-addon';
-import { setupI18n } from '@/plugins/vue-i18n.js';
+import { i18n } from '@/plugins/vue-i18n.js';
 import StoryRouter from 'storybook-vue-router';
 
 // global components
 import '../src/global-components.js';
-
-const i18n = setupI18n(Vue);
 
 const decor = (story, context) => {
     // wrap the passed component within the passed context

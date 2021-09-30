@@ -18,7 +18,7 @@
                         {{ wallet.chain }}
                     </a-placeholder>
                 </template>
-                <template v-else-if="!wallet.address">Connect Wallet</template>
+                <template v-else-if="!wallet.address">{{ $t('walletbutton.connect_wallet') }}</template>
                 <template v-else>
                     <f-ellipsis
                         text="0xc0ffee254729296a45a3885639AC7E10F9d54979"

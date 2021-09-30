@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import { mount } from '@vue/test-utils';
+import { mount } from '../mocks/vue.js';
 import WalletListbox from '@/modules/wallet/components/WalletListbox/WalletListbox.vue';
 
 const WALLETS = [

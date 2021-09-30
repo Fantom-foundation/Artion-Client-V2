@@ -10,6 +10,7 @@ import { getLanguageCode } from 'fantom-vue-components/src/utils/client-info.js'
 import appConfig from '@/app.config.js';
 import { translations } from 'fantom-vue-components/src/mixins/translations.js';
 import { clone, defer } from 'fantom-vue-components/src/utils';
+import { loadLanguage } from '@/plugins/vue-i18n.js';
 
 export default {
     name: 'AppLanguage',
@@ -55,7 +56,7 @@ export default {
             this.$store.commit(`app/${SET_LANGUAGE}`, langCode);
             translations.setLocale(langCode);
 
-            this.$i18n.locale = langCode;
+            loadLanguage(langCode);
         },
 
         findLanguageByCode(_langCode) {

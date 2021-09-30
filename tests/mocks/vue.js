@@ -1,8 +1,10 @@
-import Vuex from 'vuex';
-import { appStore } from '@/modules/app/store';
-import { setupI18n } from '@/plugins/vue-i18n.js';
-import { createLocalVue } from '@vue/test-utils';
+// import Vuex from 'vuex';
+// import { appStore } from '@/modules/app/store';
+import { i18n } from '@/plugins/vue-i18n.js';
+// import { createLocalVue } from '@vue/test-utils';
+import { mount as originalMount } from '@vue/test-utils';
 
+/*
 function store() {
     const store = { ...appStore.module };
 
@@ -15,10 +17,16 @@ function store() {
         }),
     };
 }
+*/
+
+export function mount(component, options = {}) {
+    return originalMount(component, { ...options, i18n });
+}
 
 /**
  * @param {['store'|'i18n']} mocks
  */
+/*
 export function vueMock(mocks) {
     const localVue = createLocalVue();
     const usei18n = mocks.includes('i18n');
@@ -35,3 +43,4 @@ export function vueMock(mocks) {
         localVue,
     };
 }
+*/

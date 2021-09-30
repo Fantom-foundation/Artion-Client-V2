@@ -1,5 +1,5 @@
 import appConfig from '@/app.config.js';
-import { i18n } from '@/main.js';
+import { i18n } from '@/plugins/vue-i18n.js';
 
 import UnderMaintenance from '@/modules/app/views/UnderMaintenance/UnderMaintenance.vue';
 

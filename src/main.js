@@ -2,7 +2,7 @@ import './assets/scss/main.scss';
 import Vue from 'vue';
 import App from './App.vue';
 import './registerServiceWorker';
-import { setupI18n } from './plugins/vue-i18n.js';
+import { i18n } from './plugins/vue-i18n.js';
 import { setupRouter } from './router';
 import { apolloProvider } from './plugins/apollo-provider.js';
 import store from './store';
@@ -25,7 +25,7 @@ translations.add('fa', faTranslations);
 translations.add('ps', psTranslations);
 
 Vue.config.productionTip = false;
-export const i18n = setupI18n();
+// export const i18n = setupI18n();
 export let vueApp = null;
 
 const router = setupRouter({

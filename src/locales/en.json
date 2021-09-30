@@ -67,6 +67,10 @@
         "placeholder": "Search items, collections and accounts"
     },
 
+    "walletbutton": {
+        "connect_wallet": "Connect Wallet"
+    },
+
     "nftcard": {
         "favorite": "Favorite"
     },

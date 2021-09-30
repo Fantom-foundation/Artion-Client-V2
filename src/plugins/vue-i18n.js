@@ -2,20 +2,13 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import appConfig from '@/app.config.js';
 
-// Vue.use(VueI18n);
+const defaultLocale = process.env.VUE_APP_I18N_LOCALE || 'en';
 
-function loadLocaleMessages() {
-    const locales = require.context('../locales', true, /[A-Za-z0-9-_,\s]+\.json$/i);
-    const messages = {};
-    locales.keys().forEach(key => {
-        const matched = key.match(/([A-Za-z0-9-_]+)\./i);
-        if (matched && matched.length > 1) {
-            const locale = matched[1];
-            messages[locale] = locales(key);
-        }
-    });
-    return messages;
-}
+Vue.use(VueI18n);
+
+const includedLanguage = require(`../locales/${defaultLocale}.json`);
+
+document.documentElement.setAttribute('lang', defaultLocale);
 
 const defaultDatetimeFormat = {
     short: {
@@ -48,22 +41,23 @@ appConfig.settings.languages.forEach(lang => {
     }
 });
 
-export function setupI18n(vueInstance = Vue) {
-    vueInstance.use(VueI18n);
+const messages = {
+    en: () => import(/* webpackChunkName: 'en' */ '../locales/en.json'),
+};
 
-    return new VueI18n({
-        locale: process.env.VUE_APP_I18N_LOCALE || 'en',
-        fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
-        messages: loadLocaleMessages(),
-        dateTimeFormats,
-    });
-}
-
-/*
-export default new VueI18n({
-    locale: process.env.VUE_APP_I18N_LOCALE || 'en',
+export const i18n = new VueI18n({
+    locale: defaultLocale,
     fallbackLocale: process.env.VUE_APP_I18N_FALLBACK_LOCALE || 'en',
-    messages: loadLocaleMessages(),
+    messages: {
+        en: includedLanguage,
+    },
     dateTimeFormats,
 });
-*/
+
+export function loadLanguage(language) {
+    return messages[language]().then(i18nMessages => {
+        i18n.setLocaleMessage(language, i18nMessages);
+        i18n.locale = language;
+        document.documentElement.setAttribute('lang', language);
+    });
+}
