@@ -3,6 +3,7 @@
         :data="cCategories"
         :value="parseInt(selected, 10)"
         @component-change="onListboxItemSelected"
+        :aria-label="$t('categories')"
         class="categoriesfilter"
     >
         <template v-slot="{ item }">

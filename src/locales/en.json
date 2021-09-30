@@ -2,6 +2,7 @@
     "explore": "Explore",
     "create": "Create",
     "home": "Home",
+    "categories": "Categories",
 
     "navigation": {
         "explore": "@:explore",
