@@ -13,6 +13,7 @@
 
 <script>
 import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow.vue';
+import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 import { copyMethods } from 'fantom-vue-components/src/utils/vue-helpers.js';
 
 /**
@@ -21,7 +22,7 @@ import { copyMethods } from 'fantom-vue-components/src/utils/vue-helpers.js';
 export default {
     name: 'AWindow',
 
-    components: { FWindow },
+    components: { FWindow, AppIconset },
 
     inheritAttrs: false,
 

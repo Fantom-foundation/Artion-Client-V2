@@ -62,6 +62,7 @@
     --card-shadow: 0 20.5814px 82.3256px #f2f1fa;
     --homepage-gradient: linear-gradient(180deg, #f9f9ff, rgba(234, 234, 241, 0));
     --main-lr-padding: var(--f-spacer-3);
+    --filter-item-padding: var(--f-spacer-2);
 }
 
 @include media.media-min(breakpoints.$breakpoint-md) {

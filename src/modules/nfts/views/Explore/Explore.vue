@@ -1,8 +1,8 @@
 <template>
-    <!-- <div class="explore">Explore {{ this.$route.query }}</div> -->
     <div class="explore">
         <div class="sidebar">
-            Sidebar
+            Filters
+            <nft-filters v-model="filters" />
         </div>
         <nft-list />
     </div>
@@ -10,15 +10,27 @@
 
 <script>
 import NftList from '@/modules/nfts/components/NftList/NftList';
+import NftFilters from '@/modules/nfts/components/NftFilters/NftFilters.vue';
+import { routeQueryMixin } from '@/common/mixins/route-query.js';
+
 export default {
     name: 'Explore',
-    components: { NftList },
+
+    mixins: [routeQueryMixin('filters')],
+
+    components: { NftFilters, NftList },
+
+    data() {
+        return {
+            filters: {},
+        };
+    },
 };
 </script>
 
 <style>
 .explore {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 280px 1fr;
 }
 </style>

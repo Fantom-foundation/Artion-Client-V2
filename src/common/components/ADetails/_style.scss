@@ -2,8 +2,18 @@
     --fdetails-transitions-length: 150ms;
 
     &.fdetails {
-        .fdetails_label {
-            font-weight: 700;
+        summary {
+            padding: var(--f-spacer-4);
+        }
+
+        .fdetails {
+            &_label {
+                font-weight: 700;
+            }
+
+            &_content {
+                padding: var(--f-spacer-4);
+            }
         }
     }
 }
