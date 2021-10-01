@@ -191,12 +191,165 @@ export default {
     };
 }
 
+/**
+ * createOffer Method for offering item on marketplace
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {string} payToken Paying token address
+ * @param {int} quantity Quantity of items
+ * @param {number|BN|string} pricePerItem Price per item
+ * @param {string} deadline Offer expiration
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function createOffer(nftAddress, tokenID, payToken, quantity, pricePerItem, deadline, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "contract IERC20",
+                "name": "_payToken",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_quantity",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_pricePerItem",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_deadline",
+                "type": "uint256"
+            }
+        ],
+        "name": "createOffer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, quantity, pricePerItem, deadline])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * cancelOffer Method for canceling item offer on marketplace
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function cancelOffer(nftAddress, tokenID, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "cancelOffer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * acceptOffer Method for accepting item offer on marketplace
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {string} creator Offer creator address
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function acceptOffer(nftAddress, tokenID, creator, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_creator",
+                "type": "address"
+            }
+        ],
+        "name": "acceptOffer",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, creator])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
 export default {
     createNFTCollection,
     createNFT,
     createArtCollection,
     createArt,
-    registerTokenRoyalty
+    registerTokenRoyalty,
+    createOffer,
+    cancelOffer,
+    acceptOffer
 }
 
 const createNFTContractAbi = {
