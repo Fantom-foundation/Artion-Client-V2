@@ -1,5 +1,8 @@
 <template>
     <a-details-group class="nftfilters">
+        <a-details :label="$t('status')" :open="'status' in filters" id="test_nftfilters_collections">
+            <status-filter v-model="dFilters.status" />
+        </a-details>
         <a-details :label="$t('collections')" :open="'collections' in filters" id="test_nftfilters_collections">
             <collections-filter v-model="dFilters.collections" />
         </a-details>
@@ -10,16 +13,17 @@
 </template>
 
 <script>
+import { clone } from 'fantom-vue-components/src/utils';
 import ADetailsGroup from '@/common/components/ADetailsGroup/ADetailsGroup.vue';
 import ADetails from '@/common/components/ADetails/ADetails.vue';
 import CategoriesFilter from '@/modules/nfts/components/CategoriesFilter/CategoriesFilter.vue';
-import { clone } from 'fantom-vue-components/src/utils';
 import CollectionsFilter from '@/modules/nfts/components/CollectionsFilter/CollectionsFilter.vue';
+import StatusFilter from '@/modules/nfts/components/StatusFilter/StatusFilter.vue';
 
 export default {
     name: 'NftFilters',
 
-    components: { CollectionsFilter, CategoriesFilter, ADetails, ADetailsGroup },
+    components: { StatusFilter, CollectionsFilter, CategoriesFilter, ADetails, ADetailsGroup },
 
     model: {
         prop: 'filters',

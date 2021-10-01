@@ -1,10 +1,12 @@
 <template>
     <div class="explore">
-        <div class="sidebar">
-            Filters
+        <div class="explore_sidebar">
+            <div class="h3">Filters</div>
             <nft-filters v-model="filters" />
         </div>
-        <nft-list />
+        <div>
+            <nft-list />
+        </div>
     </div>
 </template>
 
@@ -28,9 +30,6 @@ export default {
 };
 </script>
 
-<style>
-.explore {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-}
+<style lang="scss">
+@use "style";
 </style>

@@ -1,0 +1,8 @@
+.explore {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+
+    .h3 {
+        padding-left: var(--f-spacer-4);
+    }
+}

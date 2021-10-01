@@ -1,0 +1,20 @@
+.statusesfilter {
+    &_item {
+        text-align: center;
+    }
+
+    .fimage {
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .flistbox_list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--f-spacer-2);
+
+        &_item {
+            padding: var(--filter-item-padding);
+        }
+    }
+}

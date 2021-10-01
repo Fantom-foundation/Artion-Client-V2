@@ -4,6 +4,7 @@
     "home": "Home",
     "categories": "Categories",
     "collections": "Collections",
+    "status": "Status",
 
     "navigation": {
         "explore": "@:explore",
@@ -18,6 +19,13 @@
         "trading_cards": "Trading Cards",
         "virtual_worlds": "Virtual Worlds",
         "domain_names": "Domain Names"
+    },
+
+    "statuses": {
+        "buy_now": "Buy Now",
+        "has_bids": "Has Bids",
+        "has_offers": "Has Offers",
+        "on_auction": "On Auction"
     },
 
     "page": {
@@ -83,7 +91,7 @@
         "symbol":"Symbol",
         "description":"Description",
         "royalty":"Royalty (%)",
-        "royaltyErr":"It shuold be between 1 and 100",
+        "royaltyErr":"Value should be between 1 and 100",
         "royaltyTooltip": "If you set a royalty here, you will get X percent of sales price each time an NFT is sold on our platform.",
         "linkToIp":"Link to IP Rights Document (Optional)",
         "linkToIpTooltip": "Link to the document which proves your ownership of this image.",
