@@ -341,12 +341,271 @@ export default {
     };
 }
 
+/**
+ * listItem Method for listing NFT on marketplace for sale
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {int} quantity Quantity of items (needed for ERC-1155 NFTs, set as 1 for ERC-721)
+ * @param {string} payToken Paying token address
+ * @param {number|BN|string} pricePerItem Price per item
+ * @param {string} startingTime Scheduling for a future sale
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function listItem(nftAddress, tokenID, quantity, payToken, pricePerItem, startingTime, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_quantity",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_payToken",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_pricePerItem",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_startingTime",
+                "type": "uint256"
+            }
+        ],
+        "name": "listItem",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, quantity, payToken, pricePerItem, startingTime])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * cancelListing Method for canceling listed NFT
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function cancelListing(nftAddress, tokenID, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "cancelListing",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * updateListing Method for updating listed NFT
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {string} payToken Paying token address
+ * @param {number|BN|string} newPricePerItem Price per item
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function updateListing(nftAddress, tokenID, payToken, newPricePerItem, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_payToken",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_newPrice",
+                "type": "uint256"
+            }
+        ],
+        "name": "updateListing",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, newPricePerItem, startingTime])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * buyListedItem Method for buying listed NFT
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {string} ownerAddress Payable address of the owner
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function buyListedItem(nftAddress, tokenID, ownerAddress, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address payable",
+                "name": "_owner",
+                "type": "address"
+            }
+        ],
+        "name": "buyItem",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, ownerAddress])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * buyListedItemWithPayToken Method for buying listed NFT
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {string} ownerAddress Payable address of the owner
+ * @param {string} payToken Paying token address
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function buyListedItemWithPayToken(nftAddress, tokenID, ownerAddress, payToken, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_payToken",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_owner",
+                "type": "address"
+            }
+        ],
+        "name": "buyItem",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, ownerAddress])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
 export default {
     createNFTCollection,
     createNFT,
     createArtCollection,
     createArt,
     registerTokenRoyalty,
+    listItem,
+    cancelListing,
+    updateListing,
+    buyListedItem,
+    buyListedItemWithPayToken,
     createOffer,
     cancelOffer,
     acceptOffer
