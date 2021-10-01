@@ -77,6 +77,22 @@
         "favorite": "Favorite"
     },
 
+    "nftcreate": {
+        "collection":"Collection",
+        "name":"Name",
+        "symbol":"Symbol",
+        "description":"Description",
+        "royalty":"Royalty (%)",
+        "royaltyErr":"It shuold be between 1 and 100",
+        "royaltyTooltip": "If you set a royalty here, you will get X percent of sales price each time an NFT is sold on our platform.",
+        "linkToIp":"Link to IP Rights Document (Optional)",
+        "linkToIpTooltip": "Link to the document which proves your ownership of this image.",
+        "linkToIpPlaceholder": "Enter Link",
+        "unlockContent":"Unlockable Content",
+        "mint":"Mint",
+        "messageFtm":"1 FTM are charged to create a new NFT."
+    },
+
     "view_not_found": {
         "404": "404",
         "text": "Oooooops! We couldn’t find the page you’re looking for :(",

@@ -1,0 +1,82 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+.nftcreate {
+	padding: var(--f-spacer-7);
+	&_form {
+		display: flex;
+	}
+
+	&_col {
+		flex: 1;
+		&:first-child {max-width: 400px;}
+		&:last-child {max-width: 800px;}
+	}
+
+	&_wrap {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--f-spacer-4);
+	}
+
+	&_btn,
+	&_info {
+		display: flex;
+		justify-content: center;
+		margin-top: var(--f-spacer-4);
+	}
+
+	&_panel {
+		.adropdownlistbox + .fforminput,
+		.fforminput + .fforminput {
+			margin-top: var(--f-spacer-4);
+		}
+
+		.fforminput + .fforminput.fforminput_symbol {
+			margin-top: 67px;
+		}
+
+		.label_btn {
+			padding: 0;
+			border: none;
+			font: inherit;
+			color: inherit;
+			background-color: transparent;
+			cursor: pointer;
+		}
+
+		.fforminput,
+		.fforminput .finput,
+		.fforminput .finput .inp {
+			width: 100%;
+		}
+
+		.collection_list {
+			width: 100% !important;
+		}
+	}
+
+
+}
+
+@include media.media-max(1150px) {
+	.nftcreate {
+		padding: var(--f-spacer-7);
+		&_form {
+			flex-direction: column;
+			align-items: center;
+		}
+	
+		&_col {
+			& + & {
+				margin-top: var(--f-spacer-7);
+			}
+		}
+	}
+}
+
+@include media.media-max(746px) {
+	.nftcreate {
+		&_wrap {
+			grid-template-columns: 1fr;
+		}
+	}
+}

@@ -26,6 +26,8 @@ import IconClose from '@/assets/vue-icons/IconClose.vue';
 import IconLike from '@/assets/vue-icons/IconLike.vue';
 import IconLiked from '@/assets/vue-icons/IconLiked.vue';
 import IconCheck from '@/assets/vue-icons/IconCheck.vue';
+import IconQuestion from '@/assets/vue-icons/IconQuestion.vue';
+
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -55,6 +57,7 @@ export default {
         IconLike,
         IconLiked,
         IconCheck,
+        IconQuestion
     },
 
     props: {
