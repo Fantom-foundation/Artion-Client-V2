@@ -28,7 +28,6 @@ import IconLiked from '@/assets/vue-icons/IconLiked.vue';
 import IconCheck from '@/assets/vue-icons/IconCheck.vue';
 import IconQuestion from '@/assets/vue-icons/IconQuestion.vue';
 
-
 /**
  * Icon set of default icons (from `icons` directory).
  * Inherits props from `FSvgIcon`
@@ -57,7 +56,7 @@ export default {
         IconLike,
         IconLiked,
         IconCheck,
-        IconQuestion
+        IconQuestion,
     },
 
     props: {

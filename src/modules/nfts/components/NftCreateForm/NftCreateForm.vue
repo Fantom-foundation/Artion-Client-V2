@@ -10,7 +10,7 @@
                         <template #button-label="{ item }">
                             <div class="flex ali-center">
                                 <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
-                                <b>{{ item.label }}</b>
+                                <span>{{ item.label }}</span>
                                 <f-form-input
                                     type="text"
                                     name="collectionId"
@@ -22,13 +22,25 @@
                         <template #item="{ item }">
                             <div class="flex ali-center">
                                 <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
-                                <b>{{ item.label }}</b>
+                                <span>{{ item.label }}</span>
                             </div>
                         </template>
                     </a-dropdown-listbox>
-                    <f-form-input :label="$t('nftcreate.name')" :placeholder="$t('nftcreate.name')" field-size="large" type="text" name="name" />
-                    <f-form-input :label="$t('nftcreate.symbol')" :placeholder="$t('nftcreate.symbol')" field-size="large" type="text" name="symbol" class="fforminput_symbol" />
-                    <f-form-input :label="$t('nftcreate.description')" :placeholder="$t('nftcreate.description')" field-size="large" type="textarea" name="description" />
+                    <f-form-input :label="$t('nftcreate.name')" field-size="large" type="text" name="name" />
+                    <f-form-input
+                        :label="$t('nftcreate.symbol')"
+                        field-size="large"
+                        type="text"
+                        name="symbol"
+                        class="fforminput_symbol"
+                    />
+                    <f-form-input
+                        :label="$t('nftcreate.description')"
+                        field-size="large"
+                        type="textarea"
+                        name="description"
+                        rows="5"
+                    />
                 </div>
                 <div class="nftcreate_panel">
                     <f-form-input
@@ -47,7 +59,7 @@
                             </button>
                         </template>
                     </f-form-input>
-                    <f-form-input field-size="large" :placeholder="$t('nftcreate.linkToIpPlaceholder')" type="text" name="linkToIp">
+                    <f-form-input field-size="large" type="text" name="linkToIp">
                         <template #label>
                             {{ $t('nftcreate.linkToIp') }}
                             <button class="label_btn" :data-tooltip="$t('nftcreate.linkToIpTooltip')">
@@ -56,7 +68,13 @@
                         </template>
                     </f-form-input>
                     <f-form-input type="toggle" :label="$t('nftcreate.unlockContent')" name="unlockContentToogle" />
-                    <f-form-input :label="$t('nftcreate.unlockContent')" :placeholder="$t('nftcreate.unlockContent')" v-if="values.unlockContentToogle" field-size="large" type="textarea" name="unlockContent" />
+                    <f-form-input
+                        :label="$t('nftcreate.unlockContent')"
+                        v-if="values.unlockContentToogle"
+                        field-size="large"
+                        type="textarea"
+                        name="unlockContent"
+                    />
                 </div>
             </div>
             <div class="nftcreate_btn">

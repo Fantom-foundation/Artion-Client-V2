@@ -1,0 +1,13 @@
+.fform {
+    .flabel, .fforminput .flabel {
+        display: block;
+        font-size: var(--f-font-size-4);
+        //color: var(--f-color-grey-7);
+        color: var(--f-doc-color);
+        padding-bottom: var(--f-spacer-1);
+    }
+
+    .fmessage-info {
+        color: var(--f-color-grey-5);
+    }
+}
