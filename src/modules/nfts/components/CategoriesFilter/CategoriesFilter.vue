@@ -7,7 +7,7 @@
         class="categoriesfilter"
     >
         <template v-slot="{ item }">
-            <div class="categoriesfilter_item">
+            <div class="categoriesfilter_item tes-4">
                 <app-iconset size="32px" :icon="item.icon" original />
                 {{ $t(item.label) }}
             </div>

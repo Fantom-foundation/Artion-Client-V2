@@ -1,5 +1,8 @@
 <template>
     <a-details-group class="nftfilters">
+        <a-details :label="$t('collections')" :open="'collections' in filters" id="test_nftfilters_collections">
+            <collections-filter v-model="dFilters.collections" />
+        </a-details>
         <a-details :label="$t('categories')" :open="'category' in filters" id="test_nftfilters_categories">
             <categories-filter v-model="dFilters.category" />
         </a-details>
@@ -11,11 +14,12 @@ import ADetailsGroup from '@/common/components/ADetailsGroup/ADetailsGroup.vue';
 import ADetails from '@/common/components/ADetails/ADetails.vue';
 import CategoriesFilter from '@/modules/nfts/components/CategoriesFilter/CategoriesFilter.vue';
 import { clone } from 'fantom-vue-components/src/utils';
+import CollectionsFilter from '@/modules/nfts/components/CollectionsFilter/CollectionsFilter.vue';
 
 export default {
     name: 'NftFilters',
 
-    components: { CategoriesFilter, ADetails, ADetailsGroup },
+    components: { CollectionsFilter, CategoriesFilter, ADetails, ADetailsGroup },
 
     model: {
         prop: 'filters',

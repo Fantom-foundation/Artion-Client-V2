@@ -3,6 +3,7 @@
     "create": "Create",
     "home": "Home",
     "categories": "Categories",
+    "collections": "Collections",
 
     "navigation": {
         "explore": "@:explore",
