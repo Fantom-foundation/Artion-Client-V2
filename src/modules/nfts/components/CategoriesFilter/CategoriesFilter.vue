@@ -18,7 +18,6 @@
 <script>
 import { CATEGORIES } from '@/common/constants/categories.js';
 import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue';
-import { clone } from 'fantom-vue-components/src/utils';
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 
 export default {
@@ -36,7 +35,7 @@ export default {
         categories: {
             type: Array,
             default() {
-                return clone(CATEGORIES);
+                return CATEGORIES();
             },
         },
         selected: {

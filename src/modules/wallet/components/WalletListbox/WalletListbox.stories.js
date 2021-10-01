@@ -18,12 +18,12 @@ export const Default = () => ({
             wallets: [
                 {
                     icon: 'metamask',
-                    code: 'metamask',
+                    id: 'metamask',
                     label: 'Metamask',
                 },
                 {
                     icon: 'coinbase',
-                    code: 'coinbase',
+                    id: 'coinbase',
                     label: 'Coinbase Wallet',
                 },
             ],
@@ -46,12 +46,12 @@ export const WalletPickEvent = () => ({
             wallets: [
                 {
                     icon: 'metamask',
-                    code: 'metamask',
+                    id: 'metamask',
                     label: 'Metamask',
                 },
                 {
                     icon: 'coinbase',
-                    code: 'coinbase',
+                    id: 'coinbase',
                     label: 'Coinbase Wallet',
                 },
             ],

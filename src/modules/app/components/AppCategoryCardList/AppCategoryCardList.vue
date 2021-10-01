@@ -12,7 +12,7 @@ export default {
     name: 'AppCategoryCardList',
     components: { AppCategoryCard },
     data: () => ({
-        categories: CATEGORIES,
+        categories: CATEGORIES(),
     }),
 };
 </script>

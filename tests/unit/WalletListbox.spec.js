@@ -6,12 +6,12 @@ import WalletListbox from '@/modules/wallet/components/WalletListbox/WalletListb
 const WALLETS = [
     {
         icon: 'rainbow',
-        code: 'metamask',
+        id: 'metamask',
         label: 'Metamask',
     },
     {
         icon: 'rainbow',
-        code: 'coinbase',
+        id: 'coinbase',
         label: 'Coinbase Wallet',
     },
 ];
