@@ -21,7 +21,7 @@ export const Filters = () => ({
     //language=HTML
     template: `
         <div style="max-width: 365px">
-            <nft-filters :filters="{ category: 1 }" />
+            <nft-filters :filters="{ category: 1, collections: ['rarity-crafting'], status: ['has_bids'] }" />
         </div>
     `,
 });
@@ -42,7 +42,7 @@ export const Model = () => ({
     `,
     data() {
         return {
-            filters: { category: 2 },
+            filters: { category: 1, collections: ['rarity-crafting'], status: ['has_bids'] },
         };
     },
 });

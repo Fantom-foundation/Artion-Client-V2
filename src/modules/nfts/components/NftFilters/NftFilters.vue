@@ -1,6 +1,6 @@
 <template>
     <a-details-group class="nftfilters">
-        <a-details :label="$t('status')" :open="'status' in filters" id="test_nftfilters_collections">
+        <a-details :label="$t('status')" :open="'status' in filters" id="test_nftfilters_status">
             <status-filter v-model="dFilters.status" />
         </a-details>
         <a-details :label="$t('collections')" :open="'collections' in filters" id="test_nftfilters_collections">
