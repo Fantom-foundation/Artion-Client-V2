@@ -28,6 +28,11 @@
         "on_auction": "On Auction"
     },
 
+    "group": {
+        "all_items": "All Items",
+        "single_items": "Single Items"
+    },
+
     "page": {
         "explore": {
             "title": "Browse NFT's"
