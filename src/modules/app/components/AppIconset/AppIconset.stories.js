@@ -38,6 +38,10 @@ export const Default = () => ({
                 'liked',
                 'check',
                 'question',
+                'share',
+                'twitter',
+                'facebook',
+                'logo',
             ],
         };
     },

@@ -102,6 +102,13 @@
         "favorite": "Favorite"
     },
 
+    "ashareButton": {
+        "copy": "Copy Link",
+        "shareFacebook": "Share on Facebook",
+        "shareTwitter": "Share to Twitter",
+        "successCopied": "Copied!"
+    },
+
     "nftcreate": {
         "collection":"Collection",
         "name":"Name",

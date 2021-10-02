@@ -27,6 +27,10 @@ import IconLike from '@/assets/vue-icons/IconLike.vue';
 import IconLiked from '@/assets/vue-icons/IconLiked.vue';
 import IconCheck from '@/assets/vue-icons/IconCheck.vue';
 import IconQuestion from '@/assets/vue-icons/IconQuestion.vue';
+import IconShare from '@/assets/vue-icons/IconShare.vue';
+import IconTwitter from '@/assets/vue-icons/IconTwitter.vue';
+import IconFacebook from '@/assets/vue-icons/IconFacebook.vue';
+import IconLogo from '@/assets/vue-icons/IconLogo.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -57,6 +61,10 @@ export default {
         IconLiked,
         IconCheck,
         IconQuestion,
+        IconShare,
+        IconTwitter,
+        IconFacebook,
+        IconLogo,
     },
 
     props: {
