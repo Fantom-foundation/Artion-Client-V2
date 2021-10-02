@@ -33,6 +33,18 @@
         "single_items": "Single Items"
     },
 
+    "sort_by": {
+        "recently_created": "Recently Created",
+        "oldest": "Oldest",
+        "recently_listed": "Recently Listed",
+        "recently_sold": "Recently Sold",
+        "ending_soon": "Ending Soon",
+        "most_expensive": "Most expensive",
+        "cheapest": "Cheapest",
+        "highest_last_sale": "Highest Last Sale",
+        "mostly_viewed": "Mostly Viewed"
+    },
+
     "page": {
         "explore": {
             "title": "Browse NFT's"
