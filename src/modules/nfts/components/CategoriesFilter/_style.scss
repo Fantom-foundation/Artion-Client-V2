@@ -1,16 +1,3 @@
-.categoriesfilter {
-    --flistbox-item-background-color: none;
+@use "@/assets/scss/filter-item" as fi;
 
-    max-height: 260px;
-    overflow: auto;
-
-    &_item {
-        display: flex;
-        align-items: center;
-        gap: var(--f-spacer-4);
-    }
-
-    .flistbox_list_item {
-        padding: var(--filter-item-padding);
-    }
-}
+@include fi.filter-item('categoriesfilter');

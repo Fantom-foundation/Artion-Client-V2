@@ -6,7 +6,8 @@
     --f-doc-font-family: 'proxima-nova', sans-serif, Helvetica;
     --f-doc-color: var(--f-color-grey-9);
     --f-doc-background-color: #fff; // var(--f-color-grey-1);
-    --f-doc-footer-color: #1969FF;
+    //--f-doc-footer-color: #1969FF;
+    --f-doc-footer-color: var(--f-color-primary-5);
     --f-doc-font-size: 18px;
     --f-doc-line-height: 25px;
     --f-doc-line-width: 40em;
@@ -52,6 +53,8 @@
     --f-spacer-7: 40px;
     --f-spacer-8: 60px;
     --f-spacer-9: 80px;
+
+    --f-transition-length: 150ms;
 
     //--color-light: var(--f-color-grey-5);
     //--color-light-hover: var(--f-color-grey-5);

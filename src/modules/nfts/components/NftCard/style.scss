@@ -1,6 +1,9 @@
 .nftcard {
+    --nftcard-border-color: var(--f-color-grey-3);
+
 	padding: var(--f-spacer-4) 0;
-	border: 1px solid var(--f-color-grey-3);
+	border: 1px solid var(--nftcard-border-color);
+
 	& a > * {
 		padding-left: var(--f-spacer-4);
 		padding-right: var(--f-spacer-4);
@@ -11,7 +14,7 @@
 	}
 
 	&:hover {
-		box-shadow: rgb(4 17 29 / 25%) 0px 0px 8px 0px;
+		box-shadow: rgb(4 17 29 / 25%) 0 0 8px 0;
 		transform: translateY(-2px);
     	transition: all 0.1s ease 0s;
 		border: 0;
@@ -38,13 +41,13 @@
 			color: var(--f-color-grey-5);
 			&:hover,
 			&:focus {
-				color: var(--f-doc-footer-color);
+				color: var(--f-color-primary-5);
 			}
 		}
 
 		.icon-liked {
 			svg {
-				color: var(--f-doc-footer-color);
+				color: var(--f-color-primary-5);
 			}
 		}
 	}
@@ -52,7 +55,7 @@
 	&_image {
 		position: relative;
 		padding-bottom: calc(100% - var(--f-spacer-4));
-		border-bottom: 1px solid var(--f-color-grey-3);
+		border-bottom: 1px solid var(--nftcard-border-color);
 	}
 
 	&_box {
@@ -62,6 +65,7 @@
 		width: calc(100% - var(--f-spacer-6));
 		height: calc(100% - var(--f-spacer-4));
 		overflow: hidden;
+
 		img {
 			position: absolute;
 			top: 0;
@@ -92,6 +96,7 @@
 		flex: 1;
 		overflow: hidden;
 		margin-right: 16px;
+
 		& .nftcard_label {
 			display: flex;
 			align-items: center;
@@ -100,8 +105,9 @@
 				width: 1em;
 			}
 		}
+
 		span {
-			color: var(--f-doc-footer-color);
+			color: var(--f-color-primary-5);
 		}
 	}
 
@@ -110,6 +116,7 @@
 		align-items: center;
 		gap: var(--f-spacer-1);
 		font-weight: bold;
+
 		img {
 			max-width: 1em;
 		}
@@ -128,6 +135,7 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-end;
+
 		& .nftcard_crypto {
 			font-size: var(--f-font-size-4);
 		}
@@ -135,10 +143,11 @@
 
 	&_bottom {
 		margin-top: var(--f-spacer-4);
+        font-size: var(--f-font-size-2);
+
 		.nftcard_label {
 			font-size: var(--f-font-size-2);
 		}
-		font-size: var(--f-font-size-2);
 	}
 
 	&_term {

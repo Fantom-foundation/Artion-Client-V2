@@ -162,9 +162,31 @@
     .flistbox {
         --flistbox-item-color: #fff;
         --flistbox-item-hover-color: #fff;
-        --flistbox-item-background-color: var(--theme-dark-color-6);
+        --flistbox-item-background-color: var(--theme-dark-color-7);
         --flistbox-item-hover-background-color: var(--theme-dark-color-5);
         --flistbox-item-selected-background-color: var(--theme-dark-color-5);
+    }
+
+    .fdetails {
+        --fdetails-border: 1px solid var(--theme-dark-color-5);
+    }
+
+    .adetails {
+        &.fdetails {
+            .fdetails {
+                &_content {
+                    background: var(--theme-dark-color-9);
+                }
+            }
+        }
+    }
+
+    .nftcard {
+        --nftcard-border-color: var(--theme-dark-color-5);
+
+        &:hover {
+            border: 1px solid var(--nftcard-border-color);
+        }
     }
 
     .fform {
