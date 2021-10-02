@@ -31,6 +31,17 @@ import IconShare from '@/assets/vue-icons/IconShare.vue';
 import IconTwitter from '@/assets/vue-icons/IconTwitter.vue';
 import IconFacebook from '@/assets/vue-icons/IconFacebook.vue';
 import IconLogo from '@/assets/vue-icons/IconLogo.vue';
+import IconAbout from '@/assets/vue-icons/IconAbout.vue';
+import IconChain from '@/assets/vue-icons/IconChain.vue';
+import IconWeb from '@/assets/vue-icons/IconWeb.vue';
+import IconTelegram from '@/assets/vue-icons/IconTelegram.vue';
+import IconDiscord from '@/assets/vue-icons/IconDiscord.vue';
+import IconView from '@/assets/vue-icons/IconView.vue';
+import IconGraf from '@/assets/vue-icons/IconGraf.vue';
+import IconTag from '@/assets/vue-icons/IconTag.vue';
+import IconList from '@/assets/vue-icons/IconList.vue';
+import IconCollection from '@/assets/vue-icons/IconCollection.vue';
+import IconProperty from '@/assets/vue-icons/IconProperty.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -65,6 +76,17 @@ export default {
         IconTwitter,
         IconFacebook,
         IconLogo,
+        IconAbout,
+        IconChain,
+        IconWeb,
+        IconTelegram,
+        IconDiscord,
+        IconView,
+        IconGraf,
+        IconTag,
+        IconList,
+        IconCollection,
+        IconProperty,
     },
 
     props: {
