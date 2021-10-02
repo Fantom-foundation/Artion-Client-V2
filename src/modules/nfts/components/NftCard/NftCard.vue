@@ -1,6 +1,6 @@
 <template>
     <div class="nftcard">
-        <router-link :to="'/explore/' + nftData.id">
+        <router-link :to="{ name: 'nft-detail', params: { id: nftData.id } }">
             <div class="nftcard_header">
                 <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
                     <app-iconset

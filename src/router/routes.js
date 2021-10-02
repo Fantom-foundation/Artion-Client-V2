@@ -19,6 +19,7 @@ import CollectionCreate from '@/modules/collections/views/CollectionCreate/Colle
 import CollectionRegister from '@/modules/collections/views/CollectionRegister/CollectionRegister.vue';
 import NftCreate from '@/modules/nfts/views/NftCreate/NftCreate.vue';
 import Page404 from '@/modules/app/views/Page404/Page404.vue';
+import NftDetail from '@/modules/nfts/views/NftDetail/NftDetail.vue';
 
 export function getRoutes() {
     return [
@@ -40,6 +41,14 @@ export function getRoutes() {
                     path: '/explore',
                     name: 'explore',
                     component: Explore,
+                    meta: {
+                        title: i18n.t('page.explore.title'),
+                    },
+                },
+                {
+                    path: '/explore/:id',
+                    name: 'nft-detail',
+                    component: NftDetail,
                     meta: {
                         title: i18n.t('page.explore.title'),
                     },
