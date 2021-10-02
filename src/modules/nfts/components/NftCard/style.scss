@@ -4,6 +4,8 @@
 	padding: var(--f-spacer-4) 0;
 	border: 1px solid var(--nftcard-border-color);
 
+	border-radius: var(--f-border-radius-3);
+
 	& a > * {
 		padding-left: var(--f-spacer-4);
 		padding-right: var(--f-spacer-4);
