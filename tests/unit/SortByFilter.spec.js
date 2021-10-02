@@ -4,6 +4,7 @@ import SortByFilter from '@/modules/nfts/components/SortByFilter/SortByFilter.vu
 import { getVModelComponent } from 'fantom-vue-components/src/utils/test.js';
 import { mount } from '../mocks/vue.js';
 import { SORT_BY_FILTERS as sortByFilters } from '@/common/constants/sort-by-filters.js';
+import { clickFComboBoxListItem } from '../helpers.js';
 
 const VModelTest = getVModelComponent(SortByFilter);
 const SORT_BY_FILTERS = sortByFilters();
@@ -21,19 +22,6 @@ function createWrapper({ propsData = {}, slots = {} } = {}) {
         propsData,
         slots,
     });
-}
-
-async function clickListItem(wrapper, itemNum = 1) {
-    const fCombobox = wrapper.findComponent({ name: 'f-combo-box' });
-
-    // show popover
-    await fCombobox.find('button').trigger('click');
-    await fCombobox.vm.$nextTick();
-
-    const fListbox = wrapper.findComponent({ name: 'f-listbox' });
-    const li = fListbox.find(`li:nth-child(${itemNum})`);
-
-    await li.trigger('click');
 }
 
 afterEach(() => {
@@ -73,7 +61,7 @@ describe('SortByFilter', () => {
     it('should emit `change` event with a sortby filter value as a payload when a sortby filter is selected', async () => {
         wrapper = createWrapper();
 
-        await clickListItem(wrapper, 2);
+        await clickFComboBoxListItem(wrapper, 2);
 
         const emitted = wrapper.emitted('change');
 
@@ -88,7 +76,7 @@ describe('SortByFilter', () => {
 
         expect(sortbyFilter.props('selected')).toBe(SORT_BY_FILTERS[1].value);
 
-        await clickListItem(wrapper, 1);
+        await clickFComboBoxListItem(wrapper, 1);
 
         expect(wrapper.vm.dValue).toBe(SORT_BY_FILTERS[0].value);
     });

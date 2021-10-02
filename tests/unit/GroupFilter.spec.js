@@ -4,6 +4,7 @@ import GroupFilter from '@/modules/nfts/components/GroupFilter/GroupFilter.vue';
 import { getVModelComponent } from 'fantom-vue-components/src/utils/test.js';
 import { mount } from '../mocks/vue.js';
 import { GROUP_FILTERS as groupFilters } from '@/common/constants/group-filter.js';
+import { clickFComboBoxListItem } from '../helpers.js';
 
 const VModelTest = getVModelComponent(GroupFilter);
 const GROUP_FILTERS = groupFilters();
@@ -21,19 +22,6 @@ function createWrapper({ propsData = {}, slots = {} } = {}) {
         propsData,
         slots,
     });
-}
-
-async function clickListItem(wrapper, itemNum = 1) {
-    const fCombobox = wrapper.findComponent({ name: 'f-combo-box' });
-
-    // show popover
-    await fCombobox.find('button').trigger('click');
-    await fCombobox.vm.$nextTick();
-
-    const fListbox = wrapper.findComponent({ name: 'f-listbox' });
-    const li = fListbox.find(`li:nth-child(${itemNum})`);
-
-    await li.trigger('click');
 }
 
 afterEach(() => {
@@ -73,7 +61,7 @@ describe('GroupFilter', () => {
     it('should emit `change` event with a group value as a payload when a group is selected', async () => {
         wrapper = createWrapper();
 
-        await clickListItem(wrapper, 2);
+        await clickFComboBoxListItem(wrapper, 2);
 
         const emitted = wrapper.emitted('change');
 
@@ -88,7 +76,7 @@ describe('GroupFilter', () => {
 
         expect(groupFilter.props('selected')).toBe(GROUP_FILTERS[1].value);
 
-        await clickListItem(wrapper, 1);
+        await clickFComboBoxListItem(wrapper, 1);
 
         expect(wrapper.vm.dValue).toBe(GROUP_FILTERS[0].value);
     });
