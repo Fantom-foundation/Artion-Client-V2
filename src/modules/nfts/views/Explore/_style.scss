@@ -10,7 +10,7 @@
     &_nftlist_header {
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: flex-end;
         min-height: 77px;
         padding: 0 var(--f-spacer-4);
     }
