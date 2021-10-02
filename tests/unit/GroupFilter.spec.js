@@ -3,8 +3,10 @@
 import GroupFilter from '@/modules/nfts/components/GroupFilter/GroupFilter.vue';
 import { getVModelComponent } from 'fantom-vue-components/src/utils/test.js';
 import { mount } from '../mocks/vue.js';
+import { GROUP_FILTERS as groupFilters } from '@/common/constants/group-filter.js';
 
 const VModelTest = getVModelComponent(GroupFilter);
+const GROUP_FILTERS = groupFilters();
 let wrapper = null;
 
 function destroyWrapper(wrapper) {
@@ -21,6 +23,19 @@ function createWrapper({ propsData = {}, slots = {} } = {}) {
     });
 }
 
+async function clickListItem(wrapper, itemNum = 1) {
+    const fCombobox = wrapper.findComponent({ name: 'f-combo-box' });
+
+    // show popover
+    await fCombobox.find('button').trigger('click');
+    await fCombobox.vm.$nextTick();
+
+    const fListbox = wrapper.findComponent({ name: 'f-listbox' });
+    const li = fListbox.find(`li:nth-child(${itemNum})`);
+
+    await li.trigger('click');
+}
+
 afterEach(() => {
     destroyWrapper(wrapper);
 });
@@ -32,7 +47,7 @@ describe('GroupFilter', () => {
         expect(wrapper.element).toMatchSnapshot();
     });*/
 
-    xit('should select a group "all" by default', async () => {
+    it('should select the first value from GROUP_FILTERS by default', async () => {
         wrapper = createWrapper();
 
         await wrapper.vm.$nextTick();
@@ -40,60 +55,42 @@ describe('GroupFilter', () => {
         const fCombobox = wrapper.findComponent({ name: 'f-combo-box' });
         await fCombobox.vm.$nextTick();
 
-        expect(wrapper.props('selected')).toBe('all');
-        expect(fCombobox.props('value')).toBe('all');
+        expect(wrapper.props('selected')).toBe(GROUP_FILTERS[0].value);
+        expect(fCombobox.props('value')).toBe(GROUP_FILTERS[0].value);
     });
 
     it('should select a group if `selected` prop is given', async () => {
-        wrapper = createWrapper({ propsData: { selected: 'single' } });
+        wrapper = createWrapper({ propsData: { selected: GROUP_FILTERS[1].value } });
 
         await wrapper.vm.$nextTick();
 
         const fCombobox = wrapper.findComponent({ name: 'f-combo-box' });
         await fCombobox.vm.$nextTick();
 
-        expect(fCombobox.props('value')).toBe('single');
+        expect(fCombobox.props('value')).toBe(GROUP_FILTERS[1].value);
     });
 
     it('should emit `change` event with a group value as a payload when a group is selected', async () => {
         wrapper = createWrapper();
 
-        const fCombobox = wrapper.findComponent({ name: 'f-combo-box' });
-
-        // show popover
-        await fCombobox.find('button').trigger('click');
-        await fCombobox.vm.$nextTick();
-
-        const fListbox = wrapper.findComponent({ name: 'f-listbox' });
-        const li = fListbox.find('li:nth-child(2)');
-
-        await li.trigger('click');
+        await clickListItem(wrapper, 2);
 
         const emitted = wrapper.emitted('change');
 
         expect(emitted).toBeTruthy();
-        expect(emitted[0]).toEqual(['single']);
+        expect(emitted[0]).toEqual([GROUP_FILTERS[1].value]);
     });
 
     it('should properly handle v-model', async () => {
-        wrapper = mount(VModelTest, { propsData: { value: 'single' } });
+        wrapper = mount(VModelTest, { propsData: { value: GROUP_FILTERS[1].value } });
 
         const groupFilter = wrapper.findComponent({ name: 'group-filter' });
 
-        expect(groupFilter.props('selected')).toBe('single');
+        expect(groupFilter.props('selected')).toBe(GROUP_FILTERS[1].value);
 
-        const fCombobox = wrapper.findComponent({ name: 'f-combo-box' });
+        await clickListItem(wrapper, 1);
 
-        // show popover
-        await fCombobox.find('button').trigger('click');
-        await fCombobox.vm.$nextTick();
-
-        const fListbox = wrapper.findComponent({ name: 'f-listbox' });
-        const li = fListbox.find('li:nth-child(1)');
-
-        await li.trigger('click');
-
-        expect(wrapper.vm.dValue).toBe('all');
+        expect(wrapper.vm.dValue).toBe(GROUP_FILTERS[0].value);
     });
 });
 

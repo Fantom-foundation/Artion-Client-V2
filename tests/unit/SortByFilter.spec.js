@@ -47,7 +47,7 @@ describe('SortByFilter', () => {
         expect(wrapper.element).toMatchSnapshot();
     });*/
 
-    it('should select the first value of SORT_BY_FILTERS by default', async () => {
+    it('should select the first value from SORT_BY_FILTERS by default', async () => {
         wrapper = createWrapper();
 
         await wrapper.vm.$nextTick();
