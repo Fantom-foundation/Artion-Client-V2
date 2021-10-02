@@ -1,5 +1,13 @@
 <template>
-    <f-combo-box :data="data" v-model="group" select-mode readonly field-size="large" class="groupfilter" />
+    <f-combo-box
+        :data="data"
+        v-model="group"
+        select-mode
+        readonly
+        :inline-autocomplete="false"
+        field-size="large"
+        class="groupfilter"
+    />
 </template>
 
 <script>
