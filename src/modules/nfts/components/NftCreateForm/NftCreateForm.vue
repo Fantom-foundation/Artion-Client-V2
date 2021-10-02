@@ -1,7 +1,9 @@
 <template>
     <f-form v-model="values" class="nftcreate_form" @submit="onSubmit">
         <div class="nftcreate_col">
-            upload component
+            <div>
+                <a-upload-area />
+            </div>
         </div>
         <div class="nftcreate_col">
             <div class="nftcreate_wrap">
@@ -91,9 +93,11 @@ import ADropdownListbox from '@/common/components/ADropdownListbox/ADropdownList
 import FMessage from 'fantom-vue-components/src/components/FMessage/FMessage.vue';
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 import { collections } from '@/common/constants/collections';
+import AUploadArea from '@/common/components/AUploadArea/AUploadArea.vue';
+
 export default {
     name: 'NftCreateForm',
-    components: { ADropdownListbox, FMessage, AppIconset },
+    components: { AUploadArea, ADropdownListbox, FMessage, AppIconset },
     data() {
         return {
             values: {},

@@ -1,8 +1,10 @@
 @use "fantom-vue-components/src/assets/scss/tools/media";
+
 .nftcreate {
 	padding: var(--f-spacer-7);
 	&_form {
 		display: flex;
+        gap: var(--f-spacer-5);
 	}
 
 	&_col {
@@ -64,7 +66,7 @@
 			flex-direction: column;
 			align-items: center;
 		}
-	
+
 		&_col {
 			& + & {
 				margin-top: var(--f-spacer-7);
