@@ -81,17 +81,17 @@ export default {
     },
 
     methods: {
-		 onButtinClick(){
-			 //this.$refs.popover.toggle();
-			 //if(this.$refs.popover) this.$refs.listbox.focus();
-			 this.$nextTick(() => {
+        onButtinClick() {
+            //this.$refs.popover.toggle();
+            //if(this.$refs.popover) this.$refs.listbox.focus();
+            this.$nextTick(() => {
                 const { $refs } = this;
                 $refs.popover.show();
                 defer(() => {
                     $refs.listbox.focus();
                 });
             });
-		 },
+        },
         onListboxItemSelected(item) {
             const currentLink = window.location.href;
             if (item.link === false) {

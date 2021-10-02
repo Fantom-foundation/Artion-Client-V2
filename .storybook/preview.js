@@ -4,18 +4,25 @@ import { addDecorator, addParameters } from '@storybook/vue';
 import { withDirection } from 'storybook-rtl-addon';
 import { i18n } from '@/plugins/vue-i18n.js';
 import StoryRouter from 'storybook-vue-router';
+import FTooltip from 'fantom-vue-components/src/components/FTooltip/FTooltip.vue';
+import FNotifications from 'fantom-vue-components/src/components/FNotifications/FNotifications.vue';
+import '@/plugins/notifications.js';
 
 // global components
 import '../src/global-components.js';
 
 const decor = (story, context) => {
-    // wrap the passed component within the passed context
     const wrapped = story(context);
-    // extend Vue to use Vuetify around the wrapped component
+
     return Vue.extend({
         i18n,
-        components: { wrapped },
-        template: '<wrapped />',
+        components: { wrapped, FTooltip, FNotifications },
+        template: `
+            <div>
+                <wrapped />
+                <f-tooltip with-arrow />
+            </div>
+        `,
     });
 };
 
