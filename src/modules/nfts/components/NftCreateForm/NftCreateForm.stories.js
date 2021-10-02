@@ -14,4 +14,3 @@ export const Default = () => ({
         </div>
     `,
 });
-

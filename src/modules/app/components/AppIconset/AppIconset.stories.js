@@ -37,7 +37,7 @@ export const Default = () => ({
                 'like',
                 'liked',
                 'check',
-                'question'
+                'question',
             ],
         };
     },
