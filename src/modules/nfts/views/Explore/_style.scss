@@ -4,5 +4,14 @@
 
     .h3 {
         padding-left: var(--f-spacer-4);
+        max-height: 77px;
+    }
+
+    &_nftlist_header {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        min-height: 77px;
+        padding: 0 var(--f-spacer-4);
     }
 }

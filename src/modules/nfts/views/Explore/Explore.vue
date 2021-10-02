@@ -5,6 +5,9 @@
             <nft-filters v-model="filters" />
         </div>
         <div>
+            <div class="explore_nftlist_header">
+                <nft-list-filters v-model="filters" />
+            </div>
             <nft-list />
         </div>
     </div>
@@ -14,13 +17,14 @@
 import NftList from '@/modules/nfts/components/NftList/NftList';
 import NftFilters from '@/modules/nfts/components/NftFilters/NftFilters.vue';
 import { routeQueryMixin } from '@/common/mixins/route-query.js';
+import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters.vue';
 
 export default {
     name: 'Explore',
 
     mixins: [routeQueryMixin('filters')],
 
-    components: { NftFilters, NftList },
+    components: { NftListFilters, NftFilters, NftList },
 
     data() {
         return {
