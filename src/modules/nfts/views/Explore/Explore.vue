@@ -6,10 +6,13 @@
         </div>
         <div>
             <div class="explore_nftlist_header">
-                <nft-list-filters v-model="filters" />
-                <density-switch @density-switch="density = $event" />
+                <div class="co-grey-5">5 results</div>
+                <div class="explore_nftlist_header_endcol">
+                    <nft-list-filters v-model="filters" />
+                    <density-switch @density-switch="density = $event" />
+                </div>
             </div>
-            <nft-list :density="density"/>
+            <nft-list :density="density" />
         </div>
     </div>
 </template>
