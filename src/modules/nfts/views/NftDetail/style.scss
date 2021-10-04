@@ -243,6 +243,12 @@
 		}
 	}
 
+	&_noPaddings {
+		&.adetails.fdetails .fdetails_content {
+			padding: 0;
+		}
+	}
+
 	&_sail {
 		&_item {
 			display: flex;

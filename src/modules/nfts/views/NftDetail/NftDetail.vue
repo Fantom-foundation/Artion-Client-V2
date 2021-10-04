@@ -27,11 +27,9 @@
                             <app-iconset icon="view" />
                             3 {{ $t('nftdetail.views') }}
                         </div>
-                        <div class="nftdetail_favorites"
-                            :class="{ 'color-clicked': liked }"
-                        >
+                        <div class="nftdetail_favorites" :class="{ 'color-clicked': liked }">
                             <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
-                                <app-iconset 
+                                <app-iconset
                                     :icon="liked ? 'liked' : 'like'"
                                     size="20px"
                                     @click.native.prevent="onLikeClick"
@@ -88,13 +86,15 @@
                     </template>
                     PriceHistory component
                 </a-details>
-                <a-details>
+                <a-details class="nftdetail_noPaddings">
                     <template #label>
                         <div class="nftdetail_details_wrap">
                             <app-iconset icon="tag" /> {{ $t('nftdetail.listings') }}
                         </div>
                     </template>
-                    Listings component
+                    <template>
+                        <NftListingsGrid />
+                    </template>
                 </a-details>
                 <a-details>
                     <template #label>
@@ -210,10 +210,11 @@ import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 import ADetails from '@/common/components/ADetails/ADetails';
 import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftList from '@/modules/nfts/components/NftList/NftList';
+import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
 
 export default {
     name: 'NftDetail',
-    components: { ADetails, ADetailsGroup, AppIconset, AShareButton, NftList },
+    components: { ADetails, ADetailsGroup, AppIconset, AShareButton, NftList, NftListingsGrid },
     data() {
         return {
             likesCount: 7,
@@ -232,7 +233,7 @@ export default {
             }
             this.$emit('nft-like');
         },
-    }
+    },
 };
 </script>
 
