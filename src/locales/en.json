@@ -102,6 +102,35 @@
         "favorite": "Favorite"
     },
 
+    "nftdetail": {
+        "owned": "Owned by",
+        "views": "views",
+        "favorites": "favorites",
+        "currentPrice": "Current Price",
+        "buyNow": "Buy Now",
+        "saleEndsIn": "Sale ends in",
+        "reservePrice": "Reserve Price",
+        "highestBid": "Highest Bid",
+        "placeBid": "Place bid",
+        "priceHistory": "Price History",
+        "listings": "Listings",
+        "directOffers": "Direct Offers",
+        "properties": "Properties",
+        "symbol": "Symbol",
+        "royalty": "Royalty",
+        "recipient": "Recipient",
+        "ipRights": "IP_Rights",
+        "notAvailable": "Not available",
+        "collection": "Collection",
+        "nftCollection": "Fantom Powered NFT Collection",
+        "about": "About",
+        "chainInfo": "Chain Info",
+        "network": "Network",
+        "fantomOpera": "Fantom Opera",
+        "chainId": "Chain ID",
+        "fromCollection": "More from this collection"
+    },
+
     "ashareButton": {
         "copy": "Copy Link",
         "shareFacebook": "Share on Facebook",
