@@ -17,4 +17,12 @@
             }
         }
     }
+
+    &.adetails_p0 {
+        .fdetails {
+            &_content {
+                padding: 0;
+            }
+        }
+    }
 }

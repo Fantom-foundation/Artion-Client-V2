@@ -4,6 +4,7 @@
             ref="itemsGrid"
             no-header
             max-height="400px"
+            class="agrid"
             sticky-head
             :items="listing"
             :columns="columns"
@@ -11,15 +12,15 @@
             :total-items="listing.length"
         >
             <template #column-from="{ item }">
-                <a :href="item.link" class="nftlistingsgrid_link">
-                    <div class="nftlistingsgrid_avatar">
+                <a :href="item.link" class="agrid_link">
+                    <div class="agrid_avatar">
                         <img :src="item.img" alt="" />
                     </div>
                     {{ item.from }}
                 </a>
             </template>
             <template #column-price="{ item }">
-                <div class="nftlistingsgrid_price">
+                <div class="agrid_price">
                     <img :src="item.imgCurrency" alt="" />
                     {{ item.price }}
                 </div>

@@ -86,7 +86,7 @@
                     </template>
                     PriceHistory component
                 </a-details>
-                <a-details class="nftdetail_noPaddings">
+                <a-details class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
                             <app-iconset icon="tag" /> {{ $t('nftdetail.listings') }}
@@ -187,7 +187,7 @@
             </a-details-group>
         </div>
         <div class="nftdetail_filter">
-            Trade/Transfer Component
+            <NftTradeHistoryGrid />
         </div>
         <div class="nftdetail_collection">
             <a-details>
@@ -211,10 +211,10 @@ import ADetails from '@/common/components/ADetails/ADetails';
 import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftList from '@/modules/nfts/components/NftList/NftList';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
-
+import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 export default {
     name: 'NftDetail',
-    components: { ADetails, ADetailsGroup, AppIconset, AShareButton, NftList, NftListingsGrid },
+    components: { ADetails, ADetailsGroup, AppIconset, AShareButton, NftList, NftListingsGrid, NftTradeHistoryGrid },
     data() {
         return {
             likesCount: 7,
