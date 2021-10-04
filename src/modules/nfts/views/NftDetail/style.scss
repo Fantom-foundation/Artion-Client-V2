@@ -159,7 +159,27 @@
 	}
 
 	&_views svg,
-	&_favorites svg { width: 1.125em; }
+	&_favorites svg { 
+		width: 1.125em; 
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	&_favorites {
+		&.color-clicked {
+			color: var(--f-color-primary-5);
+		}
+
+		button {
+			padding: 0;
+			border: none;
+			font: inherit;
+			color: inherit;
+			background-color: transparent;
+			cursor: pointer;
+		}
+	}
 
 	&_views,
 	&_favorites,
@@ -199,7 +219,7 @@
 		&_label {
 	 		font-size: var(--f-font-size-5);
 			font-weight: 700;
-			color: var(--f-color-grey-3);
+			color: var(--f-color-grey-5);
 		}
 		&_wrap {
 			display: flex;
@@ -215,7 +235,7 @@
 		&_usd {
 			font-weight: 400;
     		font-size:  var(--f-font-size-3);
-    		color: var(--f-color-grey-3);
+    		color: var(--f-color-grey-5);
 		}
 		&_btn {
 			display: flex;

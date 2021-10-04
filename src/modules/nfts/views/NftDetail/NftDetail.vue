@@ -27,8 +27,16 @@
                             <app-iconset icon="view" />
                             3 {{ $t('nftdetail.views') }}
                         </div>
-                        <div class="nftdetail_favorites">
-                            <app-iconset icon="like" />
+                        <div class="nftdetail_favorites"
+                            :class="{ 'color-clicked': liked }"
+                        >
+                            <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
+                                <app-iconset 
+                                    :icon="liked ? 'liked' : 'like'"
+                                    size="20px"
+                                    @click.native.prevent="onLikeClick"
+                                />
+                            </button>
                             {{ $t('nftdetail.favorites') }}
                         </div>
                     </div>
@@ -206,6 +214,25 @@ import NftList from '@/modules/nfts/components/NftList/NftList';
 export default {
     name: 'NftDetail',
     components: { ADetails, ADetailsGroup, AppIconset, AShareButton, NftList },
+    data() {
+        return {
+            likesCount: 7,
+            liked: false,
+        };
+    },
+    methods: {
+        onLikeClick() {
+            this.liked = !this.liked;
+            if (this.liked) {
+                this.likesCount++;
+                // async function
+            } else {
+                this.likesCount--;
+                // async function
+            }
+            this.$emit('nft-like');
+        },
+    }
 };
 </script>
 
