@@ -101,6 +101,10 @@
     "nftcard": {
         "favorite": "Favorite"
     },
+    "densityswitch": {
+        "largeDisplay": "Large Display",
+        "smallDisplay": "Small Display"
+    },
 
     "nftdetail": {
         "owned": "Owned by",

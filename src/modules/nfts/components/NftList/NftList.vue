@@ -11,7 +11,7 @@ export default {
     components: { NftCard },
     props: {
         density: {
-            type: Number,
+            type: [Number, String],
             default: 280,
         },
     },
