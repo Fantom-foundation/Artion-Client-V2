@@ -1,7 +1,7 @@
-.explore {
-    display: grid;
-    grid-template-columns: 280px 1fr;
+@use "fantom-vue-components/src/assets/scss/tools/media";
+@use "fantom-vue-components/src/assets/scss/settings/breakpoints";
 
+.explore {
     .h3 {
         padding-left: var(--f-spacer-4);
         max-height: 77px;
@@ -10,8 +10,22 @@
     &_nftlist_header {
         display: flex;
         align-items: center;
-        justify-content: flex-end;
+        justify-content: space-between;
+        flex-wrap: wrap;
         min-height: 77px;
-        padding: 0 var(--f-spacer-4);
+        padding: var(--f-spacer-2) var(--f-spacer-4);
+
+        &_endcol {
+            display: flex;
+            align-items: center;
+            gap: var(--f-spacer-4);
+        }
+    }
+}
+
+@include media.media-min(breakpoints.$breakpoint-md) {
+    .explore {
+        display: grid;
+        grid-template-columns: 280px 1fr;
     }
 }

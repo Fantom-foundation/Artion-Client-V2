@@ -1,7 +1,7 @@
 <template>
     <div class="nftlistfilters">
-        <group-filter v-model="dFilters.group" />
-        <sort-by-filter v-model="dFilters.sortBy" />
+        <group-filter v-model="dFilters.group" :aria-label="$t('nftlistfilters.groupFilters')" />
+        <sort-by-filter v-model="dFilters.sortBy" :aria-label="$t('nftlistfilters.sortbyFilters')" />
     </div>
 </template>
 

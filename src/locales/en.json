@@ -109,6 +109,11 @@
         "successCopied": "Copied!"
     },
 
+    "nftlistfilters": {
+        "groupFilters": "Group Filters",
+        "sortbyFilters": "Sort by Filters"
+    },
+
     "nftcreate": {
         "collection":"Collection",
         "name":"Name",

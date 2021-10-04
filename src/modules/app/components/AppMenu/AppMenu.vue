@@ -1,9 +1,9 @@
 <template>
-    <div class="appmenu flex gap-5">
+    <nav class="appmenu flex gap-5">
         <router-link v-for="(item, index) in navigation" :key="`am_${index}`" :to="{ name: item.route }">
             {{ item.label }}
         </router-link>
-    </div>
+    </nav>
 </template>
 
 <script>
