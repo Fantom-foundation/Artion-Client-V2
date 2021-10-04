@@ -1,0 +1,27 @@
+.density {
+	display: flex;
+	button {
+		padding: 12px;
+		border: 1px solid #eaeaf1;
+		font: inherit;
+		color: inherit;
+		background-color: transparent;
+		cursor: pointer;
+		&:first-child {
+			border-top-left-radius: 5px;
+    		border-bottom-left-radius: 5px;
+			border-top-right-radius: 0;
+    		border-bottom-right-radius: 0;
+			margin-inline-start: 0;
+		}
+
+		&:last-child {
+			border-top-left-radius: 0;
+    		border-bottom-left-radius: 0;
+			border-top-right-radius: 5px;
+    		border-bottom-right-radius: 5px;
+			margin-inline-start: 0;
+		}
+
+	}
+}

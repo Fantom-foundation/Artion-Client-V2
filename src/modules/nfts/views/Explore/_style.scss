@@ -10,8 +10,8 @@
     &_nftlist_header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
+        justify-content: flex-end;
+        column-gap: var(--f-spacer-2);
         min-height: 77px;
         padding: var(--f-spacer-2) var(--f-spacer-4);
 

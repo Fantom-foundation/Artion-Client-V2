@@ -53,6 +53,8 @@ export const Default = () => ({
                 'list',
                 'collection',
                 'property',
+                'solid1',
+                'solid2',
             ],
         };
     },
