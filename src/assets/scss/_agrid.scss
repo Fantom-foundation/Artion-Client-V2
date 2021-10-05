@@ -1,0 +1,41 @@
+.agrid {
+	font-size: var(--f-font-size-3);
+	&.fdatagrid {
+		--fdatagrid-cell-background-color: transparent;
+		thead { background-color: var(--f-color-grey-2); }
+		tbody {
+			background: #fff;
+		}
+	}
+	&_price {
+		display: flex;
+		align-items: center;
+		column-gap: var(--f-spacer-2);
+		img {
+			max-width: 24px;
+			margin-bottom: 0;
+		}
+	}
+	&_avatar {
+		width: 24px;
+		height: 24px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		position: relative;
+		img {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+	}
+	&_link {
+		display: flex;
+		align-items: center;
+		column-gap: var(--f-spacer-2);
+	}
+}

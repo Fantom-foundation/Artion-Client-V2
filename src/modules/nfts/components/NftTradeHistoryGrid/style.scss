@@ -1,0 +1,20 @@
+.nfttradehistorygrid {
+	margin-top: var(--f-spacer-4);
+	&_header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	&_title {
+		font-weight: 700;
+		font-size: var(--f-font-size-4);
+	}
+
+	&_filter {
+	}
+
+	&_histories {
+		margin-top: var(--f-spacer-7);
+	}
+}

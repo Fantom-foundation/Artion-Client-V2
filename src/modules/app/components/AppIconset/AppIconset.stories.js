@@ -55,6 +55,7 @@ export const Default = () => ({
                 'property',
                 'solid1',
                 'solid2',
+                'filter',
             ],
         };
     },
