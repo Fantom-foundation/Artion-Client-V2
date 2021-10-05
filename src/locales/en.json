@@ -101,6 +101,12 @@
     "nftcard": {
         "favorite": "Favorite"
     },
+
+    "nftlistingsgrid": {
+        "buy": "Buy"
+    },
+
+
     "densityswitch": {
         "largeDisplay": "Large Display",
         "smallDisplay": "Small Display"

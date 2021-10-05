@@ -15,9 +15,9 @@ export const Default = () => ({
         </div>
     `,
 
-	 data(){
-		 return {
-			density: 280
-		 }
-	 }
+    data() {
+        return {
+            density: 280,
+        };
+    },
 });
