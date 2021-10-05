@@ -1,0 +1,45 @@
+.afilterchips {
+    display: flex;
+    gap: var(--f-spacer-2);
+    align-items: center;
+
+    .fchips {
+        --fchips-border-radius: var(--f-border-radius-2);
+        --fchips-lg-border-radius: var(--f-border-radius-3);
+        --fchips-sm-border-radius: var(--f-border-radius-2);
+        --fchips-xs-border-radius: var(--f-border-radius-1);
+
+        --fchips-hover-background-color: var(--fchips-background-color);
+
+        .flistbox_list:not([aria-disabled='true']) .flistbox_list_item:not([aria-disabled='true']) {
+            cursor: default;
+
+            &:hover {
+                box-shadow: var(--hover-shadow);
+            }
+        }
+
+        .flistbox_list:focus {
+            outline: none;
+
+            .flistbox_list_item-focus {
+                box-shadow: var(--hover-shadow);
+            }
+        }
+
+        .flistbox_list_item {
+            &_removebutton {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+
+        &-lg {
+            .flistbox_list_item {
+                box-sizing: border-box;
+                max-height: 30px;
+            }
+            //--fchips-lg-min-height: 48px;
+        }
+    }
+}
