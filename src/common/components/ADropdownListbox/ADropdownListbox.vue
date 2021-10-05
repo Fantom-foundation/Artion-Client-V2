@@ -1,5 +1,5 @@
 <template>
-    <f-dropdown-listbox v-bind="$attrs" button-class="inp inp-lg" class="adropdownlistbox">
+    <f-dropdown-listbox v-bind="$attrs" button-class="inp inp-lg" class="adropdownlistbox" v-on="$listeners">
         <!-- copy slots -->
         <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>

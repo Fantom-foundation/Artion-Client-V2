@@ -1,5 +1,5 @@
 <template>
-    <f-search-field v-bind="$attrs" class="asearchfield">
+    <f-search-field v-bind="$attrs" class="asearchfield" v-on="$listeners">
         <!-- copy slots -->
         <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>

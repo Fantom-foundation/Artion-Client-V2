@@ -1,5 +1,5 @@
 <template>
-    <f-placeholder v-bind="$attrs" animation="fplaceholder-pulsebganim">
+    <f-placeholder v-bind="$attrs" animation="fplaceholder-pulsebganim" v-on="$listeners">
         <slot></slot>
     </f-placeholder>
 </template>
