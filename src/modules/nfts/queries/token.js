@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql-query.js';
 
-export async function getToken(address = '', id = 0) {
+export async function getToken(contract = '', id = '') {
     const query = {
         query: gql`
-            query CollectionTokens($address: Address!, $tokenId: BigInt!) {
-                token(address: $address, tokenId: $tokenId) {
-                    address
+            query CollectionTokens($contract: Address!, $tokenId: BigInt!) {
+                token(contract: $contract, tokenId: $tokenId) {
+                    contract
                     tokenId
                     name
                     description
@@ -15,7 +15,7 @@ export async function getToken(address = '', id = 0) {
             }
         `,
         variables: {
-            address,
+            contract,
             tokenId: id,
         },
         fetchPolicy: 'network-only',

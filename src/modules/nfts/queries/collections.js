@@ -16,7 +16,7 @@ export async function getCollections() {
                     edges {
                         cursor
                         node {
-                            address
+                            contract
                             type
                             name
                             symbol

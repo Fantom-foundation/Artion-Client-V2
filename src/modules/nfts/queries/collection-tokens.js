@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql-query.js';
 
-export async function getCollectionTokens(address = '', pagination = {}) {
+export async function getCollectionTokens(contract = '', pagination = {}) {
     const query = {
         query: gql`
-            query CollectionTokens($address: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
-                collection(address: $address) {
+            query CollectionTokens($contract: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
+                collection(contract: $contract) {
                     tokens(first: $first, after: $after, last: $last, before: $before) {
                         totalCount
                         pageInfo {
@@ -17,7 +17,7 @@ export async function getCollectionTokens(address = '', pagination = {}) {
                         edges {
                             cursor
                             node {
-                                address
+                                contract
                                 tokenId
                                 name
                                 description
@@ -30,7 +30,7 @@ export async function getCollectionTokens(address = '', pagination = {}) {
             }
         `,
         variables: {
-            address,
+            contract,
             ...pagination,
         },
         fetchPolicy: 'network-only',

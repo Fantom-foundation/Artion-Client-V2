@@ -52,8 +52,8 @@ export default {
 
             if (collections) {
                 collection = collections.edges[0].node;
-                if (collection.address) {
-                    const tokens = await getCollectionTokens(collection.address, { first: 10 });
+                if (collection.contract) {
+                    const tokens = await getCollectionTokens(collection.contract, { first: 10 });
 
                     this.tokens = tokens.edges.map(token => token.node);
                 }

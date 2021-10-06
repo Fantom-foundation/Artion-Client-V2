@@ -14,7 +14,7 @@ const appConfig = {
         // list of providers. if one of them is unavailable, another is randomly picked
         providers: [
             {
-                http: 'http://artion-api-a.fantom.network:7373/graphql',
+                http: 'https://artion-api-a.fantom.network/graphql',
                 // for subscriptions
                 ws: '',
             },

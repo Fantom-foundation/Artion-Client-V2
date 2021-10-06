@@ -245,10 +245,10 @@ export default {
         async init() {
             const routeParams = this.$route.params;
 
-            if (!routeParams.tokenAddress || !routeParams.tokenId) {
+            if (!routeParams.tokenContract || !routeParams.tokenId) {
                 this.$router.push({ name: '404' });
             } else {
-                this.token = await getToken(routeParams.tokenAddress, routeParams.tokenId);
+                this.token = await getToken(routeParams.tokenContract, routeParams.tokenId);
             }
         },
 
