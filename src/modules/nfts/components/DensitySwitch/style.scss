@@ -1,6 +1,8 @@
 .density {
 	display: flex;
-	button {
+	& button {
+		--f-btn-hover-background: rgb(243, 251, 254);
+		--f-btn-main-color-hover: #eaeaf1;
 		padding: 12px;
 		border: 1px solid #eaeaf1;
 		font: inherit;
@@ -23,5 +25,18 @@
 			margin-inline-start: 0;
 		}
 
+		.fsvgicon-icon {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		svg {
+			width: 19px;
+			height: auto;
+			color: rgb(112, 122, 131);;
+			//color: rgb(53, 56, 64);
+			//fill: rgb(4, 17, 29);
+		}
 	}
 }

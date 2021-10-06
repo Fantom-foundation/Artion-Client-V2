@@ -7,10 +7,10 @@
     --f-inputs-focus-box-shadow: 0 0 8px 0 !important;
 
     .#{componentsSettings.$input} {
-        --f-input-lg-border-radius: var(--f-border-radius-3);
+        --f-input-lg-border-radius: var(--f-border-radius-2);
         --f-input-border-radius: var(--f-border-radius-2);
         --f-input-sm-border-radius: var(--f-border-radius-2);
-        --f-input-xs-border-radius: var(--f-border-radius-1);
+        --f-input-xs-border-radius:var(--f-border-radius-2);
         --f-input-readonly-background: #fff;
 
         --f-input-hover-border: var(--f-inputs-hover-border);
