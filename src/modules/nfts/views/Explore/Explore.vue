@@ -12,6 +12,7 @@
                     <density-switch @density-switch="density = $event" />
                 </div>
             </div>
+            <nft-filter-chips v-model="filters" />
             <nft-list :density="density" />
         </div>
     </div>
@@ -23,19 +24,27 @@ import NftFilters from '@/modules/nfts/components/NftFilters/NftFilters.vue';
 import DensitySwitch from '@/modules/nfts/components/DensitySwitch/DensitySwitch.vue';
 import { routeQueryMixin } from '@/common/mixins/route-query.js';
 import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters.vue';
+import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 
 export default {
     name: 'Explore',
 
     mixins: [routeQueryMixin('filters')],
 
-    components: { NftListFilters, NftFilters, NftList, DensitySwitch },
+    components: { NftFilterChips, NftListFilters, NftFilters, NftList, DensitySwitch },
 
     data() {
         return {
             filters: {},
             density: 280,
+            labels: {},
         };
+    },
+
+    watch: {
+        filters(value) {
+            console.log('filters changed: ', JSON.stringify(value));
+        },
     },
 };
 </script>

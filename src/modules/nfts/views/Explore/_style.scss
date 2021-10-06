@@ -21,6 +21,10 @@
             gap: var(--f-spacer-2);
         }
     }
+
+    .nftfilterchips {
+        padding: 0 var(--f-spacer-4) var(--f-spacer-4) var(--f-spacer-4);
+    }
 }
 
 @include media.media-min(breakpoints.$breakpoint-md) {

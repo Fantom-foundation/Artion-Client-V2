@@ -2,6 +2,7 @@
     display: flex;
     gap: var(--f-spacer-2);
     align-items: center;
+    flex-wrap: wrap;
 
     .fchips {
         --fchips-border-radius: var(--f-border-radius-2);
@@ -19,11 +20,15 @@
             }
         }
 
-        .flistbox_list:focus {
-            outline: none;
+        .flistbox_list {
+            flex-wrap: wrap;
 
-            .flistbox_list_item-focus {
-                box-shadow: var(--hover-shadow);
+            &:focus {
+                outline: none;
+
+                .flistbox_list_item-focus {
+                    box-shadow: var(--hover-shadow);
+                }
             }
         }
 
