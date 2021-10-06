@@ -57,7 +57,7 @@ export default {
 
                     this.tokens = tokens.edges.map(token => token.node);
 
-                    this.$emit('tokens-count', this.tokens.length);
+                    this.$emit('tokens-count', parseInt(tokens.totalCount, 16));
                 }
             }
         },
