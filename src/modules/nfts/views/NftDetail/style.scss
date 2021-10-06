@@ -6,7 +6,7 @@
 		display: grid;
 		grid-template-columns: minmax(320px, 500px) 1fr;
 		grid-template-rows: auto auto;
-		gap: 20px
+		gap: var(--f-spacer-6);
 	}
 
 	&_media {
