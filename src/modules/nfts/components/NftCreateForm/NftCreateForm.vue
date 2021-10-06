@@ -92,7 +92,7 @@
 import ADropdownListbox from '@/common/components/ADropdownListbox/ADropdownListbox.vue';
 import FMessage from 'fantom-vue-components/src/components/FMessage/FMessage.vue';
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
-import { collections } from '@/common/constants/collections';
+import { collections } from '@/common/constants/dummy/collections';
 import AUploadArea from '@/common/components/AUploadArea/AUploadArea.vue';
 
 export default {

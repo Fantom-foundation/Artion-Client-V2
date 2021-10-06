@@ -34,7 +34,7 @@
 <script>
 import FDataGrid from 'fantom-vue-components/src/components/FDataGrid/FDataGrid.vue';
 import { clone } from 'fantom-vue-components/src/utils';
-import { listingData } from '@/common/constants/nftlistingdata';
+import { listingData } from '@/common/constants/dummy/nftlistingdata';
 export default {
     name: 'NftListingsGrid',
     components: { FDataGrid },

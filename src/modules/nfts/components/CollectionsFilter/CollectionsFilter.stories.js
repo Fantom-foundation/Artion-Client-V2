@@ -1,6 +1,6 @@
 import CollectionsFilter from '@/modules/nfts/components/CollectionsFilter/CollectionsFilter.vue';
 import FButton from 'fantom-vue-components/src/components/FButton/FButton.vue';
-import { collectionsData } from '@/common/constants/tmp/collections-data.js';
+import { collectionsData } from '@/common/constants/dummy/collections-data.js';
 
 export default {
     title: 'Components/CollectionsFilter',

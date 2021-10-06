@@ -19,7 +19,7 @@
 <script>
 import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue';
 import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
-import { collectionsData } from '@/common/constants/tmp/collections-data.js';
+import { collectionsData } from '@/common/constants/dummy/collections-data.js';
 
 export default {
     name: 'CollectionsFilter',

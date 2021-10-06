@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import { nftData } from '@/common/constants/nftdata';
+import { nftData } from '@/common/constants/dummy/nftdata';
 import NftCard from '@/modules/nfts/components/NftCard/NftCard.vue';
 export default {
     name: 'NftList',
