@@ -1,24 +1,28 @@
 <template>
     <div class="nftlist" :style="gridStyle">
-        <nft-card v-for="nft in nftData" :nftData="nft" :key="nft.id" />
+        <nft-card v-for="nft in tokens" :nftData="nft" :key="`${nft.address}_${nft.tokenId}`" />
     </div>
 </template>
 <script>
-import { nftData } from '@/common/constants/dummy/nftdata';
 import NftCard from '@/modules/nfts/components/NftCard/NftCard.vue';
+///token-image/0x61aF4D29f672E27a097291F72fc571304BC93521/0x282
+
 export default {
     name: 'NftList',
+
     components: { NftCard },
+
     props: {
+        tokens: {
+            type: Array,
+            default() {
+                return [];
+            },
+        },
         density: {
             type: [Number, String],
             default: 280,
         },
-    },
-    data() {
-        return {
-            nftData,
-        };
     },
 
     computed: {

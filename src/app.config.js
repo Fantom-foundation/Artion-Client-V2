@@ -14,7 +14,7 @@ const appConfig = {
         // list of providers. if one of them is unavailable, another is randomly picked
         providers: [
             {
-                http: (process.env.VUE_APP_API_URL || 'http://localhost:8081/') + 'authorized',
+                http: 'http://artion-api-a.fantom.network:7373/graphql',
                 // for subscriptions
                 ws: '',
             },

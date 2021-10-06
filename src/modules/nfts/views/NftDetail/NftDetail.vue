@@ -3,17 +3,21 @@
         <div class="nftdetail_main">
             <div class="nftdetail_media">
                 <div class="nftdetail_img">
-                    <img src="/img/tmp/details-img.jpg" alt="details-img" />
+                    <f-image :src="token.image" :alt="token.name" />
                 </div>
             </div>
             <div class="nftdetail_product">
                 <div class="nftdetail_infoWrap">
                     <div class="nftdetail_category">Spooky Skeletoons</div>
                     <div class="nftdetail_name">
-                        <h1>#4676 Spine-Chilling Hamburger</h1>
+                        <h1>
+                            <a-placeholder block :content-loaded="!!token.tokenId" replacement-text="token name">
+                                #{{ parseInt(token.tokenId, 16) }} {{ token.name }}
+                            </a-placeholder>
+                        </h1>
                     </div>
                     <div class="nftdetail_description">
-                        Skull that gives you Alerts and updates to every projects on Fantom!
+                        {{ token.description }}
                     </div>
                     <div class="nftdetail_status">
                         <div class="nftdetail_owner">
@@ -197,7 +201,7 @@
                     </div>
                 </template>
                 <template>
-                    <nft-list />
+                    <!--                    <nft-list :tokens="nftData" />-->
                 </template>
             </a-details>
         </div>
@@ -209,19 +213,45 @@ import ADetailsGroup from '@/common/components/ADetailsGroup/ADetailsGroup';
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 import ADetails from '@/common/components/ADetails/ADetails';
 import AShareButton from '@/common/components/AShareButton/AShareButton';
-import NftList from '@/modules/nfts/components/NftList/NftList';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
 import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
+import { getToken } from '@/modules/nfts/queries/token.js';
+
 export default {
     name: 'NftDetail',
-    components: { ADetails, ADetailsGroup, AppIconset, AShareButton, NftList, NftListingsGrid, NftTradeHistoryGrid },
+
+    components: {
+        ADetails,
+        ADetailsGroup,
+        AppIconset,
+        AShareButton,
+        NftListingsGrid,
+        NftTradeHistoryGrid,
+    },
+
     data() {
         return {
+            token: {},
             likesCount: 7,
             liked: false,
         };
     },
+
+    created() {
+        this.init();
+    },
+
     methods: {
+        async init() {
+            const routeParams = this.$route.params;
+
+            if (!routeParams.tokenAddress || !routeParams.tokenId) {
+                this.$router.push({ name: '404' });
+            } else {
+                this.token = await getToken(routeParams.tokenAddress, routeParams.tokenId);
+            }
+        },
+
         onLikeClick() {
             this.liked = !this.liked;
             if (this.liked) {

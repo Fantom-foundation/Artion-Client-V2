@@ -46,7 +46,7 @@ export function getRoutes() {
                     },
                 },
                 {
-                    path: '/explore/:id',
+                    path: '/explore/:tokenAddress/:tokenId',
                     name: 'nft-detail',
                     component: NftDetail,
                     meta: {

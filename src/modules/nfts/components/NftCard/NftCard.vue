@@ -1,8 +1,8 @@
 <template>
     <div class="nftcard">
-        <router-link :to="{ name: 'nft-detail', params: { id: nftData.id } }">
+        <router-link :to="{ name: 'nft-detail', params: { tokenAddress: nftData.address, tokenId: nftData.tokenId } }">
             <div class="nftcard_header">
-                <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
+                <!--                <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
                     <app-iconset
                         :icon="liked ? 'liked' : 'like'"
                         :class="{ 'icon-liked': liked }"
@@ -10,28 +10,28 @@
                         @click.native.prevent="onLikeClick"
                     />
                 </button>
-                <span class="nftcard_counter">{{ likesCount }}</span>
+                <span class="nftcard_counter">{{ likesCount }}</span>-->
             </div>
             <div class="nftcard_image">
                 <div class="nftcard_box">
-                    <f-image :src="nftData.nftImage" :alt="nftData.nftName" />
+                    <f-image size="100%" :src="nftData.image" :alt="nftData.name" />
                 </div>
             </div>
             <div class="nftcard_content">
                 <div class="nftcard_top">
                     <div class="nftcard_itemName">
-                        <div class="nftcard_label">Artion <app-iconset icon="check" /></div>
-                        <div class="nftcard_name">{{ nftData.nftName }}</div>
+                        <!--                        <div class="nftcard_label">Artion <app-iconset icon="check" /></div>-->
+                        <div class="nftcard_name">{{ nftData.name }}</div>
                     </div>
-                    <div class="nftcard_price">
+                    <!--                    <div class="nftcard_price">
                         <div class="nftcard_label">Auction</div>
                         <div class="nftcard_crypto">
                             <f-image :src="nftData.cryptoLogo" :alt="nftData.cryptoName" />
                             {{ nftData.crypto }}
                         </div>
-                    </div>
+                    </div>-->
                 </div>
-                <div class="nftcard_bottom">
+                <!--                <div class="nftcard_bottom">
                     <div class="nftcard_time">
                         <div class="nftcard_label">Time left</div>
                         <div class="nftcard_term">{{ nftData.timeLeft }}</div>
@@ -43,17 +43,18 @@
                             {{ nftData.lastPrice.crypto }}
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </router-link>
     </div>
 </template>
 
 <script>
-import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
+// import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
+import { getCurrentHttpProvider } from '@/plugins/apollo-provider.js';
 
 export default {
-    components: { AppIconset },
+    // components: { AppIconset },
     name: 'NftCard',
     props: {
         nftData: {
@@ -78,6 +79,8 @@ export default {
             }
             this.$emit('nft-like');
         },
+
+        getCurrentHttpProvider,
     },
 };
 </script>
