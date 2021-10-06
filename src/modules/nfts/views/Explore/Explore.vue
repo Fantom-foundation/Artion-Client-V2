@@ -6,14 +6,14 @@
         </div>
         <div>
             <div class="explore_nftlist_header">
-                <div class="co-grey-5">5 results</div>
+                <div class="co-grey-5">{{ results }} {{ $t('results') }}</div>
                 <div class="explore_nftlist_header_endcol">
                     <nft-list-filters v-model="filters" />
                     <density-switch @density-switch="density = $event" />
                 </div>
             </div>
             <nft-filter-chips v-model="filters" />
-            <nft-main-list :filters="filters" :density="density" />
+            <nft-main-list :filters="filters" :density="density" @tokens-count="results = $event" />
         </div>
     </div>
 </template>
@@ -37,6 +37,7 @@ export default {
         return {
             filters: {},
             density: 280,
+            results: 0,
             labels: {},
         };
     },

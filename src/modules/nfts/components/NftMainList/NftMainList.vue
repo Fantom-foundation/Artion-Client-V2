@@ -42,20 +42,22 @@ export default {
     },
 
     created() {
-        this.tmp();
+        this.loadTokens();
     },
 
     methods: {
-        async tmp() {
+        async loadTokens() {
             const collections = await getCollections();
             let collection = null;
 
             if (collections) {
                 collection = collections.edges[0].node;
                 if (collection.contract) {
-                    const tokens = await getCollectionTokens(collection.contract, { first: 10 });
+                    const tokens = await getCollectionTokens(collection.contract, { first: 30 });
 
                     this.tokens = tokens.edges.map(token => token.node);
+
+                    this.$emit('tokens-count', this.tokens.length);
                 }
             }
         },

@@ -5,6 +5,7 @@
     "categories": "Categories",
     "collections": "Collections",
     "status": "Status",
+    "results": "results",
 
     "navigation": {
         "explore": "@:explore",
