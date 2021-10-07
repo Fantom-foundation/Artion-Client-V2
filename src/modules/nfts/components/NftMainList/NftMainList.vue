@@ -1,19 +1,29 @@
 <template>
     <div class="nftmainList">
-        <nft-list :tokens="tokens" :density="density" />
+        <nft-list
+            :tokens="items"
+            :loading="loading"
+            :total-items="totalItems"
+            :per-page="perPage"
+            :density="density"
+            root-margin="400px 0px"
+            @page-change="_onPageChange"
+        />
     </div>
 </template>
 
 <script>
 import NftList from '@/modules/nfts/components/NftList/NftList.vue';
-import { nftData } from '@/common/constants/dummy/nftdata';
 import { getCollections } from '@/modules/nfts/queries/collections.js';
 import { getCollectionTokens } from '@/modules/nfts/queries/collection-tokens.js';
+import { dataPageMixin } from '@/common/mixins/data-page.js';
 
 export default {
     name: 'NftMainList',
 
     components: { NftList },
+
+    mixins: [dataPageMixin],
 
     props: {
         filters: {
@@ -30,9 +40,8 @@ export default {
 
     data() {
         return {
-            nftData,
-            tokens: [],
-            loading: false,
+            contract: '',
+            perPage: 20,
         };
     },
 
@@ -51,6 +60,14 @@ export default {
     },
 
     methods: {
+        async loadPage(_pagination = { first: this.perPage }, _filterSort = {}) {
+            if (this.contract) {
+                return await getCollectionTokens(this.contract, _pagination, _filterSort);
+            }
+
+            return null;
+        },
+
         async loadTokens() {
             const collections = await getCollections();
             let collection = null;
@@ -58,14 +75,8 @@ export default {
             if (collections) {
                 collection = collections.edges[0].node;
                 if (collection.contract) {
-                    this.loading = true;
-
-                    const tokens = await getCollectionTokens(collection.contract, { first: 100 });
-
-                    this.tokens = tokens.edges.map(token => token.node);
-
-                    this.loading = false;
-                    this.$emit('tokens-count', parseInt(tokens.totalCount, 16));
+                    this.contract = collection.contract;
+                    this._loadPage();
                 }
             }
         },
