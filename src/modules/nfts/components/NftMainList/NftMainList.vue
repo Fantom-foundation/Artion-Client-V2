@@ -32,12 +32,17 @@ export default {
         return {
             nftData,
             tokens: [],
+            loading: false,
         };
     },
 
     watch: {
         filters(value) {
             console.log('filters changed: ', JSON.stringify(value));
+        },
+
+        loading(value) {
+            this.$emit('loading', value);
         },
     },
 
@@ -53,10 +58,13 @@ export default {
             if (collections) {
                 collection = collections.edges[0].node;
                 if (collection.contract) {
-                    const tokens = await getCollectionTokens(collection.contract, { first: 30 });
+                    this.loading = true;
+
+                    const tokens = await getCollectionTokens(collection.contract, { first: 100 });
 
                     this.tokens = tokens.edges.map(token => token.node);
 
+                    this.loading = false;
                     this.$emit('tokens-count', parseInt(tokens.totalCount, 16));
                 }
             }

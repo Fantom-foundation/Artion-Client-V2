@@ -6,14 +6,23 @@
         </div>
         <div>
             <div class="explore_nftlist_header">
-                <div class="co-grey-5">{{ results }} {{ $t('results') }}</div>
+                <div class="co-grey-5">
+                    <a-placeholder block :content-loaded="results > -1" replacement-text="1000 results">
+                        {{ results }} {{ $t('results') }}
+                    </a-placeholder>
+                </div>
                 <div class="explore_nftlist_header_endcol">
                     <nft-list-filters v-model="filters" />
                     <density-switch @density-switch="density = $event" />
                 </div>
             </div>
             <nft-filter-chips v-model="filters" />
-            <nft-main-list :filters="filters" :density="density" @tokens-count="results = $event" />
+            <nft-main-list
+                :filters="filters"
+                :density="density"
+                @tokens-count="results = $event"
+                @loading="onNftMainListLoading"
+            />
         </div>
     </div>
 </template>
@@ -37,9 +46,17 @@ export default {
         return {
             filters: {},
             density: 280,
-            results: 0,
+            results: -1,
             labels: {},
         };
+    },
+
+    methods: {
+        onNftMainListLoading(loading) {
+            if (loading) {
+                this.results = -1;
+            }
+        },
     },
 };
 </script>
