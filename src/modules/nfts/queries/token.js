@@ -4,7 +4,7 @@ import { gqlQuery } from '@/utils/gql-query.js';
 export async function getToken(contract = '', id = '') {
     const query = {
         query: gql`
-            query CollectionTokens($contract: Address!, $tokenId: BigInt!) {
+            query GetToken($contract: Address!, $tokenId: BigInt!) {
                 token(contract: $contract, tokenId: $tokenId) {
                     contract
                     tokenId

@@ -4,7 +4,7 @@ import { gqlQuery } from '@/utils/gql-query.js';
 export async function getCollections() {
     const query = {
         query: gql`
-            query Collections {
+            query GetCollections {
                 collections {
                     totalCount
                     pageInfo {
