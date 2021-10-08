@@ -4,7 +4,7 @@ import Main from '@/modules/app/views/Main/Main.vue';
 import Home from '@/modules/app/views/Home/Home.vue';
 import Page404 from '@/modules/app/views/Page404/Page404.vue';
 
-export function getAppRoutes(mainChildren = []) {
+export function getAppRoutes(mainChildren = [], rootChildren = []) {
     return [
         {
             path: '/',
@@ -23,6 +23,7 @@ export function getAppRoutes(mainChildren = []) {
                 ...mainChildren,
             ],
         },
+        ...rootChildren,
         {
             name: '404',
             path: '/404',

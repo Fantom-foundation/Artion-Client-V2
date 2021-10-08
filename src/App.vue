@@ -4,7 +4,7 @@
 
         <router-view />
 
-        <f-app-theme />
+        <f-app-theme :themes="['theme-default', 'theme-dark', 'theme-pg']" />
         <f-tooltip with-arrow />
         <f-notifications
             strategy="newest-first"

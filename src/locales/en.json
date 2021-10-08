@@ -52,6 +52,9 @@
         },
         "account": {
             "title": "Your profile"
+        },
+        "pg": {
+            "title": "PG"
         }
     },
 

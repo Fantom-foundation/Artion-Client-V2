@@ -21,6 +21,10 @@ export default {
                     route: 'nft-create',
                     label: this.$t('navigation.create'),
                 },
+                {
+                    route: 'pg',
+                    label: 'PG',
+                },
             ],
         };
     },
