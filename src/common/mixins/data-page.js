@@ -1,4 +1,4 @@
-import { clone } from 'fantom-vue-components/src/utils';
+import { clone, defer } from 'fantom-vue-components/src/utils';
 
 export const dataPageMixin = {
     data() {
@@ -79,7 +79,9 @@ export const dataPageMixin = {
          * @private
          */
         async _loadPage(pagination = { first: this.perPage }, filterSort = {}, dontSetItems = false) {
-            this.loading = true;
+            if (!dontSetItems) {
+                this.loading = true;
+            }
 
             const data = await this.loadPage(pagination, filterSort);
 
@@ -97,29 +99,40 @@ export const dataPageMixin = {
                 });
             }
 
-            this.loading = false;
+            if (!dontSetItems) {
+                defer(() => {
+                    this.loading = false;
+                });
+            }
 
             return data;
         },
 
         /**
-         * To be triggered by data-grid "change" event - updates visible items from server by new filter params
-         * @param _event
+         * @param {Object} pagination
          * @private
          */
         async _onPageChange(pagination) {
+            this.loading = true;
+
             const data = await this._loadPage(
                 this._getPaginationVariables(pagination),
                 this._getFilterSortVariables(pagination),
                 true
             );
 
-            const items = this._getItemsFromData(data);
+            if (this.pageInfo.hasNextPage && data.length > 0) {
+                const items = this._getItemsFromData(data);
 
-            if (pagination.currPage < pagination.prevPage) {
-                this.items = items.concat(this.items);
-            } else {
-                this.items = this.items.concat(items);
+                if (pagination.currPage < pagination.prevPage) {
+                    this.items = items.concat(this.items);
+                } else {
+                    this.items = this.items.concat(items);
+                }
+
+                defer(() => {
+                    this.loading = false;
+                });
             }
         },
     },

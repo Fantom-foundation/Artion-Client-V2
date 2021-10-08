@@ -60,9 +60,9 @@ export default {
     },
 
     methods: {
-        async loadPage(_pagination = { first: this.perPage }, _filterSort = {}) {
+        async loadPage(pagination = { first: this.perPage }, filterSort = {}) {
             if (this.contract) {
-                return await getCollectionTokens(this.contract, _pagination, _filterSort);
+                return await getCollectionTokens(this.contract, pagination, filterSort);
             }
 
             return null;
@@ -76,7 +76,10 @@ export default {
                 collection = collections.edges[0].node;
                 if (collection.contract) {
                     this.contract = collection.contract;
-                    this._loadPage();
+
+                    await this._loadPage();
+
+                    this.$emit('tokens-count', this.totalItems);
                 }
             }
         },
