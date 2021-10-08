@@ -15,8 +15,8 @@ import { psTranslations } from 'fantom-vue-components/src/locales/ps.js';
 import PortalVue from 'portal-vue';
 // import { isAnyComponentChanged } from 'fantom-vue-components/src/utils/vue-helpers.js';
 import { getRoutes, getMaintenanceRoutes } from '@/router/routes.js';
-import { beforeEachRoute } from '@/modules/app/DocumentMeta.js';
 import appConfig from '@/app.config.js';
+import { setRouteMetaInfo, setRouteTheme } from '@/router/middlewares.js';
 
 Vue.use(PortalVue);
 
@@ -30,7 +30,7 @@ export let vueApp = null;
 
 const router = setupRouter({
     routes: appConfig.underMaintenance ? getMaintenanceRoutes() : getRoutes(),
-    beforeEach: beforeEachRoute,
+    middlewares: [setRouteMetaInfo, setRouteTheme],
 });
 
 vueApp = new Vue({

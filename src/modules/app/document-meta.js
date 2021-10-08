@@ -40,19 +40,3 @@ export function setMetaInfo({ title = undefined, description = undefined }) {
     setTitle(title, title !== APP_TITLE);
     setDescription(description);
 }
-
-/**
- * Middleware for VueRouter
- *
- * @param {Object} to
- * @param {Object} from
- * @param {function} next
- */
-export function beforeEachRoute(to, from, next) {
-    next();
-
-    setMetaInfo({
-        title: to?.meta?.title || APP_TITLE,
-        description: to?.meta?.description || APP_TITLE,
-    });
-}
