@@ -4,13 +4,13 @@
             v-bind="$attrs"
             :data="currencies"
             @click.native="rotated = !rotated"
-            @selected="rotated = !rotated"
-            @window-hide="rotated = !rotated"
+            @component-change="onSelected"
+            @window-hide="windowHide"
         >
             <template #button-label="{ item }">
                 <div class="flex ali-center">
-                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.value" />
-                    <span>{{ item.value }}</span>
+                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
+                    <span>{{ item.label }}</span>
                 </div>
             </template>
             <template #button-arrow>
@@ -24,8 +24,8 @@
             </template>
             <template #item="{ item }">
                 <div class="flex ali-center" style="column-gap: 8px;">
-                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.value" />
-                    <span>{{ item.value }}</span>
+                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
+                    <span>{{ item.label }}</span>
                 </div>
             </template>
         </a-dropdown-listbox>
@@ -39,7 +39,7 @@ export default {
     components: { ADropdownListbox },
     props: {
         currencies: {
-            type: Object,
+            type: Array,
             default: () => getCurrencies(),
         },
     },
@@ -48,6 +48,16 @@ export default {
             rotated: true,
         };
     },
+
+    methods: {
+        onSelected(e){
+            this.$emit('currency-change', e);
+            this.rotated = !this.rotated
+        },
+        windowHide(){
+            this.rotated = !this.rotated
+        }
+    }
 };
 </script>
 <style lang="scss">
