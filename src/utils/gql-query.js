@@ -1,13 +1,15 @@
 import { clone } from 'fantom-vue-components/src/utils';
 import { apolloClient } from '@/plugins/apollo-provider.js';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
+import { getNestedProp } from 'fantom-vue-components/src/utils/index.js';
 
-export async function gqlQuery(query, fieldName = '') {
+export async function gqlQuery(query, fieldName = '', client = apolloClient) {
     try {
-        const response = await apolloClient.query(query);
+        const response = await client.query(query);
+        let data = null;
 
-        if (response && response.data && response.data[fieldName]) {
-            return clone(response.data[fieldName]);
+        if (response && response.data && (data = getNestedProp(response.data, fieldName))) {
+            return clone(data);
         }
 
         return null;

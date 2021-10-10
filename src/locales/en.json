@@ -99,7 +99,11 @@
     },
 
     "walletbutton": {
-        "connect_wallet": "Connect Wallet"
+        "connectWallet": "Connect Wallet"
+    },
+
+    "walletpicker": {
+        "connectToWallet": "Connect to a wallet"
     },
 
     "nftcard": {

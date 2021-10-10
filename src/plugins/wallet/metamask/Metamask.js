@@ -1,13 +1,9 @@
 import detectEthereumProvider from '@metamask/detect-provider';
-import appConfig from '../../../app.config.js';
 import Web3 from 'web3';
-import { store } from '@/store';
-import { SET_ACCOUNT, SET_CHAIN_ID } from '@/plugins/metamask/store.js';
 import './metamask.types.js';
 
-const OPERA_CHAIN_ID = appConfig.chainId;
-
 /** @type {MetamaskChain} */
+/*
 export const OPERA_MAINNET = {
     chainId: appConfig.mainnet.chainId,
     chainName: 'Fantom Opera Mainnet',
@@ -19,8 +15,10 @@ export const OPERA_MAINNET = {
     rpcUrls: [appConfig.mainnet.rpc],
     blockExplorerUrls: [appConfig.mainnet.explorerUrl],
 };
+*/
 
 /** @type {MetamaskChain} */
+/*
 export const OPERA_TESTNET = {
     chainId: appConfig.testnet.chainId,
     chainName: 'Fantom Testnet',
@@ -32,25 +30,16 @@ export const OPERA_TESTNET = {
     rpcUrls: [appConfig.testnet.rpc],
     blockExplorerUrls: [appConfig.testnet.explorerUrl],
 };
-
-/** @type {Metamask} */
-export let metamask = null;
+*/
 
 /**
  * Plugin for communication with Metamask.
  */
 export class Metamask {
     /**
-     * @param {Vue} _Vue
+     * @param {Wallet} wallet
      */
-    static install(_Vue) {
-        if (!metamask) {
-            metamask = new Metamask();
-            _Vue.prototype.$metamask = metamask;
-        }
-    }
-
-    constructor() {
+    constructor(wallet) {
         /**
          * Metamask provider.
          *
@@ -63,11 +52,11 @@ export class Metamask {
         this._initialized = false;
         this._web3 = null;
 
-        this.init();
+        this._wallet = wallet;
     }
 
     async init() {
-        if (!this._initialized && !appConfig.isChromeExtension && window.ethereum) {
+        if (!this._initialized && window.ethereum) {
             await this._detectProvider();
 
             const provider = this._provider;
@@ -76,22 +65,74 @@ export class Metamask {
                 this._web3 = new Web3(provider);
 
                 provider.autoRefreshOnNetworkChange = false;
-                provider.on('chainChanged', _chainId => {
-                    this._onChainChange(_chainId);
+                provider.on('chainChanged', chainId => {
+                    if (this._wallet) {
+                        this._wallet.onChainChange(chainId);
+                    }
                 });
-                provider.on('accountsChanged', _account => {
-                    this._onAccountsChange(_account);
+                provider.on('accountsChanged', accounts => {
+                    if (this._wallet) {
+                        this._wallet.onAccountsChange(accounts[0]);
+                    }
                 });
                 provider.on('disconnect', () => {
                     window.location.reload();
                 });
-
-                this._setChainId(provider.chainId);
-                this._setAccount(await this.getAccounts());
             }
         }
 
         this._initialized = true;
+    }
+
+    /**
+     * @param {Object} tx
+     * @param {string} [address]
+     * @return {Promise<*|string>} Tx hash
+     */
+    async signTransaction(tx, address) {
+        if (this._provider) {
+            try {
+                if (address) {
+                    tx.from = address;
+                }
+
+                const txHash = await this._provider.request({
+                    method: 'eth_sendTransaction',
+                    params: [tx],
+                });
+
+                return txHash;
+            } catch (_error) {
+                console.error(_error);
+                return '';
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * @param [pick]
+     * @return {Promise<*|string>}
+     */
+    async getAccount(pick) {
+        const accounts = pick ? await this.requestAccounts() : await this.getAccounts();
+
+        return accounts ? accounts[0] || '' : '';
+    }
+
+    /**
+     * @return {number}
+     */
+    getChainId() {
+        return this._provider ? parseInt(this._provider.chainId, 16) : 0;
+    }
+
+    /**
+     * @return {string}
+     */
+    name() {
+        return 'metamask';
     }
 
     /**
@@ -103,11 +144,10 @@ export class Metamask {
         return this._installed;
     }
 
-    /**
-     * @return {boolean}
-     */
-    isCorrectChainId() {
-        return this._provider && this._provider.chainId === OPERA_CHAIN_ID;
+    async disconnect() {}
+
+    web3() {
+        return this._web3;
     }
 
     /**
@@ -127,34 +167,42 @@ export class Metamask {
         return accounts;
     }
 
+    /**
+     * @return {Promise<*>}
+     */
     async requestAccounts() {
         if (this._provider) {
             try {
                 return await this._provider.request({ method: 'eth_requestAccounts' });
-            } catch (_error) {
+            } catch (error) {
                 // userRejectedRequest error
-                if (_error.code === 4001) {
+                if (error.code === 4001) {
                     // EIP-1193 userRejectedRequest error
                     // If this happens, the user rejected the connection request.
                     console.log('Please connect to MetaMask.');
                 } else {
-                    console.error(_error);
+                    console.error(error);
                 }
+
+                throw new Error(error.message);
             }
         }
     }
 
-    async signTransaction(_tx, _address) {
+    /**
+     * @return {Promise<*>}
+     */
+    async requestPermissions() {
         if (this._provider) {
             try {
-                _tx.from = _address;
-
-                const txHash = await this._provider.request({
-                    method: 'eth_sendTransaction',
-                    params: [_tx],
+                return this._provider.request({
+                    method: 'wallet_requestPermissions',
+                    params: [
+                        {
+                            eth_accounts: {},
+                        },
+                    ],
                 });
-
-                return txHash;
             } catch (_error) {
                 console.error(_error);
             }
@@ -185,42 +233,6 @@ export class Metamask {
                 params: { ..._asset },
             });
         }
-    }
-
-    /**
-     * @param {string} _chainId Hex number.
-     * @private
-     */
-    _setChainId(_chainId) {
-        store.commit(`metamask/${SET_CHAIN_ID}`, _chainId);
-    }
-
-    /**
-     * @param {string} _account
-     * @private
-     */
-    _setAccount(_account) {
-        store.commit(`metamask/${SET_ACCOUNT}`, _account[0] || '');
-    }
-
-    /**
-     * Called on chainId change.
-     *
-     * @param {string} _chainId Hex number.
-     * @private
-     */
-    _onChainChange(_chainId) {
-        this._setChainId(_chainId);
-    }
-
-    /**
-     * Called on account change.
-     *
-     * @param {string} _account
-     * @private
-     */
-    _onAccountsChange(_account) {
-        this._setAccount(_account);
     }
 
     /**

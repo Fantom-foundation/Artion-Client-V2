@@ -14,9 +14,10 @@
 
 <script>
 import NftList from '@/modules/nfts/components/NftList/NftList.vue';
-import { getCollections } from '@/modules/nfts/queries/collections.js';
-import { getCollectionTokens } from '@/modules/nfts/queries/collection-tokens.js';
+// import { getCollections } from '@/modules/nfts/queries/collections.js';
+// import { getCollectionTokens } from '@/modules/nfts/queries/collection-tokens.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
+import { getTokens } from '@/modules/nfts/queries/tokens.js';
 
 export default {
     name: 'NftMainList',
@@ -40,7 +41,6 @@ export default {
 
     data() {
         return {
-            contract: '',
             perPage: 20,
         };
     },
@@ -61,27 +61,13 @@ export default {
 
     methods: {
         async loadPage(pagination = { first: this.perPage }, filterSort = {}) {
-            if (this.contract) {
-                return await getCollectionTokens(this.contract, pagination, filterSort);
-            }
-
-            return null;
+            return await getTokens(pagination, filterSort);
         },
 
         async loadTokens() {
-            const collections = await getCollections();
-            let collection = null;
+            await this._loadPage();
 
-            if (collections) {
-                collection = collections.edges[0].node;
-                if (collection.contract) {
-                    this.contract = collection.contract;
-
-                    await this._loadPage();
-
-                    this.$emit('tokens-count', this.totalItems);
-                }
-            }
+            this.$emit('tokens-count', this.totalItems);
         },
     },
 };

@@ -12,7 +12,7 @@
                     <div class="nftdetail_name">
                         <h1>
                             <a-placeholder block :content-loaded="!!token.tokenId" replacement-text="token name">
-                                #{{ parseInt(token.tokenId, 16) }} {{ token.name }}
+                                #{{ toInt(token.tokenId) }} {{ token.name }}
                             </a-placeholder>
                         </h1>
                     </div>
@@ -52,7 +52,7 @@
                             <div class="nftdetail_currentPrice_usd">($71644.838)</div>
                         </div>
                         <div class="nftdetail_currentPrice_item nftdetail_currentPrice_btn">
-                            <f-button>{{ $t('nftdetail.buyNow') }}</f-button>
+                            <f-button @click.native="onTmpClick">{{ $t('nftdetail.buyNow') }}</f-button>
                         </div>
                     </div>
                     <a-share-button />
@@ -205,6 +205,8 @@
                 </template>
             </a-details>
         </div>
+
+        <a-sign-transaction :tx="tx" hidden />
     </div>
 </template>
 
@@ -216,11 +218,16 @@ import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
 import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 import { getToken } from '@/modules/nfts/queries/token.js';
+import contracts from '@/utils/artion-contracts-utils.js';
+import { bToWei, toHex, toInt } from '@/utils/big-number.js';
+import Web3 from 'web3';
+import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 
 export default {
     name: 'NftDetail',
 
     components: {
+        ASignTransaction,
         ADetails,
         ADetailsGroup,
         AppIconset,
@@ -234,6 +241,7 @@ export default {
             token: {},
             likesCount: 7,
             liked: false,
+            tx: {},
         };
     },
 
@@ -248,7 +256,24 @@ export default {
             if (!routeParams.tokenContract || !routeParams.tokenId) {
                 this.$router.push({ name: '404' });
             } else {
-                this.token = await getToken(routeParams.tokenContract, routeParams.tokenId);
+                this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+            }
+        },
+
+        async onTmpClick() {
+            const web3 = new Web3();
+            const { token } = this;
+
+            if (this.$wallet.connected) {
+                this.tx = contracts.createOffer(
+                    this.$wallet.account,
+                    token.tokenId,
+                    token.contract,
+                    1,
+                    bToWei(1, 18),
+                    1633890816,
+                    web3
+                );
             }
         },
 
@@ -263,6 +288,8 @@ export default {
             }
             this.$emit('nft-like');
         },
+
+        toInt,
     },
 };
 </script>

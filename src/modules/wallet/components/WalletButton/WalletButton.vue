@@ -2,7 +2,7 @@
     <span class="walletbutton" :class="classes">
         <f-button secondary size="large" class="btn-grey" @click.native="onClick">
             <span class="walletbutton_avatar">
-                <a-placeholder :content-loaded="!!wallet.address">
+                <a-placeholder :content-loaded="!!wallet.avatar">
                     <img :src="wallet.avatar" alt="avatar" />
                 </a-placeholder>
             </span>
@@ -18,17 +18,15 @@
                         {{ wallet.chain }}
                     </a-placeholder>
                 </template>
-                <template v-else-if="!wallet.address">{{ $t('walletbutton.connect_wallet') }}</template>
+                <template v-else-if="!wallet.address">{{ $t('walletbutton.connectWallet') }}</template>
                 <template v-else>
                     <f-ellipsis
-                        text="0xc0ffee254729296a45a3885639AC7E10F9d54979"
+                        :text="wallet.address"
                         overflow="middle"
                         :fixed-chars-count="4"
                         class="walletbutton_address"
-                    >
-                        {{ wallet.address }}
-                    </f-ellipsis>
-                    <span class="walletbutton_chain">{{ wallet.chain }}</span>
+                    />
+                    <f-ellipsis :text="wallet.chain" class="walletbutton_chain" />
                 </template>
             </span>
         </f-button>
