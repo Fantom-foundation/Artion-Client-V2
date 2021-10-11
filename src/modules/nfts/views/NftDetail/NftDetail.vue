@@ -100,13 +100,15 @@
                         <NftListingsGrid />
                     </template>
                 </a-details>
-                <a-details>
+                <a-details class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
                             <app-iconset icon="list" /> {{ $t('nftdetail.directOffers') }}
                         </div>
                     </template>
-                    DirectOffers component
+                    <template>
+                        <NftDirectOffersGrid />
+                    </template>
                 </a-details>
             </div>
             <a-details-group class="nftdetail_info" rounded>
@@ -216,6 +218,7 @@ import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 import ADetails from '@/common/components/ADetails/ADetails';
 import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
+import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
 import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 import { getToken } from '@/modules/nfts/queries/token.js';
 import contracts from '@/utils/artion-contracts-utils.js';
@@ -233,6 +236,7 @@ export default {
         AppIconset,
         AShareButton,
         NftListingsGrid,
+        NftDirectOffersGrid,
         NftTradeHistoryGrid,
     },
 
