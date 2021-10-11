@@ -1,0 +1,57 @@
+.pg-drop {
+    min-height: calc(70vh);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &__header {
+        text-transform: uppercase;
+        margin-bottom: var(--f-spacer-9);
+    }
+
+    &__text {
+        position: relative;
+        text-align: center;
+
+        p {
+            font-weight: 600;
+            font-size: var(--f-font-size-9);
+            line-height: var(--f-line-height-1);
+            letter-spacing: -0.015em;
+            z-index: 2;
+        }
+
+        p > .blue {
+            color: var(--f-color-primary-4);
+        }
+    }
+
+    &__backdrop {
+        position: absolute;
+        width: 610px;
+        height: 230px;
+        opacity: 0.12;
+        border-radius: 50%;
+        filter: blur(30px);
+        z-index: 1;
+
+        &--1 {
+            top: -35px;
+            left: -10px;
+            background: linear-gradient(90deg, #F9DD6E 0%, #FF6E7F 100%);
+        }
+
+        &--2 {
+            top: -35px;
+            right: 0;
+            background: #487BFF;
+        }
+
+        &--3 {
+            bottom: -59px;
+            right: -21px;
+            background: linear-gradient(90deg, #C8D7FF 0%, #86F1FF 0.01%, #7165FF 100%);
+        }
+    }
+}

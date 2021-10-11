@@ -9,7 +9,9 @@
 
     "navigation": {
         "explore": "@:explore",
-        "create": "@:create"
+        "create": "@:create",
+        "drop": "The Drop",
+        "nfts": "The NFT's"
     },
 
     "category": {

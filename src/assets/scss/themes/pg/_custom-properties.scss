@@ -1,6 +1,57 @@
+@use "fantom-vue-components/src/assets/scss/elements/links/tools" as linkTools;
+@use "fantom-vue-components/src/assets/scss/elements/headings/tools" as headingTools;
+@use "fantom-vue-components/src/assets/scss/components/button/tools" as btnTools;
+
 :root.theme-pg {
-    --theme-pg-backgroun-color: #222431;
+    --theme-pg-background-color: #090C10;
+    --theme-pg-color: #EAEAF1;
+    --theme-pg-btn-border-radius: 16px;
+    --theme-pg-btn-background: #1147FF;
+
+    --f-font-size-1: 10px;
+    --f-font-size-2: 12px;
+    --f-font-size-3: 14px;
+    --f-font-size-4: 16px;
+    --f-font-size-5: 18px;
+    --f-font-size-6: 20px;
+    --f-font-size-7: 24px;
+    --f-font-size-8: 32px;
+    --f-font-size-9: 36px;
+    --f-font-size-10: 64px;
+    --f-font-size-11: 88px;
 
     --f-doc-color: #fff;
-    --f-doc-background-color: var(--theme-pg-backgroun-color);
+    --f-doc-background-color: var(--theme-pg-background-color);
+
+
+    --f-color-primary-4: #3d81ff;
+
+    @include linkTools.links() {
+        --f-link-color: var(--theme-pg-color);
+    }
+
+    @include headingTools.headings() {
+        --f-h1-font-size: var(--f-font-size-11);
+        --f-h1-font-weight: 400;
+        --f-h1-letter-spacing: 0.28em;
+
+        --f-h2-font-size: var(--f-font-size-10);
+        --f-h2-font-weight: 400;
+        --f-h2-letter-spacing: 0.28em;
+
+        --f-h3-font-size: var(--f-font-size-10);
+        --f-h3-font-weight: 800;
+        --f-h3-letter-spacing: -0.015em;
+
+        --f-h4-font-size: var(--f-font-size-8);
+        --f-h4-font-weight: 600;
+        --f-h4-letter-spacing: -0.015em;
+    }
+
+    @include btnTools.button() {
+        --f-btn-lg-border-radius: var(--theme-pg-btn-border-radius);
+        --f-btn-main-color: var(--theme-pg-btn-background);
+    }
+
+    color: var(--theme-pg-color);
 }

@@ -1,0 +1,50 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+@use "@/assets/scss/variables";
+
+.pg-header {
+    --appheader-background: var(--theme-pg-background-color);
+
+    position: sticky;
+    top: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--f-spacer-2);
+
+    padding: var(--f-spacer-3) var(--main-lr-padding);
+    border-bottom: var(--appheader-border-bottom);
+    background: var(--appheader-background);
+
+    z-index: var(--f-zindex-sticky);
+
+    &__col {
+        display: flex;
+        align-items: center;
+        gap: var(--f-spacer-5);
+    }
+
+    img {
+        display: block;
+        margin: 0;
+    }
+}
+
+@include media.media-min(900px) {
+    .pg-header {
+        flex-direction: row;
+        gap: var(--f-spacer-5);
+    }
+}
+
+@include media.media-min(1200px) {
+    .pg-header {
+        gap: var(--f-spacer-9);
+
+        &_logo {
+            padding-right: 160px;
+        }
+    }
+}

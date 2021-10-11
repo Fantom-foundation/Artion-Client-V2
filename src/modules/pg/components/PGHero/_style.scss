@@ -1,0 +1,23 @@
+.pg-hero {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    &__header {
+        font-family: "Violet sans", Helvetica, sans-serif;
+        text-transform: uppercase;
+        margin: 64px 0 0 0;
+    }
+
+    &__button {
+        display: inline-block;
+        margin-top: 89px;
+        width: 439px;
+
+        & > .fbutton {
+            width: 100%;
+        }
+    }
+}
