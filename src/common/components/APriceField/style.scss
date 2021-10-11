@@ -16,7 +16,7 @@
 		.fdropdownlistbox_button.inp.inp-lg { 
 			border: none;
 			&:hover {
-				border: none;
+				border: none !important;
 			}
 		}
 	}

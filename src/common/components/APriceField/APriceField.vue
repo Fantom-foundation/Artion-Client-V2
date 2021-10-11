@@ -1,14 +1,8 @@
 <template>
     <div class="apricefield">
-        <f-input
-		  	type="number"
-            v-bind="$attrs"
-            v-on="$listeners"
-            no-label
-            v-model="value"
-        >
+        <f-input type="number" v-bind="$attrs" v-on="$listeners" v-model="value">
             <template #prefix>
-                <a-currency-dropdown @currency-change="onSelected"/>
+                <a-currency-dropdown @currency-change="onSelected" />
             </template>
             <template #suffix>
                 <div class="apricefield_suffix">
@@ -35,18 +29,18 @@ export default {
         return {
             factor: null,
             value: null,
-        }
+        };
     },
 
     computed: {
-        dollarEquivalent(){
+        dollarEquivalent() {
             return this.value * this.factor;
-        }
+        },
     },
     methods: {
-		  onSelected(e){
-			this.factor = e.value;
-		  }
+        onSelected(e) {
+            this.factor = e.value;
+        },
     },
 };
 </script>

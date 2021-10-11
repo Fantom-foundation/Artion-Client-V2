@@ -97,6 +97,7 @@
         "label": "Search bar",
         "placeholder": "Search items, collections and accounts"
     },
+    
 
     "walletbutton": {
         "connectWallet": "Connect Wallet"
@@ -112,6 +113,16 @@
 
     "nftlistingsgrid": {
         "buy": "Buy"
+    },
+
+    "nftmakeofferform": {
+        "price": "Price",
+        "offerExpiration": "Offer Expiration",
+        "placeOffer": "Place Offer"
+    },
+
+    "nftmakeofferwindow": {
+        "offer": "Place your offer"
     },
 
 

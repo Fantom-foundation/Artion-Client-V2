@@ -50,14 +50,14 @@ export default {
     },
 
     methods: {
-        onSelected(e){
+        onSelected(e) {
             this.$emit('currency-change', e);
-            this.rotated = !this.rotated
+            this.rotated = !this.rotated;
         },
-        windowHide(){
-            this.rotated = !this.rotated
-        }
-    }
+        windowHide() {
+            this.rotated = !this.rotated;
+        },
+    },
 };
 </script>
 <style lang="scss">
