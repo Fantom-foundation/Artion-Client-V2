@@ -94,7 +94,7 @@ const ZERO_AMOUNT = '0x0';
 /**
  * createArt Mints a new token on given ERC1155 collection contract
  * and assigns supply to an address
- * 
+ *
  * @param {string} toAddress Address of the owner of newly created NFT
  * @param {string} tokenUri URI address of the NFT json object
  * @param {number|BN|string} supply Amount of tokens to supply the first owner
@@ -103,7 +103,7 @@ const ZERO_AMOUNT = '0x0';
  * @param {Web3} web3Client Instance of an initialized Web3 client.
  * @return {{to: address, data: string, value string}}
  */
- function createArt(toAddress, tokenUri, amount, collectionAddress, web3Client) {
+ function createArt(toAddress, tokenUri, supply, amount, collectionAddress, web3Client) {
 
     const abi = {
         "inputs": [
@@ -140,10 +140,10 @@ const ZERO_AMOUNT = '0x0';
     };
 }
 
-export default {
+/*export default {
     createNFTCollection,
     createNFT
-}
+}*/
 
 /**
  * registerTokenRoyalty Method for setting royalty of NFT token
@@ -455,7 +455,7 @@ export default {
  * @param {Web3} web3Client Instance of an initialized Web3 client.
  * @return {{to: address, data: string, value string}}
  */
- function updateListing(nftAddress, tokenID, payToken, newPricePerItem, web3Client) {
+ function updateListing(nftAddress, tokenID, payToken, newPricePerItem, startingTime, web3Client) {
 
     const abi = {
         "inputs": [
