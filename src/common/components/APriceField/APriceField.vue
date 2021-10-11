@@ -2,7 +2,7 @@
     <div class="apricefield">
         <f-input type="number" v-bind="$attrs" v-on="$listeners" v-model="value">
             <template #prefix>
-                <a-currency-dropdown @currency-change="onSelected" />
+                <a-currency-dropdown @currency-change="factor = $event" />
             </template>
             <template #suffix>
                 <div class="apricefield_suffix">
@@ -35,11 +35,6 @@ export default {
     computed: {
         dollarEquivalent() {
             return this.value * this.factor;
-        },
-    },
-    methods: {
-        onSelected(e) {
-            this.factor = e.value;
         },
     },
 };

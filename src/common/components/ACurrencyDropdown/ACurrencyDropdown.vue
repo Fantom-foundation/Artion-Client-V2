@@ -3,6 +3,7 @@
         <a-dropdown-listbox
             v-bind="$attrs"
             :data="currencies"
+            v-model="value"
             @click.native="rotated = !rotated"
             @component-change="onSelected"
             @window-hide="windowHide"
@@ -37,21 +38,28 @@ import { getCurrencies } from '@/common/constants/dummy/currencyDropdown';
 export default {
     name: 'ACurrencyDropdown',
     components: { ADropdownListbox },
-    props: {
-        currencies: {
-            type: Array,
-            default: () => getCurrencies(),
-        },
-    },
     data() {
         return {
             rotated: true,
+            currencies: [],
+            value: null,
         };
     },
 
+    created() {
+        // fetch ?
+        this.currencies = getCurrencies();
+        this.value = this.currencies[0].value;
+    },
+
+    watch: {
+        value(_value) {
+            this.$emit('currency-change', _value);
+        },
+    },
+
     methods: {
-        onSelected(e) {
-            this.$emit('currency-change', e);
+        onSelected() {
             this.rotated = !this.rotated;
         },
         windowHide() {

@@ -18,6 +18,11 @@ export default {
 
     components: { FDropdownListbox },
 
+    model: {
+        prop: 'value',
+        event: 'change',
+    },
+
     inheritAttrs: false,
 };
 </script>
