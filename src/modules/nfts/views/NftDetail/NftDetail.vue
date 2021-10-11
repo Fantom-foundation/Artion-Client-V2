@@ -53,6 +53,7 @@
                         </div>
                         <div class="nftdetail_currentPrice_item nftdetail_currentPrice_btn">
                             <f-button @click.native="onTmpClick">{{ $t('nftdetail.buyNow') }}</f-button>
+                            <f-button @click.native="$refs.window.show()">{{ $t('nftdetail.makeOffer') }}</f-button>
                         </div>
                     </div>
                     <a-share-button />
@@ -207,7 +208,7 @@
                 </template>
             </a-details>
         </div>
-
+        <nft-make-offer-window ref="window" :title="$t('nftdetail.offer')" />
         <a-sign-transaction :tx="tx" hidden />
     </div>
 </template>
@@ -225,6 +226,7 @@ import contracts from '@/utils/artion-contracts-utils.js';
 import { bToWei, toHex, toInt } from '@/utils/big-number.js';
 import Web3 from 'web3';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
+import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow';
 
 export default {
     name: 'NftDetail',
@@ -238,6 +240,7 @@ export default {
         NftListingsGrid,
         NftDirectOffersGrid,
         NftTradeHistoryGrid,
+        NftMakeOfferWindow,
     },
 
     data() {

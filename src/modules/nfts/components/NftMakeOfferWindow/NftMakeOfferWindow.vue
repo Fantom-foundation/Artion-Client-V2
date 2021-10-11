@@ -1,5 +1,5 @@
 <template>
-    <a-window ref="window" :title="$t('nftmakeofferwindow.offer')" class="fwindow-width-5">
+    <a-window ref="window" v-bind="$attrs" class="fwindow-width-5">
         <nft-make-offer-form />
     </a-window>
 </template>

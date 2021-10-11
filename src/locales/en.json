@@ -121,10 +121,6 @@
         "placeOffer": "Place Offer"
     },
 
-    "nftmakeofferwindow": {
-        "offer": "Place your offer"
-    },
-
 
     "densityswitch": {
         "largeDisplay": "Large Display",
@@ -157,7 +153,9 @@
         "network": "Network",
         "fantomOpera": "Fantom Opera",
         "chainId": "Chain ID",
-        "fromCollection": "More from this collection"
+        "fromCollection": "More from this collection",
+        "offer": "Place your offer",
+        "makeOffer": "Make offer"
     },
 
     "ashareButton": {
