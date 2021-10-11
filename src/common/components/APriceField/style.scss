@@ -1,0 +1,58 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+.apricefield {
+	display: flex;
+	align-items: center;
+
+	.inp-cont > .acurrencydropdown {
+		margin-inline-start: 0;
+	}
+
+	.inp-cont > .apricefield_suffix {
+		margin-inline-start: 0;
+		margin-inline-end: 0;
+	}
+
+	.adropdownlistbox {
+		.fdropdownlistbox_button.inp.inp-lg { 
+			border: none;
+			&:hover {
+				border: none !important;
+			}
+		}
+	}
+
+	.finput_inputcont {
+		height: 100%;
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+	}
+
+	&_suffix {
+		margin-inline-end: 0;
+		min-height: 50px;
+		border-inline-start: 1px solid #eaeaf1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&_number {
+		padding: 0 12px;
+		font-weight: 500;
+		font-size: var(--font-size-4);
+		color: var(--f-color-grey-4);
+	}
+}
+
+@include media.media-max(576px) {
+	.apricefield {
+		&_number {
+			width: 100px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+}

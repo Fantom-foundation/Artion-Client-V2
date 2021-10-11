@@ -17,6 +17,7 @@ import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
 
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 import APlaceholder from '@/common/components/APlaceholder/APlaceholder.vue';
+import APriceField from '@/common/components/APriceField/APriceField.vue';
 import AWindow from '@/common/components/AWindow/AWindow.vue';
 
 // install global components
@@ -39,4 +40,5 @@ Vue.component('FImage', FImage);
 
 Vue.component('AppIconset', AppIconset);
 Vue.component('APlaceholder', APlaceholder);
+Vue.component('APriceField', APriceField);
 Vue.component('AWindow', AWindow);
