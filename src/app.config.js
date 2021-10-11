@@ -46,11 +46,26 @@ const appConfig = {
     underMaintenance: false,
     // use hash in address
     routerHashMode: false,
+    // Opera chain id
+    chainId: '0xfa',
+    // JSON-RPC endpoint
+    rpc: 'https://rpcapi.fantom.network/',
+    // used in links pointing to fantom explorer
+    explorerUrl: 'https://ftmscan.com/',
+    // used in links pointing to validators
+    explorerUrl2: 'https://explorer.fantom.network/',
     // default options for production build
     build: {
         // output dir for production build
         outputDir: 'dist',
     },
+};
+
+appConfig.mainnet = {
+    chainId: appConfig.chainId,
+    rpc: appConfig.rpc,
+    explorerUrl: appConfig.explorerUrl,
+    explorerUrl2: appConfig.explorerUrl2,
 };
 
 module.exports = appConfig;

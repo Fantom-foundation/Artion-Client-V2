@@ -1,9 +1,10 @@
 .acurrencydropdown {
-
+	--acurrencydropdown-background: var(--f-color-grey-2);
 	& .adropdownlistbox .fdropdownlistbox_button { 
 		width: auto;
 		padding: 2px;
-		background-color: #fafafb;
+      //background-color: #fafafb;
+		background: var(--acurrencydropdown-background);
 		background-clip: content-box, padding-box;
 		span {
 			height: 100%;
@@ -35,6 +36,7 @@
 
 		}
 	}
+
 	.flex.ali-center {
 		column-gap: var(--f-spacer-2);
 	}

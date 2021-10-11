@@ -8,20 +8,20 @@
         </div>
         <div class="appheader_col">
             <app-menu />
-            <wallet-button />
+            <wallet-button-wrap />
         </div>
     </header>
 </template>
 
 <script>
 import AppMenu from '@/modules/app/components/AppMenu/AppMenu.vue';
-import WalletButton from '@/modules/wallet/components/WalletButton/WalletButton.vue';
 import AppSearchBar from '@/modules/app/components/AppSearchBar/AppSearchBar.vue';
+import WalletButtonWrap from '@/modules/wallet/components/WalletButtonWrap/WalletButtonWrap.vue';
 
 export default {
     name: 'AppHeader',
 
-    components: { AppSearchBar, WalletButton, AppMenu },
+    components: { WalletButtonWrap, AppSearchBar, AppMenu },
 
     /*computed: {
         classes() {

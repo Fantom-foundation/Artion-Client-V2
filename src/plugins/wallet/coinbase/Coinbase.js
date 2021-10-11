@@ -1,33 +1,16 @@
 import appConfig from '../../../app.config.js';
-// import Web3 from 'web3';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
-import { store } from '@/store';
-import { SET_WALLETLINK_CHAIN_ID } from '@/plugins/walletlink/store.js';
-const OPERA_CHAIN_ID = appConfig.chainId;
 
-/** @type {Walletlink} */
-export let walletlink = null;
-
-/**
- * Plugin for communication with Walletlink.
- */
-export class Walletlink {
+export class Coinbase {
     /**
-     * @param {Vue} _Vue
+     * @param {Wallet} wallet
      */
-    static install(_Vue) {
-        if (!walletlink) {
-            walletlink = new Walletlink();
-            _Vue.prototype.$walletlink = walletlink;
-        }
-    }
-
-    constructor() {
+    constructor(wallet) {
         this.selectedAddress = '';
 
         /**
-         * Walletlink provider.
+         * Coinbase provider.
          *
          * @type {null}
          * @private
@@ -37,7 +20,7 @@ export class Walletlink {
         this._initialized = false;
         this._web3 = null;
 
-        this.init();
+        this._wallet = wallet;
     }
 
     async init() {
@@ -53,13 +36,89 @@ export class Walletlink {
             this._web3 = new Web3(this._provider);
 
             this._provider.on('chainChanged', chainId => {
-                this._setChainId(chainId);
+                if (this._wallet) {
+                    this._wallet.onChainChange(chainId);
+                }
             });
 
             this.selectedAddress = this._provider.selectedAddress || '';
         }
 
         this._initialized = true;
+    }
+
+    /**
+     * @param {Object} tx
+     * @param {string} [address]
+     * @return {Promise<*|string>} Tx hash
+     */
+    async signTransaction(tx, address) {
+        if (this._provider) {
+            if (address) {
+                tx.from = address;
+            }
+
+            try {
+                const txHash = await this._provider.request({
+                    method: 'eth_sendTransaction',
+                    params: [tx],
+                });
+
+                return txHash;
+            } catch (_error) {
+                console.error(_error);
+                return '';
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * @return {Promise<string>}
+     */
+    async getAccount() {
+        if (!this.selectedAddress) {
+            const accounts = await this.connect();
+
+            if (accounts) {
+                this.selectedAddress = accounts[0];
+            }
+        }
+
+        return this.selectedAddress || '';
+    }
+
+    /**
+     * @return {number}
+     */
+    getChainId() {
+        return this._provider ? parseInt(this._provider.chainId, 10) : 0;
+    }
+
+    /**
+     * @return {string}
+     */
+    name() {
+        return 'coinbase';
+    }
+
+    /**
+     * @return {boolean}
+     */
+    isInstalled() {
+        return true;
+    }
+
+    async disconnect() {
+        await this._walletLink.disconnect();
+
+        this._web3.eth.defaultAccount = null;
+        this.selectedAddress = '';
+    }
+
+    web3() {
+        return this._web3;
     }
 
     async connect() {
@@ -77,20 +136,6 @@ export class Walletlink {
         // console.log('accounts: ', accounts, this._provider);
 
         return accounts;
-    }
-
-    async disconnect() {
-        await this._walletLink.disconnect();
-
-        this._web3.eth.defaultAccount = null;
-        this.selectedAddress = '';
-    }
-
-    /**
-     * @return {boolean}
-     */
-    isCorrectChainId(chainId) {
-        return this._provider && this._provider.chainId === (chainId || OPERA_CHAIN_ID);
     }
 
     /**
@@ -126,40 +171,4 @@ export class Walletlink {
             }
         }
     }
-
-    async signTransaction(_tx, _address) {
-        if (this._provider) {
-            _tx.from = _address;
-
-            const txHash = await this._provider.request({
-                method: 'eth_sendTransaction',
-                params: [_tx],
-            });
-
-            return txHash;
-        }
-    }
-
-    /**
-     * @param {string} _chainId Hex number.
-     * @private
-     */
-    _setChainId(_chainId) {
-        store.commit(`walletlink/${SET_WALLETLINK_CHAIN_ID}`, _chainId);
-    }
-
-    /*adjustPopup() {
-        const ePopup = document.querySelector('.-walletlink-extension-dialog-box');
-
-        if (!ePopup) {
-            return;
-        }
-
-        ePopup.classList.add('walletlinkpopup');
-
-        const eH2 = ePopup.querySelector('.-walletlink-extension-dialog-box-bottom-description-region h2');
-        if (eH2) {
-            eH2.innerText = 'Scan to connect';
-        }
-    }*/
 }

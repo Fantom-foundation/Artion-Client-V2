@@ -17,8 +17,11 @@ import PortalVue from 'portal-vue';
 import { getRoutes, getMaintenanceRoutes } from '@/router/routes.js';
 import appConfig from '@/app.config.js';
 import { setRouteMetaInfo, setRouteTheme } from '@/router/middlewares.js';
+import { Wallet } from '@/plugins/wallet/Wallet.js';
+import { WALLETS } from '@/common/constants/wallets.js';
 
 Vue.use(PortalVue);
+Vue.use(Wallet, { wallets: WALLETS().map(wallet => wallet.id) });
 
 // set fantom-vue-components translations
 translations.add('fa', faTranslations);

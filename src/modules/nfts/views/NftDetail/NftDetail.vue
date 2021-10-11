@@ -12,7 +12,7 @@
                     <div class="nftdetail_name">
                         <h1>
                             <a-placeholder block :content-loaded="!!token.tokenId" replacement-text="token name">
-                                #{{ parseInt(token.tokenId, 16) }} {{ token.name }}
+                                #{{ toInt(token.tokenId) }} {{ token.name }}
                             </a-placeholder>
                         </h1>
                     </div>
@@ -52,7 +52,8 @@
                             <div class="nftdetail_currentPrice_usd">($71644.838)</div>
                         </div>
                         <div class="nftdetail_currentPrice_item nftdetail_currentPrice_btn">
-                            <f-button>{{ $t('nftdetail.buyNow') }}</f-button>
+                            <f-button @click.native="onTmpClick">{{ $t('nftdetail.buyNow') }}</f-button>
+                            <f-button @click.native="$refs.window.show()">{{ $t('nftdetail.makeOffer') }}</f-button>
                         </div>
                     </div>
                     <a-share-button />
@@ -100,13 +101,15 @@
                         <NftListingsGrid />
                     </template>
                 </a-details>
-                <a-details>
+                <a-details class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
                             <app-iconset icon="list" /> {{ $t('nftdetail.directOffers') }}
                         </div>
                     </template>
-                    DirectOffers component
+                    <template>
+                        <NftDirectOffersGrid />
+                    </template>
                 </a-details>
             </div>
             <a-details-group class="nftdetail_info" rounded>
@@ -205,6 +208,8 @@
                 </template>
             </a-details>
         </div>
+        <nft-make-offer-window ref="window" :title="$t('nftdetail.offer')" />
+        <a-sign-transaction :tx="tx" hidden />
     </div>
 </template>
 
@@ -214,19 +219,28 @@ import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 import ADetails from '@/common/components/ADetails/ADetails';
 import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
+import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
 import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 import { getToken } from '@/modules/nfts/queries/token.js';
+import contracts from '@/utils/artion-contracts-utils.js';
+import { bToWei, toHex, toInt } from '@/utils/big-number.js';
+import Web3 from 'web3';
+import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
+import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow';
 
 export default {
     name: 'NftDetail',
 
     components: {
+        ASignTransaction,
         ADetails,
         ADetailsGroup,
         AppIconset,
         AShareButton,
         NftListingsGrid,
+        NftDirectOffersGrid,
         NftTradeHistoryGrid,
+        NftMakeOfferWindow,
     },
 
     data() {
@@ -234,6 +248,7 @@ export default {
             token: {},
             likesCount: 7,
             liked: false,
+            tx: {},
         };
     },
 
@@ -248,7 +263,24 @@ export default {
             if (!routeParams.tokenContract || !routeParams.tokenId) {
                 this.$router.push({ name: '404' });
             } else {
-                this.token = await getToken(routeParams.tokenContract, routeParams.tokenId);
+                this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+            }
+        },
+
+        async onTmpClick() {
+            const web3 = new Web3();
+            const { token } = this;
+
+            if (this.$wallet.connected) {
+                this.tx = contracts.createOffer(
+                    this.$wallet.account,
+                    token.tokenId,
+                    token.contract,
+                    1,
+                    bToWei(1, 18),
+                    1633890816,
+                    web3
+                );
             }
         },
 
@@ -263,6 +295,8 @@ export default {
             }
             this.$emit('nft-like');
         },
+
+        toInt,
     },
 };
 </script>

@@ -3,14 +3,15 @@
         <a-dropdown-listbox
             v-bind="$attrs"
             :data="currencies"
+            v-model="value"
             @click.native="rotated = !rotated"
-            @selected="rotated = !rotated"
-            @window-hide="rotated = !rotated"
+            @component-change="onSelected"
+            @window-hide="windowHide"
         >
             <template #button-label="{ item }">
                 <div class="flex ali-center">
-                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.value" />
-                    <span>{{ item.value }}</span>
+                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
+                    <span>{{ item.label }}</span>
                 </div>
             </template>
             <template #button-arrow>
@@ -24,8 +25,8 @@
             </template>
             <template #item="{ item }">
                 <div class="flex ali-center" style="column-gap: 8px;">
-                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.value" />
-                    <span>{{ item.value }}</span>
+                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
+                    <span>{{ item.label }}</span>
                 </div>
             </template>
         </a-dropdown-listbox>
@@ -37,16 +38,33 @@ import { getCurrencies } from '@/common/constants/dummy/currencyDropdown';
 export default {
     name: 'ACurrencyDropdown',
     components: { ADropdownListbox },
-    props: {
-        currencies: {
-            type: Object,
-            default: () => getCurrencies(),
-        },
-    },
     data() {
         return {
             rotated: true,
+            currencies: [],
+            value: null,
         };
+    },
+
+    created() {
+        // fetch ?
+        this.currencies = getCurrencies();
+        this.value = this.currencies[0].value;
+    },
+
+    watch: {
+        value(_value) {
+            this.$emit('currency-change', _value);
+        },
+    },
+
+    methods: {
+        onSelected() {
+            this.rotated = !this.rotated;
+        },
+        windowHide() {
+            this.rotated = !this.rotated;
+        },
     },
 };
 </script>

@@ -99,9 +99,14 @@
         "label": "Search bar",
         "placeholder": "Search items, collections and accounts"
     },
+    
 
     "walletbutton": {
-        "connect_wallet": "Connect Wallet"
+        "connectWallet": "Connect Wallet"
+    },
+
+    "walletpicker": {
+        "connectToWallet": "Connect to a wallet"
     },
 
     "nftcard": {
@@ -110,6 +115,12 @@
 
     "nftlistingsgrid": {
         "buy": "Buy"
+    },
+
+    "nftmakeofferform": {
+        "price": "Price",
+        "offerExpiration": "Offer Expiration",
+        "placeOffer": "Place Offer"
     },
 
 
@@ -144,7 +155,9 @@
         "network": "Network",
         "fantomOpera": "Fantom Opera",
         "chainId": "Chain ID",
-        "fromCollection": "More from this collection"
+        "fromCollection": "More from this collection",
+        "offer": "Place your offer",
+        "makeOffer": "Make offer"
     },
 
     "ashareButton": {

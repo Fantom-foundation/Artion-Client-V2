@@ -1,4 +1,6 @@
 .walletbutton {
+    display: inline-block;
+
     //width: 200px;
     //max-width: 200px;
     //overflow: hidden;
@@ -34,7 +36,7 @@
     }
 
     &_chain {
-        color: var(--f-color-grey-4)
+        color: var(--f-color-grey-4);
     }
 
     &_avatar {
