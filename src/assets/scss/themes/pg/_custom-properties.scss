@@ -42,10 +42,15 @@
         --f-h3-font-size: var(--f-font-size-10);
         --f-h3-font-weight: 800;
         --f-h3-letter-spacing: -0.015em;
+        --f-h3-line-height: 1;
+        --f-h3-margin-top: 0;
+        --f-h3-margin-bottom: var(--f-spacer-7);
 
         --f-h4-font-size: var(--f-font-size-8);
         --f-h4-font-weight: 600;
         --f-h4-letter-spacing: -0.015em;
+        --f-h4-margin-top: 0;
+        --f-h4-margin-bottom: 0;
     }
 
     @include btnTools.button() {
@@ -54,4 +59,16 @@
     }
 
     color: var(--theme-pg-color);
+
+    .theme-pg-u-font-weight-normal {
+        font-weight: 400;
+    }
+
+    .theme-pg-u-mb-0 {
+        margin-bottom: 0;
+    }
+
+    .theme-pg-u-w-100 {
+        width: 100%;
+    }
 }

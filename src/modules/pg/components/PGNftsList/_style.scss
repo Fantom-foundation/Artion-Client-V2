@@ -1,0 +1,19 @@
+.pg-nfts-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 100px;
+
+    &__header {
+        text-transform: uppercase;
+        margin-bottom: 176px;
+    }
+
+    &__separator {
+        width: 100%;
+        height: 8px;
+        background: #121820;
+        margin: 100px 0 160px;
+    }
+}

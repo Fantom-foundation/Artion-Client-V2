@@ -1,9 +1,10 @@
 .pg-drop {
-    min-height: calc(70vh);
+    min-height: calc(80vh);
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 10vh;
 
     &__header {
         text-transform: uppercase;
@@ -19,7 +20,6 @@
             font-size: var(--f-font-size-9);
             line-height: var(--f-line-height-1);
             letter-spacing: -0.015em;
-            z-index: 2;
         }
 
         p > .blue {
@@ -31,10 +31,10 @@
         position: absolute;
         width: 610px;
         height: 230px;
-        opacity: 0.12;
         border-radius: 50%;
-        filter: blur(30px);
-        z-index: 1;
+        opacity: 0.15;
+        filter: blur(70px);
+        z-index: -1;
 
         &--1 {
             top: -35px;

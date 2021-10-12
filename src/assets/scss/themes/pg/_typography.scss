@@ -6,3 +6,19 @@
     font-family: "Violet sans";
     font-display: swap;
 }
+
+.h5 {
+    font-weight: 600;
+    font-size: var(--f-font-size-7);
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    margin-bottom: var(--f-spacer-3);
+}
+
+.h6 {
+    font-weight: 600;
+    font-size: var(--f-font-size-3);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    margin-bottom: var(--f-spacer-2);
+}
