@@ -12,7 +12,8 @@ import VueApollo from 'vue-apollo';
 import appConfig from '@/app.config.js';
 import { shuffle } from 'fantom-vue-components/src/utils/array.js';
 import FNetworkStatus from 'fantom-vue-components/src/components/FNetworkStatus/FNetworkStatus.vue';
-// import { setContext } from 'apollo-link-context';
+import { setContext } from 'apollo-link-context';
+import { getBearerToken } from '@/modules/account/auth.js';
 
 /**
  * Create an array of shuffled http providers excluding default provider.
@@ -80,6 +81,22 @@ const netErrorLink = new ApolloLink((operation, forward) => {
     });
 });
 
+const httpAuthLink = setContext((operation, { headers }) => {
+    const token = getBearerToken();
+
+    const h = { ...headers };
+
+    if (token) {
+        h.authorization = 'Bearer ' + token;
+    } else if ('authorization' in h) {
+        delete h.authorization;
+    }
+
+    return {
+        headers: h,
+    };
+});
+
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors)
         graphQLErrors.forEach(({ message, locations, path }) =>
@@ -135,7 +152,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 */
 
-apolloLinks = [...apolloLinks, netErrorLink, retryLink, errorLink, httpLink];
+apolloLinks = [...apolloLinks, netErrorLink, retryLink, errorLink, httpAuthLink, httpLink];
 
 export const apolloClient = new ApolloClient({
     link: ApolloLink.from(apolloLinks),

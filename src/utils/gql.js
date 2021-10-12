@@ -23,3 +23,24 @@ export async function gqlQuery(query, fieldName = '', client = apolloClient) {
 
     return null;
 }
+
+export async function gqlMutation(mutation, fieldName = '', client = apolloClient) {
+    try {
+        const response = await client.mutate(mutation);
+        let data = null;
+
+        if (response && response.data && (data = getNestedProp(response.data, fieldName))) {
+            return clone(data);
+        }
+
+        return null;
+    } catch (error) {
+        console.error(error);
+        notifications.add({
+            type: 'error',
+            text: error,
+        });
+    }
+
+    return null;
+}
