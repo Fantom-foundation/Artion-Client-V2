@@ -35,6 +35,7 @@ export default {
     data() {
         return {
             data: [
+                { value: 'account', label: 'Profile' },
                 { value: 'logout', label: 'Logout' },
                 // { value: 'login', label: 'Login (tmp)' },
             ],

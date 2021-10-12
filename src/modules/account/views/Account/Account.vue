@@ -1,14 +1,5 @@
 <template>
     <div class="account">
-        <!-- TMP -->
-        <!-- <ul>
-            <li><router-link :to="{ name: 'account-single-items' }">Single Items</router-link></li>
-            <li><router-link :to="{ name: 'account-bundles' }">Bundles</router-link></li>
-            <li><router-link :to="{ name: 'account-favorited' }">Favorited</router-link></li>
-            <li><router-link :to="{ name: 'account-activity' }">Activity</router-link></li>
-            <li><router-link :to="{ name: 'account-offers' }">Offers</router-link></li>
-            <li><router-link :to="{ name: 'account-my-offers' }">My Offers</router-link></li>
-        </ul> -->
         <div class="account_banner">
             <AUploadArea
                 ><svg
@@ -57,45 +48,45 @@
                 <AShareButton />
             </div>
         </div>
-        <div class="account_nav nav">
+        <nav class="account_nav nav">
             <ul class="nav_list">
                 <li class="nav_item">
-                    <router-link :to="{ name: 'account-single-items' }" class="nav_link">
+                    <router-link :to="{ name: 'account-single-items', query: { ...filters } }" class="nav_link">
                         <app-iconset icon="solid1" size="24px" />{{ $t('account.collected') }}
                         <span class="nav__counter">0</span></router-link
                     >
                 </li>
                 <li class="nav_item">
-                    <router-link :to="{ name: 'account-bundles' }" class="nav_link"
+                    <router-link :to="{ name: 'account-bundles', query: { ...filters } }" class="nav_link"
                         ><app-iconset icon="paint" size="24px" />{{ $t('account.created')
                         }}<span class="nav__counter">0</span></router-link
                     >
                 </li>
                 <li class="nav_item">
-                    <router-link :to="{ name: 'account-favorited' }" class="nav_link"
+                    <router-link :to="{ name: 'account-favorited', query: { ...filters } }" class="nav_link"
                         ><app-iconset icon="like" size="24px" />{{ $t('account.favorited')
                         }}<span class="nav__counter">0</span></router-link
                     >
                 </li>
                 <li class="nav_item">
-                    <router-link :to="{ name: 'account-activity' }" class="nav_link"
+                    <router-link :to="{ name: 'account-activity', query: { ...filters } }" class="nav_link"
                         ><app-iconset icon="eyeslash" size="24px" />{{ $t('account.hidden')
                         }}<span class="nav__counter">0</span></router-link
                     >
                 </li>
                 <li class="nav_item">
-                    <router-link :to="{ name: 'account-offers' }" class="nav_link"
+                    <router-link :to="{ name: 'account-offers', query: { ...filters } }" class="nav_link"
                         ><app-iconset icon="history" size="24px" />{{ $t('account.activity') }}</router-link
                     >
                 </li>
                 <li class="nav_item">
-                    <router-link :to="{ name: 'account-my-offers' }" class="nav_link"
+                    <router-link :to="{ name: 'account-my-offers', query: { ...filters } }" class="nav_link"
                         ><app-iconset icon="tag" size="24px" />{{ $t('account.offers')
                         }}<span class="nav__counter">0</span></router-link
                     >
                 </li>
             </ul>
-        </div>
+        </nav>
         <div class="account_filterButton">
             <f-button @click.native="isSideClose = !isSideClose"
                 >{{ $t('account.filter') }}
@@ -131,7 +122,7 @@
                     </div>
                 </div>
                 <div class="account_view_chips">
-                    <NftFilterChips v-model="filters" />
+                    <NftFilterChips v-model="filters" @chips-change="onChipsChange" />
                 </div>
                 <router-view />
             </div>
@@ -148,8 +139,11 @@ import ASearchField from '@/common/components/ASearchField/ASearchField';
 import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters';
 import DensitySwitch from '@/modules/nfts/components/DensitySwitch/DensitySwitch';
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
+import { routeQueryMixin } from '@/common/mixins/route-query.js';
 export default {
     name: 'Account',
+
+    mixins: [routeQueryMixin('filters')],
     components: {
         AUploadArea,
         AShareButton,
@@ -164,16 +158,13 @@ export default {
         return {
             filters: {},
             isSideClose: true,
+            filterNumber: 0,
         };
     },
-    computed: {
-        filterNumber() {
-            let size = 0;
-            let key;
-            for (key in this.filters) {
-                size += this.filters[key].length;
-            }
-            return size;
+
+    methods: {
+        onChipsChange(chips) {
+            this.filterNumber = chips.length;
         },
     },
 };

@@ -87,7 +87,11 @@ export default {
         },
 
         getChipsFromDFilters() {
-            return this.getChipsFromFilters(this.dFilters);
+            const chips = this.getChipsFromFilters(this.dFilters);
+
+            this.$emit('chips-change', clone(chips));
+
+            return chips;
         },
     },
 
