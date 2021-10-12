@@ -45,6 +45,10 @@ import IconProperty from '@/assets/vue-icons/IconProperty.vue';
 import IconSolid1 from '@/assets/vue-icons/IconSolid1.vue';
 import IconSolid2 from '@/assets/vue-icons/IconSolid2.vue';
 import IconFilter from '@/assets/vue-icons/IconFilter.vue';
+import IconEyeslash from '@/assets/vue-icons/IconEyeslash.vue';
+import IconHistory from '@/assets/vue-icons/IconHistory.vue';
+import IconPaint from '@/assets/vue-icons/IconPaint.vue';
+import IconArrowright from '@/assets/vue-icons/IconArrowright.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -93,6 +97,10 @@ export default {
         IconSolid1,
         IconSolid2,
         IconFilter,
+        IconEyeslash,
+        IconHistory,
+        IconPaint,
+        IconArrowright,
     },
 
     props: {

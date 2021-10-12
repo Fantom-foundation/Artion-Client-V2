@@ -2,7 +2,10 @@
     <f-form v-model="values" class="nftcreate_form" @submit="onSubmit">
         <div class="nftcreate_col">
             <div>
-                <a-upload-area />
+                <a-upload-area>
+                    Drop files here or browse <br />
+                    JPG, PNG, BMP, GIF Max 15mb.
+                </a-upload-area>
             </div>
         </div>
         <div class="nftcreate_col">
