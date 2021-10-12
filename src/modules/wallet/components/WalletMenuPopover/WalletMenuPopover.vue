@@ -22,7 +22,7 @@ import { popoverAnimationMixin } from 'fantom-vue-components/src/mixins/popover-
 import { clone, defer } from 'fantom-vue-components/src/utils';
 
 export default {
-    name: 'WalletMenuListbox',
+    name: 'WalletMenuPopover',
 
     inheritAttrs: false,
 
@@ -34,7 +34,10 @@ export default {
 
     data() {
         return {
-            data: [{ value: 'logout', label: 'Logout' }],
+            data: [
+                { value: 'logout', label: 'Logout' },
+                // { value: 'login', label: 'Login (tmp)' },
+            ],
         };
     },
 
