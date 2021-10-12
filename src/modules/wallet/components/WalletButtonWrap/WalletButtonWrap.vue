@@ -14,7 +14,7 @@ import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.
 import { getUser } from '@/modules/account/queries/user.js';
 import { getLoggedUser } from '@/modules/account/queries/logged-user.js';
 // import { updateUser } from '@/modules/account/mutations/update-user.js';
-import { logOut, signIn } from '@/modules/account/auth.js';
+import { signIn } from '@/modules/account/auth.js';
 import WalletMenuPopover from '@/modules/wallet/components/WalletMenuPopover/WalletMenuPopover.vue';
 
 export default {
@@ -72,8 +72,8 @@ export default {
         async onWalletMenu(item) {
             if (item.action === 'logout') {
                 this.$wallet.logout();
-                logOut();
             } else if (item.action === 'login') {
+                // tmp
                 await signIn();
                 const userInfo = await getUser(this.$wallet.account);
                 // await updateUser({ username: 'test', bio: 'test user bio', email: 'testuser@test.org' });

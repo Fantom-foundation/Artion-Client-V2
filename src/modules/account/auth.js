@@ -3,8 +3,6 @@ import { wallet } from '@/plugins/wallet/Wallet.js';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { login } from '@/modules/account/mutations/login.js';
 
-let bearerToken = '';
-
 export function getBearerToken() {
     return wallet.getBearerToken();
 }
@@ -20,8 +18,7 @@ export async function signIn() {
 
     try {
         const signature = await wallet.personalSign(challenge, account);
-
-        bearerToken = await login({ user: account, challenge, signature });
+        const bearerToken = await login({ user: account, challenge, signature });
 
         wallet.setBearerToken(bearerToken);
     } catch (error) {
@@ -34,8 +31,4 @@ export async function signIn() {
 
         console.error(error);
     }
-}
-
-export async function logOut() {
-    bearerToken = '';
 }
