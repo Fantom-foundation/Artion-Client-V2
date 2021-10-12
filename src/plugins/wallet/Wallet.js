@@ -184,7 +184,6 @@ export class Wallet {
 
     getBearerToken() {
         const account = this.account || store.state.wallet.account;
-        console.log('getBearerToken', account, store.state.wallet.bt[account]);
 
         return store.state.wallet.bt[account] || '';
     }

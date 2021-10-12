@@ -1,11 +1,27 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 
-export async function getTokens(pagination = {}) {
+export async function getTokens(pagination = {}, filterSort = {}) {
     const query = {
         query: gql`
-            query GetTokens($first: Int, $after: Cursor, $last: Int, $before: Cursor) {
-                tokens(first: $first, after: $after, last: $last, before: $before) {
+            query GetTokens(
+                $filter: TokenFilter
+                $sortBy: TokenSorting
+                $sortDir: SortingDirection
+                $first: Int
+                $after: Cursor
+                $last: Int
+                $before: Cursor
+            ) {
+                tokens(
+                    filter: $filter
+                    sortBy: $sortBy
+                    sortDir: $sortDir
+                    first: $first
+                    after: $after
+                    last: $last
+                    before: $before
+                ) {
                     totalCount
                     pageInfo {
                         startCursor
@@ -29,6 +45,7 @@ export async function getTokens(pagination = {}) {
         `,
         variables: {
             ...pagination,
+            ...filterSort,
         },
         fetchPolicy: 'network-only',
     };

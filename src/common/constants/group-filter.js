@@ -7,6 +7,7 @@ export function GROUP_FILTERS() {
         {
             value: 'single',
             label: 'group.single_items',
+            disabled: true,
         },
         // {
         //   value: 'bundle',

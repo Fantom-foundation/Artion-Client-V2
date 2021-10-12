@@ -5,7 +5,7 @@ export function collectionsData() {
             label: 'Default Artion Collection',
             value: 'default-artion-collection',
         },
-        {
+        /*{
             img: 'https://cloudflare-ipfs.com/ipfs/QmTTvJNrWky6AikiPx6LsFBazRaX47z7XKiiyZVS7x4hHE',
             label: 'Rarity Crafting',
             value: 'rarity-crafting',
@@ -29,6 +29,6 @@ export function collectionsData() {
             img: 'https://cloudflare-ipfs.com/ipfs/QmdHXCkuyQPd3zvMA8nBXz58y4NacHqPwC7UprbUQ1L897',
             label: 'Lunarland',
             value: 'lunarland',
-        },
+        },*/
     ];
 }

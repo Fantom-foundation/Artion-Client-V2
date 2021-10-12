@@ -44,32 +44,6 @@ export const dataPageMixin = {
             return paginationVars;
         },
 
-        /**
-         * Get sort and filters variables for query.
-         *
-         * @param {Object} gce
-         * @returns {{filterSort?: {}}}
-         * @private
-         */
-        _getFilterSortVariables(gce) {
-            let filterSort = {};
-
-            if (gce.sortBy) {
-                filterSort = {
-                    [gce.sortBy]: { sort: gce.sortDir.toUpperCase() },
-                };
-            }
-
-            if (gce?.filters?.values) {
-                filterSort = {
-                    ...gce.filters.values,
-                    ...filterSort,
-                };
-            }
-
-            return filterSort;
-        },
-
         _getItemsFromData(data) {
             return data.edges.map(edge => edge.node);
         },
@@ -78,7 +52,7 @@ export const dataPageMixin = {
          * Mixin internal: loads items using loadPage
          * @private
          */
-        async _loadPage(pagination = { first: this.perPage }, filterSort = {}, dontSetItems = false) {
+        async _loadPage({ pagination = { first: this.perPage }, filterSort, dontSetItems = false } = {}) {
             if (!dontSetItems) {
                 this.loading = true;
             }
@@ -115,11 +89,10 @@ export const dataPageMixin = {
         async _onPageChange(pagination) {
             this.loading = true;
 
-            const data = await this._loadPage(
-                this._getPaginationVariables(pagination),
-                this._getFilterSortVariables(pagination),
-                true
-            );
+            const data = await this._loadPage({
+                pagination: this._getPaginationVariables(pagination),
+                dontSetItems: true,
+            });
 
             if (this.pageInfo.hasNextPage && data.edges && data.edges.length > 0) {
                 const items = this._getItemsFromData(data);
