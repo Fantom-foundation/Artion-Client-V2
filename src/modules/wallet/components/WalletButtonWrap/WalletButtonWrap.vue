@@ -70,10 +70,10 @@ export default {
         },
 
         async onWalletMenu(item) {
-            if (item.value === 'logout') {
+            if (item.action === 'logout') {
                 this.$wallet.logout();
                 logOut();
-            } else if (item.value === 'login') {
+            } else if (item.action === 'login') {
                 await signIn();
                 const userInfo = await getUser(this.$wallet.account);
                 // await updateUser({ username: 'test', bio: 'test user bio', email: 'testuser@test.org' });

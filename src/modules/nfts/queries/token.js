@@ -11,6 +11,7 @@ export async function getToken(contract = '', id = '') {
                     name
                     description
                     image
+                    imageProxy
                 }
             }
         `,
@@ -34,6 +35,7 @@ export async function getTokenWithOwnerships(contract = '', id = '') {
                     name
                     description
                     image
+                    imageProxy
                     ownerships(first: 20) {
                         totalCount
                         pageInfo {
