@@ -186,6 +186,18 @@
         "messageFtm":"1 FTM are charged to create a new NFT."
     },
 
+    "account": {
+        "copy": "Copy",
+        "collected": "Collected",
+        "created": "Created",
+        "favorited": "Favorited",
+        "hidden": "Hidden",
+        "activity": "Activity",
+        "offers": "Offers",
+        "filter": "Filter",
+        "filters": "Filters"
+    },
+
     "view_not_found": {
         "404": "404",
         "text": "Oooooops! We couldn’t find the page you’re looking for :(",

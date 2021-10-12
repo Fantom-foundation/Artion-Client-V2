@@ -56,6 +56,10 @@ export const Default = () => ({
                 'solid1',
                 'solid2',
                 'filter',
+                'eyeslash',
+                'history',
+                'paint',
+                'arrowright',
             ],
         };
     },
