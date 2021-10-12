@@ -1,10 +1,16 @@
 <template>
-    <div class="asigntransaction" :hidden="hidden || null" aria-hidden="true"></div>
+    <div class="asigntransaction" :hidden="hidden || null" aria-hidden="true">
+        <wallet-picker ref="walletPicker" />
+    </div>
 </template>
 
 <script>
+import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.vue';
+
 export default {
     name: 'ASignTransaction',
+
+    components: { WalletPicker },
 
     props: {
         tx: {
@@ -32,8 +38,20 @@ export default {
         async signTransaction(tx) {
             const { $wallet } = this;
 
-            if (tx && tx.to && $wallet.connected) {
+            if (!tx || !tx.to) {
+                return;
+            }
+
+            if (!$wallet.connected) {
+                this.$refs.walletPicker.show();
+            } else {
                 try {
+                    if (!tx.from) {
+                        tx.from = $wallet.account;
+                    }
+
+                    console.log(JSON.stringify(tx));
+
                     tx.chainId = $wallet.chainId;
                     tx.nonce = await this.$wallet.getNonce($wallet.account);
                     // tx.from = $wallet.account;

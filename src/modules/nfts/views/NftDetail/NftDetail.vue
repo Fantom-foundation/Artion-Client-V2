@@ -52,7 +52,7 @@
                             <div class="nftdetail_currentPrice_usd">($71644.838)</div>
                         </div>
                         <div class="nftdetail_currentPrice_item nftdetail_currentPrice_btn">
-                            <f-button @click.native="onTmpClick">{{ $t('nftdetail.buyNow') }}</f-button>
+                            <f-button @click.native="onBuyNowClick">{{ $t('nftdetail.buyNow') }}</f-button>
                             <f-button @click.native="$refs.window.show()">{{ $t('nftdetail.makeOffer') }}</f-button>
                         </div>
                     </div>
@@ -208,7 +208,12 @@
                 </template>
             </a-details>
         </div>
-        <nft-make-offer-window ref="window" :title="$t('nftdetail.offer')" />
+        <!--        <nft-make-offer-window ref="window" :title="$t('nftdetail.offer')" />-->
+
+        <a-window ref="window" :title="$t('nftdetail.offer')" class="fwindow-width-5">
+            <nft-make-offer-form :token="token" />
+        </a-window>
+
         <a-sign-transaction :tx="tx" hidden />
     </div>
 </template>
@@ -222,16 +227,15 @@ import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListin
 import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
 import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 import { getToken } from '@/modules/nfts/queries/token.js';
-import contracts from '@/utils/artion-contracts-utils.js';
-import { bToWei, toHex, toInt } from '@/utils/big-number.js';
-import Web3 from 'web3';
+import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
-import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow';
+import NftMakeOfferForm from '@/modules/nfts/components/NftMakeOfferForm/NftMakeOfferForm.vue';
 
 export default {
     name: 'NftDetail',
 
     components: {
+        NftMakeOfferForm,
         ASignTransaction,
         ADetails,
         ADetailsGroup,
@@ -240,7 +244,6 @@ export default {
         NftListingsGrid,
         NftDirectOffersGrid,
         NftTradeHistoryGrid,
-        NftMakeOfferWindow,
     },
 
     data() {
@@ -267,22 +270,7 @@ export default {
             }
         },
 
-        async onTmpClick() {
-            const web3 = new Web3();
-            const { token } = this;
-
-            if (this.$wallet.connected) {
-                this.tx = contracts.createOffer(
-                    this.$wallet.account,
-                    token.tokenId,
-                    token.contract,
-                    1,
-                    bToWei(1, 18),
-                    1633890816,
-                    web3
-                );
-            }
-        },
+        onBuyNowClick() {},
 
         onLikeClick() {
             this.liked = !this.liked;
