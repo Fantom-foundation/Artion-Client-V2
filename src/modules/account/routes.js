@@ -49,12 +49,12 @@ export function getAccountRoutes() {
                     name: 'account-my-offers',
                     component: AccountMyOffers,
                 },
-                {
-                    path: 'settings',
-                    name: 'account-settings',
-                    component: AccountSettings,
-                },
             ],
+        },
+        {
+            path: '/account/settings',
+            name: 'account-settings',
+            component: AccountSettings,
         },
     ];
 }
