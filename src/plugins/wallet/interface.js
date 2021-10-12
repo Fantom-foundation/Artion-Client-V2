@@ -3,6 +3,7 @@ import { implementsInterface } from '@/utils/interface.js';
 const walletInterface = [
     'init',
     'signTransaction',
+    'personalSign',
     'getAccount',
     'getChainId',
     'name',

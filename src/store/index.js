@@ -3,15 +3,11 @@ import Vuex from 'vuex';
 import VuexPersist from 'vuex-persist';
 import appConfig from '@/app.config.js';
 import { appStore } from '@/modules/app/store';
-import { walletStore } from '@/plugins/wallet/store.js';
-// import { metamaskStore } from '@/plugins/metamask/store.js';
-// import { walletlinkStore } from '@/plugins/walletlink/store.js';
+import { walletStore } from '@/plugins/wallet/store/index.js';
 
 const _modules = {
     [appStore.namespace]: appStore,
     [walletStore.namespace]: walletStore,
-    // [metamaskStore.namespace]: metamaskStore,
-    // [walletlinkStore.namespace]: walletlinkStore,
 };
 const plugins = [];
 const modules = {};
@@ -20,8 +16,6 @@ const modules = {};
 Object.keys(_modules).forEach(_moduleName => {
     modules[_moduleName] = _modules[_moduleName].module;
 });
-
-// console.log('???', `vuex-${appConfig.code}`);
 
 const vuexLocalStorage = new VuexPersist({
     // The key to store the state on in the storage provider.

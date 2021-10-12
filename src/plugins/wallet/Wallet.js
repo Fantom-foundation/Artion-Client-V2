@@ -1,10 +1,10 @@
 import store from '@/store';
-import { SET_ACCOUNT, SET_CHAIN_ID, SET_WALLET } from '@/plugins/wallet/store.js';
+import { SET_ACCOUNT, SET_CHAIN_ID, SET_WALLET, SET_BT, DELETE_BT } from '@/plugins/wallet/store/mutations.js';
 import appConfig from '@/app.config.js';
 import { implementsWalletInterface } from '@/plugins/wallet/interface.js';
 import { Fetch } from '@/utils/Fetch.js';
 import gql from 'graphql-tag';
-import { gqlQuery } from '@/utils/gql-query.js';
+import { gqlQuery } from '@/utils/gql.js';
 import { Metamask } from '@/plugins/wallet/metamask/Metamask.js';
 import { Coinbase } from '@/plugins/wallet/coinbase/Coinbase.js';
 import { defer } from 'fantom-vue-components/src/utils';
@@ -57,6 +57,15 @@ export class Wallet {
     }
 
     /**
+     * @param {string} message
+     * @param {string} account
+     * @return {Promise<string>}
+     */
+    async personalSign(message, account) {
+        return this.wallet ? await this.wallet.personalSign(message, account) : '';
+    }
+
+    /**
      * @return {boolean}
      */
     isInstalled() {
@@ -78,6 +87,8 @@ export class Wallet {
     }
 
     logout() {
+        this.deleteBearerToken(this.account);
+
         this.connected = false;
         this.account = '';
         this.chainId = 0;
@@ -128,13 +139,27 @@ export class Wallet {
                     await wallet.init();
                 }
 
+                const account = await wallet.getAccount(pick);
+
+                if (!account) {
+                    this.logout();
+                    return;
+                }
+
                 this._setChainId(wallet.getChainId());
-                this._setAccount(await wallet.getAccount(pick));
+                this._setAccount(account);
 
                 this.wallet = wallet;
                 this.connected = true;
 
                 this._setWalletName(walletName);
+
+                if (pick) {
+                    notifications.add({
+                        type: 'success',
+                        text: 'Wallet added',
+                    });
+                }
             } else {
                 throw new Error(`Unknown wallet ${walletName}`);
             }
@@ -143,6 +168,26 @@ export class Wallet {
                 type: 'error',
                 text: error.message,
             });
+        }
+    }
+
+    setBearerToken(bt) {
+        if (this.account && bt) {
+            console.log('??', this.account, bt);
+            store.commit(`wallet/${SET_BT}`, {
+                account: this.account,
+                bt,
+            });
+        }
+    }
+
+    getBearerToken() {
+        return store.state.wallet.bt[this.account] || '';
+    }
+
+    deleteBearerToken(account) {
+        if (account) {
+            store.commit(`wallet/${DELETE_BT}`, account);
         }
     }
 
