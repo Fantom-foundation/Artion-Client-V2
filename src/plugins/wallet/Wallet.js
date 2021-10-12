@@ -2,13 +2,13 @@ import store from '@/store';
 import { SET_ACCOUNT, SET_CHAIN_ID, SET_WALLET, SET_BT, DELETE_BT } from '@/plugins/wallet/store/mutations.js';
 import appConfig from '@/app.config.js';
 import { implementsWalletInterface } from '@/plugins/wallet/interface.js';
-import { Fetch } from '@/utils/Fetch.js';
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 import { Metamask } from '@/plugins/wallet/metamask/Metamask.js';
 import { Coinbase } from '@/plugins/wallet/coinbase/Coinbase.js';
 import { defer } from 'fantom-vue-components/src/utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
+import { fantomApolloClient } from '@/plugins/apollo/apollo-provider.js';
 
 // import Web3 from 'web3';
 // import store from '@/store';
@@ -211,18 +211,10 @@ export class Wallet {
                 },
             },
             'account.txCount',
-            Fetch
+            fantomApolloClient
         );
 
         return inHexFormat ? nonce : parseInt(nonce, 16);
-
-        /*const web3 = this.wallet ? this.wallet.web3() : null;
-
-        if (web3) {
-            return web3.eth.getTransactionCount(address);
-        }
-
-        return -1;*/
     }
 
     /**
@@ -230,32 +222,23 @@ export class Wallet {
      * @param {string} to
      * @param {string} value
      * @param {string} data
-     * @return {Promise<void>}
+     * @return {Promise<string>}
      */
     async estimateGas({ from = undefined, to = undefined, value = undefined, data = undefined }) {
-        const dt = await Fetch.gqlQuery({
-            query: gql`
-                query EstimateGas($from: Address, $to: Address, $value: BigInt, $data: String) {
-                    estimateGas(from: $from, to: $to, value: $value, data: $data)
-                }
-            `,
-            variables: { from, to, value, data },
-        });
+        const estimateGas = await gqlQuery(
+            {
+                query: gql`
+                    query EstimateGas($from: Address, $to: Address, $value: BigInt, $data: String) {
+                        estimateGas(from: $from, to: $to, value: $value, data: $data)
+                    }
+                `,
+                variables: { from, to, value, data },
+            },
+            'estimateGas',
+            fantomApolloClient
+        );
 
-        console.log(dt);
-
-        /*const web3 = this.wallet ? this.wallet.web3() : null;
-
-        if (web3) {
-            return web3.eth.estimateGas({
-                from,
-                to,
-                data,
-                nonce: nonce > -1 ? nonce : await this.getNonce(from),
-            });
-        }
-
-        return -1;*/
+        return estimateGas;
     }
 
     /**

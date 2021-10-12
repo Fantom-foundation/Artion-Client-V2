@@ -53,7 +53,6 @@
 
 <script>
 // import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
-import { getCurrentHttpProvider } from '@/plugins/apollo-provider.js';
 
 export default {
     // components: { AppIconset },
@@ -81,8 +80,6 @@ export default {
             }
             this.$emit('nft-like');
         },
-
-        getCurrentHttpProvider,
     },
 };
 </script>

@@ -4,7 +4,7 @@ import App from './App.vue';
 import './registerServiceWorker';
 import { i18n } from './plugins/vue-i18n.js';
 import { setupRouter } from './router';
-import { apolloProvider } from './plugins/apollo-provider.js';
+import { apolloProvider } from './plugins/apollo/apollo-provider.js';
 import store from './store';
 // import i18n from './plugins/vue-i18n.js';
 import './plugins/notifications.js';
