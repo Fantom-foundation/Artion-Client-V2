@@ -16,7 +16,7 @@ import PortalVue from 'portal-vue';
 // import { isAnyComponentChanged } from 'fantom-vue-components/src/utils/vue-helpers.js';
 import { getRoutes, getMaintenanceRoutes } from '@/router/routes.js';
 import appConfig from '@/app.config.js';
-import { setRouteMetaInfo, setRouteTheme } from '@/router/middlewares.js';
+import { authRoute, setRouteMetaInfo, setRouteTheme } from '@/router/middlewares.js';
 import { Wallet } from '@/plugins/wallet/Wallet.js';
 import { WALLETS } from '@/common/constants/wallets.js';
 
@@ -33,7 +33,7 @@ export let vueApp = null;
 
 const router = setupRouter({
     routes: appConfig.underMaintenance ? getMaintenanceRoutes() : getRoutes(),
-    middlewares: [setRouteMetaInfo, setRouteTheme],
+    middlewares: [authRoute, setRouteMetaInfo, setRouteTheme],
 });
 
 vueApp = new Vue({

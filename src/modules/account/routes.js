@@ -55,6 +55,10 @@ export function getAccountRoutes() {
             path: '/account/settings',
             name: 'account-settings',
             component: AccountSettings,
+            meta: {
+                auth: true, // needs authorization
+                title: i18n.t('your_profile'),
+            },
         },
     ];
 }

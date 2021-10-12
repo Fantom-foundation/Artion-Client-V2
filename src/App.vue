@@ -25,6 +25,7 @@ import FNetworkStatus from 'fantom-vue-components/src/components/FNetworkStatus/
 import FNotifications from 'fantom-vue-components/src/components/FNotifications/FNotifications.vue';
 import FTooltip from 'fantom-vue-components/src/components/FTooltip/FTooltip.vue';
 import FAppTheme from 'fantom-vue-components/src/components/FAppTheme/FAppTheme.vue';
+import { setLoggedUser } from '@/modules/account/auth.js';
 
 // import { FAppTheme } from '@skavel/fantom-vue-ui';
 // import FAppTheme from '@skavel/fantom-vue-ui/src/components/FAppTheme/FAppTheme.vue';
@@ -46,6 +47,10 @@ export default {
         this.$root._appNode = this;
     },
 */
+
+    mounted() {
+        setLoggedUser();
+    },
 
     methods: {
         setAppTheme() {

@@ -43,6 +43,7 @@ export class Wallet {
         this.account = '';
         this.chainId = 0;
         this.connected = false;
+        this.loggedUser = null;
 
         this._initWallets(wallets);
     }
@@ -88,6 +89,7 @@ export class Wallet {
 
     logout() {
         this.deleteBearerToken(this.account);
+        this.loggedUser = null;
 
         this.connected = false;
         this.account = '';
@@ -173,7 +175,6 @@ export class Wallet {
 
     setBearerToken(bt) {
         if (this.account && bt) {
-            console.log('??', this.account, bt);
             store.commit(`wallet/${SET_BT}`, {
                 account: this.account,
                 bt,
@@ -182,12 +183,21 @@ export class Wallet {
     }
 
     getBearerToken() {
-        return store.state.wallet.bt[this.account] || '';
+        const account = this.account || store.state.wallet.account;
+        console.log('getBearerToken', account, store.state.wallet.bt[account]);
+
+        return store.state.wallet.bt[account] || '';
     }
 
     deleteBearerToken(account) {
         if (account) {
             store.commit(`wallet/${DELETE_BT}`, account);
+        }
+    }
+
+    setLoggedUser(user) {
+        if (this.account && user && this.account === user.address) {
+            this.loggedUser = user;
         }
     }
 

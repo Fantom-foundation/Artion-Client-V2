@@ -6,6 +6,7 @@
     "collections": "Collections",
     "status": "Status",
     "results": "results",
+    "your_profile": "Your Profile",
 
     "navigation": {
         "explore": "@:explore",
@@ -97,7 +98,7 @@
         "label": "Search bar",
         "placeholder": "Search items, collections and accounts"
     },
-    
+
 
     "walletbutton": {
         "connectWallet": "Connect Wallet"
