@@ -1,5 +1,5 @@
 <template>
-    <div class="accountsettings">AccountSettings</div>
+    <div class="accountsettings">AccountSettings -> account: {{ $wallet.account }}</div>
 </template>
 
 <script>
