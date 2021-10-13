@@ -50,45 +50,9 @@
                 <AShareButton />
             </div>
         </div>
-        <nav class="account_nav nav">
-            <ul class="nav_list">
-                <li class="nav_item">
-                    <router-link :to="{ name: 'account-single-items', query: { ...filters } }" class="nav_link">
-                        <app-iconset icon="solid1" size="24px" />{{ $t('account.collected') }}
-                        <span class="nav__counter">0</span></router-link
-                    >
-                </li>
-                <li class="nav_item">
-                    <router-link :to="{ name: 'account-bundles', query: { ...filters } }" class="nav_link"
-                        ><app-iconset icon="paint" size="24px" />{{ $t('account.created')
-                        }}<span class="nav__counter">0</span></router-link
-                    >
-                </li>
-                <li class="nav_item">
-                    <router-link :to="{ name: 'account-favorited', query: { ...filters } }" class="nav_link"
-                        ><app-iconset icon="like" size="24px" />{{ $t('account.favorited')
-                        }}<span class="nav__counter">0</span></router-link
-                    >
-                </li>
-                <li class="nav_item">
-                    <router-link :to="{ name: 'account-activity', query: { ...filters } }" class="nav_link"
-                        ><app-iconset icon="eyeslash" size="24px" />{{ $t('account.hidden')
-                        }}<span class="nav__counter">0</span></router-link
-                    >
-                </li>
-                <li class="nav_item">
-                    <router-link :to="{ name: 'account-offers', query: { ...filters } }" class="nav_link"
-                        ><app-iconset icon="history" size="24px" />{{ $t('account.activity') }}</router-link
-                    >
-                </li>
-                <li class="nav_item">
-                    <router-link :to="{ name: 'account-my-offers', query: { ...filters } }" class="nav_link"
-                        ><app-iconset icon="tag" size="24px" />{{ $t('account.offers')
-                        }}<span class="nav__counter">0</span></router-link
-                    >
-                </li>
-            </ul>
-        </nav>
+
+        <account-navigation ref="accountNavigation" :navigation="navigation" :filters="filters" />
+
         <div class="account_filterButton">
             <f-button @click.native="isSideClose = !isSideClose"
                 >{{ $t('account.filter') }}
@@ -146,6 +110,7 @@ import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.
 import FCopyButton from 'fantom-vue-components/src/components/FCopyButton/FCopyButton.vue';
 import { mapState } from 'vuex';
 import { getUser } from '@/modules/account/queries/user.js';
+import AccountNavigation from '@/modules/account/components/AccountNavigation/AccountNavigation.vue';
 
 export default {
     name: 'Account',
@@ -153,6 +118,7 @@ export default {
     mixins: [routeQueryMixin('filters')],
 
     components: {
+        AccountNavigation,
         AUploadArea,
         AShareButton,
         AppIconset,
@@ -172,6 +138,43 @@ export default {
             filterNumber: 0,
             address: this.$route.params.adddress,
             user: {},
+            navigation: [
+                {
+                    routeName: 'account-single-items',
+                    label: this.$t('account.collected'),
+                    icon: 'solid1',
+                    counter: 0,
+                },
+                {
+                    routeName: 'account-bundles',
+                    label: this.$t('account.created'),
+                    icon: 'paint',
+                    counter: 0,
+                },
+                {
+                    routeName: 'account-favorited',
+                    label: this.$t('account.favorited'),
+                    icon: 'like',
+                    counter: 0,
+                },
+                {
+                    routeName: 'account-activity',
+                    label: this.$t('account.hidden'),
+                    icon: 'eyeslash',
+                    counter: 0,
+                },
+                {
+                    routeName: 'account-offers',
+                    label: this.$t('account.activity'),
+                    icon: 'history',
+                },
+                {
+                    routeName: 'account-my-offers',
+                    label: this.$t('account.offers'),
+                    icon: 'tag',
+                    counter: 0,
+                },
+            ],
         };
     },
 
