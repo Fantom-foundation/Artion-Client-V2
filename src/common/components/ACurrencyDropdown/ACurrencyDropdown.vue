@@ -34,33 +34,42 @@
 </template>
 <script>
 import ADropdownListbox from '@/common/components/ADropdownListbox/ADropdownListbox.vue';
-import { getCurrencies } from '@/common/constants/dummy/currencyDropdown';
+
 export default {
     name: 'ACurrencyDropdown',
+
     components: { ADropdownListbox },
+
+    props: {
+        /** @type {PayToken[]} */
+        currencies: {
+            type: Array,
+            default() {
+                return [];
+            },
+        },
+    },
+
     data() {
         return {
             rotated: true,
-            currencies: [],
             value: null,
         };
     },
 
-    created() {
-        // fetch ?
-        this.currencies = getCurrencies();
-        this.value = this.currencies[0].value;
-    },
-
     watch: {
-        value(_value) {
-            this.$emit('currency-change', _value);
+        currencies: {
+            handler(value) {
+                this.value = value && value.length > 0 ? value[0].value : 0;
+            },
+            immediate: true,
         },
     },
 
     methods: {
-        onSelected() {
+        onSelected(item) {
             this.rotated = !this.rotated;
+            this.$emit('token-selected', item);
         },
         windowHide() {
             this.rotated = !this.rotated;
