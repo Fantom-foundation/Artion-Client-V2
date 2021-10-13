@@ -1,5 +1,5 @@
 <template>
-    <a-window ref="window" :title="title" class="fwindow-width-3">
+    <a-window ref="window" :title="title" class="fwindow-width-3" v-on="$listeners">
         <wallet-listbox :wallets="wallets" @wallet-pick="onWalletPick" />
     </a-window>
 </template>
@@ -34,9 +34,9 @@ export default {
         ...copyMethods(AWindow, ['show', 'hide', 'toggle'], 'window'),
 
         onWalletPick(wallet) {
-            this.hide();
-
             this.$emit('wallet-pick', wallet);
+
+            this.hide();
         },
     },
 };

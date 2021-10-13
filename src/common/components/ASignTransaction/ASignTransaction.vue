@@ -1,16 +1,14 @@
 <template>
-    <div class="asigntransaction" :hidden="hidden || null" aria-hidden="true">
-        <wallet-picker ref="walletPicker" />
-    </div>
+    <div class="asigntransaction" :hidden="hidden || null" aria-hidden="true"></div>
 </template>
 
 <script>
-import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.vue';
+import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 
 export default {
     name: 'ASignTransaction',
 
-    components: { WalletPicker },
+    mixins: [eventBusMixin],
 
     props: {
         tx: {
@@ -43,7 +41,7 @@ export default {
             }
 
             if (!$wallet.connected) {
-                this.$refs.walletPicker.show();
+                this._eventBus.emit('show-wallet-picker');
             } else {
                 try {
                     if (!tx.from) {

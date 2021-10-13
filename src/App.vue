@@ -4,6 +4,7 @@
 
         <router-view />
 
+        <wallet-picker />
         <f-app-theme :themes="['theme-default', 'theme-dark', 'theme-pg']" />
         <f-tooltip with-arrow />
         <f-notifications
@@ -26,6 +27,7 @@ import FNotifications from 'fantom-vue-components/src/components/FNotifications/
 import FTooltip from 'fantom-vue-components/src/components/FTooltip/FTooltip.vue';
 import FAppTheme from 'fantom-vue-components/src/components/FAppTheme/FAppTheme.vue';
 import { setLoggedUser } from '@/modules/account/auth.js';
+import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.vue';
 
 // import { FAppTheme } from '@skavel/fantom-vue-ui';
 // import FAppTheme from '@skavel/fantom-vue-ui/src/components/FAppTheme/FAppTheme.vue';
@@ -34,7 +36,7 @@ import { setLoggedUser } from '@/modules/account/auth.js';
 export default {
     name: 'App',
 
-    components: { FNotifications, FNetworkStatus, FTooltip, FAppTheme },
+    components: { WalletPicker, FNotifications, FNetworkStatus, FTooltip, FAppTheme },
 
     data() {
         return {

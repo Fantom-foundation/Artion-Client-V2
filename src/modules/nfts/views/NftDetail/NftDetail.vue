@@ -53,7 +53,7 @@
                         </div>
                         <div class="nftdetail_currentPrice_item nftdetail_currentPrice_btn">
                             <f-button @click.native="onBuyNowClick">{{ $t('nftdetail.buyNow') }}</f-button>
-                            <f-button @click.native="$refs.window.show()">{{ $t('nftdetail.makeOffer') }}</f-button>
+                            <f-button @click.native="onMakeOfferClick">{{ $t('nftdetail.makeOffer') }}</f-button>
                         </div>
                     </div>
                     <a-share-button />
@@ -210,7 +210,7 @@
         </div>
         <!--        <nft-make-offer-window ref="window" :title="$t('nftdetail.offer')" />-->
 
-        <a-window ref="window" :title="$t('nftdetail.offer')" class="fwindow-width-5">
+        <a-window ref="makeOfferWindow" :title="$t('nftdetail.offer')" class="fwindow-width-5">
             <nft-make-offer-form :token="token" />
         </a-window>
 
@@ -230,9 +230,12 @@ import { getToken } from '@/modules/nfts/queries/token.js';
 import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import NftMakeOfferForm from '@/modules/nfts/components/NftMakeOfferForm/NftMakeOfferForm.vue';
+import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 
 export default {
     name: 'NftDetail',
+
+    mixins: [eventBusMixin],
 
     components: {
         NftMakeOfferForm,
@@ -267,6 +270,21 @@ export default {
                 this.$router.push({ name: '404' });
             } else {
                 this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+            }
+        },
+
+        async onMakeOfferClick() {
+            if (!this.$wallet.connected) {
+                const payload = {};
+
+                this._eventBus.emit('show-wallet-picker', payload);
+
+                const walletPicked = !!(await payload.promise);
+                if (walletPicked) {
+                    this.$refs.makeOfferWindow.show();
+                }
+            } else {
+                this.$refs.makeOfferWindow.show();
             }
         },
 
