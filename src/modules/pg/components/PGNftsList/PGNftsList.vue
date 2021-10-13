@@ -1,5 +1,5 @@
 <template>
-    <div class="pg-nfts-list">
+    <div class="pg-nfts-list" id="nfts">
         <h2 class="h2 pg-nfts-list__header">The NFTS</h2>
         <div class="theme-pg-u-w-100" v-for="(item, index) in nfts" :key="index">
             <p-g-nft></p-g-nft>

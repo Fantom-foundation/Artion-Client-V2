@@ -14,7 +14,7 @@
     justify-content: space-between;
     gap: var(--f-spacer-2);
 
-    padding: var(--f-spacer-3) var(--main-lr-padding);
+    padding: var(--f-spacer-6) var(--f-spacer-6) 0 var(--f-spacer-7);
     border-bottom: var(--appheader-border-bottom);
     background: var(--appheader-background);
 
@@ -43,8 +43,8 @@
     .pg-header {
         gap: var(--f-spacer-9);
 
-        &_logo {
-            padding-right: 160px;
+        &__logo {
+            padding-right: 100px;
         }
     }
 }

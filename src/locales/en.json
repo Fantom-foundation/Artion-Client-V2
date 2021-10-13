@@ -99,7 +99,7 @@
         "label": "Search bar",
         "placeholder": "Search items, collections and accounts"
     },
-    
+
 
     "walletbutton": {
         "connectWallet": "Connect Wallet"
@@ -186,6 +186,14 @@
         "unlockContent":"Unlockable Content",
         "mint":"Mint",
         "messageFtm":"1 FTM are charged to create a new NFT."
+    },
+
+    "pgModal": {
+        "heading": "Place a bid"
+    },
+
+    "pgBidForm": {
+        "currentBid": "Current bid"
     },
 
     "view_not_found": {

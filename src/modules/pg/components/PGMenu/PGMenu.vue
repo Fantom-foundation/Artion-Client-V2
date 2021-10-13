@@ -1,6 +1,10 @@
 <template>
-    <nav class="appmenu flex gap-5">
-        <router-link v-for="(item, index) in navigation" :key="`am_${index}`" :to="{ name: item.route }">
+    <nav class="appmenu flex gap-9">
+        <router-link
+            v-for="(item, index) in navigation"
+            :key="`am_${index}`"
+            :to="{ path: $route.path, hash: item.hash }"
+        >
             {{ item.label }}
         </router-link>
     </nav>
@@ -14,15 +18,15 @@ export default {
         return {
             navigation: [
                 {
-                    route: 'drop',
+                    hash: 'drop',
                     label: this.$t('navigation.drop'),
                 },
                 {
-                    route: 'nfts',
+                    hash: 'nfts',
                     label: this.$t('navigation.nfts'),
                 },
                 {
-                    route: 'faq',
+                    hash: 'faq',
                     label: 'FAQ',
                 },
             ],

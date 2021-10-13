@@ -1,5 +1,5 @@
 <template>
-    <div class="pg-drop">
+    <div class="pg-drop" id="drop">
         <h2 class="h2 pg-drop__header">The drop</h2>
         <div class="pg-drop__text">
             <p>

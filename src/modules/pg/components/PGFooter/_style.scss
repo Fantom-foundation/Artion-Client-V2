@@ -1,0 +1,17 @@
+.pg-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--f-spacer-8) 0 var(--f-spacer-6);
+    margin-top: var(--f-spacer-8);
+
+    &__link {
+        font-weight: 600;
+        font-size: var(--f-font-size-5);
+        letter-spacing: -0.02em;
+
+        &:first-child {
+            margin-right: var(--f-spacer-8);
+        }
+    }
+}

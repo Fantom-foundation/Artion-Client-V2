@@ -3,12 +3,14 @@ import Vuex from 'vuex';
 import VuexPersist from 'vuex-persist';
 import appConfig from '@/app.config.js';
 import { appStore } from '@/modules/app/store';
+import { pgStore } from '@/modules/pg/store';
 import { walletStore } from '@/plugins/wallet/store.js';
 // import { metamaskStore } from '@/plugins/metamask/store.js';
 // import { walletlinkStore } from '@/plugins/walletlink/store.js';
 
 const _modules = {
     [appStore.namespace]: appStore,
+    [pgStore.namespace]: pgStore,
     [walletStore.namespace]: walletStore,
     // [metamaskStore.namespace]: metamaskStore,
     // [walletlinkStore.namespace]: walletlinkStore,

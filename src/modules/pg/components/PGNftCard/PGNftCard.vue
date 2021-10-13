@@ -44,7 +44,7 @@
             <div class="pg-nft-card__address" :class="{ 'pg-nft-card__address--empty': !address }">{{ address }}</div>
 
             <div class="pg-nft-card__cta-bottom">
-                <span v-if="true" class="pg-nft-card__button">
+                <span v-if="true" class="pg-nft-card__button" @click="openModal">
                     <f-button size="large" label="Place a bid" />
                 </span>
                 <template v-else>
@@ -52,11 +52,19 @@
                 </template>
             </div>
         </div>
+
+        <p-g-modal v-if="showModal" @close="closeModal">
+            <p-g-bid-form></p-g-bid-form>
+        </p-g-modal>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import { SET_SHOW_MODAL } from '../../store/mutations';
 import WalletButton from '../../../wallet/components/WalletButton/WalletButton';
+import PGModal from '../PGModal/PGModal';
+import PGBidForm from '../PGBidForm/PGBidForm';
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -68,6 +76,8 @@ export default {
 
     components: {
         WalletButton,
+        PGModal,
+        PGBidForm,
     },
 
     data() {
@@ -80,6 +90,20 @@ export default {
             minutes: null,
             seconds: null,
         };
+    },
+
+    computed: {
+        ...mapGetters('pg', ['showModal']),
+    },
+
+    methods: {
+        openModal() {
+            this.$store.commit(`pg/${SET_SHOW_MODAL}`, true);
+        },
+
+        closeModal() {
+            this.$store.commit(`pg/${SET_SHOW_MODAL}`, false);
+        },
     },
 
     created() {
