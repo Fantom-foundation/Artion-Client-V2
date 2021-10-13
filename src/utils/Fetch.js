@@ -1,4 +1,4 @@
-// import { getCurrentHttpProvider } from '@/plugins/apollo-provider.js';
+// import { getCurrentHttpProvider } from '@/plugins/apollo/apollo-provider.js';
 import { getNestedProp } from 'fantom-vue-components/src/utils/index.js';
 
 function getCurrentHttpProvider() {

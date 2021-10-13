@@ -6,6 +6,7 @@
     "collections": "Collections",
     "status": "Status",
     "results": "results",
+    "your_profile": "Your Profile",
 
     "navigation": {
         "explore": "@:explore",
@@ -194,6 +195,19 @@
 
     "pgBidForm": {
         "currentBid": "Current bid"
+    },
+
+    "account": {
+        "unnamed": "Unnamed",
+        "copy": "Copy",
+        "collected": "Collected",
+        "created": "Created",
+        "favorited": "Favorited",
+        "hidden": "Hidden",
+        "activity": "Activity",
+        "offers": "Offers",
+        "filter": "Filter",
+        "filters": "Filters"
     },
 
     "view_not_found": {

@@ -1,5 +1,5 @@
 <template>
-    <f-window ref="window" v-bind="$attrs" v-on="$listeners">
+    <f-window ref="window" :check-components-change="false" v-bind="$attrs" v-on="$listeners">
         <!-- copy slots -->
         <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>

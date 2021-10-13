@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { gqlQuery } from '@/utils/gql-query.js';
+import { gqlQuery } from '@/utils/gql.js';
 
 export async function getCollections() {
     const query = {

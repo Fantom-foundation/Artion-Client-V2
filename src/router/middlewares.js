@@ -2,6 +2,8 @@ import { defer } from 'fantom-vue-components/src/utils';
 import FAppTheme from 'fantom-vue-components/src/components/FAppTheme/FAppTheme.vue';
 import { setMetaInfo } from '@/modules/app/document-meta.js';
 import appConfig from '@/app.config.js';
+import { wallet } from '@/plugins/wallet/Wallet.js';
+import { signIn } from '@/modules/account/auth.js';
 
 // import { vueApp } from '@/main.js';
 // import { isAnyComponentChanged } from 'fantom-vue-components/src/utils/vue-helpers.js';
@@ -40,6 +42,27 @@ export function setRouteTheme(to, from, next) {
     } else if (prevTheme) {
         FAppTheme.setTheme(prevTheme);
         prevTheme = '';
+    }
+}
+
+/**
+ * @param {Object} to
+ * @param {Object} from
+ * @param {function} next
+ */
+export async function authRoute(to, from, next) {
+    if (to.meta.auth) {
+        if (wallet.loggedUser || !from.name) {
+            next();
+        } else {
+            await signIn();
+
+            if (wallet.loggedUser) {
+                next();
+            }
+        }
+    } else {
+        next();
     }
 }
 

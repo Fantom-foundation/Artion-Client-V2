@@ -11,6 +11,7 @@ import { STATUSES } from '@/common/constants/statuses.js';
 import { CATEGORIES } from '@/common/constants/categories.js';
 import { GROUP_FILTERS } from '@/common/constants/group-filter.js';
 import { SORT_BY_FILTERS } from '@/common/constants/sort-by-filters.js';
+import { flattenFilters } from '@/modules/nfts/filters.js';
 
 export default {
     name: 'NftFilterChips',
@@ -87,7 +88,11 @@ export default {
         },
 
         getChipsFromDFilters() {
-            return this.getChipsFromFilters(this.dFilters);
+            const chips = this.getChipsFromFilters(this.dFilters);
+
+            this.$emit('chips-change', clone(chips));
+
+            return chips;
         },
     },
 
@@ -102,29 +107,16 @@ export default {
          */
         getChipsFromFilters(filters) {
             const { translations } = this;
-            const chips = [];
+            let chips = flattenFilters(filters);
 
-            Object.keys(filters).forEach(filterName => {
-                const filter = filters[filterName];
-                const transl = translations[filterName];
+            chips = chips.filter(chip => {
+                const transl = translations[chip.filterName];
 
                 if (transl) {
-                    if (isArray(filter)) {
-                        filter.forEach(code => {
-                            chips.push({
-                                value: code,
-                                label: transl[code],
-                                filterName,
-                            });
-                        });
-                    } else {
-                        chips.push({
-                            value: filter,
-                            label: transl[filter],
-                            filterName,
-                        });
-                    }
+                    chip.label = transl[chip.value];
                 }
+
+                return !!transl;
             });
 
             return chips;

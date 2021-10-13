@@ -1,8 +1,7 @@
 <template>
     <div class="walletbuttonwrap">
         <wallet-button v-on="$listeners" :wallet="wallet" @click="onWalletButtonClick" id="wb" />
-        <wallet-picker ref="walletPicker" />
-        <wallet-menu-listbox ref="menu" attach-to="#wb" @wallet-menu="onWalletMenu" />
+        <wallet-menu-popover ref="menu" attach-to="#wb" @wallet-menu="onWalletMenu" />
     </div>
 </template>
 
@@ -10,13 +9,19 @@
 import WalletButton from '@/modules/wallet/components/WalletButton/WalletButton.vue';
 import { mapState } from 'vuex';
 import { CHAINS } from '@/common/constants/chains.js';
-import WalletMenuListbox from '@/modules/wallet/components/WalletMenuListbox/WalletMenuListbox.vue';
-import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.vue';
+import { getUser } from '@/modules/account/queries/user.js';
+import { getLoggedUser } from '@/modules/account/queries/logged-user.js';
+// import { updateUser } from '@/modules/account/mutations/update-user.js';
+import { signIn } from '@/modules/account/auth.js';
+import WalletMenuPopover from '@/modules/wallet/components/WalletMenuPopover/WalletMenuPopover.vue';
+import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 
 export default {
     name: 'WalletButtonWrap',
 
-    components: { WalletPicker, WalletMenuListbox, WalletButton },
+    mixins: [eventBusMixin],
+
+    components: { WalletMenuPopover, WalletButton },
 
     data() {
         return {
@@ -57,17 +62,31 @@ export default {
     },
 
     methods: {
-        onWalletButtonClick() {
+        async onWalletButtonClick() {
             if (this.$wallet.connected) {
                 this.$refs.menu.show();
             } else {
-                this.$refs.walletPicker.show();
+                const payload = {};
+
+                this._eventBus.emit('show-wallet-picker', payload);
+
+                const walletPicked = !!(await payload.promise);
+                if (walletPicked) {
+                    this.$refs.menu.show();
+                }
             }
         },
 
-        onWalletMenu(item) {
-            if (item.value === 'logout') {
+        async onWalletMenu(item) {
+            if (item.action === 'logout') {
                 this.$wallet.logout();
+            } else if (item.action === 'login') {
+                // tmp
+                await signIn();
+                const userInfo = await getUser(this.$wallet.account);
+                // await updateUser({ username: 'test', bio: 'test user bio', email: 'testuser@test.org' });
+                console.log('userInfo', userInfo);
+                console.log('logged user', await getLoggedUser()); // null
             }
 
             this.$refs.menu.hide();

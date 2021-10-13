@@ -20,7 +20,7 @@
             <nft-main-list
                 :filters="filters"
                 :density="density"
-                @tokens-count="results = $event"
+                @tokens-count="onTokensCount"
                 @loading="onNftMainListLoading"
             />
         </div>
@@ -52,6 +52,10 @@ export default {
     },
 
     methods: {
+        onTokensCount(count) {
+            this.results = count;
+        },
+
         onNftMainListLoading(loading) {
             if (loading) {
                 this.results = -1;

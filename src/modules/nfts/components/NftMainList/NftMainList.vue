@@ -18,6 +18,7 @@ import NftList from '@/modules/nfts/components/NftList/NftList.vue';
 // import { getCollectionTokens } from '@/modules/nfts/queries/collection-tokens.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import { getTokens } from '@/modules/nfts/queries/tokens.js';
+import { filtersToQueryFilters, getDefaultFilters } from '@/modules/nfts/filters.js';
 
 export default {
     name: 'NftMainList',
@@ -46,8 +47,8 @@ export default {
     },
 
     watch: {
-        filters(value) {
-            console.log('filters changed: ', JSON.stringify(value));
+        filters() {
+            this.loadTokens();
         },
 
         loading(value) {
@@ -60,12 +61,21 @@ export default {
     },
 
     methods: {
-        async loadPage(pagination = { first: this.perPage }, filterSort = {}) {
-            return await getTokens(pagination, filterSort);
+        async loadPage(
+            pagination = { first: this.perPage },
+            filterSort = filtersToQueryFilters(this.filters, getDefaultFilters())
+        ) {
+            const tokens = await getTokens(pagination, filterSort);
+
+            this.$emit('tokens-count', this.totalItems);
+
+            return tokens;
         },
 
         async loadTokens() {
-            await this._loadPage();
+            await this._loadPage({
+                filterSort: filtersToQueryFilters(this.filters, getDefaultFilters()),
+            });
 
             this.$emit('tokens-count', this.totalItems);
         },

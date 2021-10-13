@@ -1,14 +1,14 @@
 import store from '@/store';
-import { SET_ACCOUNT, SET_CHAIN_ID, SET_WALLET } from '@/plugins/wallet/store.js';
+import { SET_ACCOUNT, SET_CHAIN_ID, SET_WALLET, SET_BT, DELETE_BT } from '@/plugins/wallet/store/mutations.js';
 import appConfig from '@/app.config.js';
 import { implementsWalletInterface } from '@/plugins/wallet/interface.js';
-import { Fetch } from '@/utils/Fetch.js';
 import gql from 'graphql-tag';
-import { gqlQuery } from '@/utils/gql-query.js';
+import { gqlQuery } from '@/utils/gql.js';
 import { Metamask } from '@/plugins/wallet/metamask/Metamask.js';
 import { Coinbase } from '@/plugins/wallet/coinbase/Coinbase.js';
 import { defer } from 'fantom-vue-components/src/utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
+import { fantomApolloClient } from '@/plugins/apollo/apollo-provider.js';
 
 // import Web3 from 'web3';
 // import store from '@/store';
@@ -43,6 +43,7 @@ export class Wallet {
         this.account = '';
         this.chainId = 0;
         this.connected = false;
+        this.loggedUser = null;
 
         this._initWallets(wallets);
     }
@@ -54,6 +55,15 @@ export class Wallet {
      */
     async signTransaction(tx, address) {
         return this.wallet ? await this.wallet.signTransaction(tx, address) : '';
+    }
+
+    /**
+     * @param {string} message
+     * @param {string} account
+     * @return {Promise<string>}
+     */
+    async personalSign(message, account) {
+        return this.wallet ? await this.wallet.personalSign(message, account) : '';
     }
 
     /**
@@ -78,6 +88,9 @@ export class Wallet {
     }
 
     logout() {
+        this.deleteBearerToken(this.account);
+        this.loggedUser = null;
+
         this.connected = false;
         this.account = '';
         this.chainId = 0;
@@ -128,13 +141,27 @@ export class Wallet {
                     await wallet.init();
                 }
 
+                const account = await wallet.getAccount(pick);
+
+                if (!account) {
+                    this.logout();
+                    return;
+                }
+
                 this._setChainId(wallet.getChainId());
-                this._setAccount(await wallet.getAccount(pick));
+                this._setAccount(account);
 
                 this.wallet = wallet;
                 this.connected = true;
 
                 this._setWalletName(walletName);
+
+                if (pick) {
+                    notifications.add({
+                        type: 'success',
+                        text: 'Wallet added',
+                    });
+                }
             } else {
                 throw new Error(`Unknown wallet ${walletName}`);
             }
@@ -143,6 +170,33 @@ export class Wallet {
                 type: 'error',
                 text: error.message,
             });
+        }
+    }
+
+    setBearerToken(bt) {
+        if (this.account && bt) {
+            store.commit(`wallet/${SET_BT}`, {
+                account: this.account,
+                bt,
+            });
+        }
+    }
+
+    getBearerToken() {
+        const account = this.account || store.state.wallet.account;
+
+        return store.state.wallet.bt[account] || '';
+    }
+
+    deleteBearerToken(account) {
+        if (account) {
+            store.commit(`wallet/${DELETE_BT}`, account);
+        }
+    }
+
+    setLoggedUser(user) {
+        if (this.account && user && this.account === user.address) {
+            this.loggedUser = user;
         }
     }
 
@@ -166,18 +220,10 @@ export class Wallet {
                 },
             },
             'account.txCount',
-            Fetch
+            fantomApolloClient
         );
 
         return inHexFormat ? nonce : parseInt(nonce, 16);
-
-        /*const web3 = this.wallet ? this.wallet.web3() : null;
-
-        if (web3) {
-            return web3.eth.getTransactionCount(address);
-        }
-
-        return -1;*/
     }
 
     /**
@@ -185,32 +231,23 @@ export class Wallet {
      * @param {string} to
      * @param {string} value
      * @param {string} data
-     * @return {Promise<void>}
+     * @return {Promise<string>}
      */
     async estimateGas({ from = undefined, to = undefined, value = undefined, data = undefined }) {
-        const dt = await Fetch.gqlQuery({
-            query: gql`
-                query EstimateGas($from: Address, $to: Address, $value: BigInt, $data: String) {
-                    estimateGas(from: $from, to: $to, value: $value, data: $data)
-                }
-            `,
-            variables: { from, to, value, data },
-        });
+        const estimateGas = await gqlQuery(
+            {
+                query: gql`
+                    query EstimateGas($from: Address, $to: Address, $value: BigInt, $data: String) {
+                        estimateGas(from: $from, to: $to, value: $value, data: $data)
+                    }
+                `,
+                variables: { from, to, value, data },
+            },
+            'estimateGas',
+            fantomApolloClient
+        );
 
-        console.log(dt);
-
-        /*const web3 = this.wallet ? this.wallet.web3() : null;
-
-        if (web3) {
-            return web3.eth.estimateGas({
-                from,
-                to,
-                data,
-                nonce: nonce > -1 ? nonce : await this.getNonce(from),
-            });
-        }
-
-        return -1;*/
+        return estimateGas;
     }
 
     /**

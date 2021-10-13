@@ -25,10 +25,7 @@
                 </button>
             </div>
             <div v-if="imagePreview === null" class="auploadarea_text">
-                <slot
-                    >Drop files here or browse <br />
-                    JPG, PNG, BMP, GIF Max 15mb.</slot
-                >
+                <slot></slot>
             </div>
         </div>
     </div>

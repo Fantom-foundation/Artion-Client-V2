@@ -75,6 +75,15 @@ export class Coinbase {
     }
 
     /**
+     * @param {string} message
+     * @param {string} account
+     * @return {Promise<string>}
+     */
+    async personalSign(message, account) {
+        return await this._web3.eth.personal.sign(message, account, '');
+    }
+
+    /**
      * @return {Promise<string>}
      */
     async getAccount() {

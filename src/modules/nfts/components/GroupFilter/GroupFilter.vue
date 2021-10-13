@@ -34,7 +34,7 @@ export default {
     data() {
         return {
             data: GROUP_FILTERS().map(group => {
-                return { label: this.$t(group.label), value: group.value };
+                return { label: this.$t(group.label), value: group.value, disabled: group.disabled };
             }),
             group: this.selected,
         };

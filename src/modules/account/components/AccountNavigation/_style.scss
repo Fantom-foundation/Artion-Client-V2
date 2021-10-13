@@ -1,0 +1,71 @@
+@use "fantom-vue-components/src/assets/scss/elements/links/tools" as linkTools;
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
+.accountnavigation {
+    margin-top: var(--f-spacer-6);
+
+    &_list {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        padding: 0;
+    }
+
+    &_item {
+        list-style-type: none;
+        position: relative;
+    }
+
+    @include linkTools.links() {
+        display: flex;
+        color: var(--f-color-grey-5);
+        align-items: center;
+        column-gap: var(--f-spacer-2);
+        padding: var(--f-spacer-4) var(--f-spacer-6);
+        font-weight: 600;
+        transition: all 0.3s ease;
+
+        &::after {
+            transition: background-color 0.4s ease 0s;
+            background-color: transparent;
+            bottom: 0%;
+            content: '';
+            display: block;
+            height: 4px;
+            left: 0px;
+            position: absolute;
+            width: 100%;
+            border-top-left-radius: var(--f-border-radius-2);
+            border-top-right-radius: var(--f-border-radius-2);
+        }
+
+        &:hover,
+        &.router-link-active {
+            color: var(--f-color-grey-7);
+        }
+
+        &.router-link-active {
+            &::after {
+                background-color: var(--f-color-primary-5);
+            }
+        }
+    }
+}
+
+@include media.media-max(1147px) {
+    .accountnavigation {
+        &_list {
+            justify-content: flex-start;
+            padding-left: var(--f-spacer-2);
+            overflow-x: scroll;
+            &::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+            }
+        }
+
+        @include linkTools.links() {
+            padding: var(--f-spacer-2) var(--f-spacer-4);
+        }
+    }
+}

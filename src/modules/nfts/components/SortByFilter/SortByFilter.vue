@@ -27,14 +27,14 @@ export default {
     props: {
         selected: {
             type: String,
-            default: 'createdAt',
+            default: '',
         },
     },
 
     data() {
         return {
             data: SORT_BY_FILTERS().map(sortby => {
-                return { label: this.$t(sortby.label), value: sortby.value };
+                return { label: this.$t(sortby.label), value: sortby.value, disabled: sortby.disabled };
             }),
             group: this.selected,
         };

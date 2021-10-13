@@ -1,0 +1,18 @@
+:root {
+    .faccordionnavigation {
+        .fnavigationnode {
+            &_item {
+                opacity: 0.8;
+
+                &:hover, &:focus {
+                    background: var(--f-color-primary-2);
+                    opacity: 1;
+                }
+            }
+
+            &-level1 {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

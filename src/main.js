@@ -4,7 +4,7 @@ import App from './App.vue';
 import './registerServiceWorker';
 import { i18n } from './plugins/vue-i18n.js';
 import { setupRouter } from './router';
-import { apolloProvider } from './plugins/apollo-provider.js';
+import { apolloProvider } from './plugins/apollo/apollo-provider.js';
 import store from './store';
 // import i18n from './plugins/vue-i18n.js';
 import './plugins/notifications.js';
@@ -16,9 +16,10 @@ import PortalVue from 'portal-vue';
 // import { isAnyComponentChanged } from 'fantom-vue-components/src/utils/vue-helpers.js';
 import { getRoutes, getMaintenanceRoutes } from '@/router/routes.js';
 import appConfig from '@/app.config.js';
-import { setRouteMetaInfo, setRouteTheme } from '@/router/middlewares.js';
+import { authRoute, setRouteMetaInfo, setRouteTheme } from '@/router/middlewares.js';
 import { Wallet } from '@/plugins/wallet/Wallet.js';
 import { WALLETS } from '@/common/constants/wallets.js';
+import './plugins/dayjs.js';
 
 Vue.use(PortalVue);
 Vue.use(Wallet, { wallets: WALLETS().map(wallet => wallet.id) });
@@ -33,7 +34,7 @@ export let vueApp = null;
 
 const router = setupRouter({
     routes: appConfig.underMaintenance ? getMaintenanceRoutes() : getRoutes(),
-    middlewares: [setRouteMetaInfo, setRouteTheme],
+    middlewares: [authRoute, setRouteMetaInfo, setRouteTheme],
 });
 
 vueApp = new Vue({
