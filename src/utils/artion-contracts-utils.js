@@ -140,11 +140,6 @@ const ZERO_AMOUNT = '0x0';
     };
 }
 
-/*export default {
-    createNFTCollection,
-    createNFT
-}*/
-
 /**
  * registerTokenRoyalty Method for setting royalty of NFT token
  *
@@ -595,6 +590,121 @@ const ZERO_AMOUNT = '0x0';
     };
 }
 
+/**
+ * createAuction Creates a new auction for a given item
+ * 
+ * Only the owner of item can create an auction and must have approved the contract
+ * In addition to owning the item, the sender also has to have the MINTER role.
+ * End time for the auction must be in the future.
+ *
+ * @param {string} nftAddress Address of the NFT token
+ * @param {int} tokenID NFT token ID
+ * @param {string} payToken Paying token address
+ * @param {number|BN|string} reservePrice Item cannot be sold for less than this price in wei
+ * @param {string} startTimestamp Unix epoch in seconds for the auction start time
+ * @param {string} endTimestamp Unix epoch in seconds for the auction end time
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+ function createAuction(nftAddress, tokenID, payToken, reservePrice, startTimestamp, endTimestamp, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "_payToken",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_reservePrice",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_startTimestamp",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_endTimestamp",
+                "type": "uint256"
+            }
+        ],
+        "name": "createAuction",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, reservePrice, startTimestamp, endTimestamp])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * placeAuctionBid Places a new bid, out bidding the existing bidder if found and criteria is reached
+ * 
+ * Only callable when the auction is open
+ * Bids from smart contracts are prohibited to prevent griefing with always reverting receiver
+ *
+ * @param {string} nftAddress Address of the NFT token, ERC721 address
+ * @param {int} tokenID NFT token ID
+ * @param {number|BN|string} amount Amount of tokens in auction paytoken in WEI units
+ */
+ function placeAuctionBid(nftAddress, tokenID, amount) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_bidAmount",
+                "type": "uint256"
+            }
+        ],
+        "name": "placeBid",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, amount])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
 export default {
     createNFTCollection,
     createNFT,
@@ -608,7 +718,9 @@ export default {
     buyListedItemWithPayToken,
     createOffer,
     cancelOffer,
-    acceptOffer
+    acceptOffer,
+    createAuction,
+    placeAuctionBid,
 }
 
 const createNFTContractAbi = {
