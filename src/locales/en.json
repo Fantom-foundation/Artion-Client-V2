@@ -188,6 +188,7 @@
     },
 
     "account": {
+        "unnamed": "Unnamed",
         "copy": "Copy",
         "collected": "Collected",
         "created": "Created",

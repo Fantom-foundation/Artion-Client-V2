@@ -37,11 +37,13 @@
                         ></path></svg
                 ></AUploadArea>
             </div>
-            <div class="account_title">Unnamed</div>
+            <div class="account_title">{{ user.name || $t('account.unnamed') }}</div>
             <div class="account_subtitle">
-                <button :area-label="$t('account.copy')" :data-tooltip="$t('account.copy')">
-                    0x2b45f2f1b5984a27eb100e6020eb5831dc287027
-                </button>
+                <f-copy-button :text="address">
+                    <template #button-content>
+                        <f-ellipsis :text="address" overflow="middle" />
+                    </template>
+                </f-copy-button>
             </div>
             <div class="account_join">Joined September 2021</div>
             <div class="account_btn">
@@ -140,10 +142,16 @@ import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilt
 import DensitySwitch from '@/modules/nfts/components/DensitySwitch/DensitySwitch';
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 import { routeQueryMixin } from '@/common/mixins/route-query.js';
+import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
+import FCopyButton from 'fantom-vue-components/src/components/FCopyButton/FCopyButton.vue';
+import { mapState } from 'vuex';
+import { getUser } from '@/modules/account/queries/user.js';
+
 export default {
     name: 'Account',
 
     mixins: [routeQueryMixin('filters')],
+
     components: {
         AUploadArea,
         AShareButton,
@@ -153,16 +161,46 @@ export default {
         NftListFilters,
         DensitySwitch,
         NftFilterChips,
+        FEllipsis,
+        FCopyButton,
     },
+
     data() {
         return {
             filters: {},
             isSideClose: true,
             filterNumber: 0,
+            address: this.$route.params.adddress,
+            user: {},
         };
     },
 
+    computed: {
+        ...mapState('wallet', {
+            walletAddress: 'account',
+        }),
+    },
+
+    watch: {
+        walletAddress: {
+            handler(value) {
+                if (!this.address) {
+                    this.address = this.$route.params.address || value;
+                }
+
+                this.loadUser(this.address);
+            },
+            immediate: true,
+        },
+    },
+
     methods: {
+        async loadUser(address) {
+            if (address) {
+                this.user = await getUser(address);
+            }
+        },
+
         onChipsChange(chips) {
             this.filterNumber = chips.length;
         },

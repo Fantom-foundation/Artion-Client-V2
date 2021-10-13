@@ -12,40 +12,41 @@ import AccountSettings from '@/modules/account/views/AccountSettings/AccountSett
 export function getAccountRoutes() {
     return [
         {
-            path: '/account',
+            path: '/account/:address?',
             name: 'account',
             component: Account,
+            redirect: { name: 'account-single-items' },
             meta: {
                 title: i18n.t('page.account.title'),
             },
             children: [
                 {
-                    path: 'singleitems',
+                    path: '/account/:address?/singleitems',
                     name: 'account-single-items',
                     component: AccountSingleItems,
                 },
                 {
-                    path: 'bundles',
+                    path: '/account/:address?/bundles',
                     name: 'account-bundles',
                     component: AccountBundles,
                 },
                 {
-                    path: 'favorited',
+                    path: '/account/:address?/favorited',
                     name: 'account-favorited',
                     component: AccountFavorited,
                 },
                 {
-                    path: 'activity',
+                    path: '/account/:address?/activity',
                     name: 'account-activity',
                     component: AccountActivity,
                 },
                 {
-                    path: 'offers',
+                    path: '/account/:address?/offers',
                     name: 'account-offers',
                     component: AccountOffers,
                 },
                 {
-                    path: 'myoffers',
+                    path: '/account/:address?/myoffers',
                     name: 'account-my-offers',
                     component: AccountMyOffers,
                 },
