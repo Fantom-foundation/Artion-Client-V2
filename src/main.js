@@ -19,6 +19,7 @@ import appConfig from '@/app.config.js';
 import { authRoute, setRouteMetaInfo, setRouteTheme } from '@/router/middlewares.js';
 import { Wallet } from '@/plugins/wallet/Wallet.js';
 import { WALLETS } from '@/common/constants/wallets.js';
+import './plugins/dayjs.js';
 
 Vue.use(PortalVue);
 Vue.use(Wallet, { wallets: WALLETS().map(wallet => wallet.id) });
