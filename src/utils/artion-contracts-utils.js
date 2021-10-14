@@ -747,6 +747,90 @@ const ZERO_AMOUNT = '0x0';
     };
 }
 
+/**
+ * resultAuction Closes a finished auction and rewards the highest bidder
+ * 
+ * Only item owner
+ * Auction can only be resulted if there has been a bidder and reserve met.
+ * If there have been no bids, the auction needs to be cancelled instead using `cancelAuction()`
+ *
+ * @param {string} nftAddress Address of the NFT token, ERC721 address
+ * @param {int} tokenID NFT Token ID of the item being auctioned
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ */
+ function resultAuction(nftAddress, tokenID, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "resultAuction",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * cancelAuction Cancels an un-resulted auctions, returning the funds to the top bidder if found
+ * 
+ * Only item owner
+ *
+ * @param {string} nftAddress Address of the NFT token, ERC721 address
+ * @param {int} tokenID NFT Token ID of the item being auctioned
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ */
+ function cancelAuction(nftAddress, tokenID, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "cancelAuction",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
 export default {
     createNFTCollection,
     createNFT,
@@ -764,6 +848,8 @@ export default {
     createAuction,
     placeAuctionBid,
     withdrawAuctionBid,
+    resultAuction,
+    cancelAuction,
 }
 
 const createNFTContractAbi = {
