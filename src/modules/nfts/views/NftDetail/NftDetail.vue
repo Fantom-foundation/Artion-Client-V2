@@ -210,7 +210,7 @@
         </div>
         <!--        <nft-make-offer-window ref="window" :title="$t('nftdetail.offer')" />-->
 
-        <a-window ref="makeOfferWindow" :title="$t('nftdetail.offer')" class="fwindow-width-5">
+        <a-window ref="makeOfferWindow" :title="$t('nftdetail.offer')" class="fwindow-width-4">
             <nft-make-offer-form :token="token" />
         </a-window>
 
@@ -270,6 +270,7 @@ export default {
                 this.$router.push({ name: '404' });
             } else {
                 this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+                console.log(routeParams.tokenContract, toHex(routeParams.tokenId));
             }
         },
 
