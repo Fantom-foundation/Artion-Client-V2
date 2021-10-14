@@ -1,4 +1,5 @@
 import UnderMaintenance from '@/modules/app/views/UnderMaintenance/UnderMaintenance.vue';
+import Page404 from '@/modules/app/views/Page404/Page404.vue';
 
 import { getAppRoutes } from '@/modules/app/routes.js';
 import { getNftsRoutes } from '@/modules/nfts/routes.js';
@@ -16,6 +17,29 @@ export function getMaintenanceRoutes() {
             name: 'maintenance',
             path: '*',
             component: UnderMaintenance,
+        },
+    ];
+}
+
+export function getPGModuleRoutes() {
+    return [
+        ...getPGRoutes('/'),
+        {
+            name: '404',
+            path: '/404',
+            component: Page404,
+            meta: {
+                theme: 'theme-pg',
+            },
+        },
+        {
+            name: 'n',
+            path: '*',
+            component: Page404,
+            redirect: { name: '404' },
+            meta: {
+                theme: 'theme-pg',
+            },
         },
     ];
 }
