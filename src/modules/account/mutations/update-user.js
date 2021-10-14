@@ -8,14 +8,18 @@ import { gqlMutation } from '@/utils/gql.js';
  * @param {string} avatar
  * @return {Promise<number|string|*|undefined|null>}
  */
-export async function updateUser({ username = '', bio = '', email = '', avatar = '' }) {
+export async function updateUser({ username = '', bio = '', email = ''}) {
     const mutation = {
         mutation: gql`
-            mutation UpdateUser($username: String!, $bio: String!, $email: String!, $avatar: String!) {
-                updateUser(username: $username, bio: $bio, email: $email, avatar: $avatar)
+            mutation UpdateUser(
+                $username: String!
+                $bio: String!
+                $email: String!
+            ) {
+                updateUser(username: $username, bio: $bio, email: $email)
             }
         `,
-        variables: { username, bio, email, avatar },
+        variables: { username, bio, email },
     };
 
     return gqlMutation(mutation);

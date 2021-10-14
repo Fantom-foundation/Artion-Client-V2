@@ -1,0 +1,50 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+.accountsettings {
+	display: flex;
+	&_sidebar {
+		padding: 0 var(--f-spacer-2);
+		border-right: 1px solid var(--f-color-grey-3); 
+		min-width: 250px;
+		width: 340px;
+	}
+
+	&_title {
+		margin: var(--f-spacer-2) 0;
+		padding-left: var(--f-spacer-4);
+		text-transform: uppercase;
+		font-weight: 700;
+		color: var(--f-color-grey-6);
+	}
+
+	.fnavigation > ul > li.fnavigationnode {
+		border-radius: 12px;
+		overflow: hidden;
+	}
+
+	&_view {
+		max-width: 800px;
+		flex: 1;
+		margin: var(--f-spacer-6) var(--f-spacer-7) 0px;
+	}
+}
+
+@include media.media-max(1297px) {
+	.accountsettings {
+		&_sidebar {
+			width: auto;
+		}
+	}
+}
+
+
+@include media.media-max(998px) {
+	.accountsettings {
+		&_sidebar {
+			display: none;
+		}
+
+		&_view {
+			margin: var(--f-spacer-6) var(--f-spacer-3) 0px;
+		}
+	}
+}

@@ -35,6 +35,7 @@ import IconAbout from '@/assets/vue-icons/IconAbout.vue';
 import IconChain from '@/assets/vue-icons/IconChain.vue';
 import IconWeb from '@/assets/vue-icons/IconWeb.vue';
 import IconTelegram from '@/assets/vue-icons/IconTelegram.vue';
+import IconInstagram from '@/assets/vue-icons/IconInstagram.vue';
 import IconDiscord from '@/assets/vue-icons/IconDiscord.vue';
 import IconView from '@/assets/vue-icons/IconView.vue';
 import IconGraf from '@/assets/vue-icons/IconGraf.vue';
@@ -49,6 +50,9 @@ import IconEyeslash from '@/assets/vue-icons/IconEyeslash.vue';
 import IconHistory from '@/assets/vue-icons/IconHistory.vue';
 import IconPaint from '@/assets/vue-icons/IconPaint.vue';
 import IconArrowright from '@/assets/vue-icons/IconArrowright.vue';
+import IconNotify from '@/assets/vue-icons/IconNotify.vue';
+import IconUser from '@/assets/vue-icons/IconUser.vue';
+import IconCopy from '@/assets/vue-icons/IconCopy.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -101,6 +105,10 @@ export default {
         IconHistory,
         IconPaint,
         IconArrowright,
+        IconNotify,
+        IconUser,
+        IconInstagram,
+        IconCopy,
     },
 
     props: {

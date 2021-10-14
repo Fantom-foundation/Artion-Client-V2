@@ -225,6 +225,34 @@
         "filters": "Filters"
     },
 
+    "accountsettings": {
+        "title": "SETTINGS",
+        "profile": "Profile",
+        "notifications": "Notifications",
+        "offers": "Offers"
+    },
+
+    "accountsettingsprofile": {
+        "title": "Profile Settings"
+    },
+
+    "accountprofileform": {
+        "title": "Profile Settings",
+        "username": "Username",
+        "enterUsername": "Enter username",
+        "bio": "Bio",
+        "enterBio": "Enter Bio!",
+        "email": "Email Address",
+        "enterEmail": "Enter Email",
+        "enterTwitter": "YourTwitterHandle",
+        "enterInst": "YourInstagramHandle",
+        "enterWeb": "yoursite.io",
+        "wallet": "Wallet Address",
+        "profileImg": "Profile Image",
+        "profileBanner": "Profile Banner",
+        "save": "Save"
+    },
+
     "view_not_found": {
         "404": "404",
         "text": "Oooooops! We couldn’t find the page you’re looking for :(",

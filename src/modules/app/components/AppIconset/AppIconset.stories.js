@@ -60,6 +60,10 @@ export const Default = () => ({
                 'history',
                 'paint',
                 'arrowright',
+                'notify',
+                'user',
+                'instagram',
+                'copy',
             ],
         };
     },
