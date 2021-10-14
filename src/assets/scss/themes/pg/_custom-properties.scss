@@ -75,4 +75,15 @@
     .theme-pg-u-w-100 {
         width: 100%;
     }
+
+    .walletbutton {
+        & .fbutton {
+            color: var(--theme-pg-color);
+        }
+
+        &.walletbutton-notconnected .fbutton {
+            color: var(--theme-pg-color);
+            background: var(--theme-pg-btn-background);
+        }
+    }
 }

@@ -195,10 +195,14 @@
 
     "pgBidForm": {
         "currentBid": "Current bid",
+        "minNextBid": "Min bid",
         "balance": "Balance",
         "termsAndConditionsAgreement": "By checking this box, I agree to Artion's",
         "termsAndConditionsLink": "Terms of Service",
-        "placeBid": "Place bid"
+        "placeBid": "Place bid",
+        "newBidIsBelowCurrent": "Bid is below current bid",
+        "mustBeNumber": "Bid must be number",
+        "bidMustBeDivisibleByHundred": "Bid must be in 100 FTM increments minimum"
     },
 
     "account": {

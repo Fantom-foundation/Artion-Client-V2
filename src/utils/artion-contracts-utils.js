@@ -592,7 +592,7 @@ const ZERO_AMOUNT = '0x0';
 
 /**
  * createAuction Creates a new auction for a given item
- * 
+ *
  * Only the owner of item can create an auction and must have approved the contract
  * In addition to owning the item, the sender also has to have the MINTER role.
  * End time for the auction must be in the future.
@@ -660,15 +660,16 @@ const ZERO_AMOUNT = '0x0';
 
 /**
  * placeAuctionBid Places a new bid, out bidding the existing bidder if found and criteria is reached
- * 
+ *
  * Only callable when the auction is open
  * Bids from smart contracts are prohibited to prevent griefing with always reverting receiver
  *
  * @param {string} nftAddress Address of the NFT token, ERC721 address
  * @param {int} tokenID NFT token ID
  * @param {number|BN|string} amount Amount of tokens in auction paytoken in WEI units
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
  */
- function placeAuctionBid(nftAddress, tokenID, amount) {
+ function placeAuctionBid(nftAddress, tokenID, amount, web3Client) {
 
     const abi = {
         "inputs": [

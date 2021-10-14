@@ -1,14 +1,20 @@
 <template>
     <div class="pg-bid-form">
-        <div class="pg-bid-form__current-bid">{{ $t('pgBidForm.currentBid') }}: 15,000 FTM</div>
+        <div class="pg-bid-form__current-bid" :class="{ 'pg-bid-form__current-bid--mb-0': !!currentBid }">
+            {{ $t('pgBidForm.currentBid') }}: {{ currentBid.toLocaleString('en-US') }} FTM
+        </div>
+        <div class="pg-bid-form__min-next-bid" v-if="currentBid">
+            {{ $t('pgBidForm.minNextBid') }}: {{ (currentBid + 100).toLocaleString('en-US') }} FTM
+        </div>
         <div class="pg-bid-form__my-bid">
-            <a-currency-dropdown></a-currency-dropdown>
+            <a-currency-dropdown :currencies="currencies" @token-selected="factor = $event.price"></a-currency-dropdown>
             <input
                 class="pg-bid-form__amount"
-                :class="{ 'pg-bid-form__amount--zero': !formData.amount }"
-                type="text"
-                v-model="formData.amount"
+                :class="{ 'pg-bid-form__amount--zero': !amount, 'pg-bid-form__amount--error': error }"
+                type="number"
+                v-model="amount"
             />
+            <div v-if="error" class="pg-bid-form__error">{{ error }}</div>
         </div>
         <div class="pg-bid-form__info">
             <div class="pg-bid-form__balance">
@@ -28,15 +34,42 @@
         </div>
         <div class="flex juc-center">
             <span v-if="true" class="pg-bid-form__button" @click="placeBid">
-                <f-button size="large" :label="$t('pgBidForm.placeBid')" />
+                <f-button
+                    size="large"
+                    :label="$t('pgBidForm.placeBid')"
+                    :disabled="!amount || !termAndConditionsAgreed || !!error"
+                />
             </span>
         </div>
     </div>
 </template>
 
 <script>
-// import PGCurrencyDropdown from '../PGCurrencyDropdown/PGCurrencyDropdown';
 import ACurrencyDropdown from '../../../../common/components/ACurrencyDropdown/ACurrencyDropdown';
+
+const currencies = [
+    {
+        address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+        label: 'WFTM',
+        img: '/img/WFTM.png',
+        price: 2.23,
+        value: 'wftm',
+    },
+    {
+        address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
+        label: 'DAI',
+        img: '',
+        price: 1,
+        value: 'day',
+    },
+    {
+        address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
+        label: 'USDC',
+        img: '',
+        price: 1,
+        value: 'usdc',
+    },
+];
 
 export default {
     name: 'PGBidForm',
@@ -47,25 +80,40 @@ export default {
 
     data() {
         return {
-            formData: {
-                token: null,
-                amount: 0.0,
-            },
+            currencies,
+            factor: null,
+            token: null,
+            amount: 0.0,
+            currentBid: 15000,
             termAndConditionsAgreed: false,
+            error: null,
         };
+    },
+
+    watch: {
+        amount() {
+            const parsedAmount = Number(this.amount);
+
+            if (Number.isNaN(parsedAmount)) {
+                this.error = this.$t('pgBidForm.mustBeNumber');
+                return false;
+            }
+            if (parsedAmount < this.currentBid) {
+                this.error = this.$t('pgBidForm.newBidIsBelowCurrent');
+                return false;
+            }
+            if (parsedAmount % 100 !== 0) {
+                this.error = this.$t('pgBidForm.bidMustBeDivisibleByHundred');
+                return false;
+            }
+
+            this.error = null;
+        },
     },
 
     methods: {
         placeBid() {
-            if (!this.validate()) {
-                return;
-            }
             console.log('Place Bid');
-        },
-
-        validate() {
-            console.log('Validate');
-            return true;
         },
     },
 };
