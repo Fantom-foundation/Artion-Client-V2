@@ -8,6 +8,7 @@
     --theme-pg-btn-border-radius: 16px;
     --theme-pg-btn-background: #1147FF;
     --theme-pg-currency-dropdown-background: #142035;
+    --theme-pg-currency-dropdown-background-selected: #273958;
     --theme-pg-currency-dropdown-background-hover: #1f304e;
 
     --f-font-size-1: 10px;
@@ -74,6 +75,22 @@
 
     .theme-pg-u-w-100 {
         width: 100%;
+    }
+
+    .flistbox {
+        --flistbox-item-color: var(--theme-pg-color);
+        --flistbox-item-hover-color: var(--theme-pg-color);
+        --flistbox-item-background-color: var(--theme-pg-currency-dropdown-background);
+        --flistbox-item-hover-background-color: var(--theme-pg-currency-dropdown-background-hover);
+        --flistbox-item-selected-background-color: var(--theme-pg-currency-dropdown-background-hover);
+
+        & .flistbox_list_item:not(:first-child) {
+            border-top: 1px solid #273958;;
+        }
+    }
+
+    .fpopover {
+        --fwindow-popover-border-radius: 0 0 var(--f-border-radius-3) var(--f-border-radius-3);
     }
 
     .walletbutton {
