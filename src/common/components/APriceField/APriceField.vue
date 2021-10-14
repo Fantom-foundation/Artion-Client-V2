@@ -1,14 +1,12 @@
 <template>
     <div class="apricefield">
-        <f-input type="number" v-bind="$attrs" v-on="$listeners" v-model="dValue">
+        <f-input ref="input" type="number" v-bind="$attrs" v-on="$listeners" v-model="dValue">
             <template #prefix>
-                <a-currency-dropdown :currencies="currencies" @token-selected="factor = $event.price" />
+                <a-currency-dropdown :currencies="currencies" @token-selected="onTokenSelected" />
             </template>
             <template #suffix>
                 <div class="apricefield_suffix">
-                    <div class="apricefield_number">
-                        {{ '$' + dollarEquivalent }}
-                    </div>
+                    <div class="apricefield_number">{{ '$' + dollarEquivalent }}</div>
                 </div>
             </template>
         </f-input>
@@ -52,7 +50,7 @@ export default {
         dollarEquivalent() {
             const m = parseFloat(this.dValue) * this.factor;
 
-            return isNaN(m) ? '' : m;
+            return isNaN(m) ? '' : m.toFixed(2);
         },
     },
 
@@ -65,11 +63,23 @@ export default {
         },
 
         value(value) {
-            this.dValue = parseFloat(value);
+            const val = parseFloat(value);
+
+            if (val !== parseFloat(this.dValue)) {
+                this.dValue = val;
+            }
         },
 
         dValue(value) {
+            console.log('dVAlue change');
             this.$emit('change', value);
+        },
+    },
+
+    methods: {
+        onTokenSelected(item) {
+            this.factor = item.price;
+            this.$emit('token-selected', item);
         },
     },
 };
