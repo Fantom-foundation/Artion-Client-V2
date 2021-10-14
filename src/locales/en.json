@@ -194,7 +194,11 @@
     },
 
     "pgBidForm": {
-        "currentBid": "Current bid"
+        "currentBid": "Current bid",
+        "balance": "Balance",
+        "termsAndConditionsAgreement": "By checking this box, I agree to Artion's",
+        "termsAndConditionsLink": "Terms of Service",
+        "placeBid": "Place bid"
     },
 
     "account": {

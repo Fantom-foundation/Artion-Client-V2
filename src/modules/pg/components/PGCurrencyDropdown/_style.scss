@@ -1,0 +1,54 @@
+.pg-currency-dropdown {
+	--acurrencydropdown-background: var(--f-color-grey-2);
+
+	& .adropdownlistbox .fdropdownlistbox_button {
+		width: auto;
+		padding: 2px;
+        border: none;
+		background: var(--theme-pg-currency-dropdown-background);
+		background-clip: content-box, padding-box;
+
+
+
+		span {
+			height: 100%;
+			display: flex;
+			border-radius: inherit;
+			gap:var(--f-spacer-2);
+			align-items: center;
+
+			&.fdropdownlistbox_button_label {
+				padding: var(--f-spacer-2) var(--f-spacer-3);
+
+				div {
+					display: flex;
+					column-gap: var(--f-spacer-2);
+				}
+			}
+
+			&.pg-currency-dropdown__arrow {
+				padding: 0 var(--f-spacer-1);
+
+				svg {
+					width: 16px;
+				}
+
+				&.arrow_rotate {
+					svg {
+						transition: transform .1s ease;
+						transform: rotate(180deg);
+					}
+				}
+			}
+		}
+	}
+
+	.flex.ali-center {
+		column-gap: var(--f-spacer-2);
+	}
+}
+
+.inp:not([disabled]):not(.inp-disabled):not(.inp-nohover):not([readonly]):not(.inp-readonly):not([aria-invalid=true]):not(.inp-invalid):hover {
+    background: var(--theme-pg-currency-dropdown-background-hover);
+    border: none;
+}

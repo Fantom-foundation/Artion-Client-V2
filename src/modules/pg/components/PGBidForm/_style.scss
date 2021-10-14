@@ -1,8 +1,81 @@
 .pg-bid-form {
+    --zero-value-color: #8093B6;
+    --error-value-color: #C02929;
+
+    width: 640px;
+
     &__current-bid {
         margin-bottom: var(--f-spacer-9);
         font-size: var(--f-font-size-5);
         font-weight: 600;
         color: #71717D;
+    }
+
+    &__my-bid {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 24px;
+
+        & .acurrencydropdown {
+            --acurrencydropdown-background: #142035;
+        }
+    }
+
+    &__amount {
+        text-align: right;
+        font-size: var(--f-font-size-9);
+        background-color: var(--theme-pg-background-color);
+        border: none;
+
+        &:focus {
+            outline: none
+        }
+
+        &--zero {
+            color: var(--zero-value-color);
+        }
+
+        &--error {
+            color: var(--error-value-color);
+        }
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 100px;
+    }
+
+    &__balance {
+        padding-left: 14px;
+    }
+
+    &__balance-text {
+        color: var(--zero-value-color);
+    }
+
+    &__bid-value-fiat {
+        color: var(--zero-value-color);
+    }
+
+    &__terms-and-conditions {
+        --f-cr-label-color: #95A3B3;
+        --f-inputs-border-color: #95A3B3;
+        --theme-pg-color: var(--theme-pg-btn-background);
+    }
+
+    &__button {
+        display: inline-block;
+        justify-content: center;
+        width: 460px;
+        margin-top: var(--f-spacer-6);
+        border-radius: var(--f-border-radius-7);
+        overflow: hidden;
+
+        & > .fbutton {
+            width: 100%;
+        }
     }
 }
