@@ -9,6 +9,8 @@ import { Coinbase } from '@/plugins/wallet/coinbase/Coinbase.js';
 import { defer } from 'fantom-vue-components/src/utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { fantomApolloClient } from '@/plugins/apollo/apollo-provider.js';
+import { delay } from 'fantom-vue-components/src/utils/function.js';
+import { toBigNumber, toHex } from '@/utils/big-number.js';
 
 // import Web3 from 'web3';
 // import store from '@/store';
@@ -50,11 +52,23 @@ export class Wallet {
 
     /**
      * @param {Object} tx
+     * @param {boolean} [waitUntilVerified]
      * @param {string} [address]
      * @return {Promise<*|string>} Tx hash
      */
-    async signTransaction(tx, address) {
-        return this.wallet ? await this.wallet.signTransaction(tx, address) : '';
+    async signTransaction(tx, waitUntilVerified = false, address) {
+        // return this.wallet ? await this.wallet.signTransaction(tx, address) : '';
+        let txHash = '';
+
+        if (this.wallet) {
+            txHash = await this.wallet.signTransaction(tx, address);
+
+            if (txHash && waitUntilVerified) {
+                await this._verifyTransaction(txHash);
+            }
+        }
+
+        return txHash;
     }
 
     /**
@@ -227,6 +241,31 @@ export class Wallet {
     }
 
     /**
+     * @param {string} address
+     * @param {boolean} [inHexFormat]
+     * @return {Promise<number|string|*|number>}
+     */
+    async getGasPrice(inHexFormat) {
+        let gasPrice = await gqlQuery(
+            {
+                query: gql`
+                    query GasPrice {
+                        gasPrice
+                    }
+                `,
+                fetchPolicy: 'network-only',
+            },
+            'gasPrice',
+            fantomApolloClient
+        );
+
+        // gasPrice * 1.2
+        gasPrice = toHex(toBigNumber(gasPrice).multipliedBy(1.2));
+
+        return inHexFormat ? gasPrice : parseInt(gasPrice, 16);
+    }
+
+    /**
      * @param {string} from
      * @param {string} to
      * @param {string} value
@@ -242,6 +281,7 @@ export class Wallet {
                     }
                 `,
                 variables: { from, to, value, data },
+                fetchPolicy: 'network-only',
             },
             'estimateGas',
             fantomApolloClient
@@ -251,11 +291,53 @@ export class Wallet {
     }
 
     /**
+     * @param {string} txHash
+     * @return {Promise<void>}
+     * @private
+     */
+    async _verifyTransaction(txHash) {
+        let status = '';
+
+        if (txHash) {
+            while (!status) {
+                status = await this._getTransactionStatus(txHash);
+                await delay(400);
+                console.log(!!status);
+            }
+        }
+    }
+
+    /**
+     * @param {string} txHash
+     * @return {Promise<number|string|*|undefined|null>}
+     * @private
+     */
+    _getTransactionStatus(txHash) {
+        return gqlQuery(
+            {
+                query: gql`
+                    query TransactionByHash($hash: Bytes32!) {
+                        transaction(hash: $hash) {
+                            status
+                        }
+                    }
+                `,
+                variables: {
+                    hash: txHash,
+                },
+                fetchPolicy: 'network-only',
+            },
+            'transaction.status',
+            fantomApolloClient
+        );
+    }
+
+    /**
      * @param {number} chainId
      * @private
      */
     _setChainId(chainId) {
-        console.log('CHANINID', chainId, !chainId);
+        // if (isNaN(chainId) || chainId === 0) {
         if (isNaN(chainId)) {
             this.logout();
         }

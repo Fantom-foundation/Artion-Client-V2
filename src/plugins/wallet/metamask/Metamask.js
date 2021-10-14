@@ -91,21 +91,14 @@ export class Metamask {
      */
     async signTransaction(tx, address) {
         if (this._provider) {
-            try {
-                if (address) {
-                    tx.from = address;
-                }
-
-                const txHash = await this._provider.request({
-                    method: 'eth_sendTransaction',
-                    params: [tx],
-                });
-
-                return txHash;
-            } catch (_error) {
-                console.error(_error);
-                return '';
+            if (address) {
+                tx.from = address;
             }
+
+            return await this._provider.request({
+                method: 'eth_sendTransaction',
+                params: [tx],
+            });
         }
 
         return '';
