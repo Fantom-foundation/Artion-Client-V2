@@ -14,14 +14,13 @@ export async function gqlQuery(query, fieldName = '', client = artionApolloClien
 
         return null;
     } catch (error) {
-        console.error(error);
         notifications.add({
             type: 'error',
             text: error,
         });
+        // console.error(error);
+        throw error;
     }
-
-    return null;
 }
 
 export async function gqlMutation(mutation, fieldName = '', client = artionApolloClient) {
@@ -35,12 +34,11 @@ export async function gqlMutation(mutation, fieldName = '', client = artionApoll
 
         return null;
     } catch (error) {
-        console.error(error);
         notifications.add({
             type: 'error',
             text: error,
         });
+        // console.error(error);
+        throw error;
     }
-
-    return null;
 }

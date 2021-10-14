@@ -1,5 +1,4 @@
 import { BigNumber } from 'bignumber.js';
-// import web3utils from 'web3-utils';
 
 export const BigNumber0 = BigNumber.clone({
     DECIMAL_PLACES: 0,
@@ -26,23 +25,41 @@ export function bShiftDP(_value, _dp = 18) {
 }
 
 /**
- * From Wei to Ether
- *
- * @param {string|number|BigNumber} _value
+ * @param {string|number|BigNumber} value
+ * @param {number} [decimals]
  * @return {BigNumber}
  */
-export function bFromWei(_value) {
-    return bShiftDP(_value, -18);
+export function bFromTokenValue(value, decimals = 18) {
+    return bShiftDP(value, -decimals);
+}
+
+/**
+ * @param {string|number|BigNumber} value
+ * @param {number} [decimals]
+ * @return {BigNumber}
+ */
+export function bToTokenValue(value, decimals = 18) {
+    return bShiftDP(value, decimals);
+}
+
+/**
+ * From Wei to Ether
+ *
+ * @param {string|number|BigNumber} value
+ * @return {BigNumber}
+ */
+export function bFromWei(value) {
+    return bFromTokenValue(value);
 }
 
 /**
  * From Ether to Wei
  *
- * @param {string|number|BigNumber} _value
+ * @param {string|number|BigNumber} value
  * @return {BigNumber}
  */
-export function bToWei(_value) {
-    return bShiftDP(_value, 18);
+export function bToWei(value) {
+    return bToTokenValue(value);
 }
 
 /**

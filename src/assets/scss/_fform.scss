@@ -1,4 +1,32 @@
 .fform {
+    width: 100%;
+
+    &:not(.fform-elemsautowidth) {
+        .fforminput {
+            &_text, &_email, &_number, &_date, &_time, &_textarea, &_select, &_passwordfield, &_listbox,
+            &_dropdownlistbox, &_slider, &_combo-box, &_combobox, &_money-field, &_date-field, &_datetime-field,
+            &_a-price-field {
+                //display: block;
+                width: 100%;
+
+                .finput, .fselect, .fdropdownlistbox, .fpasswordfield, .fcombobox {
+                    width: 100%;
+                }
+
+                .inp {
+                    //display: flex;
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    &_buttons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     .flabel, .fforminput .flabel {
         display: block;
         font-size: var(--f-font-size-4);

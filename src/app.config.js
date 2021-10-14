@@ -1,4 +1,4 @@
-const appConfig = {
+let appConfig = {
     // app name - used in titles
     name: 'Artion',
     // app main title
@@ -7,8 +7,12 @@ const appConfig = {
     description: 'Artion, NFT markteplace',
     // app keywords
     keywords: 'Artion, NFT, NFTs, Fantom',
+    // app's favicon
+    favicon: 'public/favicon.png',
     // app code
-    code: 'artion',
+    code: process.env.VUE_APP_FANTOM_MODULE || 'artion',
+    // app routes
+    module: process.env.VUE_APP_FANTOM_MODULE || 'artion',
     // apollo client settings
     apollo: {
         // Artion api
@@ -101,6 +105,24 @@ const appConfig = {
         outputDir: 'dist',
     },
 };
+
+if (appConfig.module === 'pg') {
+    appConfig = {
+        ...appConfig,
+        // app name - used in titles
+        name: 'Pierre Gasly',
+        // app main title
+        title: 'Pierre Gasly',
+        // app description
+        description: 'Pierre Gasly, NFT markteplace',
+        // app keywords
+        keywords: 'Pierre Gasly, NFT, NFTs, Fantom',
+        // app's favicon
+        favicon: 'public/favicon-pg.png',
+        // progressive web application
+        usePWA: false,
+    };
+}
 
 appConfig.mainnet = {
     chainId: appConfig.chainId,

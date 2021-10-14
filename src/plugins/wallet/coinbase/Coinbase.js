@@ -58,17 +58,10 @@ export class Coinbase {
                 tx.from = address;
             }
 
-            try {
-                const txHash = await this._provider.request({
-                    method: 'eth_sendTransaction',
-                    params: [tx],
-                });
-
-                return txHash;
-            } catch (_error) {
-                console.error(_error);
-                return '';
-            }
+            return await this._provider.request({
+                method: 'eth_sendTransaction',
+                params: [tx],
+            });
         }
 
         return '';

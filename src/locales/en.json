@@ -101,7 +101,6 @@
         "placeholder": "Search items, collections and accounts"
     },
 
-
     "walletbutton": {
         "connectWallet": "Connect Wallet"
     },
@@ -121,9 +120,11 @@
     "nftmakeofferform": {
         "price": "Price",
         "offerExpiration": "Offer Expiration",
-        "placeOffer": "Place Offer"
+        "placeOffer": "Place Offer",
+        "nonZeroPrice": "Price must be non zero value",
+        "unsufficientBalance": "Unsufficient balance",
+        "badDate": "Bad date"
     },
-
 
     "densityswitch": {
         "largeDisplay": "Large Display",
@@ -174,19 +175,19 @@
     },
 
     "nftcreate": {
-        "collection":"Collection",
-        "name":"Name",
-        "symbol":"Symbol",
-        "description":"Description",
-        "royalty":"Royalty (%)",
-        "royaltyErr":"Value should be between 1 and 100",
+        "collection": "Collection",
+        "name": "Name",
+        "symbol": "Symbol",
+        "description": "Description",
+        "royalty": "Royalty (%)",
+        "royaltyErr": "Value should be between 1 and 100",
         "royaltyTooltip": "If you set a royalty here, you will get X percent of sales price each time an NFT is sold on our platform.",
-        "linkToIp":"Link to IP Rights Document (Optional)",
+        "linkToIp": "Link to IP Rights Document (Optional)",
         "linkToIpTooltip": "Link to the document which proves your ownership of this image.",
         "linkToIpPlaceholder": "Enter Link",
-        "unlockContent":"Unlockable Content",
-        "mint":"Mint",
-        "messageFtm":"1 FTM are charged to create a new NFT."
+        "unlockContent": "Unlockable Content",
+        "mint": "Mint",
+        "messageFtm": "1 FTM are charged to create a new NFT."
     },
 
     "pgModal": {

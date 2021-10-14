@@ -4,9 +4,7 @@
             <div class="page404_col">
                 <h1>{{ $t('view_not_found.404') }}</h1>
                 <p>{{ $t('view_not_found.text') }}</p>
-                <router-link :to="{ name: 'main' }" class="btn btn-lg">{{
-                    $t('view_not_found.link_title')
-                }}</router-link>
+                <router-link to="/" class="btn btn-lg">{{ $t('view_not_found.link_title') }}</router-link>
             </div>
             <div class="page404_col">
                 <f-image src="img/404_man.png" alt="man" />

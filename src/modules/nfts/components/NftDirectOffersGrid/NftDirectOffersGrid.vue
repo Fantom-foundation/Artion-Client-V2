@@ -35,15 +35,21 @@
 <script>
 import FDataGrid from 'fantom-vue-components/src/components/FDataGrid/FDataGrid.vue';
 import { OFFERS } from '@/common/constants/dummy/nftOffers.js';
+import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
+import dayjs from 'dayjs';
+
 export default {
     name: 'NftDirectOffersGrid',
+
     components: { FDataGrid },
+
     props: {
         offers: {
             type: Array,
             default: () => OFFERS(),
         },
     },
+
     data() {
         return {
             itemsColumns: [
@@ -79,6 +85,22 @@ export default {
             //     },
             // ],
         };
+    },
+
+    created() {
+        // this.init();
+    },
+
+    methods: {
+        async init() {
+            const items = await getTokenOffers('0x61af4d29f672e27a097291f72fc571304bc93521', '0x1e9c');
+
+            console.log('offers: ', items);
+
+            console.log(dayjs(items.edges[0].node.created).format('DD.MM.YYYY HH:mm'));
+            console.log(dayjs(items.edges[0].node.deadline).format('DD.MM.YYYY HH:mm'));
+            console.log(dayjs(items.edges[0].node.closed).format('DD.MM.YYYY HH:mm'));
+        },
     },
 };
 </script>
