@@ -667,8 +667,9 @@ const ZERO_AMOUNT = '0x0';
  * @param {string} nftAddress Address of the NFT token, ERC721 address
  * @param {int} tokenID NFT token ID
  * @param {number|BN|string} amount Amount of tokens in auction paytoken in WEI units
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
  */
- function placeAuctionBid(nftAddress, tokenID, amount) {
+ function placeAuctionBid(nftAddress, tokenID, amount, web3Client) {
 
     const abi = {
         "inputs": [
@@ -705,6 +706,47 @@ const ZERO_AMOUNT = '0x0';
     };
 }
 
+/**
+ * withdrawAuctionBid Allows the hightest bidder to withdraw the bid (after 12 hours post auction's end) 
+ * 
+ * Only callable by the existing top bidder
+ *
+ * @param {string} nftAddress Address of the NFT token, ERC721 address
+ * @param {int} tokenID NFT Token ID of the item being auctioned
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ */
+ function withdrawAuctionBid(nftAddress, tokenID, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "withdrawBid",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
 export default {
     createNFTCollection,
     createNFT,
@@ -721,6 +763,7 @@ export default {
     acceptOffer,
     createAuction,
     placeAuctionBid,
+    withdrawAuctionBid,
 }
 
 const createNFTContractAbi = {
