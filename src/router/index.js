@@ -8,6 +8,17 @@ export function setupRouter({ routes = [], middlewares = [], vueInstance = Vue }
     const router = new VueRouter({
         routes,
         mode: appConfig.routerHashMode ? 'hash' : 'history',
+
+        scrollBehavior: function(to) {
+            if (to.hash) {
+                return {
+                    selector: to.hash,
+                    behavior: 'smooth',
+                };
+            }
+
+            return { x: 0, y: 0 };
+        },
     });
 
     middlewares.forEach(middleware => {

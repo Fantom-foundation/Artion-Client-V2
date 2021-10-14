@@ -1,0 +1,124 @@
+.pg-bid-form {
+    --zero-value-color: #8093B6;
+    --error-value-color: #C02929;
+    --dropdown-background-color: #142035;
+
+    width: 640px;
+
+    &__current-bid {
+        margin-bottom: var(--f-spacer-9);
+        font-size: var(--f-font-size-5);
+        font-weight: 600;
+        color: #71717D;
+
+        &--mb-0 {
+            margin-bottom: var(--f-spacer-0);
+        }
+    }
+
+    &__min-next-bid {
+        color: var(--theme-pg-btn-background);
+        margin-bottom: 54px;
+    }
+
+    &__my-bid {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 24px;
+
+        & .acurrencydropdown {
+            --acurrencydropdown-background: var(--dropdown-background-color);
+        }
+
+        & .acurrencydropdown .adropdownlistbox .fdropdownlistbox_button {
+            padding: 0;
+            height: 64px;
+        }
+
+        & .acurrencydropdown .adropdownlistbox .fdropdownlistbox_button > span.fdropdownlistbox_button_label {
+            width: 155px;
+        }
+
+        & .inp-lg {
+            --f-input-lg-border-radius: var(--f-border-radius-3);
+            --f-inputs-border-color: var(--dropdown-background-color);
+        }
+    }
+
+    &__error {
+        position: absolute;
+        top: -25px;
+        right: var(--f-spacer-0);
+        font-weight: 600;
+        color: var(--error-value-color);
+    }
+
+    &__amount {
+        text-align: right;
+        font-size: var(--f-font-size-9);
+        background-color: var(--theme-pg-background-color);
+        border: none;
+
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        &[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        &:focus {
+            outline: none
+        }
+
+        &--zero {
+            color: var(--zero-value-color);
+        }
+
+        &--error {
+            color: var(--error-value-color);
+        }
+    }
+
+    &__info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 100px;
+    }
+
+    &__balance {
+        padding-left: 14px;
+    }
+
+    &__balance-text {
+        color: var(--zero-value-color);
+    }
+
+    &__bid-value-fiat {
+        color: var(--zero-value-color);
+    }
+
+    &__terms-and-conditions {
+        --f-cr-label-color: #95A3B3;
+        --f-inputs-border-color: #95A3B3;
+        --theme-pg-color: var(--theme-pg-btn-background);
+    }
+
+    &__button {
+        display: inline-block;
+        justify-content: center;
+        width: 460px;
+        margin-top: var(--f-spacer-6);
+        border-radius: var(--f-border-radius-7);
+        overflow: hidden;
+
+        & > .fbutton {
+            width: 100%;
+        }
+    }
+}

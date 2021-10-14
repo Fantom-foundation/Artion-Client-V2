@@ -1,0 +1,57 @@
+.pg-modal__mask {
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(3px);
+    transition: opacity 0.3s ease;
+}
+
+.pg-modal__wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    min-width: 30vw;
+    transform: translate(-50%, -50%);
+}
+
+.pg-modal__container {
+    margin: 0 auto;
+    padding: var(--f-spacer-6);
+    background-color: var(--theme-pg-background-color);
+    border-radius: var(--f-border-radius-5);
+    box-shadow: 0 16px 60px rgba(133, 139, 193, 0.11);
+    transition: all 0.3s ease;
+}
+
+.pg-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--f-spacer-3);
+
+    & > .h5 {
+        margin-bottom: 0;
+    }
+}
+
+.pg-modal__close-button {
+    cursor: pointer;
+}
+
+.pg-modal-enter {
+    opacity: 0;
+}
+
+.pg-modal-leave-active {
+    opacity: 0;
+}
+
+.pg-modal-enter .pg-modal__container,
+.pg-modal-leave-active .pg-modal__container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}

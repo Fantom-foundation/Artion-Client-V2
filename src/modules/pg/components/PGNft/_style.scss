@@ -1,0 +1,42 @@
+.pg-nft {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 72px;
+
+    &__text {
+        position: relative;
+        max-width: 552px;
+    }
+
+    &__perex {
+        margin-bottom: 56px;
+    }
+
+    &__start-price {
+        margin-top: var(--f-spacer-7);
+        color: var(--f-color-primary-4);
+    }
+
+    &__backdrop {
+        position: absolute;
+        width: 449px;
+        height: 423px;
+        opacity: 0.25;
+        filter: blur(180px);
+        transform: matrix(0.89, -0.39, 0.48, 0.91, 0, 0);
+        z-index: -1;
+
+        &--1 {
+            left: 19%;
+            top: -39%;
+            background: #6F69E7;
+        }
+
+        &--2 {
+            right: -63%;
+            top: -39%;
+            background: #4243FF;
+        }
+    }
+}
