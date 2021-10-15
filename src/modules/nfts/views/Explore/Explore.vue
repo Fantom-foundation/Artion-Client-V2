@@ -17,7 +17,6 @@
                 </div>
             </div>
             <nft-filter-chips v-model="filters" />
-            {{ density }}
             <nft-main-list
                 :filters="filters"
                 :density="density"

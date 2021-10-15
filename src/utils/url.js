@@ -1,9 +1,9 @@
 import { artionFApolloClient } from '@/plugins/apollo/apollo-provider.js';
 
-export function getImageProxyUrl(imageProxyUrl) {
-    if (!imageProxyUrl) {
+export function getImageThumbUrl(imageThumbUrl) {
+    if (!imageThumbUrl) {
         return '';
     }
 
-    return `${artionFApolloClient.getCurrentHttpProviderOrigin()}${imageProxyUrl}`;
+    return `${artionFApolloClient.getCurrentHttpProviderOrigin()}${imageThumbUrl}`;
 }
