@@ -20,4 +20,11 @@ export const getters = {
     theme(state) {
         return state.theme;
     },
+    /**
+     * @param {AppState} state
+     * @return {string}
+     */
+    txStatus(state) {
+        return state.txStatus;
+    },
 };

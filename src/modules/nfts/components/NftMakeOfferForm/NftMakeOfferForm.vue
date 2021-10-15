@@ -22,7 +22,7 @@
         />
 
         <div class="fform_buttons">
-            <f-button type="submit" size="large" :disabled="!isFormValid">
+            <f-button type="submit" size="large" :disabled="!isFormValid || txStatus.status === 'pending'">
                 {{ $t('nftmakeofferform.placeOffer') }}
             </f-button>
         </div>
@@ -38,6 +38,7 @@ import ASignTransaction from '@/common/components/ASignTransaction/ASignTransact
 import { getErc20TokenBalance } from '@/modules/wallet/queries/erc20-token-balance.js';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
+import { mapState } from 'vuex';
 
 export default {
     name: 'NftMakeOfferForm',
@@ -69,6 +70,10 @@ export default {
     },
 
     computed: {
+        ...mapState('app', {
+            txStatus: 'txStatus',
+        }),
+
         isFormValid() {
             return !this.priceValidator(this.values.price) && !this.deadlineValidator(this.values.deadline);
         },
@@ -88,6 +93,8 @@ export default {
 
     created() {
         this.init();
+
+        console.log('!!~', this.txStatus);
     },
 
     methods: {
