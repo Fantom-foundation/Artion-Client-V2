@@ -16,7 +16,7 @@
             </div>
             <div class="nftcard_image">
                 <div class="nftcard_box">
-                    <f-image size="100%" :src="nftData.image" :alt="nftData.name" />
+                    <f-image size="100%" :src="getImageProxyUrl(nftData.imageProxy)" :alt="nftData.name" />
                 </div>
             </div>
             <div class="nftcard_content">
@@ -54,6 +54,8 @@
 <script>
 // import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 
+import { getImageProxyUrl } from '@/utils/url.js';
+
 export default {
     // components: { AppIconset },
     name: 'NftCard',
@@ -80,6 +82,8 @@ export default {
             }
             this.$emit('nft-like');
         },
+
+        getImageProxyUrl,
     },
 };
 </script>

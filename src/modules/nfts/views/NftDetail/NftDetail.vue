@@ -3,7 +3,7 @@
         <div class="nftdetail_main">
             <div class="nftdetail_media">
                 <div class="nftdetail_img">
-                    <f-image :src="token.image" :alt="token.name" />
+                    <f-image :src="getImageProxyUrl(token.imageProxy)" :alt="token.name" />
                 </div>
             </div>
             <div class="nftdetail_product">
@@ -231,6 +231,7 @@ import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import NftMakeOfferForm from '@/modules/nfts/components/NftMakeOfferForm/NftMakeOfferForm.vue';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
+import { getImageProxyUrl } from '@/utils/url.js';
 
 export default {
     name: 'NftDetail',
@@ -304,6 +305,7 @@ export default {
         },
 
         toInt,
+        getImageProxyUrl,
     },
 };
 </script>
