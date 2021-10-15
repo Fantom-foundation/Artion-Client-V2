@@ -1,23 +1,25 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
 .pg-drop {
-    min-height: calc(80vh);
+    min-height: calc(70vh);
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-bottom: 10vh;
 
     &__header {
         text-transform: uppercase;
-        margin-bottom: var(--f-spacer-9);
+        margin-bottom: var(--f-spacer-7);
     }
 
     &__text {
         position: relative;
+        width: 335px;
+        max-width: calc(100% - 20px);
         text-align: center;
 
         p {
             font-weight: 600;
-            font-size: var(--f-font-size-9);
+            font-size: var(--f-font-size-5);
             line-height: var(--f-line-height-1);
             letter-spacing: -0.015em;
         }
@@ -29,8 +31,6 @@
 
     &__backdrop {
         position: absolute;
-        width: 610px;
-        height: 230px;
         border-radius: 50%;
         opacity: 0.15;
         filter: blur(70px);
@@ -39,19 +39,119 @@
         &--1 {
             top: -35px;
             left: -10px;
+            width: 225px;
+            height: 205px;
             background: linear-gradient(90deg, #F9DD6E 0%, #FF6E7F 100%);
         }
 
         &--2 {
             top: -35px;
             right: 0;
+            width: 225px;
+            height: 205px;
             background: #487BFF;
         }
 
         &--3 {
             bottom: -59px;
             right: -21px;
+            width: 257px;
+            height: 205px;
             background: linear-gradient(90deg, #C8D7FF 0%, #86F1FF 0.01%, #7165FF 100%);
+        }
+    }
+}
+
+@include media.media-min(768px) {
+    .pg-drop {
+        margin-bottom: 15vh;
+
+        &__header {
+            margin-bottom: var(--f-spacer-9);
+        }
+
+        &__text {
+            width: 675px;
+
+            p {
+                font-size: var(--f-font-size-9);
+            }
+        }
+
+        &__backdrop {
+            &--1 {
+                width: 404px;
+                height: 205px;
+            }
+
+            &--2 {
+                width: 404px;
+                height: 205px;
+            }
+
+            &--3 {
+                width: 462px;
+                height: 205px;
+            }
+        }
+    }
+}
+
+@include media.media-min(1024px) {
+    .pg-drop {
+        min-height: calc(80vh);
+
+        &__text {
+            width: 770px;
+        }
+
+        &__backdrop {
+            &--1 {
+                width: 543px;
+                height: 205px;
+            }
+
+            &--2 {
+                width: 543px;
+                height: 205px;
+            }
+
+            &--3 {
+                width: 621px;
+                height: 205px;
+            }
+        }
+    }
+}
+
+@include media.media-min(1440px) {
+    .pg-drop {
+        justify-content: center;
+        margin-bottom: 15vh;
+
+        &__header {
+            margin-bottom: var(--f-spacer-9);
+        }
+
+        &__text {
+            width: 980px;
+        }
+
+        &__backdrop {
+            &--1 {
+                width: 611px;
+                height: 231px;
+            }
+
+            &--2 {
+                width: 611px;
+                height: 231px;
+            }
+
+            &--3 {
+                width: 699px;
+                height: 231px;
+            }
         }
     }
 }

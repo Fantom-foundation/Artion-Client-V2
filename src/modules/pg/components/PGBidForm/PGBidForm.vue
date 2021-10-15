@@ -24,6 +24,19 @@
                 ~$0
             </div>
         </div>
+
+        <div class="pg-bid-form__input-box">
+            <input
+                class="pg-bid-form__amount"
+                :class="{ 'pg-bid-form__amount--zero': !amount, 'pg-bid-form__amount--error': error }"
+                type="number"
+                v-model="amount"
+            />
+            <div class="pg-bid-form__bid-value-fiat">
+                ~$0
+            </div>
+        </div>
+
         <div class="pg-bid-form__terms-and-conditions">
             <f-option type="checkbox" option-size="small" name="terms" @change="termAndConditionsAgreed = $event">
                 <label>

@@ -1,3 +1,5 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
 @font-face {
     src: url("~@/assets/fonts/VioletSans-Regular.woff2") format("woff2"),
     url("~@/assets/fonts/VioletSans-Regular.woff") format("woff");
@@ -17,8 +19,15 @@
 
 .h6 {
     font-weight: 600;
-    font-size: var(--f-font-size-3);
+    font-size: var(--f-font-size-1);
     letter-spacing: -0.02em;
     line-height: 1;
     margin-bottom: var(--f-spacer-2);
+}
+
+@include media.media-min(768px) {
+    .h6 {
+        font-size: var(--f-font-size-4);
+        line-height: 1.2;
+    }
 }

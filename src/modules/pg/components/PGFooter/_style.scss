@@ -2,8 +2,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: var(--f-spacer-8) 0 var(--f-spacer-6);
-    margin-top: var(--f-spacer-8);
+    padding: var(--f-spacer-7) 0 var(--f-spacer-6);
+    margin-top: var(--f-spacer-9);
+    background: #141926;
 
     &__link {
         font-weight: 600;

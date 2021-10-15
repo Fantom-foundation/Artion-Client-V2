@@ -1,16 +1,21 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
 .pg-nft {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 72px;
+    max-width: calc(100% - 20px);
+    width: 340px;
+    margin: 0 auto;
 
     &__text {
         position: relative;
         max-width: 552px;
+
+        & p {
+            font-size: var(--f-font-size-4);
+        }
     }
 
     &__perex {
-        margin-bottom: 56px;
+        margin-bottom: 36px;
     }
 
     &__start-price {
@@ -18,25 +23,134 @@
         color: var(--f-color-primary-4);
     }
 
+    &__socials {
+        display: flex;
+        gap: var(--f-spacer-3);
+    }
+
+    &__socials-button {
+        & .fbutton {
+            background: #121820;
+        }
+    }
+
     &__backdrop {
         position: absolute;
-        width: 449px;
-        height: 423px;
-        opacity: 0.25;
+        width: 220px;
+        height: 330px;
+        opacity: 0.4;
         filter: blur(180px);
-        transform: matrix(0.89, -0.39, 0.48, 0.91, 0, 0);
+        transform: matrix(0.95, -0.93, 0.19, 0.81, 0, 0);
         z-index: -1;
 
         &--1 {
-            left: 19%;
-            top: -39%;
+            left: 1%;
+            top: -26%;
             background: #6F69E7;
         }
 
         &--2 {
-            right: -63%;
-            top: -39%;
+            right: -1%;
+            top: -26%;
             background: #4243FF;
+        }
+    }
+}
+
+@include media.media-min(768px) {
+    .pg-nft {
+        width: 528px;
+
+        &__perex {
+            margin-bottom: 48px;
+        }
+
+        &__backdrop {
+            width: 285px;
+            height: 389px;
+            transform: matrix(0.94, -0.76, 0.24, 0.84, 0, 0);
+
+            &--1 {
+                left: 5%;
+                top: -44%;
+            }
+
+            &--2 {
+                right: 5%;
+                top: -44%;
+            }
+        }
+    }
+}
+
+@include media.media-min(1024px) {
+    .pg-nft {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--f-spacer-7);
+        width: auto;
+
+        &__perex {
+            margin-bottom: 39px;
+        }
+
+        &__text {
+            max-width: 400px;
+        }
+
+        &__backdrop {
+            width: 255px;
+            height: 384px;
+            opacity: 0.3;
+            filter: blur(200px);
+            transform: matrix(0.95, -0.94, 0.19, 0.81, 0, 0);
+
+            &--1 {
+                left: 2%;
+                top: -39%;
+            }
+
+            &--2 {
+                right: 23%;
+                top: -39%;
+            }
+        }
+    }
+}
+
+@include media.media-min(1440px) {
+    .pg-nft {
+        gap: 72px;
+
+        &__text {
+            max-width: 552px;
+
+            & p {
+                font-size: var(--f-font-size-5);
+            }
+        }
+
+        &__perex {
+            margin-bottom: 56px;
+        }
+
+        &__backdrop {
+            width: 449px;
+            height: 423px;
+            opacity: 0.25;
+            filter: blur(180px);
+            transform: matrix(0.89, -0.39, 0.48, 0.91, 0, 0);
+
+            &--1 {
+                left: 11%;
+                top: -39%;
+            }
+
+            &--2 {
+                right: -72%;
+                top: -39%;
+            }
         }
     }
 }

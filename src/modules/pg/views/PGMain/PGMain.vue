@@ -6,6 +6,7 @@
             <p-g-hero></p-g-hero>
             <p-g-drop></p-g-drop>
             <p-g-nfts-list></p-g-nfts-list>
+            <p-g-faq></p-g-faq>
         </main>
 
         <p-g-footer></p-g-footer>
@@ -26,11 +27,12 @@ import PGFooter from '../../components/PGFooter/PGFooter';
 import PGSuccessNotification from '../../components/PGSuccessNotification/PGSuccessNotification';
 import { mapGetters } from 'vuex';
 import PGModal from '../../components/PGModal/PGModal';
+import PGFaq from '../../components/PGFaq/PGFaq';
 
 export default {
     name: 'PGMain',
 
-    components: { PGHeader, PGHero, PGDrop, PGNftsList, PGFooter, PGSuccessNotification, PGModal },
+    components: { PGHeader, PGHero, PGDrop, PGNftsList, PGFooter, PGSuccessNotification, PGModal, PGFaq },
 
     computed: {
         ...mapGetters('pg', ['showSuccessModal']),
