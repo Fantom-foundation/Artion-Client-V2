@@ -1,5 +1,4 @@
 export const SET_LANGUAGE = 'setLanguage';
-export const SET_DOCUMENT_TITLE = 'setDocumentTitle';
 export const SET_THEME = 'setTheme';
 export const SET_TX_STATUS = 'setTxStatus';
 
@@ -10,13 +9,6 @@ export const mutations = {
      */
     [SET_LANGUAGE](state, languageCode) {
         state.language = languageCode;
-    },
-    /**
-     * @param {AppState} state
-     * @param {string} title
-     */
-    [SET_DOCUMENT_TITLE](state, title) {
-        state.documentTitle = title;
     },
     /**
      * @param {AppState} state
