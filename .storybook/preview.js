@@ -39,7 +39,10 @@ addParameters({
     },
     themes: {
         default: '',
-        list: [{ name: 'dark', class: 'theme-dark', color: '#202225' }],
+        list: [
+            { name: 'dark', class: 'theme-dark', color: '#202225' },
+            { name: 'PG', class: 'theme-pg', color: '#090c10' },
+        ],
         target: 'root',
     },
 });

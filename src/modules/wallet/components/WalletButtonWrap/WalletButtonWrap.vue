@@ -9,10 +9,6 @@
 import WalletButton from '@/modules/wallet/components/WalletButton/WalletButton.vue';
 import { mapState } from 'vuex';
 import { CHAINS } from '@/common/constants/chains.js';
-import { getUser } from '@/modules/account/queries/user.js';
-import { getLoggedUser } from '@/modules/account/queries/logged-user.js';
-// import { updateUser } from '@/modules/account/mutations/update-user.js';
-import { signIn } from '@/modules/account/auth.js';
 import WalletMenuPopover from '@/modules/wallet/components/WalletMenuPopover/WalletMenuPopover.vue';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 
@@ -70,8 +66,8 @@ export default {
 
                 this._eventBus.emit('show-wallet-picker', payload);
 
-                const walletPicked = !!(await payload.promise);
-                if (walletPicked) {
+                const walletInfo = await payload.promise;
+                if (walletInfo && walletInfo.walletSet) {
                     this.$refs.menu.show();
                 }
             }
@@ -80,13 +76,6 @@ export default {
         async onWalletMenu(item) {
             if (item.action === 'logout') {
                 this.$wallet.logout();
-            } else if (item.action === 'login') {
-                // tmp
-                await signIn();
-                const userInfo = await getUser(this.$wallet.account);
-                // await updateUser({ username: 'test', bio: 'test user bio', email: 'testuser@test.org' });
-                console.log('userInfo', userInfo);
-                console.log('logged user', await getLoggedUser()); // null
             }
 
             this.$refs.menu.hide();

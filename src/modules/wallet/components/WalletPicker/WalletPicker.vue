@@ -16,6 +16,7 @@ import { copyMethods } from 'fantom-vue-components/src/utils/vue-helpers.js';
 import { mapState } from 'vuex';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { isObject } from 'fantom-vue-components/src/utils/index.js';
+import { clientInfo } from 'fantom-vue-components/src/utils/client-info.js';
 
 export default {
     name: 'WalletPicker',
@@ -45,9 +46,9 @@ export default {
     methods: {
         ...copyMethods(WalletPickerWindow, ['show'], 'window'),
 
-        callResolve(wallet = null) {
+        callResolve(walletInfo = null) {
             if (typeof this._resolve === 'function') {
-                this._resolve(wallet);
+                this._resolve(walletInfo);
                 this._resolve = null;
             }
         },
@@ -55,8 +56,21 @@ export default {
         async onWalletPick(wallet) {
             this._walletPicked = true;
 
-            await this.$wallet.setWallet(wallet.id, true);
-            this.callResolve(wallet);
+            if (wallet.id === 'metamask' && clientInfo.mobile) {
+                this.callResolve();
+
+                const url = new URL(window.location.href);
+
+                if (url.host.indexOf('sandbox.pbro') > -1) {
+                    window.location.href = 'https://metamask.app.link/dapp/sandbox.pbro.zenithies.dev/artion/';
+                } else {
+                    window.location.href = `https://metamask.app.link/dapp/${url.host}/`;
+                }
+            } else {
+                const walletSet = await this.$wallet.setWallet(wallet.id, true);
+
+                this.callResolve({ wallet, walletSet });
+            }
 
             this._walletPicked = false;
         },

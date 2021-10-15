@@ -19,9 +19,20 @@ export class FApolloClient {
 
         this.netError = false;
         this.defaultHttpProvider = this.apolloProviders[this.defaultProviderIndex].http;
-        this.httpProvider = this.defaultHttpProvider;
+        this.httpProvider = '';
+        this.httpProviderOrigin = '';
+
+        this.setHttpProvider(this.defaultHttpProvider);
+
         this.httpApolloProviders = this.setHttpApolloProviders(this.apolloProviders, this.defaultHttpProvider);
         this.lastOperationName = '';
+    }
+
+    setHttpProvider(httpProvider = '') {
+        const url = new URL(httpProvider);
+
+        this.httpProvider = httpProvider;
+        this.httpProviderOrigin = url.origin;
     }
 
     setHttpApolloProviders(_providers, _defaultHttpProvider) {
@@ -39,6 +50,10 @@ export class FApolloClient {
 
     getCurrentHttpProvider() {
         return this.httpProvider;
+    }
+
+    getCurrentHttpProviderOrigin() {
+        return this.httpProviderOrigin;
     }
 
     getHttpLink() {
@@ -119,7 +134,7 @@ export class FApolloClient {
                         this.httpApolloProviders.length > 0 &&
                         (!this.lastOperationName || _operation.operationName === this.lastOperationName)
                     ) {
-                        this.httpProvider = this.httpApolloProviders.pop();
+                        this.setHttpProvider(this.httpApolloProviders.pop());
                         this.lastOperationName = _operation.operationName;
                     }
 

@@ -11,7 +11,7 @@ export async function getUser(address = '') {
                     bio
                     email
                     avatar
-                    avatarProxy
+                    avatarThumb
                 }
             }
         `,

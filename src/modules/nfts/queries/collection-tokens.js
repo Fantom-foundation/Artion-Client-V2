@@ -22,7 +22,7 @@ export async function getCollectionTokens(contract = '', pagination = {}) {
                                 name
                                 description
                                 image
-                                imageProxy
+                                imageThumb
                             }
                         }
                     }

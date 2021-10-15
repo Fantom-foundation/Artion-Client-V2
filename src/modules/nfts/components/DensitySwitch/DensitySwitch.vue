@@ -21,22 +21,19 @@
 </template>
 <script>
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
+import { SET_NFTS_DENSITY } from '@/modules/app/store/mutations.js';
+
 export default {
     name: 'DensitySwitch',
-    components: { AppIconset },
-    data() {
-        return {
-            densityBig: true,
-        };
-    },
 
-    mounted() {
-        this.$refs.bigGridButton.$el.click();
-    },
+    components: { AppIconset },
 
     methods: {
         onDensitySwitchClick(e) {
-            this.$emit('density-switch', e.currentTarget.getAttribute('density'));
+            const density = parseInt(e.currentTarget.getAttribute('density'));
+
+            this.$store.commit(`app/${SET_NFTS_DENSITY}`, density);
+            this.$emit('density-switch', density);
         },
     },
 };

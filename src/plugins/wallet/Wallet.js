@@ -115,6 +115,7 @@ export class Wallet {
         }
 
         defer(() => {
+            console.log('logout');
             this._setChainId(0);
             this._setAccount('');
             this._setWalletName('');
@@ -140,14 +141,14 @@ export class Wallet {
     /**
      * @param {'metamask'|'coinbase'} walletName
      * @param {boolean} [pick]
-     * @return {Promise<void>}
+     * @return {Promise<boolean>}
      */
     async setWallet(walletName, pick) {
         const wallets = this._wallets;
         let wallet = null;
 
-        try {
-            if (walletName in wallets) {
+        if (walletName in wallets) {
+            try {
                 wallet = wallets[walletName];
 
                 if (wallet === null) {
@@ -176,14 +177,18 @@ export class Wallet {
                         text: 'Wallet added',
                     });
                 }
-            } else {
-                throw new Error(`Unknown wallet ${walletName}`);
+
+                return true;
+            } catch (error) {
+                notifications.add({
+                    type: 'error',
+                    text: error.message,
+                });
+
+                return false;
             }
-        } catch (error) {
-            notifications.add({
-                type: 'error',
-                text: error.message,
-            });
+        } else {
+            throw new Error(`Unknown wallet ${walletName}`);
         }
     }
 
@@ -302,7 +307,6 @@ export class Wallet {
             while (!status) {
                 status = await this._getTransactionStatus(txHash);
                 await delay(400);
-                console.log(!!status);
             }
         }
     }
@@ -337,7 +341,6 @@ export class Wallet {
      * @private
      */
     _setChainId(chainId) {
-        // if (isNaN(chainId) || chainId === 0) {
         if (isNaN(chainId)) {
             this.logout();
         }
@@ -352,8 +355,6 @@ export class Wallet {
      * @private
      */
     _setAccount(account) {
-        console.log('ACCOUTN', account, !account);
-
         this.account = account;
         store.commit(`wallet/${SET_ACCOUNT}`, account);
     }

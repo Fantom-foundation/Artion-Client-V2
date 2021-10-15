@@ -37,7 +37,7 @@ export async function getTokens(pagination = {}, filterSort = {}) {
                             name
                             description
                             image
-                            imageProxy
+                            imageThumb
                         }
                     }
                 }

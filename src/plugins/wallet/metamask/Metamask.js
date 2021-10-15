@@ -1,6 +1,7 @@
 import detectEthereumProvider from '@metamask/detect-provider';
 import Web3 from 'web3';
 import './metamask.types.js';
+import { toInt } from '@/utils/big-number.js';
 
 /** @type {MetamaskChain} */
 /*
@@ -127,7 +128,7 @@ export class Metamask {
      * @return {number}
      */
     getChainId() {
-        return this._provider ? parseInt(this._provider.chainId, 16) : 0;
+        return this._provider ? toInt(this._provider.chainId) : 0;
     }
 
     /**

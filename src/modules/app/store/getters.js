@@ -10,13 +10,6 @@ export const getters = {
      * @param {AppState} state
      * @return {string}
      */
-    documentTitle(state) {
-        return state.documentTitle;
-    },
-    /**
-     * @param {AppState} state
-     * @return {string}
-     */
     theme(state) {
         return state.theme;
     },
@@ -26,5 +19,12 @@ export const getters = {
      */
     txStatus(state) {
         return state.txStatus;
+    },
+    /**
+     * @param {AppState} state
+     * @return {string}
+     */
+    nftsDensity(state) {
+        return state.nftsDensity;
     },
 };

@@ -1,7 +1,7 @@
 export const SET_LANGUAGE = 'setLanguage';
-export const SET_DOCUMENT_TITLE = 'setDocumentTitle';
 export const SET_THEME = 'setTheme';
 export const SET_TX_STATUS = 'setTxStatus';
+export const SET_NFTS_DENSITY = 'setNftsDensity';
 
 export const mutations = {
     /**
@@ -10,13 +10,6 @@ export const mutations = {
      */
     [SET_LANGUAGE](state, languageCode) {
         state.language = languageCode;
-    },
-    /**
-     * @param {AppState} state
-     * @param {string} title
-     */
-    [SET_DOCUMENT_TITLE](state, title) {
-        state.documentTitle = title;
     },
     /**
      * @param {AppState} state
@@ -31,5 +24,12 @@ export const mutations = {
      */
     [SET_TX_STATUS](state, txStatus) {
         state.txStatus = txStatus;
+    },
+    /**
+     * @param {AppState} state
+     * @param {number} nftsDensity
+     */
+    [SET_NFTS_DENSITY](state, nftsDensity) {
+        state.nftsDensity = nftsDensity;
     },
 };
