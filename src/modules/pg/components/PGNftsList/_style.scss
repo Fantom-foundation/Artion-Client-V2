@@ -1,3 +1,5 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
 .pg-nfts-list {
     display: flex;
     justify-content: center;
@@ -7,13 +9,33 @@
 
     &__header {
         text-transform: uppercase;
-        margin-bottom: 176px;
+        margin-bottom: 36px;
     }
 
     &__separator {
         width: 100%;
         height: 8px;
         background: #121820;
-        margin: 100px 0 160px;
+        margin: 76px 0 80px;
+    }
+}
+
+@include media.media-min(768px) {
+    .pg-nfts-list {
+        &__header {
+            margin-bottom: 176px;
+        }
+
+        &__separator {
+            margin: 93px 0 140px;
+        }
+    }
+}
+
+@include media.media-min(1024px) {
+    .pg-nfts-list {
+        &__separator {
+            margin: 100px 0 160px;
+        }
     }
 }

@@ -1,10 +1,13 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
 .pg-nft-card {
+    margin-bottom: var(--f-spacer-9);
     border-radius: var(--f-border-radius-7);
     overflow: hidden;
 
     &__img-cont {
-        width: 528px;
-        height: 528px;
+        width: 343px;
+        height: 343px;
         overflow: hidden;
         object-fit: cover;
     }
@@ -15,7 +18,7 @@
     }
 
     &__cta {
-        padding: var(--f-spacer-6) 0;
+        padding: 18px 0 var(--f-spacer-4) 0;
         background: #121820;
     }
 
@@ -24,52 +27,51 @@
         flex-wrap: wrap;
         align-items: stretch;
         justify-content: flex-end;
-        margin: 0 var(--f-spacer-1);
     }
 
     &__cta-bottom {
-        padding: var(--f-spacer-6) var(--f-spacer-6) 0 var(--f-spacer-6);
-        margin: 0 var(--f-spacer-1);
+        padding: var(--f-spacer-4) var(--f-spacer-3) 0 var(--f-spacer-3);
         border-top: 1px solid #202A37;
     }
 
     &__bid {
         flex: 0 0 calc(50% - 0.5px);
-        padding: 0 var(--f-spacer-5)
+        padding: 0 var(--f-spacer-2);
     }
 
     &__note {
         font-weight: 600;
-        font-size: var(--f-font-size-3);
+        font-size: var(--f-font-size-1);
         letter-spacing: -0.02em;
+        line-height: 1.5;
         color: #69778A;
     }
 
     &__v-separator {
         flex: 0 0 1px;
-        height: 90px;
+        height: 57px;
         width: 1px;
         background: #202A37;
     }
 
     &__countdown {
         flex: 0 0 calc(50% - 0.5px);
-        padding: 0 var(--f-spacer-5)
+        padding: 0 var(--f-spacer-2);
     }
 
     &__countdown-time {
         display: flex;
-        gap: var(--f-spacer-3);
+        gap: var(--f-spacer-2);
     }
 
     &__address {
         flex: 1 0 100%;
-        padding: 0 var(--f-spacer-5) var(--f-spacer-1);
+        padding: 0 var(--f-spacer-1) 0;
         margin: 0 var(--f-spacer-1);
-        font-size: var(--f-font-size-3);
+        font-size: var(--f-font-size-1);
 
         &--empty {
-            padding-bottom: var(--f-spacer-5);
+            padding-bottom: var(--f-spacer-3);
         }
     }
 
@@ -82,5 +84,75 @@
         & > .fbutton {
             width: 100%;
         }
+    }
+}
+
+@include media.media-min(768px) {
+    .pg-nft-card {
+        margin-bottom: 137px;
+
+        &__img-cont {
+            width: 528px;
+            height: 528px;
+        }
+
+        &__cta {
+            padding: var(--f-spacer-6) 0;
+        }
+
+        &__cta-top {
+            margin: 0 var(--f-spacer-1);
+        }
+
+        &__cta-bottom {
+            padding: var(--f-spacer-6) var(--f-spacer-6) 0 var(--f-spacer-6);
+            margin: 0 var(--f-spacer-1);
+        }
+
+        &__bid {
+            padding: 0 var(--f-spacer-5);
+        }
+
+        &__note {
+            font-size: var(--f-font-size-3);
+            line-height: unset;
+        }
+
+        &__address {
+            padding: 0 var(--f-spacer-1) var(--f-spacer-1);
+            font-size: var(--f-font-size-3);
+
+            &--empty {
+                padding-bottom: var(--f-spacer-5);
+            }
+        }
+
+        &__countdown {
+            padding: 0 var(--f-spacer-5);
+        }
+
+        &__countdown-time {
+            gap: var(--f-spacer-2);
+        }
+
+        &__v-separator {
+            height: 90px;
+        }
+
+        &__address {
+            padding: 0 var(--f-spacer-5) var(--f-spacer-1);
+            font-size: var(--f-font-size-3);
+
+            &--empty {
+                padding-bottom: var(--f-spacer-5);
+            }
+        }
+    }
+}
+
+@include media.media-min(1024px) {
+    .pg-nft-card {
+        width: 528px;
+        margin-bottom: 0;
     }
 }

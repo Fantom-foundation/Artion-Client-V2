@@ -3,7 +3,15 @@ export const getters = {
      * @param {PgState} state
      * @return {boolean}
      */
-    showModal(state) {
-        return state.showModal;
+    showBidModal(state) {
+        return state.showBidModal;
+    },
+
+    /**
+     * @param {PgState} state
+     * @return {boolean}
+     */
+    showSuccessModal(state) {
+        return state.showSuccessModal;
     },
 };

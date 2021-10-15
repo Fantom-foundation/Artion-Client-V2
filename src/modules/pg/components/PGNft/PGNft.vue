@@ -17,6 +17,20 @@
 
             <p class="pg-nft__start-price">Bidding starts at 2,000 FTM.</p>
 
+            <div class="pg-nft__socials">
+                <span class="pg-nft__socials-button">
+                    <f-button round aria-label="round" size="large">
+                        <icon-instagram />
+                    </f-button>
+                </span>
+
+                <span class="pg-nft__socials-button">
+                    <f-button round aria-label="round" size="large">
+                        <icon-twitter-white />
+                    </f-button>
+                </span>
+            </div>
+
             <div class="pg-nft__backdrop pg-nft__backdrop--1"></div>
             <div class="pg-nft__backdrop pg-nft__backdrop--2"></div>
         </div>
@@ -25,12 +39,16 @@
 
 <script>
 import PGNftCard from '../PGNftCard/PGNftCard';
+import IconInstagram from '../../../../assets/vue-icons/IconInstagram';
+import IconTwitterWhite from '../../../../assets/vue-icons/IconTwitterWhite';
 
 export default {
     name: 'PGNft',
 
     components: {
         PGNftCard,
+        IconTwitterWhite,
+        IconInstagram,
     },
 };
 </script>

@@ -1,6 +1,7 @@
 @use "fantom-vue-components/src/assets/scss/elements/links/tools" as linkTools;
 @use "fantom-vue-components/src/assets/scss/elements/headings/tools" as headingTools;
 @use "fantom-vue-components/src/assets/scss/components/button/tools" as btnTools;
+@use "fantom-vue-components/src/assets/scss/tools/media";
 
 :root.theme-pg {
     --theme-pg-background-color: #090C10;
@@ -36,26 +37,46 @@
     }
 
     @include headingTools.headings() {
-        --f-h1-font-size: var(--f-font-size-11);
+        --f-h1-font-size: var(--f-font-size-8);
         --f-h1-font-weight: 400;
         --f-h1-letter-spacing: 0.28em;
 
-        --f-h2-font-size: var(--f-font-size-10);
+        --f-h2-font-size: var(--f-font-size-9);
         --f-h2-font-weight: 400;
         --f-h2-letter-spacing: 0.28em;
 
-        --f-h3-font-size: var(--f-font-size-10);
+        --f-h3-font-size: 48px;
         --f-h3-font-weight: 800;
         --f-h3-letter-spacing: -0.015em;
-        --f-h3-line-height: 1;
+        --f-h3-line-height: 1.2;
         --f-h3-margin-top: 0;
-        --f-h3-margin-bottom: var(--f-spacer-7);
+        --f-h3-margin-bottom: var(--f-spacer-4);
 
-        --f-h4-font-size: var(--f-font-size-8);
+        --f-h4-font-size: var(--f-font-size-6);
         --f-h4-font-weight: 600;
         --f-h4-letter-spacing: -0.015em;
         --f-h4-margin-top: 0;
         --f-h4-margin-bottom: 0;
+
+        @include media.media-min(768px) {
+            --f-h2-font-size: var(--f-font-size-10);
+
+            --f-h3-font-size: var(--f-font-size-10);
+            --f-h3-line-height: 1;
+            --f-h3-margin-bottom: var(--f-spacer-5);
+
+            --f-h4-font-size: var(--f-font-size-8);
+        }
+
+        @include media.media-min(1024px) {
+            --f-h1-font-size: var(--f-font-size-10);
+
+            --f-h3-margin-bottom: var(--f-spacer-7);
+        }
+
+        @include media.media-min(1440px) {
+            --f-h1-font-size: var(--f-font-size-11);
+        }
     }
 
     @include btnTools.button() {

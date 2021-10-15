@@ -19,6 +19,7 @@
 }
 
 .pg-modal__container {
+    position: relative;
     margin: 0 auto;
     padding: var(--f-spacer-6);
     background-color: var(--theme-pg-background-color);

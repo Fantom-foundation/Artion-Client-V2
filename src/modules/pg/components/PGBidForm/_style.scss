@@ -1,9 +1,12 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
 .pg-bid-form {
     --zero-value-color: #8093B6;
     --error-value-color: #C02929;
     --dropdown-background-color: #142035;
 
-    width: 640px;
+    width: 100%;
+    max-width: calc(100vw -  3 * var(--f-spacer-6));
 
     &__current-bid {
         margin-bottom: var(--f-spacer-9);
@@ -23,9 +26,7 @@
 
     &__my-bid {
         position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        width: 100%;
         padding-bottom: 24px;
 
         & .acurrencydropdown {
@@ -35,10 +36,12 @@
         & .acurrencydropdown .adropdownlistbox .fdropdownlistbox_button {
             padding: 0;
             height: 64px;
+            width: 100%;
         }
 
         & .acurrencydropdown .adropdownlistbox .fdropdownlistbox_button > span.fdropdownlistbox_button_label {
-            width: 155px;
+            min-width: 155px;
+            width: calc(100% - 30px);
         }
 
         & .inp-lg {
@@ -56,9 +59,9 @@
     }
 
     &__amount {
-        text-align: right;
+        display: none;
         font-size: var(--f-font-size-9);
-        background-color: var(--theme-pg-background-color);
+        background-color: transparent;
         border: none;
 
         &::-webkit-outer-spin-button,
@@ -88,7 +91,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding-bottom: 100px;
+        padding-bottom: var(--f-spacer-3);
     }
 
     &__balance {
@@ -100,6 +103,7 @@
     }
 
     &__bid-value-fiat {
+        display: none;
         color: var(--zero-value-color);
     }
 
@@ -119,6 +123,61 @@
 
         & > .fbutton {
             width: 100%;
+        }
+    }
+
+    &__input-box {
+        padding: 12px;
+        margin-bottom: 28px;
+        background: var(--dropdown-background-color);
+        border-radius: 12px;
+
+        & .pg-bid-form__amount {
+            display: block;
+            margin-bottom: var(--f-spacer-3);
+        }
+
+        & .pg-bid-form__bid-value-fiat {
+            display: block;
+            padding: 1px 2px;
+        }
+    }
+}
+
+@include media.media-min(728px) {
+    .pg-bid-form {
+        width: calc(640px - 2 * var(--f-spacer-6));
+
+        &__info {
+            padding-bottom: 100px;
+        }
+
+        &__amount {
+            display: block;
+            text-align: right;
+        }
+
+        &__bid-value-fiat {
+            display: block;
+        }
+
+        &__input-box {
+            display: none;
+        }
+
+        &__my-bid {
+            width: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            & .acurrencydropdown .adropdownlistbox .fdropdownlistbox_button > span.fdropdownlistbox_button_label {
+                width: 155px;
+            }
+
+            & .acurrencydropdown .adropdownlistbox .fdropdownlistbox_button {
+                width: auto;
+            }
         }
     }
 }

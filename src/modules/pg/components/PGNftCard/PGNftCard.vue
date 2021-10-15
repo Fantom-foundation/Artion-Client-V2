@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <p-g-modal v-if="showModal" @close="closeModal">
+        <p-g-modal v-if="showBidModal" :header="$t('pgModal.heading')" @close="closeModal">
             <p-g-bid-form></p-g-bid-form>
         </p-g-modal>
     </div>
@@ -61,7 +61,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { SET_SHOW_MODAL } from '../../store/mutations';
+import { SET_SHOW_BID_MODAL } from '../../store/mutations';
 import WalletButton from '../../../wallet/components/WalletButton/WalletButton';
 import PGModal from '../PGModal/PGModal';
 import PGBidForm from '../PGBidForm/PGBidForm';
@@ -93,16 +93,16 @@ export default {
     },
 
     computed: {
-        ...mapGetters('pg', ['showModal']),
+        ...mapGetters('pg', ['showBidModal']),
     },
 
     methods: {
         openModal() {
-            this.$store.commit(`pg/${SET_SHOW_MODAL}`, true);
+            this.$store.commit(`pg/${SET_SHOW_BID_MODAL}`, true);
         },
 
         closeModal() {
-            this.$store.commit(`pg/${SET_SHOW_MODAL}`, false);
+            this.$store.commit(`pg/${SET_SHOW_BID_MODAL}`, false);
         },
     },
 

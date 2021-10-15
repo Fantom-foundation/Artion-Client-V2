@@ -1,3 +1,5 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
 .pg-hero {
     min-height: calc(100vh - 80px);
     display: flex;
@@ -5,19 +7,63 @@
     align-items: center;
     flex-direction: column;
 
+    &__logo {
+        width: 52px;
+        height: 30px;
+    }
+
     &__header {
         font-family: "Violet sans", Helvetica, sans-serif;
         text-transform: uppercase;
-        margin: 64px 0 0 0;
+        margin: 23px 0 0 0;
+    }
+
+    &__sign {
+        width: 160px;
     }
 
     &__button {
         display: inline-block;
         margin-top: 89px;
         width: 439px;
+        max-width: 90vw;
 
         & > .fbutton {
             width: 100%;
+        }
+    }
+}
+
+@include media.media-min(1024px) {
+    .pg-hero {
+        &__logo {
+            width: 106px;
+            height: 63px;
+        }
+
+        &__header {
+            margin-top: 48px;
+        }
+
+        &__sign {
+            width: 185px;
+        }
+    }
+}
+
+@include media.media-min(1440px) {
+    .pg-hero {
+        &__logo {
+            width: auto;
+            height: auto;
+        }
+
+        &__header {
+            margin-top: 64px;
+        }
+
+        &__sign {
+            width: auto;
         }
     }
 }
