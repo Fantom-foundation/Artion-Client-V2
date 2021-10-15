@@ -1,0 +1,48 @@
+.notificationsettingsform {
+	--notification-border: 1px solid var(--f-color-primary-3);
+	margin-top: var(--f-spacer-5);
+
+	&_list {
+		display: flex;
+		flex-direction: column;
+		border: var(--notification-border);
+		border-radius: var(--f-border-radius-3);
+	}
+
+	&_item {
+		display: flex;
+		align-items: center;
+		padding: var(--f-spacer-4) var(--f-spacer-6);
+		& + & {
+			border-top: var(--notification-border);
+		}
+	}
+
+	&_checkbox {
+		.cr_check {
+			border-radius: var(--f-border-radius-3);
+		}
+	}
+
+	&_price {
+		margin-top: var(--f-spacer-5);
+		&_title { font-weight: 600; }
+		&_desc { color: var(--f-color-grey-4); }
+		div + div {
+			margin-top: var(--f-spacer-2);
+		}
+	}
+
+	&_title {
+		font-weight: 600;
+	}
+
+	&_desc {
+		color: var(--f-color-grey-4);
+	}
+
+	&_btn {
+		margin-top: var(--f-spacer-5);
+
+	}
+}

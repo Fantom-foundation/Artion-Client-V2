@@ -237,7 +237,6 @@
     },
 
     "accountprofileform": {
-        "title": "Profile Settings",
         "username": "Username",
         "enterUsername": "Enter username",
         "bio": "Bio",
@@ -251,6 +250,15 @@
         "profileImg": "Profile Image",
         "profileBanner": "Profile Banner",
         "save": "Save"
+    },
+
+    "notificationsettings": {
+        "title": "Notification Settings"
+    },
+
+    "notificationsettingsform": {
+        "minimumBid": "Minimum Bid Threshold",
+        "recieveWhenPriceEqualOrGreater": "Receive notifications only when you receive offers with a value greater than or equal to this amount of ETH. "
     },
 
     "view_not_found": {

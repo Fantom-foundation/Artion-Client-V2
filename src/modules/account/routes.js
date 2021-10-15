@@ -9,6 +9,7 @@ import AccountOffers from '@/modules/account/views/AccountOffers/AccountOffers.v
 import AccountMyOffers from '@/modules/account/views/AccountMyOffers/AccountMyOffers.vue';
 import AccountSettings from '@/modules/account/views/AccountSettings/AccountSettings.vue';
 import AccountSettingsProfile from '@/modules/account/views/AccountSettingsProfile/AccountSettingsProfile.vue';
+import NotificationSettings from '@/modules/account/views/NotificationSettings/NotificationSettings.vue';
 
 export function getAccountRoutes() {
     return [
@@ -59,17 +60,22 @@ export function getAccountRoutes() {
             redirect: { name: 'account-settings-profile' },
             component: AccountSettings,
             meta: {
-               // auth: true, // needs authorization
+                //    auth: true, // needs authorization
                 title: i18n.t('your_profile'),
             },
             children: [
                 {
-                    path: '/account/settings/profile',
+                    path: 'profile',
                     name: 'account-settings-profile',
                     component: AccountSettingsProfile,
                     meta: {
                         auth: true, // needs authorization
                     },
+                },
+                {
+                    path: 'notifications',
+                    name: 'account-settings-notifications',
+                    component: NotificationSettings,
                 },
             ],
         },
