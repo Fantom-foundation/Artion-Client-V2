@@ -6,7 +6,7 @@
 
 /** @type {PgState} */
 export const state = {
-    showModal: true,
+    showModal: false,
 };
 
 export const storeInLocalStorage = [];
