@@ -193,6 +193,12 @@
     "pgModal": {
         "heading": "Place a bid"
     },
+    "pgSuccessNotification": {
+        "header": "Congrats!",
+        "highestBidder": "You are the highest bidder!",
+        "mintedNFT": "You minted",
+        "continue": "Continue"
+    },
 
     "pgBidForm": {
         "currentBid": "Current bid",
