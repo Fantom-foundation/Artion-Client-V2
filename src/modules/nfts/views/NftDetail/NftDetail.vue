@@ -281,8 +281,8 @@ export default {
 
                 this._eventBus.emit('show-wallet-picker', payload);
 
-                const walletPicked = !!(await payload.promise);
-                if (walletPicked) {
+                const walletInfo = await payload.promise;
+                if (walletInfo && walletInfo.walletSet) {
                     this.$refs.makeOfferWindow.show();
                 }
             } else {

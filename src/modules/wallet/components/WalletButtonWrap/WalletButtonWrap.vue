@@ -67,7 +67,7 @@ export default {
                 this._eventBus.emit('show-wallet-picker', payload);
 
                 const walletInfo = await payload.promise;
-                if (walletInfo.walletSet) {
+                if (walletInfo && walletInfo.walletSet) {
                     this.$refs.menu.show();
                 }
             }
