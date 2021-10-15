@@ -1,6 +1,7 @@
 import appConfig from '../../../app.config.js';
 import WalletLink from 'walletlink';
 import Web3 from 'web3';
+import { toInt } from '@/utils/big-number.js';
 
 export class Coinbase {
     /**
@@ -95,7 +96,7 @@ export class Coinbase {
      * @return {number}
      */
     getChainId() {
-        return this._provider ? parseInt(this._provider.chainId, 10) : 0;
+        return this._provider ? toInt(this._provider.chainId) : 0;
     }
 
     /**

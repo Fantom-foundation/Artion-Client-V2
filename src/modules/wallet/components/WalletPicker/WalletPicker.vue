@@ -45,9 +45,9 @@ export default {
     methods: {
         ...copyMethods(WalletPickerWindow, ['show'], 'window'),
 
-        callResolve(wallet = null) {
+        callResolve(wallet = null, walletSet) {
             if (typeof this._resolve === 'function') {
-                this._resolve(wallet);
+                this._resolve({ wallet, walletSet });
                 this._resolve = null;
             }
         },
@@ -55,8 +55,9 @@ export default {
         async onWalletPick(wallet) {
             this._walletPicked = true;
 
-            await this.$wallet.setWallet(wallet.id, true);
-            this.callResolve(wallet);
+            const walletSet = await this.$wallet.setWallet(wallet.id, true);
+
+            this.callResolve(wallet, walletSet);
 
             this._walletPicked = false;
         },
