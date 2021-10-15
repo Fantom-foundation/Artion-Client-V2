@@ -20,4 +20,11 @@ export const getters = {
     txStatus(state) {
         return state.txStatus;
     },
+    /**
+     * @param {AppState} state
+     * @return {string}
+     */
+    nftsDensity(state) {
+        return state.nftsDensity;
+    },
 };

@@ -12,14 +12,15 @@
  * @property {string} language Code of current language
  * @property {('default'|'dark')} theme Theme used in application
  * @property {TxStatus} txStatus Status of a transaction
+ * @property {number} nftsDensity Density of nfts in nft list
  */
 
 /** @type {AppState} */
 export const state = {
     language: '',
-    nftsDensity: 280,
     theme: 'default',
     txStatus: {},
+    nftsDensity: 280,
 };
 
-export const storeInLocalStorage = ['language', 'theme'];
+export const storeInLocalStorage = ['language', 'theme', 'nftsDensity'];

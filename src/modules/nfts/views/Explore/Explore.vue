@@ -13,10 +13,11 @@
                 </div>
                 <div class="explore_nftlist_header_endcol">
                     <nft-list-filters v-model="filters" />
-                    <density-switch @density-switch="density = $event" />
+                    <density-switch />
                 </div>
             </div>
             <nft-filter-chips v-model="filters" />
+            {{ density }}
             <nft-main-list
                 :filters="filters"
                 :density="density"
@@ -34,6 +35,7 @@ import { routeQueryMixin } from '@/common/mixins/route-query.js';
 import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters.vue';
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 import NftMainList from '@/modules/nfts/components/NftMainList/NftMainList.vue';
+import { mapState } from 'vuex';
 
 export default {
     name: 'Explore',
@@ -45,10 +47,15 @@ export default {
     data() {
         return {
             filters: {},
-            density: 280,
             results: -1,
             labels: {},
         };
+    },
+
+    computed: {
+        ...mapState('app', {
+            density: 'nftsDensity',
+        }),
     },
 
     methods: {
