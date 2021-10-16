@@ -37,7 +37,7 @@
                         ></path></svg
                 ></AUploadArea>
             </div>
-            <div class="account_title">{{ user.name || $t('account.unnamed') }}</div>
+            <div class="account_title">{{ user.username || $t('account.unnamed') }}</div>
             <div class="account_subtitle">
                 <f-copy-button :text="userAddress">
                     <template #button-content>

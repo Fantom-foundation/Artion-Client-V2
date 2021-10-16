@@ -12,6 +12,7 @@ export async function getUser(address = '') {
                     email
                     avatar
                     avatarThumb
+                    banner
                 }
             }
         `,
