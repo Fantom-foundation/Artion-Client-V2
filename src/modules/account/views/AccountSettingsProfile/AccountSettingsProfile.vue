@@ -2,7 +2,9 @@
     <div class="accountsettingsprofile">
         <div class="accountsettingsprofile_title">
             <h1>{{ $t('accountsettingsprofile.title') }}</h1>
-            <div class="accountsettingsprofile_preview">Preview</div>
+            <div class="accountsettingsprofile_preview">
+                <!--                Preview-->
+            </div>
         </div>
         <AccountProfileForm />
     </div>

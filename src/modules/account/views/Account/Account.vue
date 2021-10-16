@@ -196,11 +196,15 @@ export default {
                     this.userAddress = value;
                 }
 
-                this.loadUser(this.userAddress);
+                if (!this.userAddress) {
+                    this.$router.push('/');
+                } else {
+                    this.loadUser(this.userAddress);
 
-                defer(() => {
-                    this.updateTokenCounters();
-                }, 200);
+                    defer(() => {
+                        this.updateTokenCounters();
+                    }, 200);
+                }
             },
             immediate: true,
         },

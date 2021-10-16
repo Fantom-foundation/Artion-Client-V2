@@ -42,7 +42,7 @@ if (appConfig.underMaintenance) {
     routes = getPGModuleRoutes();
 }
 
-const router = setupRouter({
+export const router = setupRouter({
     // routes: appConfig.underMaintenance ? getMaintenanceRoutes() : getRoutes(),
     routes,
     middlewares: [authRoute, setRouteMetaInfo, setRouteTheme],

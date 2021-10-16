@@ -12,7 +12,7 @@
 
 <script>
 import FAccordionNavigation from 'fantom-vue-components/src/components/FAccordionNavigation/FAccordionNavigation.vue';
-import { signIn } from '@/modules/account/auth.js';
+import { checkSignIn } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
 export default {
     name: 'AccountSettings',
@@ -39,10 +39,8 @@ export default {
         }),
     },
 
-    async created() {
-        if (!this.$wallet.loggedUser) {
-            await signIn();
-        }
+    created() {
+        checkSignIn();
     },
 };
 </script>

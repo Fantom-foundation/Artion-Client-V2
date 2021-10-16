@@ -1,6 +1,7 @@
 export const SET_CHAIN_ID = 'setChainId';
 export const SET_ACCOUNT = 'setAccount';
 export const SET_WALLET = 'setWallet';
+export const SET_USER_NAME = 'setUserName';
 export const SET_BT = 'setBT';
 export const DELETE_BT = 'deleteBT';
 
@@ -25,6 +26,20 @@ export const mutations = {
      */
     [SET_WALLET](state, walletName) {
         state.wallet = walletName;
+    },
+    /**
+     * @param {Object} state
+     * @param {string} walletName
+     */
+    [SET_WALLET](state, walletName) {
+        state.wallet = walletName;
+    },
+    /**
+     * @param {Object} state
+     * @param {string} userName
+     */
+    [SET_USER_NAME](state, userName) {
+        state.userName = userName;
     },
     /**
      * @param {Object} state

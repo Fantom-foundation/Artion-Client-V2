@@ -2,7 +2,9 @@ import { initiateLogin } from '@/modules/account/mutations/initiate-login.js';
 import { wallet } from '@/plugins/wallet/Wallet.js';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { login } from '@/modules/account/mutations/login.js';
-import { getLoggedUser } from '@/modules/account/queries/logged-user.js';
+// import { getLoggedUser } from '@/modules/account/queries/logged-user.js';
+import { getUser } from '@/modules/account/queries/user.js';
+import { router } from '@/main.js';
 
 export function getBearerToken() {
     return wallet.getBearerToken();
@@ -12,7 +14,7 @@ export async function signIn() {
     const { account } = wallet;
 
     if (!wallet.connected || !account) {
-        return '';
+        return false;
     }
 
     const challenge = await initiateLogin();
@@ -23,7 +25,9 @@ export async function signIn() {
 
         wallet.setBearerToken(bearerToken);
 
-        await setLoggedUser();
+        await setUser(account, true);
+
+        return true;
     } catch (error) {
         if (error.code === 4001) {
             notifications.add({
@@ -36,8 +40,39 @@ export async function signIn() {
     }
 }
 
+export async function setUser(account, logged) {
+    const user = await getUser(account);
+
+    if (logged) {
+        user.logged = true;
+    }
+
+    wallet.setUser(user);
+}
+
+/**
+ * Checks if user is logged, if not, try to log him
+ * @return {Promise<boolean>}
+ */
+export async function checkSignIn() {
+    let ok = true;
+
+    if (!getBearerToken()) {
+        ok = await signIn();
+
+        if (!ok) {
+            // redirect to the homepage
+            router.push('/');
+        }
+    }
+
+    return ok;
+}
+
+/*
 export async function setLoggedUser() {
     const user = await getLoggedUser();
 
     wallet.setLoggedUser(user);
 }
+*/

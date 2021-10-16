@@ -1,5 +1,12 @@
 import store from '@/store';
-import { SET_ACCOUNT, SET_CHAIN_ID, SET_WALLET, SET_BT, DELETE_BT } from '@/plugins/wallet/store/mutations.js';
+import {
+    SET_ACCOUNT,
+    SET_CHAIN_ID,
+    SET_WALLET,
+    SET_BT,
+    DELETE_BT,
+    SET_USER_NAME,
+} from '@/plugins/wallet/store/mutations.js';
 import appConfig from '@/app.config.js';
 import { implementsWalletInterface } from '@/plugins/wallet/interface.js';
 import gql from 'graphql-tag';
@@ -45,7 +52,7 @@ export class Wallet {
         this.account = '';
         this.chainId = 0;
         this.connected = false;
-        this.loggedUser = null;
+        this.user = null;
 
         this._initWallets(wallets);
     }
@@ -103,7 +110,7 @@ export class Wallet {
 
     logout() {
         this.deleteBearerToken(this.account);
-        this.loggedUser = null;
+        this.user = null;
 
         this.connected = false;
         this.account = '';
@@ -119,6 +126,7 @@ export class Wallet {
             this._setChainId(0);
             this._setAccount('');
             this._setWalletName('');
+            this._setUserName('');
         });
     }
 
@@ -213,9 +221,11 @@ export class Wallet {
         }
     }
 
-    setLoggedUser(user) {
+    setUser(user) {
         if (this.account && user && this.account === user.address) {
-            this.loggedUser = user;
+            this.user = user;
+
+            this._setUserName(user.username || '');
         }
     }
 
@@ -365,6 +375,14 @@ export class Wallet {
      */
     _setWalletName(walletName) {
         store.commit(`wallet/${SET_WALLET}`, walletName || '');
+    }
+
+    /**
+     * @param {string} userName
+     * @private
+     */
+    _setUserName(userName) {
+        store.commit(`wallet/${SET_USER_NAME}`, userName);
     }
 
     /**

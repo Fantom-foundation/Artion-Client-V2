@@ -4,6 +4,7 @@
  * @property {string} chainId Currently selected account
  * @property {string} account Code of current language
  * @property {('metamask'|'coinbase')} wallet Currently selected wallet
+ * @property {string} userName
  * @property {string} bt Bearer tokens
  */
 
@@ -12,6 +13,7 @@ export const state = {
     chainId: 0,
     account: '',
     wallet: '',
+    userName: '',
     bt: {},
 };
 

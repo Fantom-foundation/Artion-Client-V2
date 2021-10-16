@@ -52,12 +52,12 @@ export function setRouteTheme(to, from, next) {
  */
 export async function authRoute(to, from, next) {
     if (to.meta.auth) {
-        if (wallet.loggedUser || !from.name) {
+        if ((wallet.user && wallet.user.logged) || !from.name) {
             next();
         } else {
             await signIn();
 
-            if (wallet.loggedUser) {
+            if (wallet.user && wallet.user.logged) {
                 next();
             }
         }

@@ -69,7 +69,7 @@
                     :label="$t('accountprofileform.wallet')"
                 >
                     <template #suffix>
-                        <f-copy-button :text="address">
+                        <f-copy-button :text="values.address">
                             <template #button-content>
                                 <app-iconset icon="copy" size="24px" />
                             </template>
@@ -104,6 +104,7 @@ import AUploadArea from '@/common/components/AUploadArea/AUploadArea';
 import { getUser } from '@/modules/account/queries/user.js';
 import { updateUser } from '@/modules/account/mutations/update-user.js';
 import { mapState } from 'vuex';
+import { checkSignIn, getBearerToken } from '@/modules/account/auth.js';
 export default {
     name: 'AccountProfileForm',
 
@@ -113,10 +114,6 @@ export default {
         return {
             values: {},
         };
-    },
-
-    created() {
-        this.init();
     },
 
     computed: {
@@ -129,12 +126,35 @@ export default {
         },
     },
 
-    methods: {
-        async init() {
-            this.values = await getUser(this.address);
-            console.log(this.values);
-        },
+    watch: {
+        address: {
+            async handler(value) {
+                let ok = true;
 
+                if (value) {
+                    // not logged in
+                    if (!getBearerToken()) {
+                        ok = await checkSignIn();
+                    }
+
+                    if (ok) {
+                        this.values = await getUser(value);
+                    } else {
+                        this.values = {};
+                    }
+                } else {
+                    // no address - user logged out
+
+                    this.values = {};
+                    // redirect to the homepage
+                    this.$router.push('/');
+                }
+            },
+            immediate: true,
+        },
+    },
+
+    methods: {
         async onSubmit(event) {
             let result = await updateUser(event.values);
             console.log(result);
