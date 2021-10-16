@@ -1,0 +1,126 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+.accountprofileform {
+	display: flex;
+	flex-direction: column;
+
+	&_wrap {
+		display: flex;
+		width: 100%;
+	}
+
+	&_col {
+		display: flex;
+		flex-direction: column;
+
+		&:first-child {
+			flex: 1;
+		}
+
+		&:last-child {
+			margin-left: var(--f-spacer-9);
+		}
+
+		.finput, .finput_inputcont {
+			width: 100%;
+		}
+
+		& > .fforminput:not(.fforminput:first-child),
+		.fforminput + .accountfrofileform_group,
+		.accountfrofileform_group + .fforminput {
+			margin-top: var(--f-spacer-4);
+		}
+
+		.finput {
+			svg { color: inherit; }
+		}
+
+	}
+
+	.auploadarea {
+		overflow: hidden;
+		.auploadarea_content {
+			border: none;
+			background: var(--f-color-grey-4);
+		}
+		&_preview {
+			object-fit: cover;
+		}
+	}
+
+	&_banner, &_avatar {
+		display: flex;
+		flex-direction: column;
+		row-gap: var(--f-spacer-2);
+	}
+
+	&_avatar {
+		.auploadarea {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+		}
+	}
+
+	&_banner {
+		margin-top: var(--f-spacer-2);
+		.auploadarea {
+			width: 150px;
+			height: 120px;
+			border-radius: var(--f-border-radius-3);
+		}
+	}
+
+	&_group {
+		display: flex;
+		flex-direction: column;
+		margin-top: var(--f-spacer-4);
+
+		.fforminput + .fforminput {
+			.finput_inputcont {
+				border-top: none;
+			}
+		}
+
+		.finput-prefixslot {
+			svg { color: var(--f-color-grey-4) }
+		}
+
+		.finput_inputcont {
+			border-radius: 0;
+		}
+
+		.fforminput:first-child {
+			.finput_inputcont {
+				border-top-right-radius: var(--f-border-radius-2);
+				border-top-left-radius: var(--f-border-radius-2);
+			}
+		}
+
+		.fforminput:last-child {
+			.finput_inputcont {
+				border-bottom-right-radius: var(--f-border-radius-2);
+				border-bottom-left-radius: var(--f-border-radius-2);
+			}
+		}
+	}
+
+	&_btn {
+		margin-top: var(--f-spacer-6);
+	}
+}
+
+@include media.media-max(699px) {
+	.accountprofileform {
+		&_wrap {
+			flex-direction: column;
+		}
+
+		&_col:last-child {
+			margin-top: 40px;
+			flex-direction: row;
+			margin-left: 0;
+			gap: var(--f-spacer-4);
+		}
+	}
+
+}
