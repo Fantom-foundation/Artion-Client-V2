@@ -32,14 +32,14 @@ export default {
 
     computed: {
         ...mapState('wallet', {
-            address: 'account',
+            walletAddress: 'account',
             chainId: 'chainId',
             userName: 'userName',
         }),
     },
 
     watch: {
-        address: {
+        walletAddress: {
             handler(value) {
                 this.setUser(value);
 

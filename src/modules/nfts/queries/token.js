@@ -12,6 +12,16 @@ export async function getToken(contract = '', id = '') {
                     description
                     image
                     imageThumb
+                    created
+                    hasListing
+                    hasOffer
+                    hasAuction
+                    hasBids
+                    lastListing
+                    lastTrade
+                    lastOffer
+                    lastBid
+                    likes
                 }
             }
         `,

@@ -42,6 +42,11 @@
                             {{ $t('nftdetail.favorites') }}
                         </div>
                     </div>
+
+                    <div>
+                        <f-button v-if="userCreatedToken && !token.hasAuction" label="Start Auction" />
+                    </div>
+
                     <div class="nftdetail_currentPrice">
                         <div class="nftdetail_currentPrice_item nftdetail_currentPrice_label">
                             {{ $t('nftdetail.currentPrice') }}
@@ -226,12 +231,14 @@ import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
 import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
 import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
-import { getToken } from '@/modules/nfts/queries/token.js';
 import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import NftMakeOfferForm from '@/modules/nfts/components/NftMakeOfferForm/NftMakeOfferForm.vue';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { getImageThumbUrl } from '@/utils/url.js';
+import { getTokens } from '@/modules/nfts/queries/tokens.js';
+import { getToken } from '@/modules/nfts/queries/token.js';
+import { mapState } from 'vuex';
 
 export default {
     name: 'NftDetail',
@@ -255,8 +262,26 @@ export default {
             token: {},
             likesCount: 7,
             liked: false,
+            // token is created by user
+            userCreatedToken: false,
             tx: {},
         };
+    },
+
+    computed: {
+        ...mapState('wallet', {
+            walletAddress: 'account',
+        }),
+
+        userCreatedTokenOnAuction() {
+            return this.userCreatedToken;
+        },
+    },
+
+    watch: {
+        walletAddress(value) {
+            this.onWalletAddressChange(value);
+        },
     },
 
     created() {
@@ -271,8 +296,37 @@ export default {
                 this.$router.push({ name: '404' });
             } else {
                 this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
-                console.log(routeParams.tokenContract, toHex(routeParams.tokenId));
+
+                this.onWalletAddressChange();
             }
+        },
+
+        async onWalletAddressChange(address) {
+            console.log('WWCHAN', address);
+            this.userCreatedToken = await this.checkUserCreatedToken(this.token);
+        },
+
+        /**
+         * Checks, if user created the token
+         *
+         * @param {Object} token
+         * @return {Promise<boolean>}
+         */
+        async checkUserCreatedToken(token) {
+            let created = false;
+
+            if (this.$wallet.connected && this.$wallet.account) {
+                const tokens = await getTokens({}, { filter: { createdBy: this.$wallet.account } });
+
+                created =
+                    tokens.edges.findIndex(
+                        edge => edge.node.tokenId === token.tokenId && edge.node.contract === token.contract
+                    ) > -1;
+
+                console.log('CC', created, token.tokenId);
+            }
+
+            return created;
         },
 
         async onMakeOfferClick() {
