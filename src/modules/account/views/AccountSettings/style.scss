@@ -39,8 +39,18 @@
 
 @include media.media-max(998px) {
 	.accountsettings {
+		flex-direction: column;
+		// .fnavigation .fnavigationnode {
+		// 	.fnavigationnode_item {
+		// 		padding-inline-start: 0 !important;
+		// 	}
+		// }
 		&_sidebar {
-			display: none;
+			border-bottom: 1px solid var(--f-color-grey-3);
+		}
+
+		&_title {
+			padding-left: 0;
 		}
 
 		&_view {
