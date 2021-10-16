@@ -1,0 +1,40 @@
+.fbutton {
+	&.btn-loading {
+		position: relative;
+		.fbutton_spinner {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+		.fbutton_content {
+			visibility: hidden;
+		}
+	}
+}
+
+ .spin::before {
+	animation: 1.5s linear infinite spinner;
+	animation-play-state: inherit;
+	border: solid 5px #fff;
+	border-bottom-color: transparent;
+	border-radius: 50%;
+	content: "";
+	height: 25px;
+	width: 25px;
+	position: absolute;
+	top: 10%;
+	left: 10%;
+	transform: translate3d(-50%, -50%, 0);
+	will-change: transform;
+ }
+
+ @keyframes spinner {
+	0% {
+	  transform: translate3d(-50%, -50%, 0) rotate(0deg);
+	}
+	100% {
+	  transform: translate3d(-50%, -50%, 0) rotate(360deg);
+	}
+ }
+
