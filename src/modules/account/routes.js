@@ -2,7 +2,7 @@ import { i18n } from '@/plugins/vue-i18n.js';
 
 import Account from '@/modules/account/views/Account/Account.vue';
 import AccountSingleItems from '@/modules/account/views/AccountSingleItems/AccountSingleItems.vue';
-import AccountBundles from '@/modules/account/views/AccountBundles/AccountBundles.vue';
+import AccountCreated from '@/modules/account/views/AccountCreated/AccountCreated.vue';
 import AccountFavorited from '@/modules/account/views/AccountFavorited/AccountFavorited.vue';
 import AccountActivity from '@/modules/account/views/AccountActivity/AccountActivity.vue';
 import AccountOffers from '@/modules/account/views/AccountOffers/AccountOffers.vue';
@@ -26,9 +26,9 @@ export function getAccountRoutes() {
                     component: AccountSingleItems,
                 },
                 {
-                    path: '/account/:address?/bundles',
-                    name: 'account-bundles',
-                    component: AccountBundles,
+                    path: '/account/:address?/created',
+                    name: 'account-created',
+                    component: AccountCreated,
                 },
                 {
                     path: '/account/:address?/favorited',

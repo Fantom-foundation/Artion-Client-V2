@@ -39,9 +39,9 @@
             </div>
             <div class="account_title">{{ user.name || $t('account.unnamed') }}</div>
             <div class="account_subtitle">
-                <f-copy-button :text="address">
+                <f-copy-button :text="userAddress">
                     <template #button-content>
-                        <f-ellipsis :text="address" overflow="middle" />
+                        <f-ellipsis :text="userAddress" overflow="middle" />
                     </template>
                 </f-copy-button>
             </div>
@@ -54,14 +54,14 @@
         <account-navigation ref="accountNavigation" :navigation="navigation" :filters="filters" />
 
         <div class="account_filterButton">
-            <f-button @click.native="isSideClose = !isSideClose"
-                >{{ $t('account.filter') }}
-                <span v-if="filterNumber" class="account_filterButton_counter">{{ filterNumber }}</span></f-button
-            >
+            <f-button @click.native="isSideClose = !isSideClose">
+                {{ $t('account.filter') }}
+                <span v-if="filterNumber" class="account_filterButton_counter">{{ filterNumber }}</span>
+            </f-button>
         </div>
         <div class="account_content" :class="{ no_aside: isSideClose }">
             <aside class="account_sidebar" :class="{ close: isSideClose }">
-                <header class="account_sidebar_header">
+                <!--                <header class="account_sidebar_header">
                     <div class="account_sidebar_wrap">
                         <button
                             :aria-label="$t('account.filters')"
@@ -75,34 +75,34 @@
                         </button>
                     </div>
                 </header>
-                <nft-filters v-model="filters" class="account_sidebar_filters" />
+                <nft-filters v-model="filters" class="account_sidebar_filters" />-->
             </aside>
             <div class="account_view">
                 <div class="account_view_filters">
                     <div class="account_view_filters_search">
-                        <ASearchField field-size="large" placeholder="Search" />
+                        <!--                        <ASearchField field-size="large" placeholder="Search" />-->
                     </div>
                     <div class="account_view_filters_list">
-                        <NftListFilters v-model="filters" />
+                        <!--                        <NftListFilters v-model="filters" />-->
                         <DensitySwitch />
                     </div>
                 </div>
                 <div class="account_view_chips">
                     <NftFilterChips v-model="filters" @chips-change="onChipsChange" />
                 </div>
-                <router-view />
+                <router-view :user-address="userAddress" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import NftFilters from '@/modules/nfts/components/NftFilters/NftFilters.vue';
 import AUploadArea from '@/common/components/AUploadArea/AUploadArea';
 import AShareButton from '@/common/components/AShareButton/AShareButton';
-import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
-import ASearchField from '@/common/components/ASearchField/ASearchField';
-import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters';
+// import NftFilters from '@/modules/nfts/components/NftFilters/NftFilters.vue';
+// import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
+// import ASearchField from '@/common/components/ASearchField/ASearchField';
+// import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters';
 import DensitySwitch from '@/modules/nfts/components/DensitySwitch/DensitySwitch';
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 import { routeQueryMixin } from '@/common/mixins/route-query.js';
@@ -111,6 +111,9 @@ import FCopyButton from 'fantom-vue-components/src/components/FCopyButton/FCopyB
 import { mapState } from 'vuex';
 import { getUser } from '@/modules/account/queries/user.js';
 import AccountNavigation from '@/modules/account/components/AccountNavigation/AccountNavigation.vue';
+import { defer } from 'fantom-vue-components/src/utils';
+import { getUserTokenCounters } from '@/modules/account/queries/user-token-counters.js';
+import { toInt } from '@/utils/big-number.js';
 
 export default {
     name: 'Account',
@@ -121,10 +124,10 @@ export default {
         AccountNavigation,
         AUploadArea,
         AShareButton,
-        AppIconset,
-        NftFilters,
-        ASearchField,
-        NftListFilters,
+        // AppIconset,
+        // NftFilters,
+        // ASearchField,
+        // NftListFilters,
         DensitySwitch,
         NftFilterChips,
         FEllipsis,
@@ -136,7 +139,7 @@ export default {
             filters: {},
             isSideClose: true,
             filterNumber: 0,
-            address: this.$route.params.adddress,
+            userAddress: this.$route.params.adddress,
             user: {},
             navigation: [
                 {
@@ -146,7 +149,7 @@ export default {
                     counter: 0,
                 },
                 {
-                    routeName: 'account-bundles',
+                    routeName: 'account-created',
                     label: this.$t('account.created'),
                     icon: 'paint',
                     counter: 0,
@@ -187,23 +190,52 @@ export default {
     watch: {
         walletAddress: {
             handler(value) {
-                if (!this.address) {
-                    this.address = this.$route.params.address || value;
+                if (!this.userAddress) {
+                    this.userAddress = this.$route.params.address || value;
+                } else {
+                    this.userAddress = value;
                 }
 
-                this.loadUser(this.address);
+                this.loadUser(this.userAddress);
+
+                defer(() => {
+                    this.updateTokenCounters();
+                }, 200);
             },
             immediate: true,
         },
     },
 
     methods: {
-        async loadUser(address) {
-            if (address) {
-                this.user = await getUser(address);
+        /**
+         * @param {string} userAddress
+         * @return {Promise<void>}
+         */
+        async loadUser(userAddress) {
+            if (userAddress) {
+                this.user = await getUser(userAddress);
             }
         },
 
+        /**
+         * @return {Promise<void>}
+         */
+        async updateTokenCounters() {
+            const { accountNavigation } = this.$refs;
+            const tokenCounters = await getUserTokenCounters(this.userAddress);
+
+            if (!tokenCounters) {
+                return;
+            }
+
+            if (tokenCounters.createdTokens) {
+                accountNavigation.updateCounter('account-created', toInt(tokenCounters.createdTokens.totalCount));
+            }
+        },
+
+        /**
+         * @param {Array} chips
+         */
         onChipsChange(chips) {
             this.filterNumber = chips.length;
         },

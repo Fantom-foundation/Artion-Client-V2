@@ -93,8 +93,6 @@ export default {
 
     created() {
         this.init();
-
-        console.log('!!~', this.txStatus);
     },
 
     methods: {
