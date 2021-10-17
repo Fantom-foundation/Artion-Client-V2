@@ -27,6 +27,8 @@ import FNotifications from 'fantom-vue-components/src/components/FNotifications/
 import FTooltip from 'fantom-vue-components/src/components/FTooltip/FTooltip.vue';
 import FAppTheme from 'fantom-vue-components/src/components/FAppTheme/FAppTheme.vue';
 import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.vue';
+import { getBearerToken, setUser } from '@/modules/account/auth.js';
+import { mapState } from 'vuex';
 
 // import { FAppTheme } from '@skavel/fantom-vue-ui';
 // import FAppTheme from '@skavel/fantom-vue-ui/src/components/FAppTheme/FAppTheme.vue';
@@ -43,6 +45,21 @@ export default {
         };
     },
 
+    computed: {
+        ...mapState('wallet', {
+            walletAddress: 'account',
+        }),
+    },
+
+    watch: {
+        walletAddress: {
+            handler(value) {
+                this.setUser(value);
+            },
+            immediate: true,
+        },
+    },
+
     /*
     created() {
         this.$root._appNode = this;
@@ -50,6 +67,14 @@ export default {
 */
 
     methods: {
+        async setUser(account) {
+            if (!account) {
+                return;
+            }
+
+            await setUser(account, !!getBearerToken());
+        },
+
         setAppTheme() {
             // AppTheme.setTheme('theme-dark');
         },

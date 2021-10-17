@@ -11,7 +11,6 @@ import { mapState } from 'vuex';
 import { CHAINS } from '@/common/constants/chains.js';
 import WalletMenuPopover from '@/modules/wallet/components/WalletMenuPopover/WalletMenuPopover.vue';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
-import { getBearerToken, setUser } from '@/modules/account/auth.js';
 
 export default {
     name: 'WalletButtonWrap',
@@ -41,8 +40,6 @@ export default {
     watch: {
         walletAddress: {
             handler(value) {
-                this.setUser(value);
-
                 this.wallet = { ...this.wallet, address: value || '' };
             },
             immediate: true,
@@ -69,14 +66,6 @@ export default {
     },
 
     methods: {
-        async setUser(account) {
-            if (!account) {
-                return;
-            }
-
-            setUser(account, !!getBearerToken());
-        },
-
         async onWalletButtonClick() {
             if (this.$wallet.connected) {
                 this.$refs.menu.show();
