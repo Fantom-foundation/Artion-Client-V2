@@ -1,7 +1,7 @@
 <template>
     <div class="walletbuttonwrap">
         <wallet-button v-on="$listeners" :wallet="wallet" @click="onWalletButtonClick" id="wb" />
-        <wallet-menu-popover ref="menu" attach-to="#wb" @wallet-menu="onWalletMenu" />
+        <wallet-menu-popover ref="menu" :navigation="walletMenu" attach-to="#wb" @wallet-menu="onWalletMenu" />
     </div>
 </template>
 
@@ -18,6 +18,28 @@ export default {
     mixins: [eventBusMixin],
 
     components: { WalletMenuPopover, WalletButton },
+
+    props: {
+        walletMenu: {
+            type: Array,
+            default() {
+                return [
+                    {
+                        label: this.$t('walletMenu.profile'),
+                        route: 'account',
+                    },
+                    {
+                        label: this.$t('walletMenu.settings'),
+                        route: 'account-settings',
+                    },
+                    {
+                        label: this.$t('walletMenu.logout'),
+                        action: 'logout',
+                    },
+                ];
+            },
+        },
+    },
 
     data() {
         return {

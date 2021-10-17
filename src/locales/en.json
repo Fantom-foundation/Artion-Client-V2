@@ -10,6 +10,7 @@
     "nonZeroPrice": "Price must be non zero value",
     "unsufficientBalance": "Unsufficient balance",
     "startAuction": "Start Auction",
+    "profile": "Profile",
 
     "navigation": {
         "explore": "@:explore",
@@ -50,6 +51,12 @@
         "cheapest": "Cheapest",
         "highest_last_sale": "Highest Last Sale",
         "mostly_viewed": "Mostly Viewed"
+    },
+
+    "walletMenu": {
+        "profile": "@:profile",
+        "settings": "Settings",
+        "logout": "Logout"
     },
 
     "page": {
@@ -245,7 +252,7 @@
 
     "accountsettings": {
         "title": "SETTINGS",
-        "profile": "Profile",
+        "profile": "@:profile",
         "notifications": "Notifications",
         "offers": "Offers"
     },

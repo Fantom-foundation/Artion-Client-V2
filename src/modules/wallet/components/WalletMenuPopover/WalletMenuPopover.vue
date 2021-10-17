@@ -31,25 +31,13 @@ export default {
 
     components: { FAccordionNavigation, FPopover },
 
-    props: {},
-
-    data() {
-        return {
-            navigation: [
-                {
-                    label: 'Profile',
-                    route: 'account',
-                },
-                {
-                    label: 'Settings',
-                    route: 'account-settings',
-                },
-                {
-                    label: 'Logout',
-                    action: 'logout',
-                },
-            ],
-        };
+    props: {
+        navigation: {
+            type: Array,
+            default() {
+                return [];
+            },
+        },
     },
 
     methods: {
