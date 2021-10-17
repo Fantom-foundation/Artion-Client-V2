@@ -1,15 +1,20 @@
 <template>
-    <div class="asigntransaction" :hidden="hidden || null" aria-hidden="true"></div>
+    <div class="asigntransaction" :hidden="hidden || null" aria-hidden="true">
+        <metamask-wallet-notice-window ref="metamaskNotice" />
+        <coinbase-wallet-notice-window ref="coinbaseNotice" />
+    </div>
 </template>
 
 <script>
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { toBigNumber, toHex } from '@/utils/big-number.js';
 import { SET_TX_STATUS } from '@/modules/app/store/mutations.js';
+import MetamaskWalletNoticeWindow from '@/modules/wallet/components/MetamaskWalletNoticeWindow/MetamaskWalletNoticeWindow.vue';
+import CoinbaseWalletNoticeWindow from '@/modules/wallet/components/CoinbaseWalletNoticeWindow/CoinbaseWalletNoticeWindow.vue';
 
 export default {
     name: 'ASignTransaction',
-
+    components: { CoinbaseWalletNoticeWindow, MetamaskWalletNoticeWindow },
     mixins: [eventBusMixin],
 
     props: {
@@ -55,6 +60,16 @@ export default {
             if (!$wallet.connected) {
                 this._eventBus.emit('show-wallet-picker');
             } else {
+                if (!$wallet.isCorrectChainId()) {
+                    if ($wallet.is('metamask')) {
+                        this.$refs.metamaskNotice.show();
+                    } else if ($wallet.is('coinbase')) {
+                        this.$refs.coinbaseNotice.show();
+                    }
+
+                    return;
+                }
+
                 try {
                     this.setStatus('pending');
 
