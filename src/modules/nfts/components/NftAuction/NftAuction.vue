@@ -2,7 +2,9 @@
     <div class="NftAuction">
         <a-details>
             <template #label>
-                <div class="nftdetail_details_wrap">{{ $t('nftauction.saleEndsIn') }} 3 Days (06.10.2021, 17:03:15)</div>
+                <div class="nftdetail_details_wrap">
+                    {{ $t('nftauction.saleEndsIn') }} 3 Days (06.10.2021, 17:03:15)
+                </div>
             </template>
             <template>
                 <div class="nftdetail_sail">

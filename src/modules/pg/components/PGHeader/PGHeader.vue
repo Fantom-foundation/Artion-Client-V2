@@ -11,7 +11,7 @@
         </div>
 
         <div class="pg-header__col pg-header__col--wallet-button">
-            <wallet-button />
+            <wallet-button-wrap :wallet-menu="walletMenu" />
         </div>
 
         <div class="pg-header__col pg-header__col--burger">
@@ -32,12 +32,27 @@
 
 <script>
 import PGMenu from '../PGMenu/PGMenu.vue';
-import WalletButton from '@/modules/wallet/components/WalletButton/WalletButton.vue';
+import WalletButtonWrap from '@/modules/wallet/components/WalletButtonWrap/WalletButtonWrap.vue';
 
 export default {
     name: 'PGHeader',
 
-    components: { WalletButton, PGMenu },
+    components: { WalletButtonWrap, PGMenu },
+
+    data() {
+        return {
+            walletMenu: [
+                {
+                    label: this.$t('walletMenu.settings'),
+                    route: 'pg-account-settings',
+                },
+                {
+                    label: this.$t('walletMenu.logout'),
+                    action: 'logout',
+                },
+            ],
+        };
+    },
 };
 </script>
 

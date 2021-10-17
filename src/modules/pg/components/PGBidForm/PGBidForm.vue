@@ -64,7 +64,7 @@ const currencies = [
     {
         address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
         label: 'WFTM',
-        img: '/img/WFTM.png',
+        img: 'img/WFTM.png',
         price: 2.23,
         value: 'wftm',
     },
