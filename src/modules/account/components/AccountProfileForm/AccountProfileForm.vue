@@ -104,7 +104,7 @@ import AUploadArea from '@/common/components/AUploadArea/AUploadArea';
 import { getUser } from '@/modules/account/queries/user.js';
 import { updateUser } from '@/modules/account/mutations/update-user.js';
 import { mapState } from 'vuex';
-import { checkSignIn, getBearerToken } from '@/modules/account/auth.js';
+// import { checkSignIn, getBearerToken } from '@/modules/account/auth.js';
 export default {
     name: 'AccountProfileForm',
 
@@ -129,25 +129,10 @@ export default {
     watch: {
         walletAddress: {
             async handler(value) {
-                let ok = true;
-
                 if (value) {
-                    // not logged in
-                    if (!getBearerToken()) {
-                        ok = await checkSignIn();
-                    }
-
-                    if (ok) {
-                        this.values = await getUser(value);
-                    } else {
-                        this.values = {};
-                    }
+                    this.values = await getUser(value);
                 } else {
-                    // no address - user logged out
-
                     this.values = {};
-                    // redirect to the homepage
-                    this.$router.push('/');
                 }
             },
             immediate: true,

@@ -12,10 +12,12 @@
 
 <script>
 import FAccordionNavigation from 'fantom-vue-components/src/components/FAccordionNavigation/FAccordionNavigation.vue';
-import { checkSignIn } from '@/modules/account/auth.js';
+import { authPageMixin } from '@/common/mixins/auth-page.js';
 
 export default {
     name: 'AccountSettings',
+
+    mixins: [authPageMixin],
 
     components: { FAccordionNavigation },
 
@@ -32,12 +34,9 @@ export default {
             ],
         };
     },
-
-    created() {
-        checkSignIn();
-    },
 };
 </script>
+
 <style lang="scss">
 @use 'style';
 </style>
