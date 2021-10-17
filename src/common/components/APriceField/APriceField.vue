@@ -1,9 +1,15 @@
 <template>
     <div class="apricefield">
         <f-input ref="input" type="number" v-bind="$attrs" v-on="$listeners" v-model="dValue">
+            <!-- copy slots -->
+            <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
+                <slot :name="name" v-bind="data"></slot>
+            </template>
+
             <template #prefix>
                 <a-currency-dropdown :currencies="currencies" @token-selected="onTokenSelected" />
             </template>
+
             <template #suffix>
                 <div class="apricefield_suffix">
                     <div class="apricefield_number">{{ '$' + dollarEquivalent }}</div>

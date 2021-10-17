@@ -43,8 +43,12 @@
                         </div>
                     </div>
 
-                    <div>
-                        <f-button v-if="userCreatedToken && !token.hasAuction" label="Start Auction" />
+                    <div class="mat-5">
+                        <f-button
+                            v-if="userCreatedToken && !token.hasAuction"
+                            :label="$t('nftdetail.startAuction')"
+                            @click.native="onStartAuctionClick"
+                        />
                     </div>
 
                     <div class="nftdetail_currentPrice">
@@ -58,7 +62,9 @@
                         </div>
                         <div class="nftdetail_currentPrice_item nftdetail_currentPrice_btn">
                             <f-button @click.native="onBuyNowClick">{{ $t('nftdetail.buyNow') }}</f-button>
-                            <f-button @click.native="onMakeOfferClick">{{ $t('nftdetail.makeOffer') }}</f-button>
+                            <f-button v-if="!userCreatedToken" @click.native="onMakeOfferClick">
+                                {{ $t('nftdetail.makeOffer') }}
+                            </f-button>
                         </div>
                     </div>
                     <a-share-button />
@@ -219,6 +225,10 @@
             <nft-make-offer-form :token="token" />
         </a-window>
 
+        <a-window ref="startAuctionWindow" :title="$t('nftdetail.startAuction')" class="fwindow-width-5">
+            <nft-start-auction-form :token="token" />
+        </a-window>
+
         <a-sign-transaction :tx="tx" hidden />
     </div>
 </template>
@@ -239,6 +249,7 @@ import { getImageThumbUrl } from '@/utils/url.js';
 import { getTokens } from '@/modules/nfts/queries/tokens.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
 import { mapState } from 'vuex';
+import NftStartAuctionForm from '@/modules/nfts/components/NftStartAuctionForm/NftStartAuctionForm.vue';
 
 export default {
     name: 'NftDetail',
@@ -246,6 +257,7 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftStartAuctionForm,
         NftMakeOfferForm,
         ASignTransaction,
         ADetails,
@@ -272,10 +284,6 @@ export default {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
-
-        userCreatedTokenOnAuction() {
-            return this.userCreatedToken;
-        },
     },
 
     watch: {
@@ -297,12 +305,13 @@ export default {
             } else {
                 this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
 
+                console.log(this.token);
+
                 this.onWalletAddressChange();
             }
         },
 
-        async onWalletAddressChange(address) {
-            console.log('WWCHAN', address);
+        async onWalletAddressChange() {
             this.userCreatedToken = await this.checkUserCreatedToken(this.token);
         },
 
@@ -322,8 +331,6 @@ export default {
                     tokens.edges.findIndex(
                         edge => edge.node.tokenId === token.tokenId && edge.node.contract === token.contract
                     ) > -1;
-
-                console.log('CC', created, token.tokenId);
             }
 
             return created;
@@ -345,6 +352,12 @@ export default {
         },
 
         onBuyNowClick() {},
+
+        onStartAuctionClick() {
+            if (!this.token.hasAuction && this.userCreatedToken) {
+                this.$refs.startAuctionWindow.show();
+            }
+        },
 
         onLikeClick() {
             this.liked = !this.liked;

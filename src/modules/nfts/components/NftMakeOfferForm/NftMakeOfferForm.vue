@@ -14,8 +14,8 @@
             type="date"
             name="deadline"
             :validator="deadlineValidator"
-            :in-formatter="ifo"
-            :out-formatter="ofo"
+            :in-formatter="dateInFormatterTimestamp"
+            :out-formatter="dateOutFormatterTimestamp"
             validate-on-input
             field-size="large"
             :label="$t('nftmakeofferform.offerExpiration')"
@@ -39,6 +39,7 @@ import { getErc20TokenBalance } from '@/modules/wallet/queries/erc20-token-balan
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
 import { mapState } from 'vuex';
+import { dateInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
 
 export default {
     name: 'NftMakeOfferForm',
@@ -151,14 +152,6 @@ export default {
             this.tx = tx;
         },
 
-        ifo(value) {
-            return dayjs(value).format('YYYY-MM-DD');
-        },
-
-        ofo(value) {
-            return dayjs(value).valueOf();
-        },
-
         revalidatePriceField() {
             // oolalaa
             this.$refs.priceField.$refs.input.$refs.input.validate();
@@ -180,6 +173,9 @@ export default {
         onTransactionStatus(payload) {
             console.log('onTransactionStatus', JSON.stringify(payload));
         },
+
+        dateInFormatterTimestamp,
+        dateOutFormatterTimestamp,
     },
 };
 </script>

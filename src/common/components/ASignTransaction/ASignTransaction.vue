@@ -62,6 +62,8 @@ export default {
                         tx.from = $wallet.account;
                     }
 
+                    console.log('TX: ', tx);
+
                     tx.chainId = $wallet.chainId;
                     tx.nonce = await $wallet.getNonce($wallet.account, true);
                     // tx.from = $wallet.account;
@@ -74,7 +76,7 @@ export default {
                         tx.from = $wallet.account;
                     }
 
-                    console.log('TX: ', tx);
+                    // console.log('TX: ', tx);
 
                     const txHash = await $wallet.signTransaction(tx, true);
 

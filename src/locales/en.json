@@ -7,6 +7,9 @@
     "status": "Status",
     "results": "results",
     "your_profile": "Your Profile",
+    "nonZeroPrice": "Price must be non zero value",
+    "unsufficientBalance": "Unsufficient balance",
+    "startAuction": "Start Auction",
 
     "navigation": {
         "explore": "@:explore",
@@ -121,9 +124,23 @@
         "price": "Price",
         "offerExpiration": "Offer Expiration",
         "placeOffer": "Place Offer",
-        "nonZeroPrice": "Price must be non zero value",
-        "unsufficientBalance": "Unsufficient balance",
+        "nonZeroPrice": "@:nonZeroPrice",
+        "unsufficientBalance": "@:unsufficientBalance",
         "badDate": "Bad date"
+    },
+
+    "nftstartauctionform": {
+        "reservePrice": "Reserve Price",
+        "reservePriceInfo": "Reserve price is your desired one you want to get from this auction",
+        "startTime": "Start Time",
+        "auctionExpiration": "Auction Expiration",
+        "placeOffer": "Place Offer",
+        "nonZeroPrice": "@:nonZeroPrice",
+        "startAuction": "@:startAuction",
+        "badDate": "Bad date",
+        "fillDate": "Fill the date please",
+        "startDateLower": "Start date must be lower than end time",
+        "endDateGreater": "End date must be greater than start time"
     },
 
     "densityswitch": {
@@ -159,7 +176,8 @@
         "chainId": "Chain ID",
         "fromCollection": "More from this collection",
         "offer": "Place your offer",
-        "makeOffer": "Make offer"
+        "makeOffer": "Make offer",
+        "startAuction": "@:startAuction"
     },
 
     "ashareButton": {
