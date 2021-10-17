@@ -118,7 +118,7 @@ export default {
 
     computed: {
         ...mapState('wallet', {
-            address: 'account',
+            walletAddress: 'account',
         }),
 
         isDisable() {
@@ -127,7 +127,7 @@ export default {
     },
 
     watch: {
-        address: {
+        walletAddress: {
             async handler(value) {
                 let ok = true;
 

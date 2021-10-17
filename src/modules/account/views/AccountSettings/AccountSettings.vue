@@ -13,7 +13,7 @@
 <script>
 import FAccordionNavigation from 'fantom-vue-components/src/components/FAccordionNavigation/FAccordionNavigation.vue';
 import { checkSignIn } from '@/modules/account/auth.js';
-import { mapState } from 'vuex';
+
 export default {
     name: 'AccountSettings',
 
@@ -31,12 +31,6 @@ export default {
                 { label: this.$t('accountsettings.offers'), icon: 'tag' },
             ],
         };
-    },
-
-    computed: {
-        ...mapState('wallet', {
-            address: 'account',
-        }),
     },
 
     created() {
