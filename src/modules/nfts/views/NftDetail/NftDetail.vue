@@ -71,29 +71,8 @@
                 </div>
             </div>
             <div class="nftdetail_data">
-                <a-details>
-                    <template #label>
-                        <div class="nftdetail_details_wrap">
-                            {{ $t('nftdetail.saleEndsIn') }} 3 Days (06.10.2021, 17:03:15)
-                        </div>
-                    </template>
-                    <template>
-                        <div class="nftdetail_sail">
-                            <div class="nftdetail_sail_item">
-                                {{ $t('nftdetail.reservePrice') }}:&nbsp;<img
-                                    src="/img/tmp/ftm.png"
-                                    alt="FTM"
-                                />&nbsp;100
-                            </div>
-                            <div class="nftdetail_sail_item">
-                                {{ $t('nftdetail.highestBid') }}:&nbsp;<img src="/img/tmp/ftm.png" alt="FTM" />&nbsp;100
-                            </div>
-                            <div class="nftdetail_sail_item nftdetail_sail_btn">
-                                <f-button>{{ $t('nftdetail.placeBid') }}</f-button>
-                            </div>
-                        </div>
-                    </template>
-                </a-details>
+                <nft-auction v-if="token.hasAuction" :token="token" />
+
                 <a-details>
                     <template #label>
                         <div class="nftdetail_details_wrap">
@@ -250,6 +229,7 @@ import { getTokens } from '@/modules/nfts/queries/tokens.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
 import { mapState } from 'vuex';
 import NftStartAuctionForm from '@/modules/nfts/components/NftStartAuctionForm/NftStartAuctionForm.vue';
+import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
 
 export default {
     name: 'NftDetail',
@@ -257,6 +237,7 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftAuction,
         NftStartAuctionForm,
         NftMakeOfferForm,
         ASignTransaction,

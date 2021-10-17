@@ -11,6 +11,7 @@
     "unsufficientBalance": "Unsufficient balance",
     "startAuction": "Start Auction",
     "profile": "Profile",
+    "reservePrice": "Reserve Price",
 
     "navigation": {
         "explore": "@:explore",
@@ -137,7 +138,7 @@
     },
 
     "nftstartauctionform": {
-        "reservePrice": "Reserve Price",
+        "reservePrice": "@:reservePrice",
         "reservePriceInfo": "Reserve price is your desired one you want to get from this auction",
         "startTime": "Start Time",
         "auctionExpiration": "Auction Expiration",
@@ -161,10 +162,6 @@
         "favorites": "favorites",
         "currentPrice": "Current Price",
         "buyNow": "Buy Now",
-        "saleEndsIn": "Sale ends in",
-        "reservePrice": "Reserve Price",
-        "highestBid": "Highest Bid",
-        "placeBid": "Place bid",
         "priceHistory": "Price History",
         "listings": "Listings",
         "directOffers": "Direct Offers",
@@ -185,6 +182,13 @@
         "offer": "Place your offer",
         "makeOffer": "Make offer",
         "startAuction": "@:startAuction"
+    },
+
+    "nftauction": {
+        "reservePrice": "@:reservePrice",
+        "saleEndsIn": "Sale ends in",
+        "placeBid": "Place bid",
+        "highestBid": "Highest Bid"
     },
 
     "ashareButton": {
