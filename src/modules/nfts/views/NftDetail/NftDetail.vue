@@ -230,6 +230,7 @@ import { getToken } from '@/modules/nfts/queries/token.js';
 import { mapState } from 'vuex';
 import NftStartAuctionForm from '@/modules/nfts/components/NftStartAuctionForm/NftStartAuctionForm.vue';
 import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
+import { checkWallet } from '@/plugins/wallet/utils.js';
 
 export default {
     name: 'NftDetail',
@@ -318,16 +319,9 @@ export default {
         },
 
         async onMakeOfferClick() {
-            if (!this.$wallet.connected) {
-                const payload = {};
+            const walletOk = await checkWallet();
 
-                this._eventBus.emit('show-wallet-picker', payload);
-
-                const walletInfo = await payload.promise;
-                if (walletInfo && walletInfo.walletSet) {
-                    this.$refs.makeOfferWindow.show();
-                }
-            } else {
+            if (walletOk) {
                 this.$refs.makeOfferWindow.show();
             }
         },
