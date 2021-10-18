@@ -1,0 +1,46 @@
+@use "custom-properties";
+
+.avideo {
+    position: relative;
+
+    &_overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        cursor: pointer;
+        opacity: 0.6;
+        transition: opacity var(--f-transition-length) var(--f-transition-func);
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    &_icon {
+        --fsvgicon-width: var(--avideo-icon-size);
+        --fsvgicon-height: var(--avideo-icon-size);
+        --fsvgicon-color: var(--avideo-icon-color);
+
+        margin: auto;
+        filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.7));
+    }
+
+    video {
+        width: 100%;
+        display: block;
+    }
+
+    &-playing {
+        .avideo_overlay {
+            opacity: 0;
+
+            &:not(.avideo_overlay-invisible):hover,
+            &:not(.avideo_overlay-invisible):focus {
+                opacity: 1;
+            }
+        }
+    }
+}

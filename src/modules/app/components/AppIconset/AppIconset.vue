@@ -53,6 +53,8 @@ import IconArrowright from '@/assets/vue-icons/IconArrowright.vue';
 import IconNotify from '@/assets/vue-icons/IconNotify.vue';
 import IconUser from '@/assets/vue-icons/IconUser.vue';
 import IconCopy from '@/assets/vue-icons/IconCopy.vue';
+import IconPlay from '@/assets/vue-icons/IconPlay.vue';
+import IconPause from '@/assets/vue-icons/IconPause.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -109,6 +111,8 @@ export default {
         IconUser,
         IconInstagram,
         IconCopy,
+        IconPlay,
+        IconPause,
     },
 
     props: {

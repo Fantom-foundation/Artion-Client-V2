@@ -156,6 +156,11 @@
         "smallDisplay": "Small Display"
     },
 
+    "avideo": {
+        "play": "Play video",
+        "pause": "Pause video"
+    },
+
     "nftdetail": {
         "owned": "Owned by",
         "views": "views",
