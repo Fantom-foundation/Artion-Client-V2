@@ -1,45 +1,61 @@
 <template>
     <div class="pg-nft-card">
         <div class="pg-nft-card__img-cont">
-            <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
+            <a-video :poster="token.poster" :src="token.videoSrc" loop autoplay></a-video>
             <!--            <img src="img/tmp/pg.jpeg" alt="" class="pg-nft-card__img-el" />-->
         </div>
         <div class="pg-nft-card__cta">
             <div class="pg-nft-card__cta-top">
                 <div class="pg-nft-card__bid">
-                    <h6 class="h6">{{ $t('pgNftCard.currentBid') }}</h6>
+                    <template v-if="!token.hasAuction">
+                        <h6 class="h6">{{ $t('pgNftCard.price') }}</h6>
 
-                    <template v-if="auction.lastBid">
-                        <h4 class="h4">{{ currentBid }} WFTM</h4>
-                        <p class="pg-nft-card__note">{{ currentBid$ }}</p>
-                        <!--                        <p class="pg-nft-card__note">$28,671.45</p>-->
+                        <h4 class="h4">300 FTM</h4>
+                        <p class="pg-nft-card__note">$400</p>
                     </template>
 
-                    <h4 v-else class="h4">{{ $t('pgNftCard.noBids') }}</h4>
+                    <template v-else>
+                        <h6 class="h6">{{ $t('pgNftCard.currentBid') }}</h6>
+
+                        <template v-if="auction.lastBid">
+                            <h4 class="h4">{{ currentBid }} WFTM</h4>
+                            <p class="pg-nft-card__note">{{ currentBid$ }}</p>
+                            <!--                        <p class="pg-nft-card__note">$28,671.45</p>-->
+                        </template>
+
+                        <h4 v-else class="h4">{{ $t('pgNftCard.noBids') }}</h4>
+                    </template>
                 </div>
                 <div class="pg-nft-card__v-separator"></div>
                 <div class="pg-nft-card__countdown">
-                    <h6 class="h6">{{ auctionOn ? $t('pgNftCard.endsIn') : 'Auction Starting in' }}</h6>
-                    <div v-if="countdown" class="pg-nft-card__countdown-time">
-                        <div>
-                            <h4 class="h4 pg-nft-card__countdown-number">{{ days }}</h4>
-                            <div class="pg-nft-card__note">{{ $t('pgNftCard.days') }}</div>
-                        </div>
-                        <div>
-                            <h4 class="h4 pg-nft-card__countdown-number">{{ hours }}</h4>
-                            <div class="pg-nft-card__note">{{ $t('pgNftCard.hours') }}</div>
-                        </div>
-                        <div>
-                            <h4 class="h4 pg-nft-card__countdown-number">{{ minutes }}</h4>
-                            <div class="pg-nft-card__note">{{ $t('pgNftCard.minutes') }}</div>
-                        </div>
-                        <div>
-                            <h4 class="h4 pg-nft-card__countdown-number">{{ seconds }}</h4>
-                            <div class="pg-nft-card__note">{{ $t('pgNftCard.seconds') }}</div>
-                        </div>
-                    </div>
+                    <template v-if="!token.hasAuction">
+                        <h6 class="h6 theme-pg-u-text-right">{{ $t('pgNftCard.minted') }}</h6>
+                        <h4 class="h4 theme-pg-u-text-right">0 / 350</h4>
+                    </template>
 
-                    <h4 v-else class="h4">{{ $t('pgNftCard.hasEnded') }}</h4>
+                    <template v-else>
+                        <h6 class="h6">{{ auctionOn ? $t('pgNftCard.endsIn') : $t('pgNftCard.startsIn') }}</h6>
+                        <div v-if="countdown" class="pg-nft-card__countdown-time">
+                            <div>
+                                <h4 class="h4 pg-nft-card__countdown-number">{{ days }}</h4>
+                                <div class="pg-nft-card__note">{{ $t('pgNftCard.days') }}</div>
+                            </div>
+                            <div>
+                                <h4 class="h4 pg-nft-card__countdown-number">{{ hours }}</h4>
+                                <div class="pg-nft-card__note">{{ $t('pgNftCard.hours') }}</div>
+                            </div>
+                            <div>
+                                <h4 class="h4 pg-nft-card__countdown-number">{{ minutes }}</h4>
+                                <div class="pg-nft-card__note">{{ $t('pgNftCard.minutes') }}</div>
+                            </div>
+                            <div>
+                                <h4 class="h4 pg-nft-card__countdown-number">{{ seconds }}</h4>
+                                <div class="pg-nft-card__note">{{ $t('pgNftCard.seconds') }}</div>
+                            </div>
+                        </div>
+
+                        <h4 v-else class="h4">{{ $t('pgNftCard.hasEnded') }}</h4>
+                    </template>
                 </div>
             </div>
 
@@ -48,7 +64,10 @@
             </div>
 
             <div class="pg-nft-card__cta-bottom">
-                <span v-if="true" class="pg-nft-card__button">
+                <template v-if="false">
+                    <wallet-button-wrap :wallet-menu="walletMenu" />
+                </template>
+                <span v-else-if="token.hasAuction" class="pg-nft-card__button">
                     <f-button
                         @click.native="$refs.modal.show()"
                         size="large"
@@ -56,9 +75,14 @@
                         :disabled="!auctionOn"
                     />
                 </span>
-                <template v-else>
-                    <wallet-button-wrap :wallet-menu="walletMenu" />
-                </template>
+                <span v-else-if="!token.hasAuction" class="pg-nft-card__button">
+                    <f-button
+                        @click.native="$refs.modal.show()"
+                        size="large"
+                        :label="auctionOn ? 'Buy now' : 'Starting soon'"
+                        :disabled="!auctionOn"
+                    />
+                </span>
             </div>
         </div>
 
@@ -69,7 +93,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow.vue';
 import WalletButtonWrap from '@/modules/wallet/components/WalletButtonWrap/WalletButtonWrap.vue';
 import PGBidForm from '../PGBidForm/PGBidForm';
@@ -151,8 +174,6 @@ export default {
     },
 
     computed: {
-        ...mapGetters('pg', ['showBidModal']),
-
         currentBid() {
             const { lastBid } = this.auction;
 

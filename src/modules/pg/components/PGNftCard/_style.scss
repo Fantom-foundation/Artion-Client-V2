@@ -15,7 +15,8 @@
             height: 100%;
 
             video {
-                max-height: 100%;
+                max-height: 114%;
+                object-fit: cover;
             }
         }
     }
@@ -86,11 +87,18 @@
     &__button {
         display: inline-block;
         width: 100%;
-        border-radius: var(--f-border-radius-7);
         overflow: hidden;
 
         & > .fbutton {
             width: 100%;
+            border-radius: var(--f-border-radius-7);
+        }
+
+        & .btn[disabled],
+        & .btn-disabled {
+            opacity: 1;
+            border: 1px solid #fff;
+            background: #121820;
         }
     }
 }
