@@ -6,64 +6,63 @@
         <div class="pg-nft-card__cta">
             <div class="pg-nft-card__cta-top">
                 <div class="pg-nft-card__bid">
-                    <h6 class="h6">Current Bid</h6>
+                    <h6 class="h6">{{ $t('pgNftCard.currentBid') }}</h6>
 
                     <template v-if="true">
                         <h4 class="h4">15,000 FTM</h4>
                         <p class="pg-nft-card__note">$28,671.45</p>
                     </template>
 
-                    <h4 v-else class="h4">no bids</h4>
+                    <h4 v-else class="h4">{{ $t('pgNftCard.noBids') }}</h4>
                 </div>
                 <div class="pg-nft-card__v-separator"></div>
                 <div class="pg-nft-card__countdown">
-                    <h6 class="h6">Auction Ending in</h6>
+                    <h6 class="h6">{{ $t('pgNftCard.endsIn') }}</h6>
                     <div v-if="countdown" class="pg-nft-card__countdown-time">
                         <div>
                             <h4 class="h4 pg-nft-card__countdown-number">{{ days }}</h4>
-                            <div class="pg-nft-card__note">days</div>
+                            <div class="pg-nft-card__note">{{ $t('pgNftCard.days') }}</div>
                         </div>
                         <div>
                             <h4 class="h4 pg-nft-card__countdown-number">{{ hours }}</h4>
-                            <div class="pg-nft-card__note">hours</div>
+                            <div class="pg-nft-card__note">{{ $t('pgNftCard.hours') }}</div>
                         </div>
                         <div>
                             <h4 class="h4 pg-nft-card__countdown-number">{{ minutes }}</h4>
-                            <div class="pg-nft-card__note">minutes</div>
+                            <div class="pg-nft-card__note">{{ $t('pgNftCard.minutes') }}</div>
                         </div>
                         <div>
                             <h4 class="h4 pg-nft-card__countdown-number">{{ seconds }}</h4>
-                            <div class="pg-nft-card__note">seconds</div>
+                            <div class="pg-nft-card__note">{{ $t('pgNftCard.seconds') }}</div>
                         </div>
                     </div>
 
-                    <h4 v-else class="h4">Auction has ended</h4>
+                    <h4 v-else class="h4">{{ $t('pgNftCard.hasEnded') }}</h4>
                 </div>
             </div>
 
             <div class="pg-nft-card__address" :class="{ 'pg-nft-card__address--empty': !address }">{{ address }}</div>
 
             <div class="pg-nft-card__cta-bottom">
-                <span v-if="true" class="pg-nft-card__button" @click="openModal">
-                    <f-button size="large" label="Place a bid" />
+                <span v-if="true" class="pg-nft-card__button">
+                    <f-button @click.native="$refs.modal.show()" size="large" label="Place a bid" />
                 </span>
                 <template v-else>
-                    <wallet-button />
+                    <wallet-button-wrap :wallet-menu="walletMenu" />
                 </template>
             </div>
         </div>
 
-        <p-g-modal v-if="showBidModal" :header="$t('pgModal.heading')" @close="closeModal">
+        <f-window ref="modal" :title="$t('pgModal.heading')" style="max-width: 640px; min-width: 30vw;">
             <p-g-bid-form></p-g-bid-form>
-        </p-g-modal>
+        </f-window>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import { SET_SHOW_BID_MODAL } from '../../store/mutations';
-import WalletButton from '../../../wallet/components/WalletButton/WalletButton';
-import PGModal from '../PGModal/PGModal';
+import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow.vue';
+import WalletButtonWrap from '@/modules/wallet/components/WalletButtonWrap/WalletButtonWrap.vue';
 import PGBidForm from '../PGBidForm/PGBidForm';
 
 const SECOND = 1000;
@@ -75,8 +74,8 @@ export default {
     name: 'PGNftCard',
 
     components: {
-        WalletButton,
-        PGModal,
+        FWindow,
+        WalletButtonWrap,
         PGBidForm,
     },
 
@@ -89,21 +88,21 @@ export default {
             hours: null,
             minutes: null,
             seconds: null,
+            walletMenu: [
+                {
+                    label: this.$t('walletMenu.settings'),
+                    route: 'pg-account-settings',
+                },
+                {
+                    label: this.$t('walletMenu.logout'),
+                    action: 'logout',
+                },
+            ],
         };
     },
 
     computed: {
         ...mapGetters('pg', ['showBidModal']),
-    },
-
-    methods: {
-        openModal() {
-            this.$store.commit(`pg/${SET_SHOW_BID_MODAL}`, true);
-        },
-
-        closeModal() {
-            this.$store.commit(`pg/${SET_SHOW_BID_MODAL}`, false);
-        },
     },
 
     created() {

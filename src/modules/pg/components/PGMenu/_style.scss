@@ -1,0 +1,23 @@
+.pg-menu {
+    width: 100%;
+    gap: 0;
+
+    &--mobile {
+        margin-top: -28px;
+        flex-direction: column;
+        align-items: center;
+
+        & .pg-menu__wallet-button {
+            margin-top: var(--f-spacer-6);
+        }
+    }
+
+    &__logo {
+        height: 50px;
+        margin-bottom: var(--f-spacer-8);
+    }
+
+    a {
+        padding: 15px;
+    }
+}

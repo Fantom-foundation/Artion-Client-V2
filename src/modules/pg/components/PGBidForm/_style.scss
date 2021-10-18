@@ -6,7 +6,6 @@
     --dropdown-background-color: #142035;
 
     width: 100%;
-    max-width: calc(100vw -  3 * var(--f-spacer-6));
 
     &__current-bid {
         margin-bottom: var(--f-spacer-9);
@@ -134,6 +133,7 @@
 
         & .pg-bid-form__amount {
             display: block;
+            width: 100%;
             margin-bottom: var(--f-spacer-3);
         }
 
@@ -146,7 +146,6 @@
 
 @include media.media-min(728px) {
     .pg-bid-form {
-        width: calc(640px - 2 * var(--f-spacer-6));
 
         &__info {
             padding-bottom: 100px;
@@ -155,6 +154,7 @@
         &__amount {
             display: block;
             text-align: right;
+            max-width: 250px;
         }
 
         &__bid-value-fiat {

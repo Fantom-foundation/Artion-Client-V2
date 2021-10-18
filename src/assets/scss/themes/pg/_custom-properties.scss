@@ -124,4 +124,42 @@
             background: var(--theme-pg-btn-background);
         }
     }
+
+    .fwindow:not(.ferrormessagespopover) {
+        --fwindow-background: var(--theme-pg-background-color);
+        --fwindow-body-background: var(--theme-pg-background-color);
+        --fwindow-popover-background: transparent;
+
+        overflow: visible;
+        box-shadow: 0 16px 60px rgba(133, 139, 193, 0.11);
+
+        .fwindow-popover {
+            --fwindow-popover-background: var(--theme-dark-color-6);
+            --fwindow-body-background: var(--theme-dark-color-6);
+        }
+
+        .fwindow_header {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .fwindow_body {
+            border-radius: var(--f-border-radius-5);
+        }
+
+        .fwindow_header_title > .h3 {
+            text-align: left;
+            font-weight: 600;
+            font-size: var(--f-font-size-7);
+            letter-spacing: -0.015em;
+            line-height: 1.2;
+            margin-bottom: 0;
+        }
+    }
+
+    .foverlay {
+        --foverlay-background-color: none;
+        backdrop-filter: blur(3px);
+    }
 }
+

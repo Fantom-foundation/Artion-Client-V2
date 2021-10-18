@@ -17,7 +17,8 @@
         "explore": "@:explore",
         "create": "@:create",
         "drop": "The Drop",
-        "nfts": "The NFT's"
+        "nfts": "The NFT's",
+        "myNfts": "My NFT's"
     },
 
     "category": {
@@ -244,6 +245,27 @@
         "newBidIsBelowCurrent": "Bid is below current bid",
         "mustBeNumber": "Bid must be number",
         "bidMustBeDivisibleByHundred": "Bid must be in 100 FTM increments minimum"
+    },
+
+    "pgDrop": {
+        "paragraph1": "Three unique NFTs redeemable for an original <span class=\"blue\">Pierre Gasly helmet</span>, two <span class=\"blue\">signed mini-helmets</span> and three <span class=\"blue\">meet and greet</span>.",
+        "paragraph2": "A limited edition 350 NFT drop redeemable for <span class=\"blue\">signed caps</span> and <span class=\"blue\">limited edition T-shirts</span>."
+    },
+
+    "pgFooter": {
+        "privacy": "Privacy Policy",
+        "termsAndConditions": "Terms and Conditions"
+    },
+
+    "pgNftCard": {
+        "currentBid": "Current Bid",
+        "noBids": "no bids",
+        "endsIn": "Auction Ending in",
+        "days": "days",
+        "hours": "hours",
+        "minutes": "minutes",
+        "seconds": "seconds",
+        "hasEnded": "Auction has ended"
     },
 
     "account": {

@@ -12,16 +12,14 @@
             {{ message }} <strong v-if="isMintType">NFT #{{ id }}</strong>
         </div>
         <div class="flex juc-center">
-            <span v-if="true" class="pg-success-notification__button" @click="closeModal">
-                <f-button size="large" :label="$t('pgSuccessNotification.continue')" />
+            <span class="pg-success-notification__button">
+                <f-button v-fwindow-hide size="large" :label="$t('pgSuccessNotification.continue')" />
             </span>
         </div>
     </div>
 </template>
 
 <script>
-import { SET_SHOW_SUCCESS_MODAL } from '../../store/mutations';
-
 const ACHIEVEMENT_TYPE = Object.freeze({
     MINT: 0,
     BID: 1,
@@ -59,12 +57,6 @@ export default {
             }
 
             return null;
-        },
-    },
-
-    methods: {
-        closeModal() {
-            this.$store.commit(`pg/${SET_SHOW_SUCCESS_MODAL}`, false);
         },
     },
 };
