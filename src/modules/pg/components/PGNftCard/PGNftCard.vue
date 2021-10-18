@@ -1,7 +1,7 @@
 <template>
     <div class="pg-nft-card">
         <div class="pg-nft-card__img-cont">
-            <a-video :poster="token.poster" :src="token.videoSrc" loop autoplay></a-video>
+            <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
             <!--            <img src="img/tmp/pg.jpeg" alt="" class="pg-nft-card__img-el" />-->
         </div>
         <div class="pg-nft-card__cta">
