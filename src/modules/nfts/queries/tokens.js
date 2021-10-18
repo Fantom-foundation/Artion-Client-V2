@@ -38,6 +38,7 @@ export async function getTokens(pagination = {}, filterSort = {}) {
                             description
                             image
                             imageThumb
+                            likes
                         }
                     }
                 }
