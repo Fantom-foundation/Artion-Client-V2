@@ -23,7 +23,7 @@ import NftCard from '@/modules/nfts/components/NftCard/NftCard.vue';
 import FInfiniteScroll from 'fantom-vue-components/src/components/FInfiniteScroll/FInfiniteScroll.vue';
 import FPagination from 'fantom-vue-components/src/components/FPagination/FPagination.vue';
 import FIntersectionObserver from 'fantom-vue-components/src/components/FIntersectionObserver/FIntersectionObserver.vue';
-import { getUser } from '@/modules/account/queries/user.js';
+import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-tokens.js';
 import { mapState } from 'vuex';
 
 export default {
@@ -77,9 +77,10 @@ export default {
         address: {
             async handler(value) {
                 if (value) {
-                    let userData = await getUser(this.address);
-                    if (userData.tokenLikes.edges.length) {
-                        this.likedNftIds = userData.tokenLikes.edges.map(edge => {
+                    let pagination = { first: this.perPage };
+                    let userData = await getUserFavoriteTokens(this.address, pagination);
+                    if (userData.edges.length) {
+                        this.likedNftIds = userData.edges.map(edge => {
                             return edge.node.tokenId;
                         });
                     }

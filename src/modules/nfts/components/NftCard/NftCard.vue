@@ -12,7 +12,7 @@
                         @click.native.prevent="onLikeClick"
                     />
                 </button>
-                <span class="nftcard_counter">{{ likesCount }}</span>
+                <span class="nftcard_counter">{{ tansformLikeCounter(likesCount) }}</span>
             </div>
             <div class="nftcard_image">
                 <div class="nftcard_box">
@@ -57,6 +57,7 @@ import { getImageThumbUrl } from '@/utils/url.js';
 import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
+import { toInt } from '@/utils/big-number.js';
 
 export default {
     // components: { AppIconset },
@@ -80,8 +81,11 @@ export default {
     },
 
     watch: {
-        isFavorite(_value) {
-            this.liked = _value;
+        isFavorite: {
+            async handler(_value) {
+                this.liked = _value;
+            },
+            immediate: true,
         },
     },
 
@@ -92,6 +96,10 @@ export default {
                 this._eventBus.emit('show-wallet-picker', payload);
                 await payload.promise;
             }
+        },
+
+        tansformLikeCounter(value) {
+            return toInt(value);
         },
 
         async onLikeClick() {
@@ -106,14 +114,25 @@ export default {
                     console.log(res);
                     this.liked = true;
                     this.$emit('nft-like');
+                    this.$notifications.add({
+                        type: 'success',
+                        text: `You successfully added ${this.nftData.name} to your favorites`,
+                    });
                 } else {
                     let res = await unlikeToken(this.nftData);
                     this.liked = false;
                     console.log(res);
                     this.$emit('nft-unlike');
+                    this.$notifications.add({
+                        type: 'success',
+                        text: `You successfully added ${this.nftData.name} to your favorites`,
+                    });
                 }
             } else {
-                alert('Some problems');
+                this.$notifications.add({
+                    type: 'error',
+                    text: 'Some problems',
+                });
             }
         },
 

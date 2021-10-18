@@ -227,6 +227,9 @@ import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { getImageThumbUrl } from '@/utils/url.js';
 import { getTokens } from '@/modules/nfts/queries/tokens.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
+import { getUser } from '@/modules/account/queries/user.js';
+import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
+import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
 import NftStartAuctionForm from '@/modules/nfts/components/NftStartAuctionForm/NftStartAuctionForm.vue';
 import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
@@ -259,6 +262,7 @@ export default {
             // token is created by user
             userCreatedToken: false,
             tx: {},
+            likedNftIds: [],
         };
     },
 
@@ -271,6 +275,7 @@ export default {
     watch: {
         walletAddress(value) {
             this.onWalletAddressChange(value);
+            this.getFavoriteNfts(value);
         },
     },
 
@@ -290,11 +295,28 @@ export default {
                 console.log(this.token);
 
                 this.onWalletAddressChange();
+                this.isUserFavorite(this.walletAddress);
             }
         },
 
         async onWalletAddressChange() {
             this.userCreatedToken = await this.checkUserCreatedToken(this.token);
+        },
+
+        async isUserFavorite(value) {
+            if (value) {
+                let userData = await getUser(value);
+                if (userData.tokenLikes.edges.length) {
+                    this.likedNftIds = userData.tokenLikes.edges.map(edge => {
+                        return edge.node.tokenId;
+                    });
+                    if (this.likedNftIds.includes(this.token.tokenId)) {
+                        this.liked = true;
+                        return;
+                    }
+                    this.liked = false;
+                }
+            }
         },
 
         /**
@@ -326,6 +348,15 @@ export default {
             }
         },
 
+        async checkWalletConnection() {
+            if (!this.$wallet.connected) {
+                const payload = {};
+                this._eventBus.emit('show-wallet-picker', payload);
+                let res = await payload.promise;
+                return res;
+            }
+        },
+
         onBuyNowClick() {},
 
         onStartAuctionClick() {
@@ -334,16 +365,36 @@ export default {
             }
         },
 
-        onLikeClick() {
-            this.liked = !this.liked;
-            if (this.liked) {
-                this.likesCount++;
-                // async function
-            } else {
-                this.likesCount--;
-                // async function
+        async onLikeClick() {
+            let ok = true;
+            await this.checkWalletConnection();
+            if (!getBearerToken()) {
+                ok = await signIn();
             }
-            this.$emit('nft-like');
+            if (ok) {
+                if (!this.liked) {
+                    await likeToken(this.token);
+                    this.liked = true;
+                    this.$emit('nft-like');
+                    this.$notifications.add({
+                        type: 'success',
+                        text: `You successfully added ${this.token.name} to your favorites`,
+                    });
+                } else {
+                    await unlikeToken(this.token);
+                    this.liked = false;
+                    this.$emit('nft-unlike');
+                    this.$notifications.add({
+                        type: 'success',
+                        text: `You successfully delete ${this.token.name} from your favorites`,
+                    });
+                }
+            } else {
+                this.$notifications.add({
+                    type: 'error',
+                    text: 'Some problems',
+                });
+            }
         },
 
         toInt,

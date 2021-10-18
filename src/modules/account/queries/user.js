@@ -13,14 +13,6 @@ export async function getUser(address = '') {
                     avatar
                     avatarThumb
                     banner
-                    tokenLikes {
-                        totalCount
-                        edges {
-                            node {
-                                tokenId
-                            }
-                        }
-                    }
                 }
             }
         `,
