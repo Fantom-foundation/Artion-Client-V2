@@ -1,7 +1,7 @@
 <template>
     <footer class="pg-footer">
-        <router-link class="pg-footer__link" :to="{}">Terms and conditions</router-link>
-        <router-link class="pg-footer__link" :to="{}">Privacy Policy</router-link>
+        <router-link class="pg-footer__link" :to="{}">{{ $t('pgFooter.termsAndConditions') }}</router-link>
+        <router-link class="pg-footer__link" :to="{}">{{ $t('pgFooter.privacy') }}</router-link>
     </footer>
 </template>
 

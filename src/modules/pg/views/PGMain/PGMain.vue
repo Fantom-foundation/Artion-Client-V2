@@ -8,38 +8,22 @@
 
         <p-g-footer></p-g-footer>
 
-        <p-g-modal v-if="showSuccessModal" @close="closeModal" no-heading>
+        <f-window ref="successModal" style="max-width: 345px">
             <p-g-success-notification></p-g-success-notification>
-        </p-g-modal>
+        </f-window>
     </div>
 </template>
 
 <script>
-import { SET_SHOW_SUCCESS_MODAL } from '../../store/mutations';
 import PGHeader from '../../components/PGHeader/PGHeader';
 import PGFooter from '../../components/PGFooter/PGFooter';
 import PGSuccessNotification from '../../components/PGSuccessNotification/PGSuccessNotification';
-import { mapGetters } from 'vuex';
-import PGModal from '../../components/PGModal/PGModal';
+import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow';
 
 export default {
     name: 'PGMain',
 
-    components: { PGHeader, PGFooter, PGSuccessNotification, PGModal },
-
-    computed: {
-        ...mapGetters('pg', ['showSuccessModal']),
-    },
-
-    methods: {
-        openModal() {
-            this.$store.commit(`pg/${SET_SHOW_SUCCESS_MODAL}`, true);
-        },
-
-        closeModal() {
-            this.$store.commit(`pg/${SET_SHOW_SUCCESS_MODAL}`, false);
-        },
-    },
+    components: { PGHeader, PGFooter, PGSuccessNotification, FWindow },
 };
 </script>
 

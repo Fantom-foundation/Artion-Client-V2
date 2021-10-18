@@ -14,19 +14,17 @@
             <wallet-button-wrap :wallet-menu="walletMenu" />
         </div>
 
-        <div class="pg-header__col pg-header__col--burger">
-            <svg width="21" height="14" viewBox="0 0 21 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M19 7L1 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path d="M19 1H1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                <path
-                    d="M19.2729 12.9288L1 13"
-                    stroke="white"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
+        <div class="pg-header__col pg-header__col--burger" @click="isMobileNavOpen = !isMobileNavOpen">
+            <button class="pg-header__hamburger" :class="{ 'pg-header__hamburger--open': isMobileNavOpen }">
+                <div class="pg-header__hamburger-bar pg-header__hamburger-bar--1"></div>
+                <div class="pg-header__hamburger-bar pg-header__hamburger-bar--2"></div>
+                <div class="pg-header__hamburger-bar pg-header__hamburger-bar--3"></div>
+            </button>
         </div>
+
+        <nav class="pg-header__mobile-nav" :class="{ 'pg-header__mobile-nav--active': isMobileNavOpen }">
+            <p-g-menu :is-mobile="isMobileNavOpen" @close="isMobileNavOpen = false" />
+        </nav>
     </header>
 </template>
 
@@ -41,6 +39,7 @@ export default {
 
     data() {
         return {
+            isMobileNavOpen: false,
             walletMenu: [
                 {
                     label: this.$t('walletMenu.settings'),
@@ -52,6 +51,21 @@ export default {
                 },
             ],
         };
+    },
+
+    methods: {
+        handleResize() {
+            this.isMobileNavOpen = false;
+        },
+    },
+
+    created() {
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+    },
+
+    destroyed() {
+        window.removeEventListener('resize', this.handleResize);
     },
 };
 </script>
