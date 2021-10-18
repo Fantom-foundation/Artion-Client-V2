@@ -2,6 +2,7 @@
 
 .avideo {
     position: relative;
+    background: var(--avideo-background);
 
     &_overlay {
         position: absolute;

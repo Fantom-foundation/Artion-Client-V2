@@ -30,10 +30,7 @@ export default {
 
     mounted() {
         // TMP
-        // this.nft = { title: 'World of Umans', collection: 'Ancestral Uman', img: 'img/tmp/umans.png' };
-        setTimeout(() => {
-            this.nft = { title: 'World of Umans', collection: 'Ancestral Uman', img: 'img/tmp/umans.png' };
-        }, 700);
+        this.nft = { title: 'World of Umans', collection: 'Ancestral Uman', img: 'img/tmp/umans.png' };
     },
 };
 </script>

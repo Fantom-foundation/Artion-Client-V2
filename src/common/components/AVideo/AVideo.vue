@@ -1,6 +1,6 @@
 <template>
     <div class="avideo" :class="{ 'avideo-playing': playing }">
-        <video ref="video" preload="none" :src="src" :poster="poster"></video>
+        <video ref="video" :preload="preload" :loop="loop" :src="src" :poster="poster"></video>
         <button
             class="avideo_overlay btn-nostyle"
             :class="{ 'avideo_overlay-invisible': overlayInvisible }"
@@ -31,6 +31,16 @@ export default {
             type: String,
             default: '',
         },
+        /** Play in loop */
+        loop: {
+            type: Boolean,
+            default: false,
+        },
+        /** Preload video */
+        preload: {
+            type: String,
+            default: 'none',
+        },
     },
 
     data() {
@@ -52,7 +62,7 @@ export default {
     },
 
     created() {
-        this._mousemoveCallback = debounce(event => this.onOverlayMousemove(event), 1000, true, true);
+        this._mousemoveCallback = debounce(event => this.onOverlayMousemove(event), 600, true, true);
     },
 
     methods: {
