@@ -1,21 +1,29 @@
 <template>
     <div class="pg-nft">
-        <p-g-nft-card></p-g-nft-card>
+        <p-g-nft-card
+            :token="token"
+            :auction="auction"
+            :pay-token="payToken"
+            :auction-on="auctionOn"
+            :auction-start="auctionStart"
+        ></p-g-nft-card>
+
         <div class="pg-nft__text">
             <h3 class="h3">
-                Baku 2021 <br />
-                <span class="theme-pg-u-font-weight-normal">Podium</span>
+                {{ token.name }}
+                <!--                Baku 2021 <br />
+                <span class="theme-pg-u-font-weight-normal">Podium</span>-->
             </h3>
             <p class="pg-nft__perex">
-                May '21, Azerbaijan - Pierre Gasly executes a perfect weekend in Baku and secure his third podium in
-                Formula One™, the first of 2021.
+                {{ token.description }}
             </p>
             <h5 class="h5">This unique NFT is redeemable for:</h5>
-            <p class="theme-pg-u-mb-0">Promotion helmet from Brazil 2019 race weekend AND</p>
+            <p class="theme-pg-u-mb-0">{{ token.text }}</p>
+            <!--            <p class="theme-pg-u-mb-0">Promotion helmet from Brazil 2019 race weekend AND</p>
             <p class="theme-pg-u-mb-0">Meet and greet with Pierre over the next 12 months AND</p>
-            <p class="theme-pg-u-mb-0">Signed mini-helmet and merchandising</p>
+            <p class="theme-pg-u-mb-0">Signed mini-helmet and merchandising</p>-->
 
-            <p class="pg-nft__start-price">Bidding starts at 2,000 FTM.</p>
+            <p class="pg-nft__start-price">Bidding starts at {{ minBidAmount }} WFTM.</p>
 
             <div class="pg-nft__socials">
                 <span class="pg-nft__socials-button">
@@ -41,6 +49,8 @@
 import PGNftCard from '../PGNftCard/PGNftCard';
 import IconInstagram from '../../../../assets/vue-icons/IconInstagram';
 import IconTwitterWhite from '../../../../assets/vue-icons/IconTwitterWhite';
+import { getAuction } from '@/modules/nfts/queries/auction.js';
+import { formatTokenValue } from '@/utils/formatters.js';
 
 export default {
     name: 'PGNft',
@@ -49,6 +59,65 @@ export default {
         PGNftCard,
         IconTwitterWhite,
         IconInstagram,
+    },
+
+    props: {
+        /** NFT object */
+        token: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
+        /** WFTM */
+        payToken: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
+        /** Specifies if auction is on or off */
+        auctionOn: {
+            type: Boolean,
+            default: false,
+        },
+        /** Specifies auction start date */
+        auctionStart: {
+            type: Number,
+            default: 0,
+        },
+    },
+
+    data() {
+        return {
+            auction: {},
+        };
+    },
+
+    computed: {
+        minBidAmount() {
+            const { auction } = this;
+
+            return auction.minBidAmount ? formatTokenValue(auction.minBidAmount, this.payToken.priceDecimals, 1) : '-';
+        },
+    },
+
+    created() {
+        this.init();
+    },
+
+    methods: {
+        init() {
+            this.loadAuction();
+        },
+
+        async loadAuction() {
+            const { token } = this;
+            const auction = await getAuction(token.contract, token.tokenId);
+
+            console.log(auction);
+            this.auction = auction;
+        },
     },
 };
 </script>

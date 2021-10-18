@@ -1,5 +1,5 @@
 <template>
-    <f-form class="nftstartauctionform grid" v-model="values" @submit="onSubmit">
+    <f-form class="nftplacebidform grid" v-model="values" @submit="onSubmit">
         <f-form-input
             ref="priceField"
             type="a-price-field"
@@ -10,42 +10,13 @@
             @token-selected="onTokenSelected"
         >
             <template #label>
-                {{ $t('nftstartauctionform.reservePrice') }}
-                <!--                <button
-                    class="btn-nostyle"
-                    :data-tooltip="$t('nftstartauctionform.reservePriceInfo')"
-                    :aria-label="$t('nftstartauctionform.reservePriceInfo')"
-                >
-                    <app-iconset icon="question" />
-                </button>-->
+                {{ $t('nftplacebidform.price') }}
             </template>
         </f-form-input>
-        <f-form-input
-            type="date"
-            name="startTime"
-            :validator="startTimeValidator"
-            :in-formatter="dateInFormatterTimestamp"
-            :out-formatter="dateOutFormatterTimestamp"
-            validate-on-input
-            field-size="large"
-            :label="$t('nftstartauctionform.startTime')"
-            class="col-6"
-        />
-        <f-form-input
-            type="date"
-            name="endTime"
-            :validator="endTimeValidator"
-            :in-formatter="dateInFormatterTimestamp"
-            :out-formatter="dateOutFormatterTimestamp"
-            validate-on-input
-            field-size="large"
-            :label="$t('nftstartauctionform.auctionExpiration')"
-            class="col-6"
-        />
 
         <div class="fform_buttons">
             <a-button type="submit" size="large" :disabled="!isFormValid" :loading="txStatus.status === 'pending'">
-                {{ $t('nftstartauctionform.startAuction') }}
+                {{ $t('nftplacebidform.placeBid') }}
             </a-button>
         </div>
 
@@ -58,13 +29,11 @@ import contracts from '@/utils/artion-contracts-utils.js';
 import { bToTokenValue, toHex } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
-import dayjs from 'dayjs';
 import { mapState } from 'vuex';
 import AButton from '@/common/components/AButton/AButton.vue';
-import { dateInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
 
 export default {
-    name: 'NftStartAuctionForm',
+    name: 'NftPlaceBidForm',
 
     components: { AButton, ASignTransaction },
 
@@ -81,10 +50,6 @@ export default {
         return {
             values: {
                 reservePrice: '',
-                startTime: dayjs().valueOf(),
-                endTime: dayjs()
-                    .add(1, 'day')
-                    .valueOf(),
             },
             payTokens: [],
             selectedPayToken: null,
@@ -98,12 +63,9 @@ export default {
         }),
 
         isFormValid() {
-            const { values } = this;
-
             return (
-                !this.reservePriceValidator(values.reservePrice) &&
-                !this.startTimeValidator(values.startTime) &&
-                !this.endTimeValidator(values.endTime)
+                !this.reservePriceValidator(this.values.reservePrice) &&
+                (!this.startTimeValidator() || !this.endTimeValidator())
             );
         },
     },
@@ -115,7 +77,7 @@ export default {
     methods: {
         async init() {
             this.payTokens = await PAY_TOKENS_WITH_PRICES();
-            this.selectedPayToken = this.payTokens[0];
+            this.selectedPayToken = this.payTokens[0]; // nastavit spravny pay token z detailu nft
         },
 
         async setTx(values) {
@@ -128,7 +90,7 @@ export default {
             const startTime = parseInt(values.startTime / 1000);
             const endTime = parseInt(values.endTime / 1000);
 
-            console.log('token.tokenId', token.tokenId, this.selectedPayToken.address);
+            console.log('token.tokenId', token.tokenId);
 
             const tx = contracts.createAuction(
                 token.contract,
@@ -149,36 +111,10 @@ export default {
             const val = parseFloat(value);
 
             if (isNaN(val) || val <= 0) {
-                return this.$t('nftstartauctionform.nonZeroPrice');
+                return this.$t('nftplacebidform.nonZeroPrice');
             }
 
             return '';
-        },
-
-        startTimeValidator(value) {
-            const ts = dateOutFormatterTimestamp(value || this.values.startTime);
-            const tsEndTime = dateOutFormatterTimestamp(this.values.endTime);
-
-            if (isNaN(ts)) {
-                return this.$t('nftstartauctionform.fillDate');
-            }
-
-            return ts >= tsEndTime ? this.$t('nftstartauctionform.startDateLower') : '';
-        },
-
-        endTimeValidator(value) {
-            const ts = dateOutFormatterTimestamp(value || this.values.endTime);
-            const tsStartTime = dateOutFormatterTimestamp(this.values.startTime);
-
-            if (isNaN(ts)) {
-                return this.$t('nftstartauctionform.fillDate');
-            }
-
-            return ts <= tsStartTime ? this.$t('nftstartauctionform.endDateGreater') : '';
-        },
-
-        onTokenSelected(token) {
-            this.selectedPayToken = token;
         },
 
         onSubmit(data) {
@@ -190,9 +126,6 @@ export default {
         onTransactionStatus(payload) {
             console.log('onTransactionStatus', JSON.stringify(payload));
         },
-
-        dateInFormatterTimestamp,
-        dateOutFormatterTimestamp,
     },
 };
 </script>

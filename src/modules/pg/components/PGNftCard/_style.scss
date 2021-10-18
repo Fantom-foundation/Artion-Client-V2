@@ -9,7 +9,15 @@
         width: 343px;
         height: 343px;
         overflow: hidden;
-        object-fit: cover;
+
+        .avideo {
+            --avideo-background: #000;
+            height: 100%;
+
+            video {
+                max-height: 100%;
+            }
+        }
     }
 
     &__img-el {
@@ -31,7 +39,7 @@
 
     &__cta-bottom {
         padding: var(--f-spacer-4) var(--f-spacer-3) 0 var(--f-spacer-3);
-        border-top: 1px solid #202A37;
+        border-top: 1px solid #202a37;
     }
 
     &__bid {
@@ -44,14 +52,14 @@
         font-size: var(--f-font-size-1);
         letter-spacing: -0.02em;
         line-height: 1.5;
-        color: #69778A;
+        color: #69778a;
     }
 
     &__v-separator {
         flex: 0 0 1px;
         height: 57px;
         width: 1px;
-        background: #202A37;
+        background: #202a37;
     }
 
     &__countdown {

@@ -94,7 +94,8 @@ let appConfig = {
     // Opera chain id
     chainId: '0xfa',
     // JSON-RPC endpoint
-    rpc: 'https://rpcapi.fantom.network/',
+    // rpc: 'https://rpcapi.fantom.network/',
+    rpc: 'https://rpc.ftm.tools/',
     // used in links pointing to fantom explorer
     explorerUrl: 'https://ftmscan.com/',
     // used in links pointing to validators
@@ -121,6 +122,10 @@ if (appConfig.module === 'pg') {
         favicon: 'public/favicon-pg.png',
         // progressive web application
         usePWA: false,
+        // specifies if auction is on or off
+        auctionOn: true,
+        // specifies auction start date - timestamp in UTC
+        auctionStart: 1634738400000,
     };
 }
 
