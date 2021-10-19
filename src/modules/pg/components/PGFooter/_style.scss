@@ -11,7 +11,7 @@
         font-size: var(--f-font-size-5);
         letter-spacing: -0.02em;
 
-        &:first-child {
+        &:not(:last-child) {
             margin-right: var(--f-spacer-8);
         }
     }
