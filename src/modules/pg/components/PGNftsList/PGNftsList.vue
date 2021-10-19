@@ -59,9 +59,9 @@ const tokenOrder = [
     {
         tokenId: '0x4e23',
         text: 'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop',
-        poster: `${SOURCES_BASE_URL}/monza.jpg`,
+        poster: `${SOURCES_BASE_URL}/limited.jpg`,
         // tmp data
-        videoSrc: `${SOURCES_BASE_URL}/monza.mp4`,
+        videoSrc: `${SOURCES_BASE_URL}/limited.mp4`,
         price: '0x56bc75e2d63100000',
         // price$: 200,
     },
