@@ -22,15 +22,17 @@ import appConfig from '@/app.config.js';
 const CONTRACT = '0x61af4d29f672e27a097291f72fc571304bc93521';
 const AUCTION_ON = appConfig.auctionOn;
 const AUCTION_START = appConfig.auctionStart;
+// const SOURCES_BASE_URL = 'https://sandbox.pbro.zenithies.dev/M0qoc7s3';
+const SOURCES_BASE_URL = 'pg';
 
 const tokenOrder = [
     {
         tokenId: '0x1e9c',
         // additional data
         text: 'Azerbaijan 2021 race-worn helmet AND<br>Meet and greet with Pierre over the next 12 months',
-        poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/baku.jpg',
+        poster: `${SOURCES_BASE_URL}/baku.jpg`,
         // tmp data
-        videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/baku.mp4',
+        videoSrc: `${SOURCES_BASE_URL}/baku.mp4`,
         startingPrice: '0x38ebad5cdc902800000',
         // startingPrice$: 40000,
     },
@@ -38,9 +40,9 @@ const tokenOrder = [
         tokenId: '0x153',
         text:
             'Promotion helmet from Brazil 2019 race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed mini-helmet and merchandising',
-        poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/brazil.jpg',
+        poster: `${SOURCES_BASE_URL}/brazil.jpg`,
         // tmp data
-        videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/brazil.mp4',
+        videoSrc: `${SOURCES_BASE_URL}/brazil.mp4`,
         startingPrice: '0xe3aeb5737240a00000',
         // startingPrice$: 10000,
     },
@@ -48,18 +50,18 @@ const tokenOrder = [
         tokenId: '0x2636',
         text:
             'VIP experience for 2 person at a race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed mini helmet and merchandising',
-        poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.jpg',
+        poster: `${SOURCES_BASE_URL}/monza.jpg`,
         // tmp data
-        videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.mp4',
+        videoSrc: `${SOURCES_BASE_URL}/monza.mp4`,
         startingPrice: '0x30ca024f987b900000',
         // startingPrice$: 2000,
     },
     {
         tokenId: '0x4e23',
         text: 'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop',
-        poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.jpg',
+        poster: `${SOURCES_BASE_URL}/monza.jpg`,
         // tmp data
-        videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.mp4',
+        videoSrc: `${SOURCES_BASE_URL}/monza.mp4`,
         price: '0x56bc75e2d63100000',
         // price$: 200,
     },
