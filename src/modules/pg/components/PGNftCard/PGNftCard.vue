@@ -1,6 +1,6 @@
 <template>
     <div class="pg-nft-card">
-        <div class="pg-nft-card__img-cont">
+        <div class="pg-nft-card__img-cont" :class="{ 'pg-nft-card__img-cont--limited': !token.hasAuction }">
             <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
             <!--            <img src="img/tmp/pg.jpeg" alt="" class="pg-nft-card__img-el" />-->
         </div>
