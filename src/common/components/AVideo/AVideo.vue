@@ -1,6 +1,6 @@
 <template>
     <div class="avideo" :class="{ 'avideo-playing': playing }">
-        <video ref="video" :preload="preload" :loop="loop" :src="src" :poster="poster"></video>
+        <video ref="video" :preload="preload" :loop="loop" :src="src" :poster="poster" :autoplay="autoplay"></video>
         <button
             class="avideo_overlay btn-nostyle"
             :class="{ 'avideo_overlay-invisible': overlayInvisible }"
@@ -41,11 +41,16 @@ export default {
             type: String,
             default: 'none',
         },
+        /** Autoplay video */
+        autoplay: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
         return {
-            playing: false,
+            playing: this.autoplay,
             overlayInvisible: false,
             mouseover: false,
         };

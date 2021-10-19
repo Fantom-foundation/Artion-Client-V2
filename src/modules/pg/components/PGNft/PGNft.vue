@@ -17,13 +17,15 @@
             <p class="pg-nft__perex">
                 {{ token.description }}
             </p>
-            <h5 class="h5">This unique NFT is redeemable for:</h5>
-            <p class="theme-pg-u-mb-0">{{ token.text }}</p>
+            <h5 class="h5" v-if="token.hasAuction">This unique NFT is redeemable for:</h5>
+            <h5 class="h5" v-else>These 350 NFTs are redeemable for:</h5>
+            <p class="theme-pg-u-mb-0" v-html="token.text"></p>
             <!--            <p class="theme-pg-u-mb-0">Promotion helmet from Brazil 2019 race weekend AND</p>
             <p class="theme-pg-u-mb-0">Meet and greet with Pierre over the next 12 months AND</p>
             <p class="theme-pg-u-mb-0">Signed mini-helmet and merchandising</p>-->
 
-            <p class="pg-nft__start-price">Bidding starts at {{ minBidAmount }} WFTM.</p>
+            <p class="pg-nft__start-price" v-if="token.hasAuction">Bidding starts at {{ minBidAmount }} WFTM.</p>
+            <p class="pg-nft__start-price" v-else>The sale will go live on October 23rd at 1pm UTC.</p>
 
             <div class="pg-nft__socials">
                 <span class="pg-nft__socials-button">
