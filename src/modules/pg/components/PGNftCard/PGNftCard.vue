@@ -10,14 +10,14 @@
                     <template v-if="!token.hasAuction">
                         <h6 class="h6">{{ $t('pgNftCard.price') }}</h6>
 
-                        <h4 class="h4">{{ formatTokenValue(token.price, payToken.priceDecimals) }} WFTM</h4>
+                        <h4 class="h4">{{ formatTokenValue(token.price, payToken.priceDecimals) }} wFTM</h4>
                         <p class="pg-nft-card__note">{{ to$(token.price) }}</p>
                     </template>
 
                     <template v-else-if="!auctionOn">
                         <h6 class="h6">{{ $t('pgNftCard.startingPrice') }}</h6>
 
-                        <h4 class="h4">{{ formatTokenValue(token.startingPrice, payToken.priceDecimals) }} WFTM</h4>
+                        <h4 class="h4">{{ formatTokenValue(token.startingPrice, payToken.priceDecimals) }} wFTM</h4>
                         <p class="pg-nft-card__note">{{ to$(token.startingPrice, 0) }}</p>
                     </template>
 
