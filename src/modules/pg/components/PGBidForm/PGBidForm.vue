@@ -1,10 +1,10 @@
 <template>
     <div class="pg-bid-form">
         <div class="pg-bid-form__current-bid" :class="{ 'pg-bid-form__current-bid--mb-0': !!currentBid }">
-            {{ $t('pgBidForm.currentBid') }}: {{ currentBid.toLocaleString('en-US') }} WFTM
+            {{ $t('pgBidForm.currentBid') }}: {{ currentBid.toLocaleString('en-US') }} wFTM
         </div>
         <div class="pg-bid-form__min-next-bid" v-if="currentBid">
-            {{ $t('pgBidForm.minNextBid') }}: {{ (currentBid + 100).toLocaleString('en-US') }} WFTM
+            {{ $t('pgBidForm.minNextBid') }}: {{ (currentBid + 100).toLocaleString('en-US') }} wFTM
         </div>
         <div class="pg-bid-form__my-bid">
             <a-currency-dropdown :currencies="currencies" @token-selected="factor = $event.price"></a-currency-dropdown>
@@ -18,7 +18,7 @@
         </div>
         <div class="pg-bid-form__info">
             <div class="pg-bid-form__balance">
-                <span class="pg-bid-form__balance-text"> {{ $t('pgBidForm.balance') }}: </span>15,326.16 WFTM
+                <span class="pg-bid-form__balance-text"> {{ $t('pgBidForm.balance') }}: </span>15,326.16 wFTM
             </div>
             <div class="pg-bid-form__bid-value-fiat">
                 ~$0

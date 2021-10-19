@@ -59,7 +59,7 @@ const tokenOrder = [
     {
         tokenId: '0x4e23',
         text:
-            'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop<br>Additionally, 10 NFTs will be “golden tickets”, redeemable for signed mini-helmets in addition to the merchandise.',
+            'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop<br><br>Additionally, 10 NFTs will be “golden tickets”, redeemable for signed mini-helmets in addition to the merchandise.',
         poster: `${SOURCES_BASE_URL}/limited_blue.jpg`,
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/limited_blue.mp4`,

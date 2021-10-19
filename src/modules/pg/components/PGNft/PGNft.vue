@@ -31,17 +31,17 @@
 
             <div class="pg-nft__socials mat-7">
                 <span class="pg-nft__socials-button">
-                    <a href="https://twitter.com/PierreGASLY" target="_blank" class="btn btn-lg btn-round btn-samesize">
-                        <icon-instagram />
-                    </a>
-                </span>
-
-                <span class="pg-nft__socials-button">
                     <a
                         href="https://www.instagram.com/pierregasly"
                         target="_blank"
                         class="btn btn-lg btn-round btn-samesize"
                     >
+                        <icon-instagram />
+                    </a>
+                </span>
+
+                <span class="pg-nft__socials-button">
+                    <a href="https://twitter.com/PierreGASLY" target="_blank" class="btn btn-lg btn-round btn-samesize">
                         <icon-twitter-white />
                     </a>
                 </span>
