@@ -20,6 +20,19 @@
                 object-fit: cover;
             }
         }
+
+        &--limited {
+            height: 940px;
+
+            .avideo {
+                width: 100%;
+
+                video {
+                    max-height: 100%;
+                    height: 100%;
+                }
+            }
+        }
     }
 
     &__img-el {
@@ -115,6 +128,19 @@
             .avideo video {
                 min-height: 528px;
             }
+
+            &--limited {
+                height: 940px;
+
+                .avideo {
+                    width: 100%;
+
+                    video {
+                        max-height: 100%;
+                        height: 100%;
+                    }
+                }
+            }
         }
 
         &__cta {
@@ -175,18 +201,5 @@
     .pg-nft-card {
         width: 528px;
         margin-bottom: 0;
-
-        &__img-cont--limited {
-            height: 940px;
-
-            .avideo {
-                width: 100%;
-
-                video {
-                    max-height: 100%;
-                    height: 100%;
-                }
-            }
-        }
     }
 }
