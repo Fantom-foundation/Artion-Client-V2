@@ -3,28 +3,14 @@
 .pg-faq {
     padding: 50px var(--f-spacer-4) 0;
 
-    &__header {
-        margin: 0 0 50px;
-        letter-spacing: 0.28em;
-    }
-
-    &__list {
-        list-style: none;
-        padding: 0;
-        margin: 0 auto;
-        max-width: 690px;
-    }
-
     &__list-item {
         margin-bottom: 28px;
+        transition: margin 0.2s ease-out, padding 0.2s ease-out;
 
         &--open {
+            padding-bottom: 35px;
             margin-bottom: 35px;
             border-bottom: 1px solid #202A37;
-        }
-
-        &--open .pg-faq__answer {
-            display: block;
         }
 
         &--open .pg-faq__question {
@@ -39,30 +25,20 @@
 
     &__question {
         margin-bottom: 0;
+        cursor: pointer;
+        transition: margin 0.2s ease-out;
     }
 
     &__answer {
-        display: none;
-        padding-bottom: 35px;
+        overflow: hidden;
         color: #69778A;
         line-height: 1.8;
+        transition: max-height 0.2s ease-out;
     }
 
     &__button {
         & .fbutton {
             background: #121820;
-        }
-    }
-}
-
-@include media.media-min(728px) {
-    .pg-faq {
-        padding-top: 150px;
-        margin-bottom: 190px;
-
-        &__header {
-            margin-bottom: var(--f-spacer-9);
-            text-align: center;
         }
     }
 }
