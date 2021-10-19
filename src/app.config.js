@@ -120,7 +120,7 @@ if (appConfig.module === 'pg') {
         // app keywords
         keywords: 'Pierre Gasly, F1™ driver, Fantom, NFT, NFTs',
         // meta image
-        imageUrl: 'public/img/PierreGaslyNFTdrop.png',
+        imageUrl: '/img/PierreGaslyNFTdrop.png',
         // app's favicon
         favicon: 'public/favicon-pg.png',
         // progressive web application
