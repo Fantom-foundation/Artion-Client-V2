@@ -62,6 +62,7 @@ export async function PAY_TOKENS_WITH_PRICES() {
             if (dToken) {
                 token.price = bFromTokenValue(dToken.price, dToken.priceDecimals).toNumber();
                 token.priceDecimals = dToken.priceDecimals;
+                token.decimals = dToken.decimals;
             }
         }
     });

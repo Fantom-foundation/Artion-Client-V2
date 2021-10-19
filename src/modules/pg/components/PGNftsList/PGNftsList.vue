@@ -27,7 +27,7 @@ const SOURCES_BASE_URL = 'pg';
 
 const tokenOrder = [
     {
-        tokenId: '0x1e9c',
+        tokenId: '0x2b21',
         // additional data
         text: 'Azerbaijan 2021 race-worn helmet AND<br>Meet and greet with Pierre over the next 12 months',
         poster: `${SOURCES_BASE_URL}/baku.jpg`,
@@ -91,12 +91,12 @@ const TMP_TOKENS = [
     },
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
-        tokenId: '0x1e9c',
+        tokenId: '0x2b21',
         name: 'Baku 2021 Podium',
         description:
             "May '21, Azerbaijan - Pierre Gasly executes a perfect weekend in Baku and secure his third podium in Formula One™, the first of 2021.",
         image: 'https://artion1.mypinata.cloud/ipfs/QmStGkA5vyxF4D9QjkntWNLUjR46qe1ZLgcPUVjYrtQw6y',
-        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x1e9c',
+        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x2b21',
         created: '2021-10-11T10:54:14+02:00',
         hasListing: false,
         hasOffer: false,
