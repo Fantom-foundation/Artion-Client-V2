@@ -191,7 +191,7 @@ export default {
         async loadTokens(contract) {
             console.log(contract);
             // TMP
-            await delay(500);
+            await delay(1);
 
             return TMP_TOKENS;
         },

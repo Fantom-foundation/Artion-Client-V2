@@ -1,44 +1,47 @@
 .acurrencydropdown {
-	--acurrencydropdown-background: var(--f-color-grey-2);
-	& .adropdownlistbox .fdropdownlistbox_button { 
-		width: auto;
-		padding: 2px;
-      //background-color: #fafafb;
-		background: var(--acurrencydropdown-background);
-		background-clip: content-box, padding-box;
-		span {
-			height: 100%;
-			display: flex;
-			border-radius: inherit;
-			gap:var(--f-spacer-2);
-			align-items: center;
-			&.fdropdownlistbox_button_label {
-				padding: var(--f-spacer-1) var(--f-spacer-2);
-				div {
-					display: flex;
-					column-gap: var(--f-spacer-2);
-				}
-			}
+    --acurrencydropdown-background: var(--f-color-grey-2);
+    & .adropdownlistbox .fdropdownlistbox_button {
+        width: auto;
+        padding: 2px;
+        //background-color: #fafafb;
+        background: var(--acurrencydropdown-background);
+        background-clip: content-box, padding-box;
+        span {
+            height: 100%;
+            display: flex;
+            border-radius: inherit;
+            gap: var(--f-spacer-2);
+            align-items: center;
+            &.fdropdownlistbox_button_label {
+                padding: var(--f-spacer-1) var(--f-spacer-2);
+                div {
+                    display: flex;
+                    column-gap: var(--f-spacer-2);
+                }
+            }
 
-			&.acurrencydropdown_arrow {
-				padding: 0 var(--f-spacer-1);
-				svg {
-					width: 16px;
-				}
-				&.arrow_rotate {
-					svg {
-						transition: transform .1s ease;
-						transform: rotate(180deg);
-					}
-				}
-			}
-			
+            &.acurrencydropdown_arrow {
+                padding: 0 var(--f-spacer-1);
+                svg {
+                    width: 16px;
+                }
+                &.arrow_rotate {
+                    svg {
+                        transition: transform 0.1s ease;
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+        }
+    }
 
-		}
-	}
+    &-noarrow {
+        & .adropdownlistbox .fdropdownlistbox_button span.acurrencydropdown_arrow {
+            display: none;
+        }
+    }
 
-	.flex.ali-center {
-		column-gap: var(--f-spacer-2);
-	}
-	
+    .flex.ali-center {
+        column-gap: var(--f-spacer-2);
+    }
 }
