@@ -98,7 +98,7 @@ export default {
 
                 const walletInfo = await payload.promise;
                 if (walletInfo && walletInfo.walletSet) {
-                    this.$refs.menu.show();
+                    // this.$refs.menu.show();
                 }
             }
         },
