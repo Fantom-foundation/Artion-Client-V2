@@ -72,9 +72,9 @@ const TMP_TOKENS = [
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
         tokenId: '0x153',
-        name: 'Brazil 2019<br>Redemption',
+        name: 'Brazil 2019<br>Comeback',
         description:
-            "November '19. Brazil - Pierre's maiden podium came as the conclusion of a rollercoaster 2019 year. A series of solid race weekends and an epic last lap fighting Lewis Hamilton concluded one of the most notable redemption story in Formula One ™.",
+            "November '19. Brazil - Pierre's maiden podium came as the conclusion of a rollercoaster 2019 year. A series of solid race weekends and an epic last lap fighting Lewis Hamilton concluded one of the most notable redemption stories in Formula One ™.",
         image: 'https://artion7.mypinata.cloud/ipfs/QmVCCkFa3genzpq8vFTUdn3unUZ7Adejx1rqHo3s8rryG4',
         imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x153',
         created: '2021-09-25T11:00:05+02:00',
