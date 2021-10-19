@@ -18,7 +18,8 @@
         </div>
         <div class="pg-bid-form__info">
             <div class="pg-bid-form__balance">
-                <span class="pg-bid-form__balance-text"> {{ $t('pgBidForm.balance') }}: </span>15,326.16 wFTM
+                <span class="pg-bid-form__balance-text"> {{ $t('pgBidForm.balance') }}:</span>
+                {{ formatNumberByLocale(userBalance, 3) }} wFTM
             </div>
             <div class="pg-bid-form__bid-value-fiat">
                 ~$0
@@ -60,12 +61,26 @@
 <script>
 import { getWFTMToken } from '@/modules/pg/utils.js';
 import ACurrencyDropdown from '../../../../common/components/ACurrencyDropdown/ACurrencyDropdown';
+import { getErc20TokenBalance } from '@/modules/wallet/queries/erc20-token-balance.js';
+import { bFromTokenValue } from '@/utils/big-number.js';
+import { formatNumberByLocale } from '@/utils/formatters.js';
+import { mapState } from 'vuex';
 
 export default {
     name: 'PGBidForm',
 
     components: {
         ACurrencyDropdown,
+    },
+
+    props: {
+        /** Auction object */
+        auction: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
     },
 
     data() {
@@ -76,8 +91,16 @@ export default {
             amount: 0.0,
             currentBid: 15000,
             termAndConditionsAgreed: false,
+            userBalance: 0,
+            payToken: null,
             error: null,
         };
+    },
+
+    computed: {
+        ...mapState('wallet', {
+            walletAddress: 'account',
+        }),
     },
 
     watch: {
@@ -99,6 +122,11 @@ export default {
 
             this.error = null;
         },
+
+        walletAddress() {
+            this.updateUserBalance();
+            // this.walletConnected = !!value;
+        },
     },
 
     created() {
@@ -107,12 +135,22 @@ export default {
 
     methods: {
         async init() {
-            this.currencies = [await getWFTMToken()];
+            this.payToken = await getWFTMToken();
+            this.currencies = [this.payToken];
+
+            await this.updateUserBalance();
         },
 
         placeBid() {
             console.log('Place Bid');
         },
+
+        async updateUserBalance() {
+            const balance = await getErc20TokenBalance(this.walletAddress, this.payToken.address);
+            this.userBalance = bFromTokenValue(balance, this.payToken.priceDecimals).toNumber();
+        },
+
+        formatNumberByLocale,
     },
 };
 </script>

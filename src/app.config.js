@@ -126,7 +126,7 @@ if (appConfig.module === 'pg') {
         // progressive web application
         usePWA: false,
         // specifies if auction is on or off
-        auctionOn: false,
+        auctionOn: true,
         // specifies auction start date - timestamp in UTC
         auctionStart: 1634738400000,
     };

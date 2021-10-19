@@ -71,22 +71,11 @@
             </div>
 
             <div class="pg-nft-card__cta-bottom">
-                <template v-if="false">
-                    <wallet-button-wrap :wallet-menu="walletMenu" />
-                </template>
-                <span v-else-if="token.hasAuction" class="pg-nft-card__button">
+                <span class="pg-nft-card__button">
                     <f-button
-                        @click.native="$refs.modal.show()"
+                        @click.native="onBidButtonClick"
                         size="large"
-                        :label="auctionOn ? 'Place a bid' : 'Starting soon'"
-                        :disabled="!auctionOn"
-                    />
-                </span>
-                <span v-else-if="!token.hasAuction" class="pg-nft-card__button">
-                    <f-button
-                        @click.native="$refs.modal.show()"
-                        size="large"
-                        :label="auctionOn ? 'Buy now' : 'Starting soon'"
+                        :label="bidButtonLabel"
                         :disabled="!auctionOn"
                     />
                 </span>
@@ -94,20 +83,21 @@
         </div>
 
         <f-window ref="modal" :title="$t('pgModal.heading')" style="max-width: 640px; min-width: 30vw;">
-            <p-g-bid-form></p-g-bid-form>
+            <p-g-bid-form :auction="auction"></p-g-bid-form>
         </f-window>
     </div>
 </template>
 
 <script>
 import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow.vue';
-import WalletButtonWrap from '@/modules/wallet/components/WalletButtonWrap/WalletButtonWrap.vue';
 import PGBidForm from '../PGBidForm/PGBidForm';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 import dayjs from 'dayjs';
 import { bToWei, toBigNumber, toHex } from '@/utils/big-number.js';
 import { formatNumberByLocale, formatTokenValue, localeOptions } from '@/utils/formatters.js';
 import AVideo from '@/common/components/AVideo/AVideo.vue';
+import { mapState } from 'vuex';
+import { checkWallet } from '@/plugins/wallet/utils.js';
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -120,7 +110,6 @@ export default {
     components: {
         AVideo,
         FWindow,
-        WalletButtonWrap,
         PGBidForm,
         FEllipsis,
     },
@@ -167,6 +156,7 @@ export default {
             hours: null,
             minutes: null,
             seconds: null,
+            walletConnected: false,
             walletMenu: [
                 {
                     label: this.$t('walletMenu.settings'),
@@ -181,6 +171,10 @@ export default {
     },
 
     computed: {
+        ...mapState('wallet', {
+            walletAddress: 'account',
+        }),
+
         currentBid() {
             const { lastBid } = this.auction;
 
@@ -194,6 +188,20 @@ export default {
         lastBidder() {
             return this.auction.lastBidder || '';
         },
+
+        bidButtonLabel() {
+            let label = 'Place a bid';
+
+            if (!this.auctionOn) {
+                label = 'Starting soon';
+            } else if (!this.walletConnected) {
+                label = 'Connect wallet';
+            } else if (!this.token.hasAuction) {
+                label = 'Buy now';
+            }
+
+            return label;
+        },
     },
 
     watch: {
@@ -205,6 +213,13 @@ export default {
 
                 this.startCountdown(dayjs(value.endTime).valueOf());
             }
+        },
+
+        walletAddress: {
+            handler(value) {
+                this.walletConnected = !!value;
+            },
+            immediate: true,
         },
     },
 
@@ -251,6 +266,16 @@ export default {
 
         $toWFTM(value$) {
             return formatNumberByLocale(value$ / this.payToken.price, 0);
+        },
+
+        async onBidButtonClick() {
+            if (!this.walletConnected) {
+                this.walletConnected = await checkWallet();
+            }
+
+            if (this.walletConnected) {
+                this.$refs.modal.show();
+            }
         },
 
         formatTokenValue,
