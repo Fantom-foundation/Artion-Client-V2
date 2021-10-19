@@ -33,7 +33,7 @@ const tokenOrder = [
         poster: `${SOURCES_BASE_URL}/baku.jpg`,
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/baku.mp4`,
-        startingPrice: '0x38ebad5cdc902800000',
+        startingPrice: '0x878678326eac900000',
         // startingPrice$: 40000,
     },
     {
@@ -43,7 +43,7 @@ const tokenOrder = [
         poster: `${SOURCES_BASE_URL}/brazil.jpg`,
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/brazil.mp4`,
-        startingPrice: '0xe3aeb5737240a00000',
+        startingPrice: '0x5150ae84a8cdf00000',
         // startingPrice$: 10000,
     },
     {
@@ -53,7 +53,7 @@ const tokenOrder = [
         poster: `${SOURCES_BASE_URL}/monza.jpg`,
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/monza.mp4`,
-        startingPrice: '0x30ca024f987b900000',
+        startingPrice: '0x1b1ae4d6e2ef500000',
         // startingPrice$: 2000,
     },
     {
