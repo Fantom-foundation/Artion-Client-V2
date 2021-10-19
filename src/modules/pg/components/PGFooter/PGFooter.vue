@@ -1,8 +1,11 @@
 <template>
     <footer class="pg-footer">
-        <a class="pg-footer__link" href="http://pg.artion.io/terms-and-conditions" target="_blank">{{
-            $t('pgFooter.termsAndConditions')
-        }}</a>
+        <a
+            class="pg-footer__link"
+            href="https://gasly.artion.io/terms/Artion-Terms-v2.2-8-Oct-2021.pdf"
+            target="_blank"
+            >{{ $t('pgFooter.termsAndConditions') }}</a
+        >
         <a
             class="pg-footer__link"
             href="https://app.termly.io/document/privacy-policy/7db4b9fc-aa5d-4f80-bfa1-27120ff982ba"
