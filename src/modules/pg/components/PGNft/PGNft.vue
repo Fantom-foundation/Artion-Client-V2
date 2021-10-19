@@ -24,20 +24,22 @@
             <p class="theme-pg-u-mb-0">Meet and greet with Pierre over the next 12 months AND</p>
             <p class="theme-pg-u-mb-0">Signed mini-helmet and merchandising</p>-->
 
-            <p class="pg-nft__start-price" v-if="token.hasAuction">Bidding starts at {{ minBidAmount }} WFTM.</p>
-            <p class="pg-nft__start-price" v-else>The sale will go live on October 23rd at 1pm UTC.</p>
+            <p class="pg-nft__start-price" v-if="auctionOn && token.hasAuction">
+                Bidding starts at {{ minBidAmount }} WFTM.
+            </p>
+            <!--            <p class="pg-nft__start-price" v-else>The sale will go live on October 23rd at 1pm UTC.</p>-->
 
-            <div class="pg-nft__socials">
+            <div class="pg-nft__socials mat-7">
                 <span class="pg-nft__socials-button">
-                    <f-button round aria-label="round" size="large">
+                    <a href="https://twitter.com/PierreGASLY" target="_blank" class="btn btn-lg btn-round btn-samesize">
                         <icon-instagram />
-                    </f-button>
+                    </a>
                 </span>
 
                 <span class="pg-nft__socials-button">
-                    <f-button round aria-label="round" size="large">
+                    <a href="https://www.instagram.com/pierregasly" target="_blank" class="btn btn-lg btn-round btn-samesize">
                         <icon-twitter-white />
-                    </f-button>
+                    </a>
                 </span>
             </div>
 
