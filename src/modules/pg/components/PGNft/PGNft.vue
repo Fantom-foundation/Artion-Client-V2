@@ -28,7 +28,7 @@
                 Bidding starts at {{ startingPrice }} wFTM.
             </p>
             <p class="pg-nft__start-price" v-else-if="!token.hasAuction">
-                The sale will go live on October 22rd at 2pm UTC.
+                The sale will go live on October 22rd at 2pm UTC, for purchase in wFTM, ZOO, and TOMB.
             </p>
 
             <div class="pg-nft__socials mat-7">
