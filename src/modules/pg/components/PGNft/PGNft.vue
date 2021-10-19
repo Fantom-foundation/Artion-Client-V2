@@ -109,7 +109,7 @@ export default {
         minBidAmount() {
             const { auction } = this;
 
-            return auction.minBidAmount ? formatTokenValue(auction.minBidAmount, this.payToken.priceDecimals, 1) : '-';
+            return auction.minBidAmount ? formatTokenValue(auction.minBidAmount, this.payToken.decimals, 1) : '-';
         },
 
         startingPrice() {

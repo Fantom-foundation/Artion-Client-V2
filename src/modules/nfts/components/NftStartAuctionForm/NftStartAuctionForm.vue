@@ -123,7 +123,7 @@ export default {
             const { token } = this;
 
             const reservePrice = values.reservePrice
-                ? toHex(bToTokenValue(values.reservePrice, this.selectedPayToken.priceDecimals))
+                ? toHex(bToTokenValue(values.reservePrice, this.selectedPayToken.decimals))
                 : '0x0';
             const startTime = parseInt(values.startTime / 1000);
             const endTime = parseInt(values.endTime / 1000);

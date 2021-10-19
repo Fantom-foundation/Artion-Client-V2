@@ -147,7 +147,7 @@ export default {
 
         auction(value) {
             this.setData(value);
-            // this.currentBid = bFromTokenValue(value.lastBid, this.payToken.priceDecimals);
+            // this.currentBid = bFromTokenValue(value.lastBid, this.payToken.decimals);
         },
 
         walletAddress() {
@@ -199,7 +199,7 @@ export default {
 
         async updateUserBalance() {
             this.userBalanceH = await getErc20TokenBalance(this.walletAddress, this.payToken.address);
-            this.userBalance = bFromTokenValue(this.userBalanceH, this.payToken.priceDecimals).toNumber();
+            this.userBalance = bFromTokenValue(this.userBalanceH, this.payToken.decimals).toNumber();
         },
 
         fromWeiToNumber(value) {

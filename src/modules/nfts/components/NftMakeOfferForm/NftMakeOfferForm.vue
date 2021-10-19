@@ -84,7 +84,7 @@ export default {
         async selectedPayToken(token, oldValue) {
             const balance = await getErc20TokenBalance(this.$wallet.account, token.address);
 
-            this.accountBalance = bFromTokenValue(balance, token.priceDecimals).toNumber();
+            this.accountBalance = bFromTokenValue(balance, token.decimals).toNumber();
 
             if (oldValue !== null) {
                 this.revalidatePriceField();
@@ -129,7 +129,7 @@ export default {
 
             console.log(JSON.stringify(values));
 
-            const price = toHex(bToTokenValue(values.price, this.selectedPayToken.priceDecimals));
+            const price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
             const deadline = parseInt(values.deadline / 1000);
 
             console.log(price, deadline, this.selectedPayToken.address);
@@ -164,7 +164,7 @@ export default {
         onSubmit(data) {
             const { values } = data;
 
-            console.log('price', values.price, toHex(bToTokenValue(values.price, this.selectedPayToken.priceDecimals)));
+            console.log('price', values.price, toHex(bToTokenValue(values.price, this.selectedPayToken.decimals)));
             console.log('deadline', values.deadline, parseInt(values.deadline / 1000));
 
             this.setTx(values);

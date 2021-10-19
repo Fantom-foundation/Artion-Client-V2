@@ -23,6 +23,7 @@ export function PAY_TOKENS() {
             img: 'img/WFTM.png',
             price: 0,
             priceDecimals: 0,
+            decimals: 0,
             value: 'wftm',
             _update: true,
         },
@@ -32,6 +33,7 @@ export function PAY_TOKENS() {
             img: '',
             price: 1,
             priceDecimals: 18,
+            decimals: 18,
             value: 'day',
         },
         {
@@ -40,6 +42,7 @@ export function PAY_TOKENS() {
             img: '',
             price: 1,
             priceDecimals: 18,
+            decimals: 18,
             value: 'usdc',
         },
     ];
