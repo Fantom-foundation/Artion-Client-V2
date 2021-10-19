@@ -111,19 +111,20 @@ if (appConfig.module === 'pg') {
     appConfig = {
         ...appConfig,
         // app name - used in titles
-        name: 'Pierre Gasly',
+        name: 'Pierre Gasly NFT drop',
         // app main title
-        title: 'Pierre Gasly',
+        title: 'Pierre Gasly NFT drop',
         // app description
-        description: 'Pierre Gasly, NFT markteplace',
+        description:
+            'Pierre Gasly launches his NFTs on Fantom, as the first NFT drop of an F1™ driver. The NFTs will be redeemable for VIP experiences, meet and greet, signed original helmets and merchandise',
         // app keywords
-        keywords: 'Pierre Gasly, NFT, NFTs, Fantom',
+        keywords: 'Pierre Gasly, F1™ driver, Fantom, NFT, NFTs',
         // app's favicon
         favicon: 'public/favicon-pg.png',
         // progressive web application
         usePWA: false,
         // specifies if auction is on or off
-        auctionOn: true,
+        auctionOn: false,
         // specifies auction start date - timestamp in UTC
         auctionStart: 1634738400000,
     };
