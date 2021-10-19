@@ -50,6 +50,7 @@ module.exports = {
             _args[0].description = appConfig.description;
             _args[0].keywords = appConfig.keywords;
             _args[0].favicon = appConfig.favicon;
+            _args[0].imageUrl = appConfig.imageUrl || '';
             return _args;
         });
 

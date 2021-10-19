@@ -93,7 +93,7 @@ let appConfig = {
     routerHashMode: false,
     // Opera chain id
     chainId: '0xfa',
-    // JSON-RPC endpoint
+    // JSON-RPC endpointAdd
     // rpc: 'https://rpcapi.fantom.network/',
     rpc: 'https://rpc.ftm.tools/',
     // used in links pointing to fantom explorer
@@ -119,6 +119,8 @@ if (appConfig.module === 'pg') {
             'Pierre Gasly launches his NFTs on Fantom, as the first NFT drop of an F1™ driver. The NFTs will be redeemable for VIP experiences, meet and greet, signed original helmets and merchandise',
         // app keywords
         keywords: 'Pierre Gasly, F1™ driver, Fantom, NFT, NFTs',
+        // meta image
+        imageUrl: 'public/img/PierreGaslyNFTdrop.png',
         // app's favicon
         favicon: 'public/favicon-pg.png',
         // progressive web application
