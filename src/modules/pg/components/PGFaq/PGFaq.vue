@@ -2,10 +2,15 @@
     <li class="pg-faq__list-item" :class="{ 'pg-faq__list-item--open': isOpen }">
         <div class="flex juc-space-between">
             <div class="pg-faq__text">
-                <div class="pg-faq__question">
+                <div class="pg-faq__question" @click="isOpen = !isOpen">
                     {{ faq.question }}
                 </div>
-                <div class="pg-faq__answer" v-html="faq.answer"></div>
+                <div
+                    class="pg-faq__answer"
+                    ref="answer"
+                    :style="{ maxHeight: isOpen ? `${$refs.answer.scrollHeight}px` : 0 }"
+                    v-html="faq.answer"
+                ></div>
             </div>
             <span class="pg-faq__button" @click="isOpen = !isOpen">
                 <f-button round aria-label="round">

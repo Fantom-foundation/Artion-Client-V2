@@ -58,8 +58,8 @@
 </template>
 
 <script>
-import ACurrencyDropdown from '../../../../common/components/ACurrencyDropdown/ACurrencyDropdown';
 import { getWFTMToken } from '@/modules/pg/utils.js';
+import ACurrencyDropdown from '../../../../common/components/ACurrencyDropdown/ACurrencyDropdown';
 
 export default {
     name: 'PGBidForm',

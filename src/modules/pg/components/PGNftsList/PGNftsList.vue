@@ -33,32 +33,33 @@ const tokenOrder = [
         poster: `${SOURCES_BASE_URL}/baku.jpg`,
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/baku.mp4`,
-        startingPrice: '0x38ebad5cdc902800000',
+        startingPrice: '0x878678326eac900000',
         // startingPrice$: 40000,
     },
     {
         tokenId: '0x153',
         text:
-            'Promotion helmet from Brazil 2019 race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed mini-helmet and merchandising',
+            'Signed promotion helmet from Brazil 2019 race weekend AND<br>Meet and greet with Pierre over the next 12 months',
         poster: `${SOURCES_BASE_URL}/brazil.jpg`,
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/brazil.mp4`,
-        startingPrice: '0xe3aeb5737240a00000',
+        startingPrice: '0x5150ae84a8cdf00000',
         // startingPrice$: 10000,
     },
     {
         tokenId: '0x2636',
         text:
-            'VIP experience for 2 person at a race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed mini helmet and merchandising',
+            'VIP experience for two people at a race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed 2021 mini-helmet and merchandising',
         poster: `${SOURCES_BASE_URL}/monza.jpg`,
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/monza.mp4`,
-        startingPrice: '0x30ca024f987b900000',
+        startingPrice: '0x1b1ae4d6e2ef500000',
         // startingPrice$: 2000,
     },
     {
         tokenId: '0x4e23',
-        text: 'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop',
+        text:
+            'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop<br>Additionally, 10 NFTs will be “golden tickets”, redeemable for signed mini-helmets in addition to the merchandise.',
         poster: `${SOURCES_BASE_URL}/limited.jpg`,
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/limited.mp4`,

@@ -41,6 +41,7 @@
     }
 
     &__backdrop {
+        display: none;
         position: absolute;
         width: 220px;
         height: 330px;
@@ -72,6 +73,7 @@
         }
 
         &__backdrop {
+            display: block;
             width: 285px;
             height: 389px;
             transform: matrix(0.94, -0.76, 0.24, 0.84, 0, 0);

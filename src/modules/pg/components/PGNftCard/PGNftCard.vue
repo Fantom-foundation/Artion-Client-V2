@@ -1,6 +1,6 @@
 <template>
     <div class="pg-nft-card">
-        <div class="pg-nft-card__img-cont">
+        <div class="pg-nft-card__img-cont" :class="{ 'pg-nft-card__img-cont--limited': !token.hasAuction }">
             <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
             <!--            <img src="img/tmp/pg.jpeg" alt="" class="pg-nft-card__img-el" />-->
         </div>
@@ -25,7 +25,7 @@
                         <h6 class="h6">{{ $t('pgNftCard.currentBid') }}</h6>
 
                         <template v-if="auction.lastBid">
-                            <h4 class="h4">{{ currentBid }} WFTM</h4>
+                            <h4 class="h4">{{ currentBid }} wFTM</h4>
                             <p class="pg-nft-card__note">{{ currentBid$ }}</p>
                             <!--                        <p class="pg-nft-card__note">$28,671.45</p>-->
                         </template>

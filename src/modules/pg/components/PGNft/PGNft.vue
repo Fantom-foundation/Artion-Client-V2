@@ -25,9 +25,9 @@
             <p class="theme-pg-u-mb-0">Signed mini-helmet and merchandising</p>-->
 
             <p class="pg-nft__start-price" v-if="auctionOn && token.hasAuction">
-                Bidding starts at {{ minBidAmount }} WFTM.
+                Bidding starts at {{ startingPrice }} wFTM.
             </p>
-            <!--            <p class="pg-nft__start-price" v-else>The sale will go live on October 23rd at 1pm UTC.</p>-->
+            <p class="pg-nft__start-price" v-else>The sale will go live on October 22rd at 2pm UTC.</p>
 
             <div class="pg-nft__socials mat-7">
                 <span class="pg-nft__socials-button">
@@ -37,7 +37,11 @@
                 </span>
 
                 <span class="pg-nft__socials-button">
-                    <a href="https://www.instagram.com/pierregasly" target="_blank" class="btn btn-lg btn-round btn-samesize">
+                    <a
+                        href="https://www.instagram.com/pierregasly"
+                        target="_blank"
+                        class="btn btn-lg btn-round btn-samesize"
+                    >
                         <icon-twitter-white />
                     </a>
                 </span>
@@ -55,6 +59,7 @@ import IconInstagram from '../../../../assets/vue-icons/IconInstagram';
 import IconTwitterWhite from '../../../../assets/vue-icons/IconTwitterWhite';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { formatTokenValue } from '@/utils/formatters.js';
+import { toInt, bFromWei } from '@/utils/big-number.js';
 
 export default {
     name: 'PGNft',
@@ -103,6 +108,10 @@ export default {
             const { auction } = this;
 
             return auction.minBidAmount ? formatTokenValue(auction.minBidAmount, this.payToken.priceDecimals, 1) : '-';
+        },
+
+        startingPrice() {
+            return toInt(bFromWei(this.token.startingPrice));
         },
     },
 

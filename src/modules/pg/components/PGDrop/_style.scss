@@ -30,6 +30,7 @@
     }
 
     &__backdrop {
+        display: none;
         position: absolute;
         border-radius: 50%;
         opacity: 0.15;
@@ -79,6 +80,8 @@
         }
 
         &__backdrop {
+            display: block;
+
             &--1 {
                 width: 404px;
                 height: 205px;
