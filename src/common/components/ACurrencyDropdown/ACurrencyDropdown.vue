@@ -1,5 +1,5 @@
 <template>
-    <div class="acurrencydropdown">
+    <div class="acurrencydropdown" :class="{ 'acurrencydropdown-noarrow': currencies.length < 2 }">
         <a-dropdown-listbox
             v-bind="$attrs"
             :data="currencies"
@@ -77,6 +77,7 @@ export default {
     },
 };
 </script>
+
 <style lang="scss">
 @use 'style';
 </style>

@@ -10,8 +10,15 @@
                     <template v-if="!token.hasAuction">
                         <h6 class="h6">{{ $t('pgNftCard.price') }}</h6>
 
-                        <h4 class="h4">300 FTM</h4>
-                        <p class="pg-nft-card__note">$400</p>
+                        <h4 class="h4">{{ formatTokenValue(token.price, payToken.priceDecimals) }} WFTM</h4>
+                        <p class="pg-nft-card__note">{{ to$(token.price) }}</p>
+                    </template>
+
+                    <template v-else-if="!auctionOn">
+                        <h6 class="h6">{{ $t('pgNftCard.startingPrice') }}</h6>
+
+                        <h4 class="h4">{{ formatTokenValue(token.startingPrice, payToken.priceDecimals) }} WFTM</h4>
+                        <p class="pg-nft-card__note">{{ to$(token.startingPrice, 0) }}</p>
                     </template>
 
                     <template v-else>
@@ -98,8 +105,8 @@ import WalletButtonWrap from '@/modules/wallet/components/WalletButtonWrap/Walle
 import PGBidForm from '../PGBidForm/PGBidForm';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 import dayjs from 'dayjs';
-import { toBigNumber } from '@/utils/big-number.js';
-import { formatTokenValue } from '@/utils/formatters.js';
+import { bToWei, toBigNumber, toHex } from '@/utils/big-number.js';
+import { formatNumberByLocale, formatTokenValue, localeOptions } from '@/utils/formatters.js';
 import AVideo from '@/common/components/AVideo/AVideo.vue';
 
 const SECOND = 1000;
@@ -181,10 +188,7 @@ export default {
         },
 
         currentBid$() {
-            const { lastBid } = this.auction;
-            const bLastBid$ = lastBid ? toBigNumber(lastBid).multipliedBy(this.payToken.price) : null;
-
-            return bLastBid$ ? formatTokenValue(bLastBid$, this.payToken.priceDecimals, 2, true) : '';
+            return this.to$(this.auction.lastBid);
         },
 
         lastBidder() {
@@ -206,6 +210,8 @@ export default {
 
     created() {
         this.init();
+
+        console.log(toHex(bToWei(4200)));
     },
 
     methods: {
@@ -232,6 +238,23 @@ export default {
                 this.seconds = Math.floor((difference % MINUTE) / SECOND);
             }, 1000);
         },
+
+        to$(value) {
+            const value$ = value ? toBigNumber(value).multipliedBy(this.payToken.price) : null;
+
+            return value$ ? formatTokenValue(value$, this.payToken.priceDecimals, 2, true) : '';
+        },
+
+        format$(value, decimals = 2) {
+            return formatNumberByLocale(value, decimals, localeOptions.currency);
+        },
+
+        $toWFTM(value$) {
+            return formatNumberByLocale(value$ / this.payToken.price, 0);
+        },
+
+        formatTokenValue,
+        formatNumberByLocale,
     },
 };
 </script>

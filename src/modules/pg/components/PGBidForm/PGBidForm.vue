@@ -1,10 +1,10 @@
 <template>
     <div class="pg-bid-form">
         <div class="pg-bid-form__current-bid" :class="{ 'pg-bid-form__current-bid--mb-0': !!currentBid }">
-            {{ $t('pgBidForm.currentBid') }}: {{ currentBid.toLocaleString('en-US') }} FTM
+            {{ $t('pgBidForm.currentBid') }}: {{ currentBid.toLocaleString('en-US') }} WFTM
         </div>
         <div class="pg-bid-form__min-next-bid" v-if="currentBid">
-            {{ $t('pgBidForm.minNextBid') }}: {{ (currentBid + 100).toLocaleString('en-US') }} FTM
+            {{ $t('pgBidForm.minNextBid') }}: {{ (currentBid + 100).toLocaleString('en-US') }} WFTM
         </div>
         <div class="pg-bid-form__my-bid">
             <a-currency-dropdown :currencies="currencies" @token-selected="factor = $event.price"></a-currency-dropdown>
@@ -18,7 +18,7 @@
         </div>
         <div class="pg-bid-form__info">
             <div class="pg-bid-form__balance">
-                <span class="pg-bid-form__balance-text"> {{ $t('pgBidForm.balance') }}: </span>15,326.16 FTM
+                <span class="pg-bid-form__balance-text"> {{ $t('pgBidForm.balance') }}: </span>15,326.16 WFTM
             </div>
             <div class="pg-bid-form__bid-value-fiat">
                 ~$0
@@ -58,31 +58,8 @@
 </template>
 
 <script>
+import { getWFTMToken } from '@/modules/pg/utils.js';
 import ACurrencyDropdown from '../../../../common/components/ACurrencyDropdown/ACurrencyDropdown';
-
-const currencies = [
-    {
-        address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
-        label: 'wFTM',
-        img: 'img/WFTM.png',
-        price: 2.23,
-        value: 'wftm',
-    },
-    {
-        address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
-        label: 'DAI',
-        img: '',
-        price: 1,
-        value: 'day',
-    },
-    {
-        address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
-        label: 'USDC',
-        img: '',
-        price: 1,
-        value: 'usdc',
-    },
-];
 
 export default {
     name: 'PGBidForm',
@@ -93,7 +70,7 @@ export default {
 
     data() {
         return {
-            currencies,
+            currencies: [],
             factor: null,
             token: null,
             amount: 0.0,
@@ -124,7 +101,15 @@ export default {
         },
     },
 
+    created() {
+        this.init();
+    },
+
     methods: {
+        async init() {
+            this.currencies = [await getWFTMToken()];
+        },
+
         placeBid() {
             console.log('Place Bid');
         },
