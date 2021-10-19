@@ -31,6 +31,7 @@ const tokenOrder = [
         poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/baku.jpg',
         // tmp data
         videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/baku.mp4',
+        startingPrice$: 40000,
     },
     {
         tokenId: '0x153',
@@ -39,6 +40,7 @@ const tokenOrder = [
         poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/brazil.jpg',
         // tmp data
         videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/brazil.mp4',
+        startingPrice$: 10000,
     },
     {
         tokenId: '0x2636',
@@ -47,6 +49,7 @@ const tokenOrder = [
         poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.jpg',
         // tmp data
         videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.mp4',
+        startingPrice$: 2000,
     },
     {
         tokenId: '0x4e23',
@@ -54,6 +57,8 @@ const tokenOrder = [
         poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.jpg',
         // tmp data
         videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.mp4',
+        price: '0x1043561a8829300000',
+        price$: 200,
     },
 ];
 

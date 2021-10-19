@@ -115,10 +115,15 @@ export default {
 
         async loadAuction() {
             const { token } = this;
-            const auction = await getAuction(token.contract, token.tokenId);
 
-            console.log(auction);
-            this.auction = auction;
+            if (this.auctionOn) {
+                const auction = await getAuction(token.contract, token.tokenId);
+
+                console.log('AUCTION', auction);
+                if (auction) {
+                    this.auction = auction;
+                }
+            }
         },
     },
 };

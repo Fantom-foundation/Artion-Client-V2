@@ -1,6 +1,6 @@
 import { bFromTokenValue } from '@/utils/big-number.js';
 
-export const filtersOptions = {
+export const localeOptions = {
     currLocale: 'en-US',
     currency: 'USD',
     fractionDigits: 0,
@@ -16,7 +16,7 @@ export const filtersOptions = {
  */
 export function formatNumberByLocale(
     _number,
-    _fractionDigits = filtersOptions.fractionDigits,
+    _fractionDigits = localeOptions.fractionDigits,
     _currency,
     _variableFDigits
 ) {
@@ -30,13 +30,13 @@ export function formatNumberByLocale(
         options.currency = _currency;
     }
 
-    return new Intl.NumberFormat(filtersOptions.currLocale, options).format(_number);
+    return new Intl.NumberFormat(localeOptions.currLocale, options).format(_number);
 }
 
 export function formatTokenValue(value, tokenPriceDecimals = 18, _fractionDigits, _currency) {
     return formatNumberByLocale(
         bFromTokenValue(value, tokenPriceDecimals).toNumber(),
         _fractionDigits,
-        _currency ? filtersOptions.currency : ''
+        _currency ? localeOptions.currency : ''
     );
 }

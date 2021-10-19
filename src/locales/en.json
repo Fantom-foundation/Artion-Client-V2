@@ -262,6 +262,7 @@
         "noBids": "no bids",
         "endsIn": "Auction Ending in",
         "startsIn": "Auction Starting in",
+        "startingPrice": "Starting Price",
         "days": "days",
         "hours": "hours",
         "minutes": "minutes",
