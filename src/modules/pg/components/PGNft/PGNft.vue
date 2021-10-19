@@ -27,7 +27,9 @@
             <p class="pg-nft__start-price" v-if="auctionOn && token.hasAuction">
                 Bidding starts at {{ startingPrice }} wFTM.
             </p>
-            <p class="pg-nft__start-price" v-else>The sale will go live on October 22rd at 2pm UTC.</p>
+            <p class="pg-nft__start-price" v-else-if="!token.hasAuction">
+                The sale will go live on October 22rd at 2pm UTC.
+            </p>
 
             <div class="pg-nft__socials mat-7">
                 <span class="pg-nft__socials-button">

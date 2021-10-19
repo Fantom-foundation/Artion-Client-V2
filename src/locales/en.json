@@ -254,7 +254,8 @@
 
     "pgFooter": {
         "privacy": "Privacy Policy",
-        "termsAndConditions": "Terms and Conditions"
+        "termsAndConditions": "Terms and Conditions",
+        "cookiePolicy": "Cookie Policy"
     },
 
     "pgNftCard": {
