@@ -35,7 +35,7 @@ const tokenOrder = [
     {
         tokenId: '0x153',
         text:
-            'Promotion helmet from Brazil 2019 race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed mini-helmet and merchandising',
+            'Signed promotion helmet from Brazil 2019 race weekend AND<br>Meet and greet with Pierre over the next 12 months',
         poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/brazil.jpg',
         // tmp data
         videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/brazil.mp4',
@@ -43,14 +43,15 @@ const tokenOrder = [
     {
         tokenId: '0x2636',
         text:
-            'VIP experience for 2 person at a race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed mini helmet and merchandising',
+            'VIP experience for two people at a race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed 2021 mini-helmet and merchandising',
         poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.jpg',
         // tmp data
         videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.mp4',
     },
     {
         tokenId: '0x4e23',
-        text: 'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop',
+        text:
+            'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop<br>Additionally, 10 NFTs will be “golden tickets”, redeemable for signed mini-helmets in addition to the merchandise.',
         poster: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.jpg',
         // tmp data
         videoSrc: 'https://sandbox.pbro.zenithies.dev/M0qoc7s3/monza.mp4',

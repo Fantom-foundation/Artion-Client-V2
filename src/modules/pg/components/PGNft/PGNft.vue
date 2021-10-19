@@ -24,8 +24,8 @@
             <p class="theme-pg-u-mb-0">Meet and greet with Pierre over the next 12 months AND</p>
             <p class="theme-pg-u-mb-0">Signed mini-helmet and merchandising</p>-->
 
-            <p class="pg-nft__start-price" v-if="token.hasAuction">Bidding starts at {{ minBidAmount }} WFTM.</p>
-            <p class="pg-nft__start-price" v-else>The sale will go live on October 23rd at 1pm UTC.</p>
+            <p class="pg-nft__start-price" v-if="token.hasAuction">Bidding starts at {{ minBidAmount }} wFTM.</p>
+            <p class="pg-nft__start-price" v-else>The sale will go live on October 22rd at 2pm UTC.</p>
 
             <div class="pg-nft__socials">
                 <span class="pg-nft__socials-button">

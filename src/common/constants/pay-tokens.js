@@ -19,7 +19,7 @@ export function PAY_TOKENS() {
     return [
         {
             address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
-            label: 'WFTM',
+            label: 'wFTM',
             img: 'img/WFTM.png',
             price: 0,
             priceDecimals: 0,

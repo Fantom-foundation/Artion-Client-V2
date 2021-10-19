@@ -17,8 +17,8 @@
         "explore": "@:explore",
         "create": "@:create",
         "drop": "The Drop",
-        "nfts": "The NFT's",
-        "myNfts": "My NFT's"
+        "nfts": "The NFTs",
+        "myNfts": "My NFTs"
     },
 
     "category": {
