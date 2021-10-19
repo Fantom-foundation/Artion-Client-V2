@@ -8,7 +8,7 @@
     "results": "results",
     "your_profile": "Your Profile",
     "nonZeroPrice": "Price must be non zero value",
-    "unsufficientBalance": "Unsufficient balance",
+    "insufficientBalance": "Insufficient balance",
     "startAuction": "Start Auction",
     "profile": "Profile",
     "reservePrice": "Reserve Price",
@@ -134,7 +134,7 @@
         "offerExpiration": "Offer Expiration",
         "placeOffer": "Place Offer",
         "nonZeroPrice": "@:nonZeroPrice",
-        "unsufficientBalance": "@:unsufficientBalance",
+        "insufficientBalance": "@:insufficientBalance",
         "badDate": "Bad date"
     },
 
@@ -243,8 +243,10 @@
         "termsAndConditionsLink": "Terms of Service",
         "placeBid": "Place bid",
         "newBidIsBelowCurrent": "Bid is below current bid",
+        "newBidIsBelowMin": "Bid is below min bid",
         "mustBeNumber": "Bid must be number",
-        "bidMustBeDivisibleByHundred": "Bid must be in 100 FTM increments minimum"
+        "bidMustBeDivisibleByHundred": "Bid must be in {amount} FTM increments minimum",
+        "insufficientBalance": "@:insufficientBalance"
     },
 
     "pgDrop": {

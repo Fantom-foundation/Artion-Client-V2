@@ -93,7 +93,7 @@ export default {
             if (isNaN(val) || val <= 0) {
                 return this.$t('nftmakeofferform.nonZeroPrice');
             } else if (this.accountBalance < val) {
-                return this.$t('nftmakeofferform.unsufficientBalance');
+                return this.$t('nftmakeofferform.insufficientBalance');
             }
 
             return '';
