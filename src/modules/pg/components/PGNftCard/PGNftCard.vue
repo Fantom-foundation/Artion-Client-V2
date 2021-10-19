@@ -10,15 +10,15 @@
                     <template v-if="!token.hasAuction">
                         <h6 class="h6">{{ $t('pgNftCard.price') }}</h6>
 
-                        <h4 class="h4">{{ $toWFTM(token.price$) }} WFTM</h4>
-                        <p class="pg-nft-card__note">{{ format$(token.price$) }}</p>
+                        <h4 class="h4">{{ formatTokenValue(token.price, payToken.priceDecimals) }} WFTM</h4>
+                        <p class="pg-nft-card__note">{{ to$(token.price) }}</p>
                     </template>
 
                     <template v-else-if="!auctionOn">
                         <h6 class="h6">{{ $t('pgNftCard.startingPrice') }}</h6>
 
-                        <h4 class="h4">{{ $toWFTM(token.startingPrice$) }} WFTM</h4>
-                        <p class="pg-nft-card__note">{{ format$(token.startingPrice$, 0) }}</p>
+                        <h4 class="h4">{{ formatTokenValue(token.startingPrice, payToken.priceDecimals) }} WFTM</h4>
+                        <p class="pg-nft-card__note">{{ to$(token.startingPrice, 0) }}</p>
                     </template>
 
                     <template v-else>
@@ -211,7 +211,7 @@ export default {
     created() {
         this.init();
 
-        console.log(toHex(bToWei(300)));
+        console.log(toHex(bToWei(4200)));
     },
 
     methods: {
