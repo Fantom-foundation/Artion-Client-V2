@@ -707,8 +707,8 @@ const ZERO_AMOUNT = '0x0';
 }
 
 /**
- * withdrawAuctionBid Allows the hightest bidder to withdraw the bid (after 12 hours post auction's end) 
- * 
+ * withdrawAuctionBid Allows the hightest bidder to withdraw the bid (after 12 hours post auction's end)
+ *
  * Only callable by the existing top bidder
  *
  * @param {string} nftAddress Address of the NFT token, ERC721 address
@@ -749,7 +749,7 @@ const ZERO_AMOUNT = '0x0';
 
 /**
  * resultAuction Closes a finished auction and rewards the highest bidder
- * 
+ *
  * Only item owner
  * Auction can only be resulted if there has been a bidder and reserve met.
  * If there have been no bids, the auction needs to be cancelled instead using `cancelAuction()`
@@ -792,7 +792,7 @@ const ZERO_AMOUNT = '0x0';
 
 /**
  * cancelAuction Cancels an un-resulted auctions, returning the funds to the top bidder if found
- * 
+ *
  * Only item owner
  *
  * @param {string} nftAddress Address of the NFT token, ERC721 address

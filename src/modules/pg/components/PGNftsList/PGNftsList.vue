@@ -27,7 +27,7 @@ const SOURCES_BASE_URL = 'pg';
 
 const tokenOrder = [
     {
-        tokenId: '0x2b21',
+        tokenId: '0x2bdc',
         // additional data
         text: 'Azerbaijan 2021 race-worn helmet AND<br>Meet and greet with Pierre over the next 12 months',
         poster: `${SOURCES_BASE_URL}/baku.jpg`,
@@ -37,7 +37,7 @@ const tokenOrder = [
         // startingPrice$: 40000,
     },
     {
-        tokenId: '0x153',
+        tokenId: '0x29e1',
         text:
             'Signed promotion helmet from Brazil 2019 race weekend AND<br>Meet and greet with Pierre over the next 12 months',
         poster: `${SOURCES_BASE_URL}/brazil.jpg`,
@@ -71,32 +71,12 @@ const tokenOrder = [
 const TMP_TOKENS = [
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
-        tokenId: '0x153',
-        name: 'Brazil 2019 Redemption',
-        description:
-            "November '19. Brazil - Pierre's maiden podium came as the conclusion of a rollercoaster 2019 year. A series of solid race weekends and an epic last lap fighting Lewis Hamilton concluded one of the most notable redemption story in Formula One ™.",
-        image: 'https://artion7.mypinata.cloud/ipfs/QmVCCkFa3genzpq8vFTUdn3unUZ7Adejx1rqHo3s8rryG4',
-        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x153',
-        created: '2021-09-25T11:00:05+02:00',
-        hasListing: false,
-        hasOffer: false,
-        hasAuction: true,
-        hasBids: true,
-        lastListing: null,
-        lastTrade: null,
-        lastOffer: null,
-        lastBid: '2021-10-18T12:39:19+02:00',
-        likes: '0x0',
-        __typename: 'Token',
-    },
-    {
-        contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
-        tokenId: '0x2b21',
+        tokenId: '0x2bdc',
         name: 'Baku 2021 Podium',
         description:
             "May '21, Azerbaijan - Pierre Gasly executes a perfect weekend in Baku and secure his third podium in Formula One™, the first of 2021.",
         image: 'https://artion1.mypinata.cloud/ipfs/QmStGkA5vyxF4D9QjkntWNLUjR46qe1ZLgcPUVjYrtQw6y',
-        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x2b21',
+        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x2bdc',
         created: '2021-10-11T10:54:14+02:00',
         hasListing: false,
         hasOffer: false,
@@ -106,6 +86,26 @@ const TMP_TOKENS = [
         lastTrade: null,
         lastOffer: '2021-10-14T10:43:11+02:00',
         lastBid: null,
+        likes: '0x0',
+        __typename: 'Token',
+    },
+    {
+        contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
+        tokenId: '0x29e1',
+        name: 'Brazil 2019 Redemption',
+        description:
+            "November '19. Brazil - Pierre's maiden podium came as the conclusion of a rollercoaster 2019 year. A series of solid race weekends and an epic last lap fighting Lewis Hamilton concluded one of the most notable redemption story in Formula One ™.",
+        image: 'https://artion7.mypinata.cloud/ipfs/QmVCCkFa3genzpq8vFTUdn3unUZ7Adejx1rqHo3s8rryG4',
+        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x29e1',
+        created: '2021-09-25T11:00:05+02:00',
+        hasListing: false,
+        hasOffer: false,
+        hasAuction: true,
+        hasBids: true,
+        lastListing: null,
+        lastTrade: null,
+        lastOffer: null,
+        lastBid: '2021-10-18T12:39:19+02:00',
         likes: '0x0',
         __typename: 'Token',
     },

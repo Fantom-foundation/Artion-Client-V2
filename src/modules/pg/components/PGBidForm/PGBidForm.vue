@@ -1,16 +1,21 @@
 <template>
     <div class="pg-bid-form">
-        <div class="pg-bid-form__current-bid" :class="{ 'pg-bid-form__current-bid--mb-0': !!currentBid }">
-            {{ $t('pgBidForm.currentBid') }}: {{ formatNumberByLocale(currentBid) }} wFTM
+        <div class="pg-bid-form__current-bid" :class="{ 'pg-bid-form__current-bid--mb-0': true }">
+            {{ $t('pgBidForm.currentBid') }}: {{ formatNumberByLocale(currentBid, decimals) }} wFTM
         </div>
-        <div class="pg-bid-form__min-next-bid" v-if="currentBid">
-            {{ $t('pgBidForm.minNextBid') }}: {{ formatNumberByLocale(currentBid + minBidAmount) }} wFTM
+        <div class="pg-bid-form__min-next-bid">
+            {{ $t('pgBidForm.minNextBid') }}: {{ formatTokenValue(minNextBidB, payToken.decimals, decimals) }} wFTM
         </div>
         <div class="pg-bid-form__my-bid">
-            <a-currency-dropdown :currencies="currencies" @token-selected="factor = $event.price"></a-currency-dropdown>
+            <a-currency-dropdown
+                :currencies="currencies"
+                :disabled="txStatus === 'pending'"
+                @token-selected="factor = $event.price"
+            ></a-currency-dropdown>
             <input
                 class="pg-bid-form__amount"
                 :class="{ 'pg-bid-form__amount--zero': !amount, 'pg-bid-form__amount--error': error }"
+                :disabled="txStatus === 'pending'"
                 type="number"
                 v-model="amount"
             />
@@ -19,9 +24,9 @@
         <div class="pg-bid-form__info">
             <div class="pg-bid-form__balance">
                 <span class="pg-bid-form__balance-text"> {{ $t('pgBidForm.balance') }}:</span>
-                {{ formatNumberByLocale(userBalance, 3) }} wFTM
+                {{ formatTokenValue(userBalanceB, payToken.decimals, decimals) }} wFTM
             </div>
-            <div class="pg-bid-form__bid-value-fiat">~{{ to$(userBalanceH) }}</div>
+            <div class="pg-bid-form__bid-value-fiat">~{{ to$(userBalanceB) }}</div>
         </div>
 
         <div class="pg-bid-form__input-box">
@@ -29,13 +34,20 @@
                 class="pg-bid-form__amount"
                 :class="{ 'pg-bid-form__amount--zero': !amount, 'pg-bid-form__amount--error': error }"
                 type="number"
+                :disabled="txStatus === 'pending'"
                 v-model="amount"
             />
             <div class="pg-bid-form__bid-value-fiat">~{{ to$(amount) }}</div>
         </div>
 
         <div class="pg-bid-form__terms-and-conditions">
-            <f-option type="checkbox" option-size="small" name="terms" @change="termAndConditionsAgreed = $event">
+            <f-option
+                type="checkbox"
+                option-size="small"
+                name="terms"
+                :disabled="txStatus === 'pending'"
+                @change="termAndConditionsAgreed = $event"
+            >
                 <label>
                     {{ $t('pgBidForm.termsAndConditionsAgreement') }}
                     <router-link :to="{ path: '/pg' }">{{ $t('pgBidForm.termsAndConditionsLink') }}</router-link>
@@ -43,17 +55,18 @@
             </f-option>
         </div>
         <div class="flex juc-center">
-            <span class="pg-bid-form__button" @click="placeBid">
+            <span class="pg-bid-form__button">
                 <a-button
                     size="large"
-                    :loading="txStatus.status === 'pending'"
+                    :loading="txStatus === 'pending'"
                     :label="$t('pgBidForm.placeBid')"
                     :disabled="!amount || !termAndConditionsAgreed || !!error"
+                    @click.native="onPlaceBid"
                 />
             </span>
         </div>
 
-        <a-sign-transaction :tx="tx" />
+        <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
     </div>
 </template>
 
@@ -67,7 +80,9 @@ import { mapState } from 'vuex';
 import AButton from '@/common/components/AButton/AButton.vue';
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
+import erc20Utils from '@/utils/erc20-utils.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
+import { getErc20TokenAllowance } from '@/modules/wallet/queries/erc20-token-allowance.js';
 
 export default {
     name: 'PGBidForm',
@@ -95,15 +110,18 @@ export default {
             token: null,
             amount: 0.0,
             currentBid: 0,
-            currentBidH: '',
+            currentBidB: null,
             minBidAmount: 0,
-            minBidAmountH: '',
+            minBidAmountB: null,
             termAndConditionsAgreed: false,
-            userBalance: 0,
-            userBalanceH: '',
-            payToken: null,
+            userBalanceB: null,
+            userAllowanceB: null,
+            payToken: {},
             error: null,
+            minIncrement: 1,
+            decimals: 2,
             tx: {},
+            txStatus: '',
         };
     },
 
@@ -112,20 +130,41 @@ export default {
             walletAddress: 'account',
         }),
 
-        ...mapState('app', {
-            txStatus: 'txStatus',
-        }),
+        minNextBidB() {
+            if (!this.minBidAmountB || !this.payToken.decimals) {
+                return toBigNumber(0);
+            }
+
+            if (this.currentBid === 0) {
+                return this.minBidAmountB;
+            }
+
+            console.log('---', this.fromWeiToNumber(this.minBidAmountB), this.minIncrement, this.currentBid);
+            // const minIncrementB = bToTokenValue(this.minIncrement, this.payToken.decimals);
+
+            // return this.minBidAmountB.plus(minIncrementB);
+
+            return bToTokenValue(this.fromWeiToNumber(this.minBidAmountB) + this.minIncrement, this.payToken.decimals);
+        },
     },
 
     watch: {
         amount() {
             const parsedAmount = Number(this.amount);
+            const parsedAmountB = bToTokenValue(this.amount, this.payToken.decimals);
+
+            console.log(
+                'arr',
+                parsedAmountB.toNumber(),
+                this.userBalanceB.toNumber(),
+                parsedAmountB.isLessThan(this.userBalanceB)
+            );
 
             if (Number.isNaN(parsedAmount)) {
                 this.error = this.$t('pgBidForm.mustBeNumber');
                 return false;
             }
-            if (parsedAmount > this.userBalance) {
+            if (parsedAmountB.isGreaterThan(this.userBalanceB)) {
                 this.error = this.$t('pgBidForm.insufficientBalance');
                 return false;
             }
@@ -133,11 +172,16 @@ export default {
                 this.error = this.$t('pgBidForm.newBidIsBelowCurrent');
                 return false;
             }
-            if (parsedAmount < this.minBidAmount + this.currentBid) {
+            if (parsedAmountB.isLessThan(this.minNextBidB)) {
                 this.error = this.$t('pgBidForm.newBidIsBelowMin');
                 return false;
             }
-            /*if (parsedAmount % this.minBidAmount !== 0) {
+            /*if (parsedAmount < this.minBidAmount + this.currentBid) {
+                this.error = this.$t('pgBidForm.newBidIsBelowMin');
+                return false;
+            }*/
+            /*console.log(parsedAmount, this.minBidAmount, this.minBidAmountB);
+            if (parsedAmount % this.minBidAmount !== 0) {
                 this.error = this.$t('pgBidForm.bidMustBeDivisibleByHundred', { amount: this.minBidAmount });
                 return false;
             }*/
@@ -172,34 +216,74 @@ export default {
         },
 
         setData(auction) {
-            this.minBidAmountH = auction.minBidAmount;
+            this.minBidAmountB = toBigNumber(auction.minBidAmount);
             this.minBidAmount = this.fromWeiToNumber(auction.minBidAmount);
 
-            this.currentBidH = auction.lastBid || '0x0';
-            this.currentBid = this.fromWeiToNumber(auction.lastBid ? auction.lastBid : this.minBidAmountH);
+            this.currentBidB = toBigNumber(auction.lastBid || '0x0');
+            this.currentBid = this.fromWeiToNumber(this.currentBidB);
+            // this.currentBid = this.fromWeiToNumber(auction.lastBid ? auction.lastBid : this.minBidAmountB);
         },
 
-        async setTx() {
+        async setTx(_amountB) {
             const web3 = new Web3();
             const { auction } = this;
-            const amount = toHex(bToTokenValue(this.amount + 0.000001, this.payToken.decimals));
+            let amountB = _amountB || bToTokenValue(this.amount, this.payToken.decimals);
 
-            console.log('AMOUNT3:', this.amount, amount, this.minBidAmount, this.currentBid);
+            // console.log('AMOUNT3:', _amountB, this.amount, toHex(amountB), this.minBidAmount, this.currentBid);
+            if (amountB.isLessThan(this.minBidAmountB)) {
+                amountB = this.minBidAmountB;
+            } else {
+                /*console.log(
+                    '@@@@@@@@@@@@@@@@@@',
+                    amountB.toString(10),
+                    this.minBidAmountB.toString(10),
+                    this.userAllowanceB.toString(10)
+                );*/
+                amountB = amountB.plus(2);
+            }
 
-            const tx = contracts.placeAuctionBid(auction.contract, auction.tokenId, amount, web3);
+            // console.log('FINAL', amountB.toString(10));
 
-            console.log('tx: ', tx);
+            const tx = contracts.placeAuctionBid(auction.contract, auction.tokenId, toHex(amountB), web3);
+
+            tx._code = 'bid';
 
             this.tx = tx;
         },
 
-        placeBid() {
-            this.setTx();
+        setAllowanceTx(_amountB) {
+            let amountB = _amountB;
+
+            if (amountB.isLessThan(this.minBidAmountB)) {
+                amountB = this.minBidAmountB;
+            }
+
+            console.log('INCREASE ALLOWANCE', amountB.plus(10).toString(10));
+
+            const tx = erc20Utils.erc20IncreaseAllowanceTx(
+                this.payToken.address,
+                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+                toHex(amountB.plus(10))
+            );
+
+            tx._code = 'allowance';
+
+            // console.log('setALL', amountB.plus(10).toString());
+            this.tx = tx;
         },
 
         async updateUserBalance() {
-            this.userBalanceH = await getErc20TokenBalance(this.walletAddress, this.payToken.address);
-            this.userBalance = bFromTokenValue(this.userBalanceH, this.payToken.decimals).toNumber();
+            this.userBalanceB = toBigNumber(await getErc20TokenBalance(this.walletAddress, this.payToken.address));
+
+            this.userAllowanceB = toBigNumber(
+                await getErc20TokenAllowance(
+                    this.walletAddress,
+                    this.payToken.address,
+                    process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS
+                )
+            );
+
+            console.log('this.userAllowanceB', this.userAllowanceB.toNumber());
         },
 
         fromWeiToNumber(value) {
@@ -212,7 +296,33 @@ export default {
             return value$ ? formatTokenValue(value$, this.payToken.priceDecimals, 2, true) : '';
         },
 
+        onPlaceBid() {
+            const amountB = bToTokenValue(this.amount, this.payToken.decimals);
+
+            if (amountB.isGreaterThan(this.userAllowanceB)) {
+                this.setAllowanceTx(amountB.minus(this.userAllowanceB));
+            } else {
+                this.setTx(amountB);
+            }
+        },
+
+        onTransactionStatus(payload) {
+            const txCode = payload.code;
+            this.txStatus = payload.status;
+
+            if (this.txStatus === 'success') {
+                if (txCode === 'allowance') {
+                    this.setTx();
+                } else if (txCode === 'bid') {
+                    this.$emit('successful-bid');
+                }
+            }
+
+            this.$emit('transaction-status', payload);
+        },
+
         formatNumberByLocale,
+        formatTokenValue,
     },
 };
 </script>

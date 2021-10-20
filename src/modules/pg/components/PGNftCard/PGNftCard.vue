@@ -42,7 +42,7 @@
 
                     <template v-else>
                         <h6 class="h6">{{ auctionOn ? $t('pgNftCard.endsIn') : $t('pgNftCard.startsIn') }}</h6>
-                        <div v-if="countdown" class="pg-nft-card__countdown-time">
+                        <div v-if="!auctionHasEnded" class="pg-nft-card__countdown-time">
                             <div>
                                 <h4 class="h4 pg-nft-card__countdown-number">{{ days }}</h4>
                                 <div class="pg-nft-card__note">{{ $t('pgNftCard.days') }}</div>
@@ -76,14 +76,27 @@
                         @click.native="onBidButtonClick"
                         size="large"
                         :label="bidButtonLabel"
-                        :disabled="!auctionOn"
+                        :disabled="!auctionOn || auctionHasEnded"
                     />
                 </span>
             </div>
         </div>
 
-        <f-window ref="modal" :title="$t('pgModal.heading')" style="max-width: 640px; min-width: 30vw;">
-            <p-g-bid-form :auction="auction"></p-g-bid-form>
+        <f-window
+            ref="modal"
+            :closing-disabled="txStatus === 'pending'"
+            :title="$t('pgModal.heading')"
+            style="max-width: 640px; min-width: 30vw;"
+        >
+            <p-g-bid-form
+                :auction="auction"
+                @successful-bid="onSuccessfulBid"
+                @transaction-status="onTransactionStatus"
+            ></p-g-bid-form>
+        </f-window>
+
+        <f-window ref="successModal" style="max-width: 345px">
+            <p-g-success-notification></p-g-success-notification>
         </f-window>
     </div>
 </template>
@@ -98,6 +111,8 @@ import { formatNumberByLocale, formatTokenValue, localeOptions } from '@/utils/f
 import AVideo from '@/common/components/AVideo/AVideo.vue';
 import { mapState } from 'vuex';
 import { checkWallet } from '@/plugins/wallet/utils.js';
+import { auctionIsClosed } from '@/modules/nfts/utils.js';
+import PGSuccessNotification from '@/modules/pg/components/PGSuccessNotification/PGSuccessNotification.vue';
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -108,6 +123,7 @@ export default {
     name: 'PGNftCard',
 
     components: {
+        PGSuccessNotification,
         AVideo,
         FWindow,
         PGBidForm,
@@ -157,6 +173,8 @@ export default {
             minutes: null,
             seconds: null,
             walletConnected: false,
+            auctionHasEnded: false,
+            txStatus: '',
             walletMenu: [
                 {
                     label: this.$t('walletMenu.settings'),
@@ -198,6 +216,8 @@ export default {
                 label = 'Connect wallet';
             } else if (!this.token.hasAuction) {
                 label = 'Buy now';
+            } else if (this.auctionHasEnded) {
+                label = this.$t('pgNftCard.hasEnded');
             }
 
             return label;
@@ -206,12 +226,18 @@ export default {
 
     watch: {
         auction(value) {
-            if (this.auctionOn) {
+            if (this.auctionOn && this.token.hasAuction) {
                 // TMP!
                 // value.lastBid = toHex(bToWei(15500));
                 // END TMP!
 
-                this.startCountdown(dayjs(value.endTime).valueOf());
+                this.auctionHasEnded = auctionIsClosed(value);
+
+                // this.auctionHasEnded = !!value.closed;
+                // console.log('???', this.auctionHasEnded, value.closed, typeof value.closed);
+                if (!this.auctionHasEnded) {
+                    this.startCountdown(dayjs(value.endTime).valueOf());
+                }
             }
         },
 
@@ -244,6 +270,7 @@ export default {
                 if (difference < 0) {
                     clearInterval(this.countdown);
                     this.countdown = null;
+                    this.auctionHasEnded = true;
                     return;
                 }
 
@@ -276,6 +303,16 @@ export default {
             if (this.walletConnected) {
                 this.$refs.modal.show();
             }
+        },
+
+        onSuccessfulBid() {
+            this.$refs.modal.hide();
+            this.$refs.successModal.show();
+            this.$emit('reload-auction');
+        },
+
+        onTransactionStatus(payload) {
+            this.txStatus = payload.status;
         },
 
         formatTokenValue,

@@ -2,7 +2,7 @@
     <div class="pg-success-notification">
         <div class="pg-success-notification__badge">
             <div class="pg-success-notification__img-cont">
-                <img src="/img/confetti.png" alt="confetti emoji" class="pg-success-notification__img-el" />
+                <img src="img/confetti.png" alt="confetti emoji" class="pg-success-notification__img-el" />
                 <div class="pg-success-notification__backdrop pg-success-notification__backdrop--1"></div>
                 <div class="pg-success-notification__backdrop pg-success-notification__backdrop--2"></div>
             </div>

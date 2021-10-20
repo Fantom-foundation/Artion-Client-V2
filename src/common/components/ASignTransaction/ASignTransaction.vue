@@ -14,7 +14,9 @@ import CoinbaseWalletNoticeWindow from '@/modules/wallet/components/CoinbaseWall
 
 export default {
     name: 'ASignTransaction',
+
     components: { CoinbaseWalletNoticeWindow, MetamaskWalletNoticeWindow },
+
     mixins: [eventBusMixin],
 
     props: {

@@ -6,6 +6,7 @@
             :pay-token="payToken"
             :auction-on="auctionOn"
             :auction-start="auctionStart"
+            @reload-auction="onReloadAuction"
         ></p-g-nft-card>
 
         <div class="pg-nft__text">
@@ -62,6 +63,7 @@ import IconTwitterWhite from '../../../../assets/vue-icons/IconTwitterWhite';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { formatTokenValue } from '@/utils/formatters.js';
 import { toInt, bFromWei } from '@/utils/big-number.js';
+import { pollingMixin } from '@/common/mixins/polling.js';
 
 export default {
     name: 'PGNft',
@@ -71,6 +73,8 @@ export default {
         IconTwitterWhite,
         IconInstagram,
     },
+
+    mixins: [pollingMixin],
 
     props: {
         /** NFT object */
@@ -123,20 +127,34 @@ export default {
 
     methods: {
         init() {
-            this.loadAuction();
+            if (this.auctionOn && this.token.hasAuction) {
+                this.loadAuction();
+
+                this._polling.start(
+                    'update-auction',
+                    () => {
+                        this.loadAuction();
+                    },
+                    3000
+                );
+            }
         },
 
         async loadAuction() {
             const { token } = this;
 
-            if (this.auctionOn) {
+            if (this.auctionOn && token.hasAuction) {
                 const auction = await getAuction(token.contract, token.tokenId);
 
-                console.log('AUCTION', auction);
-                if (auction) {
+                if (auction && JSON.stringify(this.auction) !== JSON.stringify(auction)) {
+                    console.log('AUCTION', auction);
                     this.auction = auction;
                 }
             }
+        },
+
+        onReloadAuction() {
+            this.loadAuction();
         },
     },
 };
