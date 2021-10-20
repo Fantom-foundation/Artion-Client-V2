@@ -71,27 +71,7 @@ const tokenOrder = [
 const TMP_TOKENS = [
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
-        tokenId: '0x153',
-        name: 'Brazil 2019<br>Comeback',
-        description:
-            "November '19. Brazil - Pierre's maiden podium came as the conclusion of a rollercoaster 2019 year. A series of solid race weekends and an epic last lap fighting Lewis Hamilton concluded one of the most notable comeback stories in Formula One ™.",
-        image: 'https://artion7.mypinata.cloud/ipfs/QmVCCkFa3genzpq8vFTUdn3unUZ7Adejx1rqHo3s8rryG4',
-        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x153',
-        created: '2021-09-25T11:00:05+02:00',
-        hasListing: false,
-        hasOffer: false,
-        hasAuction: true,
-        hasBids: true,
-        lastListing: null,
-        lastTrade: null,
-        lastOffer: null,
-        lastBid: '2021-10-18T12:39:19+02:00',
-        likes: '0x0',
-        __typename: 'Token',
-    },
-    {
-        contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
-        tokenId: '0x1e9c',
+        tokenId: '0x2bdc',
         name: 'Baku 2021 Podium',
         description:
             "May '21, Azerbaijan - Pierre Gasly executes a perfect weekend in Baku and secure his third podium in Formula One™, the first of 2021.",
@@ -112,11 +92,11 @@ const TMP_TOKENS = [
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
         tokenId: '0x29e1',
-        name: 'Brazil 2019 Redemption',
+        name: 'Brazil 2019<br>Comeback',
         description:
-            "November '19. Brazil - Pierre's maiden podium came as the conclusion of a rollercoaster 2019 year. A series of solid race weekends and an epic last lap fighting Lewis Hamilton concluded one of the most notable redemption story in Formula One ™.",
+            "November '19. Brazil - Pierre's maiden podium came as the conclusion of a rollercoaster 2019 year. A series of solid race weekends and an epic last lap fighting Lewis Hamilton concluded one of the most notable comeback stories in Formula One ™.",
         image: 'https://artion7.mypinata.cloud/ipfs/QmVCCkFa3genzpq8vFTUdn3unUZ7Adejx1rqHo3s8rryG4',
-        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x29e1',
+        imageThumb: '/images/token/0x61aF4D29f672E27a097291F72fc571304BC93521/0x153',
         created: '2021-09-25T11:00:05+02:00',
         hasListing: false,
         hasOffer: false,

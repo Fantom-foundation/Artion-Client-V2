@@ -76,7 +76,7 @@
                         @click.native="onBidButtonClick"
                         size="large"
                         :label="bidButtonLabel"
-                        :disabled="!auctionOn || auctionHasEnded"
+                        :disabled="!auctionOn || auctionHasEnded || !token.hasAuction"
                     />
                 </span>
             </div>
@@ -210,7 +210,7 @@ export default {
         bidButtonLabel() {
             let label = 'Place a bid';
 
-            if (!this.auctionOn) {
+            if (!this.auctionOn || !this.token.hasAuction) {
                 label = 'Starting soon';
             } else if (!this.walletConnected) {
                 label = 'Connect wallet';
