@@ -120,7 +120,7 @@ export default {
             userAllowanceB: null,
             payToken: {},
             error: null,
-            minIncrement: 1,
+            minIncrement: 50,
             decimals: 2,
             tx: {},
             txStatus: '',

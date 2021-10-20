@@ -23,6 +23,11 @@ const FAQs = [
             'The Pierre Gasly NFTs are digital tokens that owners will use to claim the items they have won in the auction. When items are claimed, the NFT will be “burned,” meaning that auction winners will redeem their NFT for the corresponding physical items. The NFT won’t be in possession of the user anymore and will be sent to an address inaccessible by anyone. ',
     },
     {
+        question: 'I’ve read about the negative environmental impact of NFTs. What makes this different?',
+        answer:
+            'Fantom is built to minimize the system’s overall carbon footprint. Unlike other blockchain protocols that require lots of energy to run, Fantom’s proof-of-stake system means that nodes who validate transactions consume little power to run the blockchain. ',
+    },
+    {
         question: 'What do I need to do before joining the auction?',
         answer:
             'To participate in the auction, you first need to <strong>install <a href="https://fantom.foundation/blog/the-ultimate-guide-to-the-ftm-token/?__cf_chl_jschl_tk__=pmd_sOpbegfQncikm0fy3uY._Ij9j9sgDcKvojoUF0.R_2Q-1634231103-0-gqNtZGzNAjujcnBszQdR#ftm-metamask">Metamask</a></strong> or the <a href="https://fantom.foundation/blog/coinbase-wallet-integrates-support-for-fantom-mainnet/"><strong>Coinbase Wallet</strong></a> as browser extensions and connect to them through Artion. The <a href="https://docs.fantom.foundation/artion/creating-an-account#how-do-i-connect-to-artion">Artion documentation</a> offers detailed instructions on how to connect your wallet.',
@@ -61,11 +66,6 @@ const FAQs = [
         question: 'What happens once I win an item?',
         answer:
             'Each item in the Pierre Gasly NFT auction has an end time and date when the NFT will be awarded to the highest bidder and transferred to the winner’s wallet. The winner will then be able to redeem the NFT for the item through the auction site. The NFT will be burned (removed from the wallet and destroyed) when the physical item is claimed.',
-    },
-    {
-        question: 'I’ve read about the negative environmental impact of NFTs. What makes this different?',
-        answer:
-            'Fantom is built to minimize the system’s overall carbon footprint. Unlike other blockchain protocols that require lots of energy to run, Fantom’s proof-of-stake system means that nodes who validate transactions consume little power to run the blockchain. ',
     },
 ];
 // <a href=""></a>
