@@ -67,7 +67,9 @@
             </div>
 
             <div class="pg-nft-card__address" :class="{ 'pg-nft-card__address--empty': !lastBidder }">
-                <f-ellipsis :text="lastBidder" overflow="middle" :fixed-chars-count="4" style="max-width: 120px;" />
+                <a :href="`https://ftmscan.com/address/${lastBidder}`" target="_blank">
+                    <f-ellipsis :text="lastBidder" overflow="middle" :fixed-chars-count="4" style="max-width: 120px;" />
+                </a>
             </div>
 
             <div class="pg-nft-card__cta-bottom">
@@ -84,7 +86,7 @@
 
         <f-window
             ref="modal"
-            :closing-disabled="txStatus === 'pending'"
+            :closing-disabled="modalDisabled"
             :title="$t('pgModal.heading')"
             style="max-width: 640px; min-width: 30vw;"
         >
@@ -106,13 +108,14 @@ import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow.vue';
 import PGBidForm from '../PGBidForm/PGBidForm';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 import dayjs from 'dayjs';
-import { bToWei, toBigNumber, toHex } from '@/utils/big-number.js';
+import { toBigNumber } from '@/utils/big-number.js';
 import { formatNumberByLocale, formatTokenValue, localeOptions } from '@/utils/formatters.js';
 import AVideo from '@/common/components/AVideo/AVideo.vue';
 import { mapState } from 'vuex';
 import { checkWallet } from '@/plugins/wallet/utils.js';
 import { auctionIsClosed } from '@/modules/nfts/utils.js';
 import PGSuccessNotification from '@/modules/pg/components/PGSuccessNotification/PGSuccessNotification.vue';
+// import { delay } from 'fantom-vue-components/src/utils/function.js';
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -174,6 +177,7 @@ export default {
             seconds: null,
             walletConnected: false,
             auctionHasEnded: false,
+            modalDisabled: false,
             txStatus: '',
             walletMenu: [
                 {
@@ -231,6 +235,8 @@ export default {
                 // value.lastBid = toHex(bToWei(15500));
                 // END TMP!
 
+                // JSON.stringify('AUC', value);
+
                 this.auctionHasEnded = auctionIsClosed(value);
 
                 // this.auctionHasEnded = !!value.closed;
@@ -252,7 +258,13 @@ export default {
     created() {
         this.init();
 
-        console.log(toHex(bToWei(4200)));
+        this._timeoutId = -1;
+
+        // console.log(toHex(bToWei(4200)));
+    },
+
+    beforeDestroy() {
+        this.clearTimeout();
     },
 
     methods: {
@@ -295,6 +307,20 @@ export default {
             return formatNumberByLocale(value$ / this.payToken.price, 0);
         },
 
+        clearTimeout() {
+            if (this._timeoutId > -1) {
+                clearTimeout(this._timeoutId);
+                this._timeoutId = -1;
+            }
+        },
+
+        startTimeout() {
+            this.clearTimeout();
+            this._timeoutId = setTimeout(() => {
+                this.modalDisabled = false;
+            }, 30000);
+        },
+
         async onBidButtonClick() {
             if (!this.walletConnected) {
                 this.walletConnected = await checkWallet();
@@ -305,14 +331,29 @@ export default {
             }
         },
 
-        onSuccessfulBid() {
-            this.$refs.modal.hide();
-            this.$refs.successModal.show();
+        async onSuccessfulBid() {
+            console.log('onSuccessfulBid');
             this.$emit('reload-auction');
+
+            this.clearTimeout();
+
+            // await delay(3000);
+
+            this.$refs.successModal.show();
+            this.$nextTick(() => {
+                this.$refs.modal.hide();
+            });
         },
 
         onTransactionStatus(payload) {
+            console.log('onTransactionStatus', payload.status);
             this.txStatus = payload.status;
+
+            this.modalDisabled = this.txStatus === 'pending';
+
+            if (this.txStatus === 'pending' && payload.code === 'bid') {
+                this.startTimeout();
+            }
         },
 
         formatTokenValue,

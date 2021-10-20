@@ -139,7 +139,7 @@ export default {
                 return this.minBidAmountB;
             }
 
-            console.log('---', this.fromWeiToNumber(this.minBidAmountB), this.minIncrement, this.currentBid);
+            // console.log('---', this.fromWeiToNumber(this.minBidAmountB), this.minIncrement, this.currentBid);
             // const minIncrementB = bToTokenValue(this.minIncrement, this.payToken.decimals);
 
             // return this.minBidAmountB.plus(minIncrementB);
@@ -153,12 +153,12 @@ export default {
             const parsedAmount = Number(this.amount);
             const parsedAmountB = bToTokenValue(this.amount, this.payToken.decimals);
 
-            console.log(
+            /*console.log(1
                 'arr',
                 parsedAmountB.toNumber(),
                 this.userBalanceB.toNumber(),
                 parsedAmountB.isLessThan(this.userBalanceB)
-            );
+            );*/
 
             if (Number.isNaN(parsedAmount)) {
                 this.error = this.$t('pgBidForm.mustBeNumber');
@@ -222,6 +222,9 @@ export default {
             this.currentBidB = toBigNumber(auction.lastBid || '0x0');
             this.currentBid = this.fromWeiToNumber(this.currentBidB);
             // this.currentBid = this.fromWeiToNumber(auction.lastBid ? auction.lastBid : this.minBidAmountB);
+
+            this.amount = parseInt(bFromTokenValue(this.minNextBidB, this.payToken.decimals).toNumber());
+            // console.log('!!!!!', bFromTokenValue(this.minNextBidB, this.payToken.decimals).toNumber());
         },
 
         async setTx(_amountB) {
@@ -310,6 +313,8 @@ export default {
             const txCode = payload.code;
             this.txStatus = payload.status;
 
+            this.$emit('transaction-status', payload);
+
             if (this.txStatus === 'success') {
                 if (txCode === 'allowance') {
                     this.setTx();
@@ -317,8 +322,6 @@ export default {
                     this.$emit('successful-bid');
                 }
             }
-
-            this.$emit('transaction-status', payload);
         },
 
         formatNumberByLocale,
