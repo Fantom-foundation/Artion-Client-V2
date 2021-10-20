@@ -16,7 +16,17 @@ export async function getUserFavoriteTokens(address = '', pagination = {}) {
                         }
                         edges {
                             node {
+                                contract
                                 tokenId
+                                token {
+                                    contract
+                                    tokenId
+                                    name
+                                    description
+                                    image
+                                    imageThumb
+                                    likes
+                                }
                             }
                         }
                     }
