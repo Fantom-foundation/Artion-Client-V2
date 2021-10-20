@@ -230,7 +230,7 @@
     },
     "pgSuccessNotification": {
         "header": "Congrats!",
-        "highestBidder": "You are the highest bidder!",
+        "highestBidder": "The TX went through!  Please check if you are the highest bidder.",
         "mintedNFT": "You minted",
         "continue": "Continue"
     },

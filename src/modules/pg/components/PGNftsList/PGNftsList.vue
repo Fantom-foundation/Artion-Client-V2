@@ -25,54 +25,11 @@ const AUCTION_START = appConfig.auctionStart;
 // const SOURCES_BASE_URL = 'https://sandbox.pbro.zenithies.dev/M0qoc7s3';
 const SOURCES_BASE_URL = 'pg';
 
-const tokenOrder = [
-    {
-        tokenId: '0x2bdc',
-        // additional data
-        text: 'Azerbaijan 2021 race-worn helmet AND<br>Meet and greet with Pierre over the next 12 months',
-        poster: `${SOURCES_BASE_URL}/baku.jpg`,
-        // tmp data
-        videoSrc: `${SOURCES_BASE_URL}/baku.mp4`,
-        startingPrice: '0x878678326eac900000',
-        // startingPrice$: 40000,
-    },
-    {
-        tokenId: '0x29e1',
-        text:
-            'Signed promotion helmet from Brazil 2019 race weekend AND<br>Meet and greet with Pierre over the next 12 months',
-        poster: `${SOURCES_BASE_URL}/brazil.jpg`,
-        // tmp data
-        videoSrc: `${SOURCES_BASE_URL}/brazil.mp4`,
-        startingPrice: '0x5150ae84a8cdf00000',
-        // startingPrice$: 10000,
-    },
-    {
-        tokenId: '0x2636',
-        text:
-            'VIP experience for two people at a race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed 2021 mini-helmet and merchandising',
-        poster: `${SOURCES_BASE_URL}/monza.jpg`,
-        // tmp data
-        videoSrc: `${SOURCES_BASE_URL}/monza.mp4`,
-        startingPrice: '0x1b1ae4d6e2ef500000',
-        // startingPrice$: 2000,
-    },
-    {
-        tokenId: '0x4e23',
-        text:
-            'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop<br><br>Additionally, 10 NFTs will be “golden tickets”, redeemable for signed mini-helmets in addition to the merchandise.',
-        poster: `${SOURCES_BASE_URL}/limited_blue.jpg`,
-        // tmp data
-        videoSrc: `${SOURCES_BASE_URL}/limited_blue.mp4`,
-        price: '0x56bc75e2d63100000',
-        // price$: 200,
-    },
-];
-
 const TMP_TOKENS = [
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
         tokenId: '0x2bdc',
-        name: 'Baku 2021 Podium',
+        name: 'Baku 2021<br>Podium',
         description:
             "May '21, Azerbaijan - Pierre Gasly executes a perfect weekend in Baku and secure his third podium in Formula One™, the first of 2021.",
         image: 'https://artion1.mypinata.cloud/ipfs/QmStGkA5vyxF4D9QjkntWNLUjR46qe1ZLgcPUVjYrtQw6y',
@@ -88,6 +45,13 @@ const TMP_TOKENS = [
         lastBid: null,
         likes: '0x0',
         __typename: 'Token',
+        // additional data
+        text: 'Azerbaijan 2021 race-worn helmet AND<br>Meet and greet with Pierre over the next 12 months',
+        poster: `${SOURCES_BASE_URL}/baku.jpg`,
+        // tmp data
+        videoSrc: `${SOURCES_BASE_URL}/baku.mp4`,
+        startingPrice: '0x878678326eac900000',
+        // startingPrice$: 40000,
     },
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
@@ -108,6 +72,13 @@ const TMP_TOKENS = [
         lastBid: '2021-10-18T12:39:19+02:00',
         likes: '0x0',
         __typename: 'Token',
+        text:
+            'Signed promotion helmet from Brazil 2019 race weekend AND<br>Meet and greet with Pierre over the next 12 months',
+        poster: `${SOURCES_BASE_URL}/brazil.jpg`,
+        // tmp data
+        videoSrc: `${SOURCES_BASE_URL}/brazil.mp4`,
+        startingPrice: '0x5150ae84a8cdf00000',
+        // startingPrice$: 10000,
     },
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
@@ -128,6 +99,13 @@ const TMP_TOKENS = [
         lastBid: null,
         likes: '0x0',
         __typename: 'Token',
+        text:
+            'VIP experience for two people at a race weekend AND<br>Meet and greet with Pierre over the next 12 months AND<br>Signed 2021 mini-helmet and merchandising',
+        poster: `${SOURCES_BASE_URL}/monza.jpg`,
+        // tmp data
+        videoSrc: `${SOURCES_BASE_URL}/monza.mp4`,
+        startingPrice: '0x1b1ae4d6e2ef500000',
+        // startingPrice$: 2000,
     },
     {
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
@@ -147,6 +125,13 @@ const TMP_TOKENS = [
         lastBid: null,
         likes: '0x0',
         __typename: 'Token',
+        text:
+            'Signed Pierre Gasly Merch cap AND<br>Numbered limited edition T-shirt celebrating the first NFT drop<br><br>Additionally, 10 NFTs will be “golden tickets”, redeemable for signed mini-helmets in addition to the merchandise.',
+        poster: `${SOURCES_BASE_URL}/limited_blue.jpg`,
+        // tmp data
+        videoSrc: `${SOURCES_BASE_URL}/limited_blue.mp4`,
+        price: '0x56bc75e2d63100000',
+        // price$: 200,
     },
 ];
 
@@ -171,22 +156,11 @@ export default {
     methods: {
         async init() {
             const data = await Promise.all([this.loadTokens(CONTRACT), getWFTMToken()]);
-
-            const lTokens = data[0];
             const wftm = data[1];
-            const tokens = [];
 
             this.payToken = wftm;
 
-            tokenOrder.forEach(token => {
-                const lToken = lTokens.find(t => t.tokenId === token.tokenId);
-
-                if (lToken) {
-                    tokens.push({ ...lToken, ...token });
-                }
-            });
-
-            this.tokens = tokens;
+            this.tokens = data[0];
         },
 
         async loadTokens(contract) {

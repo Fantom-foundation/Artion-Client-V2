@@ -31,6 +31,7 @@
 
         <div class="pg-bid-form__input-box">
             <input
+                ref="amountInput"
                 class="pg-bid-form__amount"
                 :class="{ 'pg-bid-form__amount--zero': !amount, 'pg-bid-form__amount--error': error }"
                 type="number"
@@ -48,10 +49,11 @@
                 :disabled="txStatus === 'pending'"
                 @change="termAndConditionsAgreed = $event"
             >
-                <label>
-                    {{ $t('pgBidForm.termsAndConditionsAgreement') }}
-                    <router-link :to="{ path: '/pg' }">{{ $t('pgBidForm.termsAndConditionsLink') }}</router-link>
-                </label>
+                {{ $t('pgBidForm.termsAndConditionsAgreement') }}
+                <!--                    <router-link :to="{ path: '/pg' }">{{ $t('pgBidForm.termsAndConditionsLink') }}</router-link>-->
+                <a href="https://gasly.artion.io/terms/Artion-Terms-v2.2-8-Oct-2021.pdf" target="_blank">
+                    {{ $t('pgBidForm.termsAndConditionsLink') }}
+                </a>
             </f-option>
         </div>
         <div class="flex juc-center">
@@ -213,6 +215,8 @@ export default {
 
             this.setData(this.auction);
             await this.updateUserBalance();
+
+            this.amount = parseInt(bFromTokenValue(this.minNextBidB, this.payToken.decimals).toNumber());
         },
 
         setData(auction) {
@@ -222,9 +226,6 @@ export default {
             this.currentBidB = toBigNumber(auction.lastBid || '0x0');
             this.currentBid = this.fromWeiToNumber(this.currentBidB);
             // this.currentBid = this.fromWeiToNumber(auction.lastBid ? auction.lastBid : this.minBidAmountB);
-
-            this.amount = parseInt(bFromTokenValue(this.minNextBidB, this.payToken.decimals).toNumber());
-            // console.log('!!!!!', bFromTokenValue(this.minNextBidB, this.payToken.decimals).toNumber());
         },
 
         async setTx(_amountB) {
