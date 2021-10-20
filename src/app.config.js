@@ -24,6 +24,16 @@ let appConfig = {
                     // for subscriptions
                     ws: '',
                 },
+                {
+                    http: 'https://artion-api-b.fantom.network/graphql',
+                    // for subscriptions
+                    ws: '',
+                },
+                {
+                    http: 'https://artion-api-c.fantom.network/graphql',
+                    // for subscriptions
+                    ws: '',
+                },
             ],
             // index into providers array of default provider or 'random' - takes index randomly
             defaultProviderIndex: 'random',
