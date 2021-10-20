@@ -10,8 +10,7 @@
         ></p-g-nft-card>
 
         <div class="pg-nft__text">
-            <h3 class="h3">
-                {{ token.name }}
+            <h3 class="h3" v-html="token.name">
                 <!--                Baku 2021 <br />
                 <span class="theme-pg-u-font-weight-normal">Podium</span>-->
             </h3>
