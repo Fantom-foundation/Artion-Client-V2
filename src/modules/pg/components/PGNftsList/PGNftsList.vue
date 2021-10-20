@@ -27,8 +27,8 @@ const SOURCES_BASE_URL = 'pg';
 
 const TMP_TOKENS = [
     {
-        contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
-        tokenId: '0x2bdc',
+        contract: '0x475631dbd805f46be62d8f87a4f07ca8afaf7e45',
+        tokenId: '0x1',
         name: 'Baku 2021<br>Podium',
         description:
             "May '21, Azerbaijan - Pierre Gasly executes a perfect weekend in Baku and secure his third podium in Formula One™, the first of 2021.",
@@ -54,8 +54,8 @@ const TMP_TOKENS = [
         // startingPrice$: 40000,
     },
     {
-        contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
-        tokenId: '0x29e1',
+        contract: '0x475631dbd805f46be62d8f87a4f07ca8afaf7e45',
+        tokenId: '0x2',
         name: 'Brazil 2019<br>Comeback',
         description:
             "November '19. Brazil - Pierre's maiden podium came as the conclusion of a rollercoaster 2019 year. A series of solid race weekends and an epic last lap fighting Lewis Hamilton concluded one of the most notable comeback stories in Formula One ™.",
@@ -81,8 +81,8 @@ const TMP_TOKENS = [
         // startingPrice$: 10000,
     },
     {
-        contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
-        tokenId: '0x2636',
+        contract: '0x475631dbd805f46be62d8f87a4f07ca8afaf7e45',
+        tokenId: '0x3',
         name: 'Monza 2020<br>First Victory',
         description:
             "September '21, Italy - Pierre puts himself into Scuderia AlphaTauri's heart by scoring the second win of the Italian team in 15 years.",
