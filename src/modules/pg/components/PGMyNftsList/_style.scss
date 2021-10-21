@@ -1,0 +1,62 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
+.pg-my-nfts-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 100px;
+    min-height: 100vh;
+
+    &__header {
+        margin-top: 110px;
+        margin-bottom: 0;
+    }
+
+    &__container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 44px;
+        padding: 50px 100px;
+    }
+
+    &__backdrop {
+        display: none;
+    }
+}
+
+@include media.media-min(1024px) {
+    .pg-my-nfts-list {
+        position: relative;
+
+        &__backdrop {
+            position: absolute;
+            top: 50%;
+            z-index: -1;
+            display: block;
+            width: 535px;
+            height: 575px;
+            opacity: 0.10;
+            filter: blur(100px);
+            transform: matrix(0.91, -0.49, 0.38, 0.89, 0, 0) translateY(-50%);
+
+            &--1 {
+                background: #6F69E7;
+                left: 25%;
+            }
+
+            &--2 {
+                background: #4243FF;
+                right: 10%;
+            }
+        }
+    }
+}
+
+@include media.media-min(1440px) {
+    .pg-my-nfts-list__backdrop {
+        opacity: 0.20;
+        filter: blur(200px);
+    }
+}

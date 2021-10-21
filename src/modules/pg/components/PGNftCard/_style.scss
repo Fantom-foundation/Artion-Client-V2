@@ -115,6 +115,48 @@
             background: #121820;
         }
     }
+
+    &--mine {
+        cursor: pointer;
+
+        .pg-nft-card__img-cont {
+            width: 343px;
+            height: 343px;
+            overflow: hidden;
+
+            .avideo {
+                --avideo-background: #000;
+                height: 100%;
+
+                video {
+                    max-height: 114%;
+                    min-height: 343px;
+                    object-fit: cover;
+                }
+            }
+        }
+
+        .pg-nft-card__cta {
+            padding: var(--f-spacer-4);
+        }
+
+        .pg-nft-card__cta-top {
+            justify-content: flex-start;
+        }
+
+        .pg-nft-card__cta-bottom,
+        .pg-nft-card__address,
+        .pg-nft-card__bid,
+        .pg-nft-card__v-separator,
+        .pg-nft-card__countdown,{
+            display: none;
+        }
+
+        .h6 > br,
+        .h6 > br:after{
+            content: ' ';
+        }
+    }
 }
 
 @include media.media-min(768px) {
@@ -194,6 +236,25 @@
                 padding-bottom: var(--f-spacer-5);
             }
         }
+
+        &--mine {
+            .pg-nft-card__img-cont {
+                width: 384px;
+                height: 384px;
+                overflow: hidden;
+
+                .avideo {
+                    --avideo-background: #000;
+                    height: 100%;
+
+                    video {
+                        max-height: 114%;
+                        min-height: 384px;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -201,5 +262,17 @@
     .pg-nft-card {
         width: 528px;
         margin-bottom: 0;
+
+        &--mine {
+            width: 384px;
+        }
+    }
+}
+
+@include media.media-min(1200px) {
+    .pg-nft-card--mine:hover {
+        box-shadow: 0 16px 60px rgba(133, 139, 193, 0.11);
+        transform: translateY(-5px);
+        transition: box-shadow 0.15s ease-out, transform 0.15s ease-out;
     }
 }

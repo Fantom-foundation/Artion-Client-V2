@@ -1,10 +1,10 @@
 <template>
-    <div class="pg-nft-card">
+    <div class="pg-nft-card" :class="{ 'pg-nft-card--mine': isMine }">
         <div class="pg-nft-card__img-cont" :class="{ 'pg-nft-card__img-cont--limited': !token.hasAuction }">
             <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
             <!--            <img src="img/tmp/pg.jpeg" alt="" class="pg-nft-card__img-el" />-->
         </div>
-        <div class="pg-nft-card__cta">
+        <div class="pg-nft-card__cta" @click="$refs.cardDetailModal.show()">
             <div class="pg-nft-card__cta-top">
                 <div class="pg-nft-card__bid">
                     <template v-if="!token.hasAuction">
@@ -33,6 +33,14 @@
                         <h4 v-else class="h4">{{ $t('pgNftCard.noBids') }}</h4>
                     </template>
                 </div>
+
+                <template v-if="isMine">
+                    <div>
+                        <h6 class="h6 " v-html="token.name"></h6>
+                        <h4 class="h4">#140</h4>
+                    </div>
+                </template>
+
                 <div class="pg-nft-card__v-separator"></div>
                 <div class="pg-nft-card__countdown">
                     <template v-if="!token.hasAuction">
@@ -100,6 +108,10 @@
         <f-window ref="successModal" style="max-width: 345px">
             <p-g-success-notification></p-g-success-notification>
         </f-window>
+
+        <f-window ref="cardDetailModal" style="max-width: 675px">
+            <p-g-nft-card :token="token"></p-g-nft-card>
+        </f-window>
     </div>
 </template>
 
@@ -115,6 +127,7 @@ import { mapState } from 'vuex';
 import { checkWallet } from '@/plugins/wallet/utils.js';
 import { auctionIsClosed } from '@/modules/nfts/utils.js';
 import PGSuccessNotification from '@/modules/pg/components/PGSuccessNotification/PGSuccessNotification.vue';
+import PGNftCard from '@/modules/pg/components/PGNftCard/PGNftCard.vue';
 // import { delay } from 'fantom-vue-components/src/utils/function.js';
 
 const SECOND = 1000;
@@ -130,6 +143,7 @@ export default {
         AVideo,
         FWindow,
         PGBidForm,
+        PGNftCard,
         FEllipsis,
     },
 
@@ -225,6 +239,14 @@ export default {
             }
 
             return label;
+        },
+
+        /**
+         * Card style modifier
+         * @returns {boolean} true if on My NFTs route, false otherwise
+         */
+        isMine() {
+            return this.$route.name === 'pg-account-my-nfts';
         },
     },
 
