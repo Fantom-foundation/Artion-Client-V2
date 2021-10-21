@@ -30,14 +30,14 @@
                 </template>
             </f-listbox>
         </f-popover>
-        <f-notifications with-icon position="bottom-right" />
+        <!-- <f-notifications with-icon position="bottom-right" /> -->
     </div>
 </template>
 <script>
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue';
 import FPopover from 'fantom-vue-components/src/components/FPopover/FPopover.vue';
-import FNotifications from 'fantom-vue-components/src/components/FNotifications/FNotifications.vue';
+//import FNotifications from 'fantom-vue-components/src/components/FNotifications/FNotifications.vue';
 import { getUniqueId, defer } from 'fantom-vue-components/src/utils';
 export default {
     name: 'AShareButton',
@@ -45,7 +45,7 @@ export default {
         AppIconset,
         FListbox,
         FPopover,
-        FNotifications,
+    //    FNotifications,
     },
     data() {
         return {

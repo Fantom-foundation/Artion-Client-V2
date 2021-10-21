@@ -142,13 +142,13 @@
                     <div class="accountprofileform_label">
                         {{ $t('accountprofileform.profileImg') }}
                     </div>
-                    <AUploadArea />
+                    <AUploadArea @input="uploadUserAvatar" />
                 </div>
                 <div class="accountprofileform_banner">
                     <div class="accountprofileform_label">
                         {{ $t('accountprofileform.profileBanner') }}
                     </div>
-                    <AUploadArea />
+                    <AUploadArea @input="uploadUserBanner" />
                 </div>
             </div>
         </div>
@@ -164,7 +164,8 @@ import AUploadArea from '@/common/components/AUploadArea/AUploadArea';
 import { getUser } from '@/modules/account/queries/user.js';
 import { updateUser } from '@/modules/account/mutations/update-user.js';
 import { mapState } from 'vuex';
-// import { checkSignIn, getBearerToken } from '@/modules/account/auth.js';
+import { signIn, getBearerToken } from '@/modules/account/auth.js';
+import { uploadUserFile } from '@/utils/upload.js';
 export default {
     name: 'AccountProfileForm',
 
@@ -203,6 +204,29 @@ export default {
         async onSubmit(event) {
             let result = await updateUser(event.values);
             console.log(result);
+        },
+
+        async checkUserSingIn() {
+            let ok = true;
+            if (!getBearerToken()) {
+                ok = await signIn();
+            }
+
+            return ok;
+        },
+
+        async uploadUserAvatar(files) {
+            let isSignIn = await this.checkUserSingIn();
+            if (isSignIn) {
+                uploadUserFile(files, 'avatar');
+            }
+        },
+
+        async uploadUserBanner(files) {
+            let isSignIn = await this.checkUserSingIn();
+            if (isSignIn) {
+                uploadUserFile(files, 'banner');
+            }
         },
     },
 };
