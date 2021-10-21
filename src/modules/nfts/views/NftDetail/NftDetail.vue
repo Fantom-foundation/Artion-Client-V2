@@ -227,7 +227,7 @@ import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { getImageThumbUrl } from '@/utils/url.js';
 import { getTokens } from '@/modules/nfts/queries/tokens.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
-import { getUser } from '@/modules/account/queries/user.js';
+import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-tokens.js';
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
 import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
@@ -305,9 +305,10 @@ export default {
 
         async isUserFavorite(value) {
             if (value) {
-                let userData = await getUser(value);
-                if (userData.tokenLikes.edges.length) {
-                    this.likedNftIds = userData.tokenLikes.edges.map(edge => {
+                let pagination = { first: 20 };
+                let { edges } = await getUserFavoriteTokens(value, pagination);
+                if (edges.length) {
+                    this.likedNftIds = edges.map(edge => {
                         return edge.node.tokenId;
                     });
                     if (this.likedNftIds.includes(this.token.tokenId)) {

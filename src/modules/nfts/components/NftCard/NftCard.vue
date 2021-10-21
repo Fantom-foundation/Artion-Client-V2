@@ -113,6 +113,7 @@ export default {
                     let res = await likeToken(this.nftData);
                     console.log(res);
                     this.liked = true;
+                    this.likesCount++;
                     this.$emit('nft-like');
                     this.$notifications.add({
                         type: 'success',
@@ -122,6 +123,7 @@ export default {
                     let res = await unlikeToken(this.nftData);
                     this.liked = false;
                     console.log(res);
+                    if (this.tansformLikeCounter(this.likesCount)) this.likesCount--;
                     this.$emit('nft-unlike');
                     this.$notifications.add({
                         type: 'success',
