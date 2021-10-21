@@ -113,6 +113,7 @@ import { getUser } from '@/modules/account/queries/user.js';
 import AccountNavigation from '@/modules/account/components/AccountNavigation/AccountNavigation.vue';
 import { defer } from 'fantom-vue-components/src/utils';
 import { getUserTokenCounters } from '@/modules/account/queries/user-token-counters.js';
+import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-tokens.js';
 import { toInt } from '@/utils/big-number.js';
 
 export default {
@@ -203,6 +204,7 @@ export default {
 
                     defer(() => {
                         this.updateTokenCounters();
+                        this.updateFavoriteCounters();
                     }, 200);
                 }
             },
@@ -234,6 +236,22 @@ export default {
 
             if (tokenCounters.createdTokens) {
                 accountNavigation.updateCounter('account-created', toInt(tokenCounters.createdTokens.totalCount));
+            }
+        },
+
+        /**
+         * @return {Promise<void>}
+         */
+        async updateFavoriteCounters() {
+            const { accountNavigation } = this.$refs;
+            const favoriteCounters = await getUserFavoriteTokens(this.userAddress);
+            console.log(favoriteCounters)
+            if (!favoriteCounters) {
+                return;
+            }
+
+            if (favoriteCounters.edges.length) {
+                accountNavigation.updateCounter('account-favorited', toInt(favoriteCounters.totalCount));
             }
         },
 
