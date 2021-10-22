@@ -97,9 +97,6 @@
                         />
                     </span>
                 </template>
-                <template v-else>
-                    <div class="pg-nft-card__button tea-center fos-9"><b>SOLD</b></div>
-                </template>
             </div>
         </div>
 
