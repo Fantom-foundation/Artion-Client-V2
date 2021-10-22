@@ -39,7 +39,8 @@
                 <div class="pg-nft-card__countdown">
                     <template v-if="!token.hasAuction">
                         <h6 class="h6 theme-pg-u-text-right">{{ $t('pgNftCard.minted') }}</h6>
-                        <h4 class="h4 theme-pg-u-text-right">{{ tokensAvailable }} / {{ totalTokens }}</h4>
+<!--                        <h4 class="h4 theme-pg-u-text-right">{{ tokensAvailable }} / {{ totalTokens }}</h4>-->
+                        <h4 class="h4 theme-pg-u-text-right">0 / 350</h4>
                     </template>
 
                     <template v-else>
@@ -75,7 +76,7 @@
             </div>
 
             <div class="pg-nft-card__cta-bottom">
-                <span class="pg-nft-card__button" v-if="token.hasAuction">
+                <span class="pg-nft-card__button" v-if="true">
                     <f-button
                         @click.native="onBidButtonClick"
                         size="large"

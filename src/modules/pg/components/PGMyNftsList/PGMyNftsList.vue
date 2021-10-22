@@ -140,7 +140,7 @@ export default {
             console.log(tokens);
 
             // return tokens.filter(token => CONTRACTS_FILTER.includes(token.contract));
-            return TMP_TOKENS;
+            return [];
         },
     },
 };

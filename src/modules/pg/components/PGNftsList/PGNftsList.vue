@@ -96,16 +96,16 @@ const PAY_TOKENS = [
         decimals: 18,
         value: 'wftm',
     },
-    /*{
+    {
         address: '0x09e145a1d53c0045f41aeef25d8ff982ae74dd56',
         label: 'ZOO',
         img: 'img/ZOO.png',
-        tokenPrice: '0xb1f8c701eba76c0000',
+        tokenPrice: '0xb3a6fd21acec880000',
         // price: 1,
         // priceDecimals: 18,
         decimals: 18,
         value: 'zoo',
-    },*/
+    },
     {
         address: '0x6c021ae822bea943b2e66552bde1d2696a53fbb7',
         label: 'TOMB',
@@ -152,12 +152,12 @@ export default {
                 PAY_TOKENS.map(payToken => getRandomTradePayTokenPrice(RANDOM_TRADE_CONTRACT, payToken.address))
             );
 
-            return PAY_TOKENS.map((payToken, index) => {
+            /*return PAY_TOKENS.map((payToken, index) => {
                 return { ...payToken, tokenPrice: prices[index] };
-            });
+            });*/
 
-            // console.log(prices);
-            // return PAY_TOKENS;
+            console.log(prices);
+            return PAY_TOKENS;
         },
     },
 };
