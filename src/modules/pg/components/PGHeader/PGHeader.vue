@@ -41,10 +41,10 @@ export default {
         return {
             isMobileNavOpen: false,
             walletMenu: [
-                /*{
+                {
                     label: this.$t('walletMenu.settings'),
                     route: 'pg-account-settings',
-                },*/
+                },
                 {
                     label: this.$t('walletMenu.logout'),
                     action: 'logout',

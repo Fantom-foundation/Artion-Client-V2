@@ -76,6 +76,66 @@
                         </f-copy-button>
                     </template>
                 </f-form-input>
+
+                <h5 class="h5">{{ $t('accountprofileform.address') }}</h5>
+                <div class="accountprofileform_address">
+                    <f-form-input
+                        type="text"
+                        field-size="large"
+                        name="fullname"
+                        :placeholder="$t('accountprofileform.enterFullname')"
+                        :label="$t('accountprofileform.fullname')"
+                    />
+                    <f-form-input
+                        type="text"
+                        field-size="large"
+                        :placeholder="$t('accountprofileform.enterPhone')"
+                        name="phone"
+                        :label="$t('accountprofileform.phone')"
+                    />
+                    <f-form-input
+                        type="text"
+                        field-size="large"
+                        name="street"
+                        :placeholder="$t('accountprofileform.enterStreet')"
+                        :label="$t('accountprofileform.street')"
+                    />
+                    <f-form-input
+                        type="text"
+                        field-size="large"
+                        name="apartment"
+                        :placeholder="$t('accountprofileform.enterApartment')"
+                        :label="$t('accountprofileform.apartment')"
+                    />
+                    <f-form-input
+                        type="text"
+                        field-size="large"
+                        :placeholder="$t('accountprofileform.enterCity')"
+                        name="city"
+                        :label="$t('accountprofileform.city')"
+                    />
+                    <f-form-input
+                        type="text"
+                        field-size="large"
+                        name="state"
+                        :placeholder="$t('accountprofileform.enterState')"
+                        :label="$t('accountprofileform.state')"
+                    />
+                    <f-form-input
+                        type="text"
+                        field-size="large"
+                        name="country"
+                        :placeholder="$t('accountprofileform.enterCountry')"
+                        :label="$t('accountprofileform.country')"
+                    />
+                    <f-form-input
+                        type="text"
+                        field-size="large"
+                        :placeholder="$t('accountprofileform.enterZip')"
+                        name="zip"
+                        :label="$t('accountprofileform.zip')"
+                    />
+                </div>
             </div>
             <div class="accountprofileform_col">
                 <div class="accountprofileform_avatar">

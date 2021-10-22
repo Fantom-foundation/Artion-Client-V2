@@ -260,6 +260,10 @@
         "cookiePolicy": "Cookie Policy"
     },
 
+    "pgAccountSettings": {
+        "accountSettings": "Account Settings"
+    },
+
     "pgNftCard": {
         "currentBid": "Current Bid",
         "noBids": "no bids",
@@ -313,6 +317,23 @@
         "wallet": "Wallet Address",
         "profileImg": "Profile Image",
         "profileBanner": "Profile Banner",
+        "address": "Address",
+        "fullname": "Fullname",
+        "phone": "Phone",
+        "street": "Street",
+        "apartment": "Apartment",
+        "city": "City",
+        "country": "Country",
+        "state": "State",
+        "zip": "Zip",
+        "enterFullname": "Enter full name",
+        "enterPhone": "Enter phone",
+        "enterStreet": "Enter street",
+        "enterCity": "Enter city",
+        "enterApartment": "Enter apartment",
+        "enterState": "Enter state",
+        "enterCountry": "Enter country",
+        "enterZip": "Enter zip",
         "save": "Save"
     },
 

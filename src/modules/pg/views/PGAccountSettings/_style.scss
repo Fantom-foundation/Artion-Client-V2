@@ -1,0 +1,30 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+
+:root.theme-pg .pg-account-settings {
+    width: 90%;
+    max-width: 1440px;
+    margin: 0 auto;
+
+    &__header {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    &__form .inp {
+        --f-input-readonly-background: #141926;
+    }
+
+    & .h5 {
+        margin-bottom: var(--f-spacer-2);
+        line-height: 1;
+        margin-top: var(--f-spacer-6);
+    }
+}
+
+@include media.media-min(1024px) {
+    :root.theme-pg .pg-account-settings {
+        &__header {
+            margin-top: 110px;
+        }
+    }
+}
