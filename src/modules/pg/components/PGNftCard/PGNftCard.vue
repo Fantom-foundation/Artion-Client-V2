@@ -86,7 +86,7 @@
                         :disabled="!auctionOn || auctionHasEnded || !token.hasAuction"
                     />
                 </span>
-                <template v-else>
+                <template v-else-if="!sold">
                     <span v-for="pt in mPayTokens" :key="`pt_${pt.address}`" class="pg-nft-card__button mab-2">
                         <a-button
                             @click.native="onBuyButtonClick(pt)"
@@ -96,6 +96,9 @@
                             :loading="mPayToken.address === pt.address"
                         />
                     </span>
+                </template>
+                <template v-else>
+                    <div class="pg-nft-card__button tea-center fos-9"><b>SOLD</b></div>
                 </template>
             </div>
         </div>
