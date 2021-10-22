@@ -118,6 +118,10 @@
         --fwindow-popover-border-radius: 0 0 var(--f-border-radius-3) var(--f-border-radius-3);
     }
 
+    .fplaceholder {
+        --fplaceholder-bg-color2: var(--theme-pg-currency-dropdown-background-selected);
+    }
+
     .walletbutton {
         & .fbutton {
             color: var(--theme-pg-color);
