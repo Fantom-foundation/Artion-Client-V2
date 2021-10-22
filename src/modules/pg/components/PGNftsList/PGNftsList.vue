@@ -23,8 +23,8 @@ import appConfig from '@/app.config.js';
 const CONTRACT = '0x61af4d29f672e27a097291f72fc571304bc93521';
 const AUCTION_ON = appConfig.auctionOn;
 const AUCTION_START = appConfig.auctionStart;
-const SOURCES_BASE_URL = 'https://sandbox.pbro.zenithies.dev/M0qoc7s3';
-// const SOURCES_BASE_URL = 'pg';
+// const SOURCES_BASE_URL = 'https://sandbox.pbro.zenithies.dev/M0qoc7s3';
+const SOURCES_BASE_URL = 'pg';
 
 const TOKENS = [
     {
