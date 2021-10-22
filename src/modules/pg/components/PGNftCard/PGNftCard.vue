@@ -39,7 +39,7 @@
                 <div class="pg-nft-card__countdown">
                     <template v-if="!token.hasAuction">
                         <h6 class="h6 theme-pg-u-text-right">{{ $t('pgNftCard.minted') }}</h6>
-                        <h4 class="h4 theme-pg-u-text-right">{{ minted }} / {{ mCount }}</h4>
+                        <h4 class="h4 theme-pg-u-text-right">{{ tokensAvailable }} / {{ totalTokens }}</h4>
                     </template>
 
                     <template v-else>
@@ -140,9 +140,12 @@ import { getErc20TokenAllowance } from '@/modules/wallet/queries/erc20-token-all
 import erc20Utils from '@/utils/erc20-utils.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { pollingMixin } from '@/common/mixins/polling.js';
-import { delay } from 'fantom-vue-components/src/utils/function.js';
 import PGPayTokensList from '@/modules/pg/components/PGPayTokensList/PGPayTokensList.vue';
-// import { delay } from 'fantom-vue-components/src/utils/function.js';
+import { getRandomTrade, getRandomTradeTokensAmount } from '@/modules/pg/queries/random-trade.js';
+import contracts from '@/utils/artion-contracts-utils.js';
+import Web3 from 'web3';
+
+const RANDOM_TRADE_CONTRACT = process.env.VUE_APP_FANTOM_RANDOM_PURCHASE_CONTRACT_ADDRESS;
 
 const SECOND = 1000;
 const MINUTE = SECOND * 60;
@@ -222,8 +225,8 @@ export default {
             buyTxStatus: '',
             buyInProgress: false,
             mPayToken: {},
-            minted: 0,
-            mCount: 350,
+            tokensAvailable: 0,
+            totalTokens: 0,
             mintedNftId: 0,
             walletMenu: [
                 {
@@ -303,6 +306,7 @@ export default {
         buyInProgress(value) {
             if (!value) {
                 this.mPayToken = {};
+                this.tokenPriceB = null;
             } else {
                 this.mintedNftId = 0;
             }
@@ -310,9 +314,9 @@ export default {
     },
 
     created() {
-        this.init();
-
         this._timeoutId = -1;
+
+        this.init();
 
         // console.log(toHex(bToWei(4200)));
     },
@@ -322,12 +326,16 @@ export default {
     },
 
     methods: {
-        init() {
+        async init() {
             if (!this.auctionOn) {
                 this.startCountdown(this.auctionStart);
             }
 
             if (!this.token.hasAuction) {
+                const data = await getRandomTrade(RANDOM_TRADE_CONTRACT);
+
+                this.updateAvailableTokens(data);
+
                 this._polling.start(
                     'update-mintable-token',
                     () => {
@@ -379,23 +387,26 @@ export default {
         },
 
         setBuyTx() {
-            const tx = {};
+            const web3 = new Web3();
+            const tx = contracts.randomPurchase(RANDOM_TRADE_CONTRACT, this.mPayToken.address, web3);
 
             tx._code = 'buy';
 
-            // this.tx = tx;
+            // this.buyTx = tx;
         },
 
         setBuyAllowanceTx(tokenPriceB) {
             const tx = erc20Utils.erc20IncreaseAllowanceTx(
-                this.payToken.address,
-                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+                this.mPayToken.address,
+                RANDOM_TRADE_CONTRACT,
                 toHex(tokenPriceB.plus(10))
             );
 
             tx._code = 'buy_allowance';
 
-            // this.tx = tx;
+            console.log('set allowence', bFromTokenValue(tokenPriceB, 18).toNumber(), toHex(tokenPriceB.plus(10)));
+
+            this.buyTx = tx;
         },
 
         async buyMToken(payToken) {
@@ -405,12 +416,16 @@ export default {
             const tokenPriceB = toBigNumber(payToken.tokenPrice);
             const userBalanceB = await this.getUserBalance(payToken.address);
 
+            this.tokenPriceB = tokenPriceB;
+
             // TMP!
-            await delay(1000);
+            // this.onSuccessfulBuy();
+            // await delay(1000);
+
+            console.log(bFromTokenValue(tokenPriceB, payToken.decimals).toNumber());
+            console.log(bFromTokenValue(userBalanceB, payToken.decimals).toNumber());
 
             if (tokenPriceB.isGreaterThan(userBalanceB)) {
-                console.log(bFromTokenValue(tokenPriceB, payToken.decimals).toNumber());
-                console.log(bFromTokenValue(userBalanceB, payToken.decimals).toNumber());
                 this.$notifications.add({
                     text: this.$t('pgNftCard.insufficientBalance', { token: payToken.label }),
                     type: 'error',
@@ -421,18 +436,27 @@ export default {
                 return;
             }
 
-            const userAllowanceB = this.getUserAllowance(
-                payToken.address,
-                // TMP!!
-                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS
-            );
+            const userAllowanceB = await this.getUserAllowance(payToken.address, RANDOM_TRADE_CONTRACT);
 
             if (tokenPriceB.isGreaterThan(userAllowanceB)) {
                 this.setBuyAllowanceTx(tokenPriceB);
+            } else {
+                this.setBuyTx();
             }
         },
 
-        updateMToken() {},
+        async updateMToken() {
+            const data = await getRandomTradeTokensAmount(RANDOM_TRADE_CONTRACT);
+
+            if (data && data.tokensAvailable) {
+                this.updateAvailableTokens(data);
+            }
+        },
+
+        updateAvailableTokens(data) {
+            this.tokensAvailable = parseInt(data.tokensAvailable, 16);
+            this.totalTokens = parseInt(data.totalTokens, 16);
+        },
 
         clearTimeout() {
             if (this._timeoutId > -1) {

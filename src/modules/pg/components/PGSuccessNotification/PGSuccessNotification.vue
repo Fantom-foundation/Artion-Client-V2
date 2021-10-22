@@ -1,5 +1,5 @@
 <template>
-    <div class="pg-success-notification">
+    <div class="pg-success-notification" :class="{ 'pg-success-notification--mint': type === 'mint' }">
         <div class="pg-success-notification__badge">
             <div class="pg-success-notification__img-cont">
                 <img src="img/confetti.png" alt="confetti emoji" class="pg-success-notification__img-el" />
@@ -8,12 +8,17 @@
             </div>
         </div>
         <h3 class="h3 pg-success-notification__header">{{ $t('pgSuccessNotification.header') }}</h3>
-        <div class="pg-success-notification__achievement">
+        <!--        <div class="pg-success-notification__achievement">
             {{ message }} <strong v-if="type === 'mint'">NFT #{{ id }}</strong>
-        </div>
+        </div>-->
         <div class="flex juc-center">
             <span class="pg-success-notification__button">
-                <f-button v-fwindow-hide size="large" :label="$t('pgSuccessNotification.continue')" />
+                <f-button
+                    v-fwindow-hide
+                    size="large"
+                    :label="$t('pgSuccessNotification.continue')"
+                    @click.native="onButtonClick"
+                />
             </span>
         </div>
     </div>
@@ -47,6 +52,14 @@ export default {
             }
 
             return null;
+        },
+    },
+
+    methods: {
+        onButtonClick() {
+            if (this.type === 'mint') {
+                this.$router.push({ name: 'pg-account-my-nfts' });
+            }
         },
     },
 };

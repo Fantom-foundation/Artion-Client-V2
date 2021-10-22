@@ -41,14 +41,14 @@
         &--1 {
             top: 50%;
             left: 50%;
-            background: #FFA319;
+            background: #ffa319;
             transform: translateY(-50%);
         }
 
         &--2 {
             top: 50%;
             right: 50%;
-            background: #7A6FFF;
+            background: #7a6fff;
             transform: translateY(-50%);
         }
     }
@@ -70,6 +70,13 @@
 
         & .fbutton {
             width: 100%;
+        }
+    }
+
+    &--mint {
+        .pg-success-notification__header {
+            margin-top: 33px;
+            margin-bottom: 53px;
         }
     }
 }

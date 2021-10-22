@@ -966,6 +966,39 @@ const ZERO_AMOUNT = '0x0';
     };
 }
 
+/**
+ * randomPurchase Books a random NFT token on the given trade contract.
+ *
+ * @param {string} tradeAddress Address of the trading contract.
+ * @param {string} payToken Address of the ERC20 token to pay in.
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string}}
+ */
+function randomPurchase(tradeAddress, payToken, web3Client) {
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_token",
+                "type": "address"
+            }
+        ],
+        "name": "purchase",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    };
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[payToken]);
+
+    // return tx object
+    return {
+        from: undefined,
+        to: tradeAddress,
+        data: encodedAbi,
+    };
+}
+
 export default {
     createNFTCollection,
     createNFT,
@@ -988,6 +1021,7 @@ export default {
     updateAuctionReservePrice,
     updateAuctionStartTime,
     updateAuctionEndTime,
+    randomPurchase,
 }
 
 const createNFTContractAbi = {

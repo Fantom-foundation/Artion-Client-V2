@@ -4,17 +4,20 @@
             <a-video v-if="isVideo" :poster="getImageThumbUrl(token.imageThumb)" :src="token.image" loop></a-video>
             <f-image v-else :src="getImageThumbUrl(token.imageThumb)" :alt="token.name"></f-image>
         </div>
-        <div class="pg-nft-card__cta" @click="$refs.cardDetailModal.show()">
+        <div class="pg-nft-card__cta" @click="onCardClick">
             <div class="pg-nft-card__cta-top">
                 <div>
                     <h6 class="h6 " v-html="token.name"></h6>
                     <h4 class="h4">#{{ parseInt(token.tokenId, 16) }}</h4>
                 </div>
             </div>
+            <div v-if="!noRedeemButton" class="pg-nft-card__cta-button pg-nft-card__button">
+                <a-button label="Redeem available from 10/25" :disabled="true" size="large" />
+            </div>
         </div>
 
         <f-window ref="cardDetailModal" class="pg-nft-card__detail-modal">
-            <p-g-nft-card-generic :token="token"></p-g-nft-card-generic>
+            <p-g-nft-card-generic :token="token" no-redeem-button></p-g-nft-card-generic>
         </f-window>
     </div>
 </template>
@@ -25,11 +28,13 @@ import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow';
 import FImage from 'fantom-vue-components/src/components/FImage/FImage';
 import AVideo from '@/common/components/AVideo/AVideo.vue';
 import { CONTRACTS_FILTER } from '../PGMyNftsList/PGMyNftsList.vue';
+import AButton from '@/common/components/AButton/AButton.vue';
 
 export default {
     name: 'PGNftCardGeneric',
 
     components: {
+        AButton,
         FWindow,
         FImage,
         AVideo,
@@ -40,6 +45,10 @@ export default {
             type: Object,
             default: null,
         },
+        noRedeemButton: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     computed: {
@@ -49,6 +58,12 @@ export default {
     },
 
     methods: {
+        onCardClick(event) {
+            if (!event.target.closest('.pg-nft-card__cta-button')) {
+                this.$refs.cardDetailModal.show();
+            }
+        },
+
         getImageThumbUrl,
     },
 };
