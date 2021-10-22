@@ -23,11 +23,9 @@ export const Loading = () => ({
             <a-button :loading="loading" @click.native="loading = !loading">Very long text</a-button>
         </div>
     `,
-	 data(){
-		 return {
-			 loading: false
-		 }
-	 },
+    data() {
+        return {
+            loading: false,
+        };
+    },
 });
-
-
