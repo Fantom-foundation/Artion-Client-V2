@@ -10,8 +10,9 @@
                     <template v-if="!token.hasAuction">
                         <h6 class="h6">{{ $t('pgNftCard.price') }}</h6>
 
-                        <h4 class="h4">{{ formatTokenValue(token.price, payToken.decimals) }} wFTM</h4>
-                        <p class="pg-nft-card__note">{{ to$(token.price) }}</p>
+                        <p-g-pay-tokens-list :tokens="mPayTokens" />
+                        <!--                        <h4 class="h4">{{ formatTokenValue(token.price, payToken.decimals) }} wFTM</h4>
+                        <p class="pg-nft-card__note">{{ to$(token.price) }}</p>-->
                     </template>
 
                     <template v-else-if="!auctionOn">
@@ -45,7 +46,7 @@
                 <div class="pg-nft-card__countdown">
                     <template v-if="!token.hasAuction">
                         <h6 class="h6 theme-pg-u-text-right">{{ $t('pgNftCard.minted') }}</h6>
-                        <h4 class="h4 theme-pg-u-text-right">0 / 350</h4>
+                        <h4 class="h4 theme-pg-u-text-right">{{ minted }} / {{ mCount }}</h4>
                     </template>
 
                     <template v-else>
@@ -81,7 +82,7 @@
             </div>
 
             <div class="pg-nft-card__cta-bottom">
-                <span class="pg-nft-card__button">
+                <span class="pg-nft-card__button" v-if="token.hasAuction">
                     <f-button
                         @click.native="onBidButtonClick"
                         size="large"
@@ -89,6 +90,17 @@
                         :disabled="!auctionOn || auctionHasEnded || !token.hasAuction"
                     />
                 </span>
+                <template v-else>
+                    <span v-for="pt in mPayTokens" :key="`pt_${pt.address}`" class="pg-nft-card__button">
+                        <a-button
+                            @click.native="onBuyButtonClick(pt)"
+                            size="large"
+                            :label="getBuyButtonLabel(pt)"
+                            :disabled="buyInProgress"
+                            :loading="mPayToken.address === pt.address"
+                        />
+                    </span>
+                </template>
             </div>
         </div>
 
@@ -106,12 +118,18 @@
         </f-window>
 
         <f-window ref="successModal" style="max-width: 345px">
-            <p-g-success-notification></p-g-success-notification>
+            <p-g-success-notification />
         </f-window>
 
         <f-window ref="cardDetailModal" style="max-width: 675px">
             <p-g-nft-card :token="token"></p-g-nft-card>
         </f-window>
+
+        <f-window ref="buySuccessModal" style="max-width: 345px">
+            <p-g-success-notification type="mint" :id="mintedNftId" />
+        </f-window>
+
+        <a-sign-transaction :tx="buyTx" @transaction-status="onBuyTransactionStatus" />
     </div>
 </template>
 
@@ -120,7 +138,7 @@ import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow.vue';
 import PGBidForm from '../PGBidForm/PGBidForm';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 import dayjs from 'dayjs';
-import { toBigNumber } from '@/utils/big-number.js';
+import { bFromTokenValue, toBigNumber, toHex } from '@/utils/big-number.js';
 import { formatNumberByLocale, formatTokenValue, localeOptions } from '@/utils/formatters.js';
 import AVideo from '@/common/components/AVideo/AVideo.vue';
 import { mapState } from 'vuex';
@@ -128,6 +146,14 @@ import { checkWallet } from '@/plugins/wallet/utils.js';
 import { auctionIsClosed } from '@/modules/nfts/utils.js';
 import PGSuccessNotification from '@/modules/pg/components/PGSuccessNotification/PGSuccessNotification.vue';
 import PGNftCard from '@/modules/pg/components/PGNftCard/PGNftCard.vue';
+import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
+import { getErc20TokenBalance } from '@/modules/wallet/queries/erc20-token-balance.js';
+import { getErc20TokenAllowance } from '@/modules/wallet/queries/erc20-token-allowance.js';
+import erc20Utils from '@/utils/erc20-utils.js';
+import AButton from '@/common/components/AButton/AButton.vue';
+import { pollingMixin } from '@/common/mixins/polling.js';
+import { delay } from 'fantom-vue-components/src/utils/function.js';
+import PGPayTokensList from '@/modules/pg/components/PGPayTokensList/PGPayTokensList.vue';
 // import { delay } from 'fantom-vue-components/src/utils/function.js';
 
 const SECOND = 1000;
@@ -139,6 +165,9 @@ export default {
     name: 'PGNftCard',
 
     components: {
+        PGPayTokensList,
+        AButton,
+        ASignTransaction,
         PGSuccessNotification,
         AVideo,
         FWindow,
@@ -146,6 +175,8 @@ export default {
         PGNftCard,
         FEllipsis,
     },
+
+    mixins: [pollingMixin],
 
     props: {
         /** NFT object */
@@ -167,6 +198,13 @@ export default {
             type: Object,
             default() {
                 return {};
+            },
+        },
+        /** Pay tokens for mintable nft (with hasAuction: false) */
+        mPayTokens: {
+            type: Array,
+            default() {
+                return [];
             },
         },
         /** Specifies if auction is on or off */
@@ -193,6 +231,13 @@ export default {
             auctionHasEnded: false,
             modalDisabled: false,
             txStatus: '',
+            buyTx: {},
+            buyTxStatus: '',
+            buyInProgress: false,
+            mPayToken: {},
+            minted: 0,
+            mCount: 350,
+            mintedNftId: 0,
             walletMenu: [
                 {
                     label: this.$t('walletMenu.settings'),
@@ -275,6 +320,14 @@ export default {
             },
             immediate: true,
         },
+
+        buyInProgress(value) {
+            if (!value) {
+                this.mPayToken = {};
+            } else {
+                this.mintedNftId = 0;
+            }
+        },
     },
 
     created() {
@@ -294,10 +347,20 @@ export default {
             if (!this.auctionOn) {
                 this.startCountdown(this.auctionStart);
             }
+
+            if (!this.token.hasAuction) {
+                this._polling.start(
+                    'update-mintable-token',
+                    () => {
+                        this.updateMToken();
+                    },
+                    3000
+                );
+            }
         },
 
         startCountdown(endDateTs) {
-            console.log('end', endDateTs);
+            // console.log('end', endDateTs);
 
             this.countdown = setInterval(() => {
                 const difference = endDateTs - Date.now();
@@ -329,6 +392,69 @@ export default {
             return formatNumberByLocale(value$ / this.payToken.price, 0);
         },
 
+        getBuyButtonLabel(payToken) {
+            /*if (!this.walletConnected) {
+                return 'Connect wallet';
+            }*/
+            return `Buy for ${formatTokenValue(payToken.tokenPrice, payToken.decimals)} ${payToken.label}`;
+        },
+
+        setBuyTx() {
+            const tx = {};
+
+            tx._code = 'buy';
+
+            // this.tx = tx;
+        },
+
+        setBuyAllowanceTx(tokenPriceB) {
+            const tx = erc20Utils.erc20IncreaseAllowanceTx(
+                this.payToken.address,
+                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+                toHex(tokenPriceB.plus(10))
+            );
+
+            tx._code = 'buy_allowance';
+
+            // this.tx = tx;
+        },
+
+        async buyMToken(payToken) {
+            this.buyInProgress = true;
+            this.mPayToken = payToken;
+
+            const tokenPriceB = toBigNumber(payToken.tokenPrice);
+            const userBalanceB = await this.getUserBalance(payToken.address);
+
+            // TMP!
+            await delay(1000);
+
+            if (tokenPriceB.isGreaterThan(userBalanceB)) {
+                console.log(bFromTokenValue(tokenPriceB, payToken.decimals).toNumber());
+                console.log(bFromTokenValue(userBalanceB, payToken.decimals).toNumber());
+                this.$notifications.add({
+                    text: this.$t('pgNftCard.insufficientBalance', { token: payToken.label }),
+                    type: 'error',
+                });
+
+                this.buyInProgress = false;
+
+                return;
+            }
+
+            const userAllowanceB = this.getUserAllowance(
+                payToken.address,
+                // TMP!!
+                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS
+            );
+
+            if (tokenPriceB.isGreaterThan(userAllowanceB)) {
+                this.setBuyAllowanceTx(tokenPriceB);
+            }
+        },
+
+        updateMToken() {},
+
         clearTimeout() {
             if (this._timeoutId > -1) {
                 clearTimeout(this._timeoutId);
@@ -343,6 +469,14 @@ export default {
             }, 30000);
         },
 
+        async getUserBalance(payTokenAddress = '') {
+            return toBigNumber(await getErc20TokenBalance(this.walletAddress, payTokenAddress));
+        },
+
+        async getUserAllowance(payTokenAddress = '', contractAddress = '') {
+            return toBigNumber(await getErc20TokenAllowance(this.walletAddress, payTokenAddress, contractAddress));
+        },
+
         async onBidButtonClick() {
             if (!this.walletConnected) {
                 this.walletConnected = await checkWallet();
@@ -351,6 +485,37 @@ export default {
             if (this.walletConnected) {
                 this.$refs.modal.show();
             }
+        },
+
+        async onBuyButtonClick(payToken) {
+            if (!this.walletConnected) {
+                this.walletConnected = await checkWallet();
+            }
+
+            if (this.walletConnected) {
+                this.buyMToken(payToken);
+            }
+        },
+
+        onBuyTransactionStatus(payload) {
+            const txCode = payload.code;
+            this.buyTxStatus = payload.status;
+
+            if (this.buyTxStatus === 'success') {
+                if (txCode === 'buy_allowance') {
+                    this.setBuyTx();
+                } else if (txCode === 'buy') {
+                    this.onSuccessfulBuy();
+                }
+            } else if (this.buyTxStatus === 'error') {
+                this.buyInProgress = false;
+            }
+        },
+
+        async onSuccessfulBuy() {
+            this.buyInProgress = false;
+            this.mintedNftId = 11;
+            this.$refs.buySuccessModal.show();
         },
 
         async onSuccessfulBid() {

@@ -9,7 +9,7 @@
         </div>
         <h3 class="h3 pg-success-notification__header">{{ $t('pgSuccessNotification.header') }}</h3>
         <div class="pg-success-notification__achievement">
-            {{ message }} <strong v-if="isMintType">NFT #{{ id }}</strong>
+            {{ message }} <strong v-if="type === 'mint'">NFT #{{ id }}</strong>
         </div>
         <div class="flex juc-center">
             <span class="pg-success-notification__button">
@@ -20,18 +20,16 @@
 </template>
 
 <script>
-const ACHIEVEMENT_TYPE = Object.freeze({
-    MINT: 0,
-    BID: 1,
-});
-
 export default {
     name: 'PGSuccessNotification',
 
     props: {
         type: {
-            type: Number,
-            default: ACHIEVEMENT_TYPE.BID,
+            type: String,
+            default: 'bid',
+            validator: function(_value) {
+                return ['bid', 'mint'].indexOf(_value) !== -1;
+            },
         },
 
         id: {
@@ -41,18 +39,10 @@ export default {
     },
 
     computed: {
-        isMintType() {
-            return this.type === ACHIEVEMENT_TYPE.MINT;
-        },
-
-        isBidType() {
-            return this.type === ACHIEVEMENT_TYPE.BID;
-        },
-
         message() {
-            if (this.isBidType) {
+            if (this.type === 'bid') {
                 return this.$t('pgSuccessNotification.highestBidder');
-            } else if (this.isMintType) {
+            } else if (this.type === 'mint') {
                 return this.$t('pgSuccessNotification.mintedNFT');
             }
 
