@@ -164,6 +164,8 @@ import AUploadArea from '@/common/components/AUploadArea/AUploadArea';
 import { getUser } from '@/modules/account/queries/user.js';
 import { updateUser } from '@/modules/account/mutations/update-user.js';
 import { mapState } from 'vuex';
+import { getLoggedUserShippingAddress } from '../../queries/logged-user-shipping-address';
+import { updateShippingAddress } from '../../mutations/update-shipping-address';
 // import { checkSignIn, getBearerToken } from '@/modules/account/auth.js';
 export default {
     name: 'AccountProfileForm',
@@ -190,7 +192,9 @@ export default {
         walletAddress: {
             async handler(value) {
                 if (value) {
-                    this.values = await getUser(value);
+                    const user = await getUser(value);
+                    const shippingAddress = await getLoggedUserShippingAddress();
+                    this.values = { ...user, ...shippingAddress };
                 } else {
                     this.values = {};
                 }
@@ -201,7 +205,33 @@ export default {
 
     methods: {
         async onSubmit(event) {
-            let result = await updateUser(event.values);
+            const {
+                username,
+                bio,
+                email,
+                fullname,
+                phone,
+                street,
+                apartment,
+                city,
+                state,
+                country,
+                zip,
+            } = event.values;
+
+            const userData = { username, bio, email };
+            const shippingAddressData = {
+                fullname,
+                phone,
+                street,
+                apartment,
+                city,
+                state,
+                country,
+                zip,
+            };
+
+            let result = await Promise.all([updateUser(userData), updateShippingAddress(shippingAddressData)]);
             console.log(result);
         },
     },
