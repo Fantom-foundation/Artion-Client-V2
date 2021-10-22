@@ -2,14 +2,7 @@
     <div class="pg-my-nfts-list">
         <h2 class="h2 pg-my-nfts-list__header">My NFTs</h2>
         <div class="pg-my-nfts-list__container">
-            <p-g-nft-card
-                v-for="(token, index) in tokens"
-                :key="index"
-                :token="token"
-                :auction-on="AUCTION_ON"
-                :auction-start="AUCTION_START"
-                :pay-token="payToken"
-            ></p-g-nft-card>
+            <p-g-nft-card-generic v-for="(token, index) in tokens" :key="index" :token="token"></p-g-nft-card-generic>
         </div>
 
         <div class="pg-my-nfts-list__backdrop pg-my-nfts-list__backdrop--1"></div>
@@ -21,7 +14,7 @@
 import { delay } from 'fantom-vue-components/src/utils/function.js';
 import { getWFTMToken } from '@/modules/pg/utils.js';
 import appConfig from '@/app.config.js';
-import PGNftCard from '../PGNftCard/PGNftCard';
+import PGNftCardGeneric from '../PGNftCardGeneric/PGNftCardGeneric';
 
 const CONTRACT = '0x61af4d29f672e27a097291f72fc571304bc93521';
 const AUCTION_ON = appConfig.auctionOn;
@@ -142,7 +135,7 @@ const TMP_TOKENS = [
 export default {
     name: 'PGMyNftsList',
 
-    components: { PGNftCard },
+    components: { PGNftCardGeneric },
 
     data() {
         return {

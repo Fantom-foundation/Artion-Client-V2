@@ -1,5 +1,5 @@
 <template>
-    <div class="pg-nft-card" :class="{ 'pg-nft-card--mine': isMine }">
+    <div class="pg-nft-card">
         <div class="pg-nft-card__img-cont" :class="{ 'pg-nft-card__img-cont--limited': !token.hasAuction }">
             <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
             <!--            <img src="img/tmp/pg.jpeg" alt="" class="pg-nft-card__img-el" />-->
@@ -34,13 +34,6 @@
                         <h4 v-else class="h4">{{ $t('pgNftCard.noBids') }}</h4>
                     </template>
                 </div>
-
-                <template v-if="isMine">
-                    <div>
-                        <h6 class="h6 " v-html="token.name"></h6>
-                        <h4 class="h4">#140</h4>
-                    </div>
-                </template>
 
                 <div class="pg-nft-card__v-separator"></div>
                 <div class="pg-nft-card__countdown">
@@ -121,10 +114,6 @@
             <p-g-success-notification />
         </f-window>
 
-        <f-window ref="cardDetailModal" style="max-width: 675px">
-            <p-g-nft-card :token="token"></p-g-nft-card>
-        </f-window>
-
         <f-window ref="buySuccessModal" style="max-width: 345px">
             <p-g-success-notification type="mint" :id="mintedNftId" />
         </f-window>
@@ -145,7 +134,6 @@ import { mapState } from 'vuex';
 import { checkWallet } from '@/plugins/wallet/utils.js';
 import { auctionIsClosed } from '@/modules/nfts/utils.js';
 import PGSuccessNotification from '@/modules/pg/components/PGSuccessNotification/PGSuccessNotification.vue';
-import PGNftCard from '@/modules/pg/components/PGNftCard/PGNftCard.vue';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { getErc20TokenBalance } from '@/modules/wallet/queries/erc20-token-balance.js';
 import { getErc20TokenAllowance } from '@/modules/wallet/queries/erc20-token-allowance.js';
@@ -172,7 +160,6 @@ export default {
         AVideo,
         FWindow,
         PGBidForm,
-        PGNftCard,
         FEllipsis,
     },
 
@@ -284,14 +271,6 @@ export default {
             }
 
             return label;
-        },
-
-        /**
-         * Card style modifier
-         * @returns {boolean} true if on My NFTs route, false otherwise
-         */
-        isMine() {
-            return this.$route.name === 'pg-account-my-nfts';
         },
     },
 
