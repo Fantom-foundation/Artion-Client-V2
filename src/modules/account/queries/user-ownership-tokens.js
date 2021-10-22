@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 
-export async function getUserFavoriteTokens(address = '', pagination = {}) {
+export async function getUserOwnershipTokens(address = '', pagination = {}) {
     const query = {
         query: gql`
-            query GetUserFavoriteTokens($address: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
+            query GetUserOwnershipTokens($address: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
                 user(address: $address) {
-                    tokenLikes(first: $first, after: $after, last: $last, before: $before) {
+                    ownerships(first: $first, after: $after, last: $last, before: $before) {
                         totalCount
                         pageInfo {
                             startCursor
@@ -40,5 +40,5 @@ export async function getUserFavoriteTokens(address = '', pagination = {}) {
         fetchPolicy: 'network-only',
     };
 
-    return gqlQuery(query, 'user.tokenLikes');
+    return gqlQuery(query, 'user.ownerships');
 }
