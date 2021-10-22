@@ -1,14 +1,14 @@
 <template>
     <div class="pg-nft-card pg-nft-card--generic">
         <div class="pg-nft-card__img-cont">
-            <!--            <f-image :src="getImageThumbUrl(token.imageThumb)" :alt="token.name"></f-image>-->
-            <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
+            <a-video v-if="isVideo" :poster="getImageThumbUrl(token.imageThumb)" :src="token.image" loop></a-video>
+            <f-image v-else :src="getImageThumbUrl(token.imageThumb)" :alt="token.name"></f-image>
         </div>
         <div class="pg-nft-card__cta" @click="$refs.cardDetailModal.show()">
             <div class="pg-nft-card__cta-top">
                 <div>
                     <h6 class="h6 " v-html="token.name"></h6>
-                    <h4 class="h4">#140</h4>
+                    <h4 class="h4">#{{ parseInt(token.tokenId, 16) }}</h4>
                 </div>
             </div>
         </div>
@@ -20,13 +20,20 @@
 </template>
 
 <script>
-import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow';
-// import FImage from 'fantom-vue-components/src/components/FImage/FImage';
 import { getImageThumbUrl } from '@/utils/url.js';
+import FWindow from 'fantom-vue-components/src/components/FWindow/FWindow';
+import FImage from 'fantom-vue-components/src/components/FImage/FImage';
 import AVideo from '@/common/components/AVideo/AVideo.vue';
+import { CONTRACTS_FILTER } from '../PGMyNftsList/PGMyNftsList.vue';
 
 export default {
     name: 'PGNftCardGeneric',
+
+    components: {
+        FWindow,
+        FImage,
+        AVideo,
+    },
 
     props: {
         token: {
@@ -35,10 +42,10 @@ export default {
         },
     },
 
-    components: {
-        FWindow,
-        // FImage,
-        AVideo,
+    computed: {
+        isVideo() {
+            return CONTRACTS_FILTER.includes(this.token.contract);
+        },
     },
 
     methods: {

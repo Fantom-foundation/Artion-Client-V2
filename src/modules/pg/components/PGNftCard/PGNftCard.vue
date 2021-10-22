@@ -4,7 +4,7 @@
             <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
             <!--            <img src="img/tmp/pg.jpeg" alt="" class="pg-nft-card__img-el" />-->
         </div>
-        <div class="pg-nft-card__cta" @click="$refs.cardDetailModal.show()">
+        <div class="pg-nft-card__cta">
             <div class="pg-nft-card__cta-top">
                 <div class="pg-nft-card__bid">
                     <template v-if="!token.hasAuction">
@@ -84,7 +84,7 @@
                     />
                 </span>
                 <template v-else>
-                    <span v-for="pt in mPayTokens" :key="`pt_${pt.address}`" class="pg-nft-card__button">
+                    <span v-for="pt in mPayTokens" :key="`pt_${pt.address}`" class="pg-nft-card__button mab-2">
                         <a-button
                             @click.native="onBuyButtonClick(pt)"
                             size="large"

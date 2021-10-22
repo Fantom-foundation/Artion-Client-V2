@@ -10,7 +10,7 @@
         <f-notifications
             strategy="newest-first"
             with-icon
-            position="bottom-right"
+            position="top-center"
             hide-on-click
             animation-in="scale-center-enter-active"
             animation-out="scale-center-leave-active"
