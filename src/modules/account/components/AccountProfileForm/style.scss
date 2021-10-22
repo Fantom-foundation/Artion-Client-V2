@@ -33,8 +33,13 @@
 		.finput {
 			svg { color: inherit; }
 		}
-
 	}
+
+    &_address {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--f-spacer-3);
+    }
 
 	.auploadarea {
 		overflow: hidden;
@@ -121,6 +126,13 @@
 			margin-left: 0;
 			gap: var(--f-spacer-4);
 		}
+	}
+
+}
+
+@include media.media-min(1024px) {
+	.accountprofileform_address .fforminput.fforminput_text {
+        width: calc(50% - (var(--f-spacer-3) / 2));
 	}
 
 }
