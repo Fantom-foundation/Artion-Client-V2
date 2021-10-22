@@ -82,11 +82,11 @@ const TMP_TOKENS = [
     },*/
 ];
 
-const RANDOM_TRADE_CONTRACT = process.env.VUE_APP_FANTOM_RANDOM_PURCHASE_CONTRACT_ADDRESS;
+// const RANDOM_TRADE_CONTRACT = process.env.VUE_APP_FANTOM_RANDOM_PURCHASE_CONTRACT_ADDRESS;
 
 export const CONTRACTS_FILTER = [
-    RANDOM_TRADE_CONTRACT,
-    // '0x475631dbd805f46be62d8f87a4f07ca8afaf7e45',
+    // RANDOM_TRADE_CONTRACT,
+    '0x475631dbd805f46be62d8f87a4f07ca8afaf7e45',
 ];
 
 export default {
@@ -139,8 +139,8 @@ export default {
 
             console.log(tokens);
 
-            // return tokens.filter(token => CONTRACTS_FILTER.includes(token.contract));
-            return [];
+            return tokens.filter(token => CONTRACTS_FILTER.includes(token.contract));
+            // return [];
         },
     },
 };

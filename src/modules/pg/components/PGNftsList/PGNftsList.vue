@@ -103,7 +103,7 @@ const PAY_TOKENS = [
         tokenPrice: '0xb3a6fd21acec880000',
         // price: 1,
         // priceDecimals: 18,
-        decimals: 18,
+        decimals: 0,
         value: 'zoo',
     },
     {
@@ -152,12 +152,12 @@ export default {
                 PAY_TOKENS.map(payToken => getRandomTradePayTokenPrice(RANDOM_TRADE_CONTRACT, payToken.address))
             );
 
-            /*return PAY_TOKENS.map((payToken, index) => {
+            return PAY_TOKENS.map((payToken, index) => {
                 return { ...payToken, tokenPrice: prices[index] };
-            });*/
+            });
 
-            console.log(prices);
-            return PAY_TOKENS;
+            /*console.log(prices);
+            return PAY_TOKENS;*/
         },
     },
 };

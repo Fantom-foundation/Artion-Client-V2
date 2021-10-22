@@ -38,9 +38,9 @@
                 <div class="pg-nft-card__v-separator"></div>
                 <div class="pg-nft-card__countdown">
                     <template v-if="!token.hasAuction">
-                        <h6 class="h6 theme-pg-u-text-right">{{ $t('pgNftCard.minted') }}</h6>
-<!--                        <h4 class="h4 theme-pg-u-text-right">{{ tokensAvailable }} / {{ totalTokens }}</h4>-->
-                        <h4 class="h4 theme-pg-u-text-right">0 / 350</h4>
+                        <h6 class="h6 theme-pg-u-text-right">Sold</h6>
+                        <h4 class="h4 theme-pg-u-text-right">{{ 350 - tokensAvailable }} / 350</h4>
+                        <!--                        <h4 class="h4 theme-pg-u-text-right">0 / 350</h4>-->
                     </template>
 
                     <template v-else>
@@ -76,7 +76,7 @@
             </div>
 
             <div class="pg-nft-card__cta-bottom">
-                <span class="pg-nft-card__button" v-if="true">
+                <span class="pg-nft-card__button" v-if="token.hasAuction">
                     <f-button
                         @click.native="onBidButtonClick"
                         size="large"
@@ -393,7 +393,7 @@ export default {
 
             tx._code = 'buy';
 
-            // this.buyTx = tx;
+            this.buyTx = tx;
         },
 
         setBuyAllowanceTx(tokenPriceB) {
