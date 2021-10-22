@@ -7,6 +7,7 @@
                 :auction-on="AUCTION_ON"
                 :auction-start="AUCTION_START"
                 :pay-token="payToken"
+                :m-pay-tokens="mPayTokens"
             ></p-g-nft>
             <div v-if="index !== tokens.length - 1" class="pg-nfts-list__separator"></div>
         </div>
@@ -83,6 +84,39 @@ const TOKENS = [
     },
 ];
 
+const PAY_TOKENS = [
+    {
+        address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+        label: 'wFTM',
+        img: 'img/WFTM.png',
+        tokenPrice: '0x1043561a8829300000',
+        // price: 2.308624,
+        // priceDecimals: 18,
+        decimals: 18,
+        value: 'wftm',
+    },
+    {
+        address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
+        label: 'ZOO',
+        img: 'img/ZOO.png',
+        tokenPrice: '0x12f939c99edab80000',
+        // price: 1,
+        // priceDecimals: 18,
+        decimals: 18,
+        value: 'zoo',
+    },
+    {
+        address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
+        label: 'TOMB',
+        img: 'img/TOMB.png',
+        tokenPrice: '0x56bc75e2d63100000',
+        // price: 1,
+        // priceDecimals: 18,
+        decimals: 18,
+        value: 'tomb',
+    },
+];
+
 export default {
     name: 'PGNftsList',
 
@@ -92,6 +126,7 @@ export default {
         return {
             tokens: [],
             payToken: {},
+            mPayTokens: [],
             AUCTION_ON,
             AUCTION_START,
         };
@@ -103,20 +138,19 @@ export default {
 
     methods: {
         async init() {
-            const data = await Promise.all([this.loadTokens(CONTRACT), getWFTMToken()]);
-            const wftm = data[1];
+            const data = await Promise.all([this.loadMPayTokens(CONTRACT), getWFTMToken()]);
 
-            this.payToken = wftm;
+            this.mPayTokens = data[0];
+            this.payToken = data[1];
 
-            this.tokens = data[0];
+            this.tokens = TOKENS;
         },
 
-        async loadTokens(contract) {
-            console.log(contract);
+        async loadMPayTokens() {
             // TMP
             await delay(1);
 
-            return TOKENS;
+            return PAY_TOKENS;
         },
     },
 };

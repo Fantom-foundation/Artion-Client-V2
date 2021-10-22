@@ -272,7 +272,8 @@
         "seconds": "seconds",
         "hasEnded": "Auction has ended",
         "price": "Price",
-        "minted": "Minted"
+        "minted": "Minted",
+        "insufficientBalance": "Insufficient {token} Balance"
     },
 
     "account": {

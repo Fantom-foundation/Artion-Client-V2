@@ -1,0 +1,26 @@
+.pgpaytokenslist {
+    &_token {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--f-spacer-3);
+        margin-bottom: var(--f-spacer-3);
+
+        &_symbol {
+            display: flex;
+            align-items: center;
+            gap: var(--f-spacer-2);
+
+            img {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 0;
+            }
+        }
+
+        &_price {
+            font-size: 1.1em;
+            font-weight: 700;
+        }
+    }
+}

@@ -6,6 +6,7 @@
             :pay-token="payToken"
             :auction-on="auctionOn"
             :auction-start="auctionStart"
+            :m-pay-tokens="mPayTokens"
             @reload-auction="onReloadAuction"
         ></p-g-nft-card>
 
@@ -88,6 +89,13 @@ export default {
             type: Object,
             default() {
                 return {};
+            },
+        },
+        /** Pay tokens for mintable nft (with hasAuction: false) */
+        mPayTokens: {
+            type: Array,
+            default() {
+                return [];
             },
         },
         /** Specifies if auction is on or off */
