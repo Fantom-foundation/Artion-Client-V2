@@ -39,7 +39,9 @@
                 <div class="pg-nft-card__countdown">
                     <template v-if="!token.hasAuction">
                         <h6 class="h6 theme-pg-u-text-right">Sold</h6>
-                        <h4 class="h4 theme-pg-u-text-right">{{ 350 - tokensAvailable }} / 350</h4>
+                        <h4 class="h4 theme-pg-u-text-right">
+                            {{ tokensAvailable > -1 ? 350 - tokensAvailable : 0 }} / 350
+                        </h4>
                         <!--                        <h4 class="h4 theme-pg-u-text-right">0 / 350</h4>-->
                     </template>
 
@@ -90,7 +92,7 @@
                             @click.native="onBuyButtonClick(pt)"
                             size="large"
                             :label="getBuyButtonLabel(pt)"
-                            :disabled="buyInProgress"
+                            :disabled="buyInProgress || sold"
                             :loading="mPayToken.address === pt.address"
                         />
                     </span>
@@ -226,7 +228,7 @@ export default {
             buyTxStatus: '',
             buyInProgress: false,
             mPayToken: {},
-            tokensAvailable: 0,
+            tokensAvailable: -1,
             totalTokens: 0,
             mintedNftId: 0,
             walletMenu: [
@@ -275,6 +277,12 @@ export default {
             }
 
             return label;
+        },
+
+        sold() {
+            const { tokensAvailable } = this;
+
+            return tokensAvailable > -1 ? 350 - this.tokensAvailable === 350 : false;
         },
     },
 
@@ -384,7 +392,9 @@ export default {
             /*if (!this.walletConnected) {
                 return 'Connect wallet';
             }*/
-            return `Buy for ${formatTokenValue(payToken.tokenPrice, payToken.decimals)} ${payToken.label}`;
+            return this.sold
+                ? 'Sold'
+                : `Buy for ${formatTokenValue(payToken.tokenPrice, payToken.decimals)} ${payToken.label}`;
         },
 
         setBuyTx() {
