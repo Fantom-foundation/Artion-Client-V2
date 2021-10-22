@@ -4,7 +4,7 @@
             <a-video :poster="token.poster" :src="token.videoSrc" loop></a-video>
             <!--            <img src="img/tmp/pg.jpeg" alt="" class="pg-nft-card__img-el" />-->
         </div>
-        <div class="pg-nft-card__cta">
+        <div class="pg-nft-card__cta" @click="$refs.cardDetailModal.show()">
             <div class="pg-nft-card__cta-top">
                 <div class="pg-nft-card__bid">
                     <template v-if="!token.hasAuction">
@@ -34,6 +34,7 @@
                         <h4 v-else class="h4">{{ $t('pgNftCard.noBids') }}</h4>
                     </template>
                 </div>
+
                 <div class="pg-nft-card__v-separator"></div>
                 <div class="pg-nft-card__countdown">
                     <template v-if="!token.hasAuction">

@@ -17,7 +17,7 @@
         <router-link
             v-for="(item, index) in navigation"
             :key="`am_${index}`"
-            :to="{ path: $route.path, hash: item.hash }"
+            :to="{ path: item.path, hash: item.hash, name: item.name || null }"
             @click.native="$emit('close')"
         >
             {{ item.label }}
@@ -56,6 +56,7 @@ export default {
                     label: this.$t('navigation.nfts'),
                 },
                 {
+                    name: 'pg-account-my-nfts',
                     label: this.$t('navigation.myNfts'),
                 },
                 {

@@ -21,6 +21,15 @@
             }
         }
 
+        .fimage {
+            height: 100%;
+            width: 100%;
+
+            img {
+                object-fit: cover;
+            }
+        }
+
         &--limited {
             height: 940px;
 
@@ -115,6 +124,61 @@
             background: #121820;
         }
     }
+
+    &--generic {
+        cursor: pointer;
+
+        .pg-nft-card__img-cont {
+            width: 343px;
+            height: 343px;
+            overflow: hidden;
+
+            .avideo {
+                --avideo-background: #000;
+                height: 100%;
+
+                video {
+                    max-height: 114%;
+                    min-height: 343px;
+                    object-fit: cover;
+                }
+            }
+        }
+
+        .pg-nft-card__cta {
+            padding: var(--f-spacer-4);
+        }
+
+        .pg-nft-card__cta-top {
+            justify-content: flex-start;
+        }
+
+        .h6 > br,
+        .h6 > br:after{
+            content: ' ';
+        }
+    }
+}
+
+:root.theme-pg {
+    .pg-nft-card__detail-modal.fwindow:not(.ferrormessagespopover) {
+        --fwindow-background: transparent;
+        --fwindow-body-background: transparent;
+        --fwindow-popover-background: transparent;
+
+        box-shadow: none;
+        max-width: 343px;
+
+        & .pg-nft-card--generic {
+            margin: 0 auto;
+        }
+
+        & .pg-nft-card--generic:hover {
+            box-shadow: none;
+            transform: none;
+            cursor: default;
+        }
+    }
 }
 
 @include media.media-min(768px) {
@@ -194,6 +258,44 @@
                 padding-bottom: var(--f-spacer-5);
             }
         }
+
+        &--generic {
+            .pg-nft-card__img-cont {
+                width: 384px;
+                height: 384px;
+                overflow: hidden;
+
+                .avideo {
+                    --avideo-background: #000;
+                    height: 100%;
+
+                    video {
+                        max-height: 114%;
+                        min-height: 384px;
+                        object-fit: cover;
+                    }
+                }
+            }
+        }
+    }
+
+    :root.theme-pg {
+        .pg-nft-card__detail-modal.fwindow:not(.ferrormessagespopover) {
+            max-width: 700px;
+
+            & .pg-nft-card--generic {
+                width: 500px;
+            }
+
+            & .pg-nft-card__img-cont {
+                width: 500px;
+                height: 500px;
+
+                .avideo video {
+                    min-height: 500px;
+                }
+            }
+        }
     }
 }
 
@@ -201,5 +303,36 @@
     .pg-nft-card {
         width: 528px;
         margin-bottom: 0;
+
+        &--generic {
+            width: 384px;
+        }
+    }
+
+    :root.theme-pg {
+        .pg-nft-card__detail-modal.fwindow:not(.ferrormessagespopover) {
+            max-width: 900px;
+
+            & .pg-nft-card--generic {
+                width: 675px;
+            }
+
+            & .pg-nft-card__img-cont {
+                width: 675px;
+                height: 675px;
+
+                .avideo video {
+                    min-height: 675px;
+                }
+            }
+        }
+    }
+}
+
+@include media.media-min(1200px) {
+    .pg-nft-card--generic:hover {
+        box-shadow: 0 16px 60px rgba(133, 139, 193, 0.11);
+        transform: translateY(-5px);
+        transition: box-shadow 0.15s ease-out, transform 0.15s ease-out;
     }
 }
