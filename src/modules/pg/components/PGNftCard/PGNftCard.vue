@@ -39,10 +39,10 @@
                 <div class="pg-nft-card__countdown">
                     <template v-if="!token.hasAuction">
                         <h6 class="h6 theme-pg-u-text-right">Sold</h6>
-                        <h4 class="h4 theme-pg-u-text-right">
+                        <!--                        <h4 class="h4 theme-pg-u-text-right">
                             {{ tokensAvailable > -1 ? 350 - tokensAvailable : 0 }} / 350
-                        </h4>
-                        <!--                        <h4 class="h4 theme-pg-u-text-right">0 / 350</h4>-->
+                        </h4>-->
+                        <h4 class="h4 theme-pg-u-text-right">350 / 350</h4>
                     </template>
 
                     <template v-else>
@@ -144,7 +144,7 @@ import erc20Utils from '@/utils/erc20-utils.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { pollingMixin } from '@/common/mixins/polling.js';
 import PGPayTokensList from '@/modules/pg/components/PGPayTokensList/PGPayTokensList.vue';
-import { getRandomTrade, getRandomTradeTokensAmount } from '@/modules/pg/queries/random-trade.js';
+import { getRandomTradeTokensAmount } from '@/modules/pg/queries/random-trade.js';
 import contracts from '@/utils/artion-contracts-utils.js';
 import Web3 from 'web3';
 
@@ -228,7 +228,7 @@ export default {
             buyTxStatus: '',
             buyInProgress: false,
             mPayToken: {},
-            tokensAvailable: -1,
+            tokensAvailable: 0,
             totalTokens: 0,
             mintedNftId: 0,
             walletMenu: [
@@ -340,7 +340,7 @@ export default {
                 this.startCountdown(this.auctionStart);
             }
 
-            if (!this.token.hasAuction) {
+            /*if (!this.token.hasAuction) {
                 const data = await getRandomTrade(RANDOM_TRADE_CONTRACT);
 
                 this.updateAvailableTokens(data);
@@ -352,7 +352,7 @@ export default {
                     },
                     3000
                 );
-            }
+            }*/
         },
 
         startCountdown(endDateTs) {
