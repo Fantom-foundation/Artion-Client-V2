@@ -14,6 +14,7 @@ export const state = {
     account: '',
     wallet: '',
     userName: '',
+    userAvatar: '',
     bt: {},
 };
 

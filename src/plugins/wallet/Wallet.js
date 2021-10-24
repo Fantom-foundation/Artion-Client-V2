@@ -6,6 +6,7 @@ import {
     SET_BT,
     DELETE_BT,
     SET_USER_NAME,
+    SET_USER_AVATAR,
 } from '@/plugins/wallet/store/mutations.js';
 import appConfig from '@/app.config.js';
 import { implementsWalletInterface } from '@/plugins/wallet/interface.js';
@@ -226,6 +227,7 @@ export class Wallet {
             this.user = user;
 
             this._setUserName(user.username || '');
+            this._setUserAvatar(user.avatarThumb || '');
         }
     }
 
@@ -383,6 +385,14 @@ export class Wallet {
      */
     _setUserName(userName) {
         store.commit(`wallet/${SET_USER_NAME}`, userName);
+    }
+
+    /**
+     * @param {string} userAvatar
+     * @private
+     */
+    _setUserAvatar(userAvatar) {
+        store.commit(`wallet/${SET_USER_AVATAR}`, userAvatar);
     }
 
     /**
