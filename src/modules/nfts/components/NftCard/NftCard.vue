@@ -127,7 +127,7 @@ export default {
                     this.$emit('nft-unlike');
                     this.$notifications.add({
                         type: 'success',
-                        text: `You successfully added ${this.nftData.name} to your favorites`,
+                        text: `You successfully remove ${this.nftData.name} from your favorites`,
                     });
                 }
             } else {
