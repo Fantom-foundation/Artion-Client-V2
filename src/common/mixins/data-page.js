@@ -108,5 +108,26 @@ export const dataPageMixin = {
                 });
             }
         },
+
+        /**
+         * @param {Object} pagination
+         * @private
+         */
+        async _onGridPageChange(pagination) {
+            this.loading = true;
+
+            const data = await this._loadPage({
+                pagination: this._getPaginationVariables(pagination),
+                dontSetItems: true,
+            });
+
+            if (this.pageInfo.hasNextPage && data.edges && data.edges.length > 0) {
+                this.items = this._getItemsFromData(data);
+
+                defer(() => {
+                    this.loading = false;
+                });
+            }
+        },
     },
 };
