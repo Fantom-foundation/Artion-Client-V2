@@ -45,7 +45,7 @@ export default {
         AppIconset,
         FListbox,
         FPopover,
-    //    FNotifications,
+        //    FNotifications,
     },
     data() {
         return {

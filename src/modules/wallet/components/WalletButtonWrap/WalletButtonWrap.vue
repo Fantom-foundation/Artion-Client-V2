@@ -11,6 +11,7 @@ import { mapState } from 'vuex';
 import { CHAINS } from '@/common/constants/chains.js';
 import WalletMenuPopover from '@/modules/wallet/components/WalletMenuPopover/WalletMenuPopover.vue';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
+import { getImageThumbUrl } from '@/utils/url.js';
 
 export default {
     name: 'WalletButtonWrap',
@@ -56,13 +57,17 @@ export default {
             walletAddress: 'account',
             chainId: 'chainId',
             userName: 'userName',
+            userAvatar: 'userAvatar',
         }),
     },
 
     watch: {
         walletAddress: {
             handler(value) {
-                this.wallet = { ...this.wallet, address: value || '' };
+                this.wallet = {
+                    ...this.wallet,
+                    address: value || '',
+                };
             },
             immediate: true,
         },
@@ -80,6 +85,13 @@ export default {
         userName: {
             handler(value) {
                 this.wallet = { ...this.wallet, userName: value };
+            },
+            immediate: true,
+        },
+
+        userAvatar: {
+            handler(value) {
+                this.wallet = { ...this.wallet, avatar: value ? getImageThumbUrl(value) : '' };
             },
             immediate: true,
         },
