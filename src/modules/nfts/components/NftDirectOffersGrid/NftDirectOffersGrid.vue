@@ -1,106 +1,170 @@
 <template>
     <div class="nftdirectoffersgrid">
         <f-data-grid
+            infinite-scroll
+            strategy="remote"
             no-header
             max-height="400px"
             sticky-head
-            class="agrid"
-            :items="offers"
-            :columns="itemsColumns"
-            :use-pagination="false"
-            :total-items="offers.length"
+            class="agrid nfttmpgrid"
+            :items="items"
+            :columns="columns"
+            :total-items="totalItems"
+            :per-page="perPage"
+            @change="_onGridPageChange"
         >
-            <template #column-from="{ item }">
-                <a :href="item.link" class="agrid_link">
-                    <div class="agrid_avatar">
-                        <img :src="item.img" alt="" />
-                    </div>
-                    {{ item.from }}
-                </a>
+            <template #column-proposedBy="{ value }">
+                <router-link :to="{ name: 'account', params: { address: value } }">
+                    <a-address :address="value" />
+                </router-link>
             </template>
-            <template #column-price="{ item }">
-                <div class="agrid_price">
-                    <img :src="item.imgCurrency" alt="" />
-                    {{ item.price }}
-                </div>
+            <template #column-unitPrice="{ item, value }">
+                <a-token-value
+                    :token="item.payToken"
+                    :value="value"
+                    :fraction-digits="2"
+                    :use-placeholder="false"
+                    no-symbol
+                />
             </template>
-            <template #column-expiration="{ item }">
-                <div>
-                    {{ item.expiration }}
-                </div>
+            <template #column-actions="{ item }">
+                <template v-if="!isExpired(item)">
+                    <a-button
+                        v-if="userCreatedToken"
+                        :loading="txStatus === 'pending'"
+                        label="Accept"
+                        @click.native="onAcceptButtonClick(item)"
+                    />
+                    <a-button
+                        v-else-if="compareAddresses(item.proposedBy, walletAddress)"
+                        :loading="txStatus === 'pending'"
+                        label="Withdraw"
+                        @click.native="onWithdrawButtonClick(item)"
+                    />
+                </template>
             </template>
         </f-data-grid>
     </div>
 </template>
 <script>
 import FDataGrid from 'fantom-vue-components/src/components/FDataGrid/FDataGrid.vue';
-import { OFFERS } from '@/common/constants/dummy/nftOffers.js';
 import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import dayjs from 'dayjs';
+import { dataPageMixin } from '@/common/mixins/data-page.js';
+import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
+import AAddress from '@/common/components/AAddress/AAddress.vue';
+import { mapState } from 'vuex';
+import AButton from '@/common/components/AButton/AButton.vue';
+import { compareAddresses } from '@/utils/address.js';
 
 export default {
     name: 'NftDirectOffersGrid',
 
-    components: { FDataGrid },
+    components: { AButton, AAddress, ATokenValue, FDataGrid },
+
+    mixins: [dataPageMixin],
 
     props: {
-        offers: {
-            type: Array,
-            default: () => OFFERS(),
+        token: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
+        userCreatedToken: {
+            type: Boolean,
+            default: false,
         },
     },
 
     data() {
         return {
-            itemsColumns: [
+            columns: [
                 {
-                    name: 'from',
+                    name: 'proposedBy',
                     label: 'From',
+                    width: '100px',
                 },
                 {
-                    name: 'price',
+                    name: 'unitPrice',
                     label: 'Price',
                 },
                 {
-                    name: 'expiration',
-                    label: 'Expiration',
+                    name: 'deadline',
+                    label: 'Expires',
+                    formatter(value) {
+                        return dayjs(value).format('DD.MM.YYYY HH:mm');
+                    },
+                },
+                {
+                    name: 'actions',
                 },
             ],
-            // items: [
-            //     {
-            //         from: '0x0d0c',
-            //         expiration: 'in 12 hours',
-            //         img: '/img/tmp/owner-avatar.png',
-            //         link: 'someLink',
-            //         price: 5000,
-            //         imgCurrency: '/img/tmp/ftm.png',
-            //     },
-            //     {
-            //         from: '0x0d0c',
-            //         expiration: 'in 12 hours',
-            //         link: 'someLink',
-            //         img: '/img/tmp/owner-avatar.png',
-            //         price: 5000,
-            //         imgCurrency: '/img/tmp/ftm.png',
-            //     },
-            // ],
+            txStatus: '',
         };
     },
 
-    created() {
-        // this.init();
+    computed: {
+        ...mapState('wallet', {
+            walletAddress: 'account',
+        }),
+    },
+
+    watch: {
+        token: {
+            handler(value) {
+                if (value.contract) {
+                    this.loadOffers();
+                }
+            },
+            immediate: true,
+        },
+
+        /*walletAddress() {
+            this.loadOffers();
+        },*/
     },
 
     methods: {
-        async init() {
-            const items = await getTokenOffers('0x61af4d29f672e27a097291f72fc571304bc93521', '0x1e9c');
+        async loadPage(pagination = { first: this.perPage }) {
+            const { token } = this;
 
-            console.log('offers: ', items);
+            const offers = await getTokenOffers(token.contract, token.tokenId, pagination);
 
-            console.log(dayjs(items.edges[0].node.created).format('DD.MM.YYYY HH:mm'));
-            console.log(dayjs(items.edges[0].node.deadline).format('DD.MM.YYYY HH:mm'));
-            console.log(dayjs(items.edges[0].node.closed).format('DD.MM.YYYY HH:mm'));
+            console.log(offers);
+
+            return offers;
         },
+
+        async loadOffers() {
+            await this._loadPage();
+        },
+
+        isExpired(token) {
+            if (!token.closed) {
+                const now = dayjs();
+                const deadline = dayjs(token.deadline);
+
+                return deadline.diff(now) <= 0;
+            }
+
+            return true;
+
+            /*console.log('isExpired', token);
+            return false;*/
+        },
+
+        onAcceptButtonClick(token) {
+            console.log('onAcceptButtonClick', token);
+            alert('Not implemented yew');
+        },
+
+        onWithdrawButtonClick(token) {
+            console.log('onWithdrawButtonClick', token);
+            alert('Not implemented yew');
+        },
+
+        compareAddresses,
     },
 };
 </script>

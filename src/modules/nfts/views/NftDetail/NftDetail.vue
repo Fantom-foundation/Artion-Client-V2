@@ -97,9 +97,7 @@
                             <app-iconset icon="list" /> {{ $t('nftdetail.directOffers') }}
                         </div>
                     </template>
-                    <template>
-                        <NftDirectOffersGrid />
-                    </template>
+                    <nft-direct-offers-grid :token="token" :user-created-token="userCreatedToken" />
                 </a-details>
             </div>
             <a-details-group class="nftdetail_info" rounded>
@@ -184,7 +182,7 @@
             </a-details-group>
         </div>
         <div class="nftdetail_filter">
-            <NftTradeHistoryGrid />
+            <nft-trade-history-grid />
         </div>
         <div class="nftdetail_collection">
             <a-details>
@@ -275,7 +273,7 @@ export default {
     watch: {
         walletAddress(value) {
             this.onWalletAddressChange(value);
-            this.getFavoriteNfts(value);
+            // this.getFavoriteNfts(value);
         },
     },
 
