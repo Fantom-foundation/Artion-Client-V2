@@ -16,15 +16,16 @@
 
 <script>
 import PGNft from '../PGNft/PGNft';
-import { delay } from 'fantom-vue-components/src/utils/function.js';
 import { getWFTMToken } from '@/modules/pg/utils.js';
+import { getRandomTradePayTokenPrice } from '@/modules/pg/queries/random-trade.js';
 import appConfig from '@/app.config.js';
 
+const RANDOM_TRADE_CONTRACT = process.env.VUE_APP_FANTOM_RANDOM_PURCHASE_CONTRACT_ADDRESS;
 const CONTRACT = '0x61af4d29f672e27a097291f72fc571304bc93521';
 const AUCTION_ON = appConfig.auctionOn;
 const AUCTION_START = appConfig.auctionStart;
-const SOURCES_BASE_URL = 'https://sandbox.pbro.zenithies.dev/M0qoc7s3';
-// const SOURCES_BASE_URL = 'pg';
+// const SOURCES_BASE_URL = 'https://sandbox.pbro.zenithies.dev/M0qoc7s3';
+const SOURCES_BASE_URL = 'pg';
 
 const TOKENS = [
     {
@@ -89,24 +90,24 @@ const PAY_TOKENS = [
         address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
         label: 'wFTM',
         img: 'img/WFTM.png',
-        tokenPrice: '0x1043561a8829300000',
+        tokenPrice: '0x56bc75e2d63100000',
         // price: 2.308624,
         // priceDecimals: 18,
         decimals: 18,
         value: 'wftm',
     },
     {
-        address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
+        address: '0x09e145a1d53c0045f41aeef25d8ff982ae74dd56',
         label: 'ZOO',
         img: 'img/ZOO.png',
-        tokenPrice: '0x12f939c99edab80000',
+        tokenPrice: '0xb3a6fd21acec880000',
         // price: 1,
         // priceDecimals: 18,
-        decimals: 18,
+        decimals: 0,
         value: 'zoo',
     },
     {
-        address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
+        address: '0x6c021ae822bea943b2e66552bde1d2696a53fbb7',
         label: 'TOMB',
         img: 'img/TOMB.png',
         tokenPrice: '0x56bc75e2d63100000',
@@ -147,10 +148,16 @@ export default {
         },
 
         async loadMPayTokens() {
-            // TMP
-            await delay(1);
+            const prices = await Promise.all(
+                PAY_TOKENS.map(payToken => getRandomTradePayTokenPrice(RANDOM_TRADE_CONTRACT, payToken.address))
+            );
 
-            return PAY_TOKENS;
+            return PAY_TOKENS.map((payToken, index) => {
+                return { ...payToken, tokenPrice: prices[index] };
+            });
+
+            /*console.log(prices);
+            return PAY_TOKENS;*/
         },
     },
 };

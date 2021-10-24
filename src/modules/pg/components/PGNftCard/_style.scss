@@ -52,6 +52,11 @@
     &__cta {
         padding: 18px 0 var(--f-spacer-4) 0;
         background: #121820;
+
+        &-button {
+            padding-top: var(--f-spacer-4);
+            text-align: center;
+        }
     }
 
     &__cta-top {

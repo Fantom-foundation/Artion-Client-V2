@@ -31,6 +31,7 @@
 <script>
 import PGMenu from '../PGMenu/PGMenu.vue';
 import WalletButtonWrap from '@/modules/wallet/components/WalletButtonWrap/WalletButtonWrap.vue';
+import appConfig from '@/app.config.js';
 
 export default {
     name: 'PGHeader',
@@ -41,10 +42,10 @@ export default {
         return {
             isMobileNavOpen: false,
             walletMenu: [
-                {
+                /*{
                     label: this.$t('walletMenu.settings'),
                     route: 'pg-account-settings',
-                },
+                },*/
                 {
                     label: this.$t('walletMenu.logout'),
                     action: 'logout',
@@ -60,6 +61,13 @@ export default {
     },
 
     created() {
+        if (appConfig.settingsOn) {
+            this.walletMenu.unshift({
+                label: this.$t('walletMenu.settings'),
+                route: 'pg-account-settings',
+            });
+        }
+
         window.addEventListener('resize', this.handleResize);
         this.handleResize();
     },

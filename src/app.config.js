@@ -100,7 +100,7 @@ let appConfig = {
     // if `true`, every route will be redirected to 'under maintenance' page
     underMaintenance: false,
     // use hash in address
-    routerHashMode: false,
+    routerHashMode: true,
     // Opera chain id
     chainId: '0xfa',
     // JSON-RPC endpointAdd
@@ -139,6 +139,8 @@ if (appConfig.module === 'pg') {
         auctionOn: true,
         // specifies auction start date - timestamp in UTC
         auctionStart: 1634738400000,
+        // specifies if setting page is on/off
+        settingsOn: false,
     };
 }
 
