@@ -12,6 +12,15 @@
 
     &__form .inp {
         --f-input-readonly-background: #141926;
+
+        & input:-webkit-autofill,
+        & input:-webkit-autofill:hover,
+        & input:-webkit-autofill:focus,
+        & input:-webkit-autofill:active {
+            -webkit-text-fill-color: var(--theme-pg-color);
+            -webkit-box-shadow: 0 0 0px 1000px var(--theme-pg-background-color) inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
     }
 
     & .h5 {
