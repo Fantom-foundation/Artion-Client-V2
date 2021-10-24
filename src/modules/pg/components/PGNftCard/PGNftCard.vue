@@ -118,7 +118,7 @@
         </f-window>
 
         <f-window ref="buySuccessModal" style="max-width: 345px">
-            <p-g-success-notification type="mint" :id="mintedNftId" />
+            <p-g-success-notification type="mint" />
         </f-window>
 
         <a-sign-transaction :tx="buyTx" @transaction-status="onBuyTransactionStatus" />
@@ -230,7 +230,6 @@ export default {
             mPayToken: {},
             tokensAvailable: 0,
             totalTokens: 0,
-            mintedNftId: 0,
             walletMenu: [
                 {
                     label: this.$t('walletMenu.settings'),
@@ -316,8 +315,6 @@ export default {
             if (!value) {
                 this.mPayToken = {};
                 this.tokenPriceB = null;
-            } else {
-                this.mintedNftId = 0;
             }
         },
     },
@@ -528,7 +525,6 @@ export default {
 
         async onSuccessfulBuy() {
             this.buyInProgress = false;
-            this.mintedNftId = 11;
             this.$refs.buySuccessModal.show();
         },
 
