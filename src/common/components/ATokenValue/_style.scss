@@ -1,0 +1,13 @@
+.atokenvalue {
+    &,
+    .fplaceholder {
+        display: flex;
+        align-items: center;
+        column-gap: var(--f-spacer-2);
+    }
+
+    img {
+        max-width: 24px;
+        margin-bottom: 0;
+    }
+}
