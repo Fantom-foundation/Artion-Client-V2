@@ -348,6 +348,19 @@
         "save": "Save"
     },
 
+    "accountshippingaddressform": {
+        "address": "Address",
+        "fullname": "Fullname",
+        "phone": "Phone",
+        "street": "Street",
+        "apartment": "Apartment",
+        "city": "City",
+        "country": "Country",
+        "state": "State",
+        "zip": "Zip",
+        "save": "Save"
+    },
+
     "notificationsettings": {
         "title": "Notification Settings"
     },

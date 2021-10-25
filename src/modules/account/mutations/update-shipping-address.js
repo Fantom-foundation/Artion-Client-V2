@@ -51,5 +51,5 @@ export async function updateShippingAddress({
         variables: { fullname, phone, street, apartment, city, state, country, zip },
     };
 
-    return gqlMutation(mutation);
+    return gqlMutation(mutation, 'updateShippingAddress');
 }

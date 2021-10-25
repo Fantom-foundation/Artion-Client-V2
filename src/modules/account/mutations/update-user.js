@@ -18,5 +18,5 @@ export async function updateUser({ username = '', bio = '', email = '' }) {
         variables: { username, bio, email },
     };
 
-    return gqlMutation(mutation);
+    return gqlMutation(mutation, 'updateUser');
 }
