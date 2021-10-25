@@ -35,7 +35,7 @@ export default {
     methods: {
         async loadTokens() {
             let pagination = { first: this.perPage };
-            let filterSort = { collections: this.contract };
+            let filterSort = { collections: this.contract, sortBy: "CREATED", sortDir: "DESC" };
             const tokens = await getTokens(pagination, filterSort);
             this.items = tokens.edges.map(edge => edge.node);
         },
