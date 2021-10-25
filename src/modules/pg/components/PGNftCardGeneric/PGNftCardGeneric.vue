@@ -12,13 +12,16 @@
                 </div>
             </div>
             <div v-if="!noRedeemButton" class="pg-nft-card__cta-button pg-nft-card__button">
-                <a-button label="Redeem available from 10/25" :disabled="true" size="large" />
+                <!--                <a-button label="Redeem available from 10/25" :disabled="true" size="large" />-->
+                <a-button label="Redeem" size="large" @click.native="onRedeemButtonClick" />
             </div>
         </div>
 
         <f-window ref="cardDetailModal" class="pg-nft-card__detail-modal">
             <p-g-nft-card-generic :token="token" no-redeem-button></p-g-nft-card-generic>
         </f-window>
+
+        <nft-redeem-window ref="redeemWindow" :token="token" />
     </div>
 </template>
 
@@ -29,11 +32,14 @@ import FImage from 'fantom-vue-components/src/components/FImage/FImage';
 import AVideo from '@/common/components/AVideo/AVideo.vue';
 import { CONTRACTS_FILTER } from '../PGMyNftsList/PGMyNftsList.vue';
 import AButton from '@/common/components/AButton/AButton.vue';
+import NftRedeemWindow from '@/modules/nfts/components/NftRedeemWindow/NftRedeemWindow.vue';
+import { checkSignIn } from '@/modules/account/auth.js';
 
 export default {
     name: 'PGNftCardGeneric',
 
     components: {
+        NftRedeemWindow,
         AButton,
         FWindow,
         FImage,
@@ -61,6 +67,14 @@ export default {
         onCardClick(event) {
             if (!event.target.closest('.pg-nft-card__cta-button')) {
                 this.$refs.cardDetailModal.show();
+            }
+        },
+
+        async onRedeemButtonClick() {
+            const ok = await checkSignIn();
+
+            if (ok) {
+                this.$refs.redeemWindow.show();
             }
         },
 
