@@ -52,16 +52,17 @@ export async function setUser(account, logged) {
 
 /**
  * Checks if user is logged, if not, try to log him
+ *
+ * @param {boolean} [redirectToHomepage]
  * @return {Promise<boolean>}
  */
-export async function checkSignIn() {
+export async function checkSignIn(redirectToHomepage = false) {
     let ok = true;
 
     if (!getBearerToken()) {
         ok = await signIn();
 
-        if (!ok) {
-            // redirect to the homepage
+        if (!ok && redirectToHomepage) {
             router.push('/');
         }
     }

@@ -14,7 +14,7 @@ export const authPageMixin = {
                 if (value) {
                     // not logged in
                     if (!getBearerToken()) {
-                        await checkSignIn();
+                        await checkSignIn(true);
                     }
                 } else {
                     // redirect to the homepage
@@ -25,6 +25,6 @@ export const authPageMixin = {
     },
 
     created() {
-        checkSignIn();
+        checkSignIn(true);
     },
 };
