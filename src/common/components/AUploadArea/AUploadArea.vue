@@ -44,12 +44,24 @@ export default {
             type: Boolean,
             default: false,
         },
+        initialPreview: {
+            type: String,
+            default: null
+        }
     },
+
     data() {
         return {
-            imagePreview: null,
+            imagePreview: null
         };
     },
+
+    watch: {
+        initialPreview(value) {
+            if(value) this.imagePreview = value;
+        }
+    },
+
     methods: {
         updatePreview(e) {
             let files;

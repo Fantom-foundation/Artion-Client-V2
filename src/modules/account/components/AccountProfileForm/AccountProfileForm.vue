@@ -142,13 +142,13 @@
                     <div class="accountprofileform_label">
                         {{ $t('accountprofileform.profileImg') }}
                     </div>
-                    <AUploadArea @input="uploadUserAvatar" />
+                    <AUploadArea :initial-preview="avatar" @input="uploadUserAvatar" />
                 </div>
                 <div class="accountprofileform_banner">
                     <div class="accountprofileform_label">
                         {{ $t('accountprofileform.profileBanner') }}
                     </div>
-                    <AUploadArea @input="uploadUserBanner" />
+                    <AUploadArea :initial-preview="banner" @input="uploadUserBanner" />
                 </div>
             </div>
         </div>
@@ -167,6 +167,7 @@ import { mapState } from 'vuex';
 import { getLoggedUserShippingAddress } from '../../queries/logged-user-shipping-address';
 import { updateShippingAddress } from '../../mutations/update-shipping-address';
 import { signIn, getBearerToken } from '@/modules/account/auth.js';
+import { getImageThumbUrl, getIPFSUrl } from '@/utils/url.js';
 import { uploadUserFile } from '@/utils/upload.js';
 
 export default {
@@ -177,6 +178,8 @@ export default {
     data() {
         return {
             values: {},
+            avatar: null,
+            banner: null,
         };
     },
 
@@ -195,6 +198,8 @@ export default {
             async handler(value) {
                 if (value) {
                     const user = await getUser(value);
+                    this.avatar = getImageThumbUrl(user.avatarThumb);
+                    this.banner = getIPFSUrl(user.banner);
                     const shippingAddress = await getLoggedUserShippingAddress();
                     this.values = { ...user, ...shippingAddress };
                 } else {

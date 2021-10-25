@@ -1,11 +1,11 @@
 <template>
     <div class="account">
         <div class="account_banner">
-            <AUploadArea @input="uploadUserBanner" />
+            <AUploadArea :initial-preview="banner" @input="uploadUserBanner" />
         </div>
         <div class="account_header">
             <div class="account_avatar">
-                <AUploadArea @input="uploadUserAvatar" />
+                <AUploadArea :initial-preview="avatar" @input="uploadUserAvatar" />
             </div>
             <div class="account_title">{{ user.username || $t('account.unnamed') }}</div>
             <div class="account_subtitle">
@@ -87,6 +87,7 @@ import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-t
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 import { signIn, getBearerToken } from '@/modules/account/auth.js';
 import { uploadUserFile } from '@/utils/upload.js';
+import { getImageThumbUrl, getIPFSUrl } from '@/utils/url.js';
 import { toInt } from '@/utils/big-number.js';
 
 export default {
@@ -115,6 +116,8 @@ export default {
             filterNumber: 0,
             userAddress: this.$route.params.adddress,
             user: {},
+            avatar: null,
+            banner: null,
             navigation: [
                 {
                     routeName: 'account-single-items',
@@ -217,6 +220,8 @@ export default {
         async loadUser(userAddress) {
             if (userAddress) {
                 this.user = await getUser(userAddress);
+                this.avatar = getImageThumbUrl(this.user.avatarThumb);
+                this.banner = getIPFSUrl(this.user.banner);
             }
         },
 
