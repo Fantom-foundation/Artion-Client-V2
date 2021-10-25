@@ -46,20 +46,20 @@ export default {
         },
         initialPreview: {
             type: String,
-            default: null
-        }
+            default: null,
+        },
     },
 
     data() {
         return {
-            imagePreview: null
+            imagePreview: null,
         };
     },
 
     watch: {
         initialPreview(value) {
-            if(value) this.imagePreview = value;
-        }
+            if (value) this.imagePreview = value;
+        },
     },
 
     methods: {
