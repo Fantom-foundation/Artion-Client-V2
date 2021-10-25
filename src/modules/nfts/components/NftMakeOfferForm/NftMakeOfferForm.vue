@@ -5,7 +5,7 @@
             type="a-price-field"
             :currencies="payTokens"
             name="price"
-            :label="$t('nftmakeofferform.price')"
+            :label="$t('nftMakeOfferForm.price')"
             :validator="priceValidator"
             validate-on-input
             @token-selected="onTokenSelected"
@@ -18,13 +18,13 @@
             :out-formatter="dateOutFormatterTimestamp"
             validate-on-input
             field-size="large"
-            :label="$t('nftmakeofferform.offerExpiration')"
+            :label="$t('nftMakeOfferForm.offerExpiration')"
         />
 
         <div class="fform_buttons">
-            <f-button type="submit" size="large" :disabled="!isFormValid || txStatus.status === 'pending'">
-                {{ $t('nftmakeofferform.placeOffer') }}
-            </f-button>
+            <a-button type="submit" size="large" :disabled="!isFormValid" :loading="txStatus === 'pending'">
+                {{ $t('nftMakeOfferForm.placeOffer') }}
+            </a-button>
         </div>
 
         <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
@@ -38,13 +38,13 @@ import ASignTransaction from '@/common/components/ASignTransaction/ASignTransact
 import { getErc20TokenBalance } from '@/modules/wallet/queries/erc20-token-balance.js';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
-import { mapState } from 'vuex';
 import { dateInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
+import AButton from '@/common/components/AButton/AButton.vue';
 
 export default {
     name: 'NftMakeOfferForm',
 
-    components: { ASignTransaction },
+    components: { AButton, ASignTransaction },
 
     props: {
         token: {
@@ -67,14 +67,11 @@ export default {
             selectedPayToken: null,
             accountBalance: 0,
             tx: {},
+            txStatus: '',
         };
     },
 
     computed: {
-        ...mapState('app', {
-            txStatus: 'txStatus',
-        }),
-
         isFormValid() {
             return !this.priceValidator(this.values.price) && !this.deadlineValidator(this.values.deadline);
         },
@@ -109,9 +106,9 @@ export default {
             const val = parseFloat(value);
 
             if (isNaN(val) || val <= 0) {
-                return this.$t('nftmakeofferform.nonZeroPrice');
+                return this.$t('nftMakeOfferForm.nonZeroPrice');
             } else if (this.accountBalance < val) {
-                return this.$t('nftmakeofferform.insufficientBalance');
+                return this.$t('nftMakeOfferForm.insufficientBalance');
             }
 
             return '';
@@ -120,7 +117,7 @@ export default {
         deadlineValidator(value) {
             const now = dayjs().valueOf();
 
-            return dayjs(value).valueOf() <= now ? this.$t('nftmakeofferform.badDate') : '';
+            return dayjs(value).valueOf() <= now ? this.$t('nftMakeOfferForm.badDate') : '';
         },
 
         async setTx(values) {
@@ -172,6 +169,15 @@ export default {
 
         onTransactionStatus(payload) {
             console.log('onTransactionStatus', JSON.stringify(payload));
+            this.txStatus = payload.status;
+
+            if (this.txStatus === 'success') {
+                this.$notifications.add({
+                    type: 'success',
+                    text: this.$t('nftMakeOfferForm.makeOfferSuccess'),
+                });
+                this.$emit('tx-success');
+            }
         },
 
         dateInFormatterTimestamp,

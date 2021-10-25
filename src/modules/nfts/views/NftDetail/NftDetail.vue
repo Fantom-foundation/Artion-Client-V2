@@ -97,7 +97,11 @@
                             <app-iconset icon="list" /> {{ $t('nftdetail.directOffers') }}
                         </div>
                     </template>
-                    <nft-direct-offers-grid :token="token" :user-created-token="userCreatedToken" />
+                    <nft-direct-offers-grid
+                        ref="directOffersGrid"
+                        :token="token"
+                        :user-created-token="userCreatedToken"
+                    />
                 </a-details>
             </div>
             <a-details-group class="nftdetail_info" rounded>
@@ -199,7 +203,7 @@
         <!--        <nft-make-offer-window ref="window" :title="$t('nftdetail.offer')" />-->
 
         <a-window ref="makeOfferWindow" :title="$t('nftdetail.offer')" class="fwindow-width-4">
-            <nft-make-offer-form :token="token" />
+            <nft-make-offer-form :token="token" @tx-success="onMakeOfferTxSuccess" />
         </a-window>
 
         <a-window ref="startAuctionWindow" :title="$t('nftdetail.startAuction')" class="fwindow-width-5">
@@ -362,6 +366,11 @@ export default {
             if (!this.token.hasAuction && this.userCreatedToken) {
                 this.$refs.startAuctionWindow.show();
             }
+        },
+
+        onMakeOfferTxSuccess() {
+            this.$refs.makeOfferWindow.hide();
+            this.$refs.directOffersGrid.update();
         },
 
         async onLikeClick() {

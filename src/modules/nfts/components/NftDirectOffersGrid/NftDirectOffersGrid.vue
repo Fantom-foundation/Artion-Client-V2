@@ -1,12 +1,14 @@
 <template>
     <div class="nftdirectoffersgrid">
         <f-data-grid
+            ref="grid"
             infinite-scroll
             strategy="remote"
             no-header
             max-height="400px"
             sticky-head
             class="agrid nfttmpgrid"
+            infinite-scroll-root=".nfttmpgrid .fdatagrid_table"
             :items="items"
             :columns="columns"
             :total-items="totalItems"
@@ -31,19 +33,21 @@
                 <template v-if="!isExpired(item)">
                     <a-button
                         v-if="userCreatedToken"
-                        :loading="txStatus === 'pending'"
-                        label="Accept"
+                        :loading="txStatus === 'pending' && pickedAddress === item.proposedBy"
+                        :label="$t('nftDirectOffersGrid.accept')"
                         @click.native="onAcceptButtonClick(item)"
                     />
                     <a-button
                         v-else-if="compareAddresses(item.proposedBy, walletAddress)"
-                        :loading="txStatus === 'pending'"
-                        label="Withdraw"
+                        :loading="txStatus === 'pending' && pickedAddress === item.proposedBy"
+                        :label="$t('nftDirectOffersGrid.withdraw')"
                         @click.native="onWithdrawButtonClick(item)"
                     />
                 </template>
             </template>
         </f-data-grid>
+
+        <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
     </div>
 </template>
 <script>
@@ -56,11 +60,14 @@ import AAddress from '@/common/components/AAddress/AAddress.vue';
 import { mapState } from 'vuex';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { compareAddresses } from '@/utils/address.js';
+import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
+import Web3 from 'web3';
+import contracts from '@/utils/artion-contracts-utils.js';
 
 export default {
     name: 'NftDirectOffersGrid',
 
-    components: { AButton, AAddress, ATokenValue, FDataGrid },
+    components: { ASignTransaction, AButton, AAddress, ATokenValue, FDataGrid },
 
     mixins: [dataPageMixin],
 
@@ -82,16 +89,16 @@ export default {
             columns: [
                 {
                     name: 'proposedBy',
-                    label: 'From',
+                    label: this.$t('nftDirectOffersGrid.from'),
                     width: '100px',
                 },
                 {
                     name: 'unitPrice',
-                    label: 'Price',
+                    label: this.$t('nftDirectOffersGrid.price'),
                 },
                 {
                     name: 'deadline',
-                    label: 'Expires',
+                    label: this.$t('nftDirectOffersGrid.expires'),
                     formatter(value) {
                         return dayjs(value).format('DD.MM.YYYY HH:mm');
                     },
@@ -100,7 +107,9 @@ export default {
                     name: 'actions',
                 },
             ],
+            tx: {},
             txStatus: '',
+            pickedAddress: '',
         };
     },
 
@@ -129,39 +138,92 @@ export default {
         async loadPage(pagination = { first: this.perPage }) {
             const { token } = this;
 
-            const offers = await getTokenOffers(token.contract, token.tokenId, pagination);
-
-            console.log(offers);
-
-            return offers;
+            return await getTokenOffers(token.contract, token.tokenId, pagination);
         },
 
         async loadOffers() {
             await this._loadPage();
         },
 
-        isExpired(token) {
-            if (!token.closed) {
+        acceptOffer(offer) {
+            const { token } = this;
+            const web3 = new Web3();
+            const tx = contracts.acceptOffer(token.contract, token.tokenId, offer.proposedBy, web3);
+
+            tx._code = 'accept';
+
+            this.pickedAddress = offer.proposedBy;
+
+            this.tx = tx;
+            // alert('Not implemented yew');
+        },
+
+        withdrawOffer(offer) {
+            const { token } = this;
+            const web3 = new Web3();
+            const tx = contracts.cancelOffer(token.contract, token.tokenId, web3);
+
+            tx._code = 'withdraw';
+
+            this.pickedAddress = offer.proposedBy;
+
+            this.tx = tx;
+        },
+
+        update() {
+            this.pageInfo = {};
+            this.$nextTick(() => {
+                this.$refs.grid.goToPageNum(1);
+            });
+            // this.loadOffers();
+        },
+
+        isExpired(offer) {
+            if (!offer.closed) {
                 const now = dayjs();
-                const deadline = dayjs(token.deadline);
+                const deadline = dayjs(offer.deadline);
 
                 return deadline.diff(now) <= 0;
             }
 
             return true;
 
-            /*console.log('isExpired', token);
+            /*console.log('isExpired', offer);
             return false;*/
         },
 
-        onAcceptButtonClick(token) {
-            console.log('onAcceptButtonClick', token);
-            alert('Not implemented yew');
+        onAcceptButtonClick(offer) {
+            this.acceptOffer(offer);
         },
 
-        onWithdrawButtonClick(token) {
-            console.log('onWithdrawButtonClick', token);
-            alert('Not implemented yew');
+        onWithdrawButtonClick(offer) {
+            this.withdrawOffer(offer);
+        },
+
+        onTxSuccess(txCode) {
+            console.log('onTxSuccess', txCode);
+
+            this.$notifications.add({
+                type: 'success',
+                text:
+                    txCode === 'withdraw'
+                        ? this.$t('nftDirectOffersGrid.withdrawSuccess')
+                        : this.$t('nftDirectOffersGrid.acceptSuccess'),
+            });
+
+            this.update();
+        },
+
+        onTransactionStatus(payload) {
+            this.txStatus = payload.status;
+
+            if (this.txStatus === 'success') {
+                this.onTxSuccess(payload.code);
+            }
+
+            if (this.txStatus !== 'pending') {
+                this.pickedAddress = '';
+            }
         },
 
         compareAddresses,

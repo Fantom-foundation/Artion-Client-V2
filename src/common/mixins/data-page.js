@@ -1,4 +1,4 @@
-import { clone, defer } from 'fantom-vue-components/src/utils';
+import { clone, defer, objectEquals } from 'fantom-vue-components/src/utils';
 
 export const dataPageMixin = {
     data() {
@@ -116,13 +116,21 @@ export const dataPageMixin = {
         async _onGridPageChange(pagination) {
             this.loading = true;
 
+            console.log('_onGridPageChange', JSON.stringify(pagination));
+            console.log('this.pageInfo', JSON.stringify(this.pageInfo));
+
             const data = await this._loadPage({
                 pagination: this._getPaginationVariables(pagination),
                 dontSetItems: true,
             });
 
             if (this.pageInfo.hasNextPage && data.edges && data.edges.length > 0) {
-                this.items = this._getItemsFromData(data);
+                // if (data.edges && data.edges.length > 0) {
+                const items = this._getItemsFromData(data);
+
+                if (!objectEquals(this.items, this._getItemsFromData(data))) {
+                    this.items = items;
+                }
 
                 defer(() => {
                     this.loading = false;
