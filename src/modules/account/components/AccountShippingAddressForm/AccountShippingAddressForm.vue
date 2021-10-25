@@ -80,9 +80,9 @@
         />
 
         <div>
-            <a-button type="submit" size="large" :loading="saving">{{
-                $t('accountshippingaddressform.save')
-            }}</a-button>
+            <a-button type="submit" size="large" :loading="saving">
+                {{ $t('accountshippingaddressform.save') }}
+            </a-button>
         </div>
     </f-form>
 </template>
@@ -199,7 +199,7 @@ export default {
 
                 if (result[0] && (result.length === 2 ? result[1] : true)) {
                     this.$notifications.add({
-                        text: 'Shipping address saved successfully',
+                        text: this.$t('accountshippingaddressform.savedSuccessfully'),
                         type: 'success',
                     });
                 }

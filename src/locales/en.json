@@ -358,7 +358,8 @@
         "country": "Country",
         "state": "State",
         "zip": "Zip",
-        "save": "Save"
+        "save": "Save",
+        "savedSuccessfully": "Shipping address saved successfully"
     },
 
     "notificationsettings": {
