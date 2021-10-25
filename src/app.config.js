@@ -140,7 +140,7 @@ if (appConfig.module === 'pg') {
         // specifies auction start date - timestamp in UTC
         auctionStart: 1634738400000,
         // specifies if setting page is on/off
-        settingsOn: false,
+        settingsOn: true,
     };
 }
 
