@@ -173,7 +173,7 @@ export default {
 
             const promises = [
                 updateShippingAddress({
-                    fullname2: fullname,
+                    fullname,
                     phone,
                     street,
                     apartment,
