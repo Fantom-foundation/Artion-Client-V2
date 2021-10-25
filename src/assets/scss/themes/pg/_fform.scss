@@ -1,0 +1,38 @@
+:root.theme-pg {
+    .fform {
+        & .inp,
+        & .inp-readonly {
+            --f-input-readonly-background: #121d3a;
+            --f-inputs-background: #121820;
+            --f-input-lg-border-radius: 12px;
+            --f-border-radius-2: var(--f-input-lg-border-radius);
+            --f-input-border: var(--f-inputs-border) var(--f-inputs-background);
+            --f-input-hover-border: var(--f-input-border);
+
+            border: var(--f-input-border);
+            padding: 3px 0 2px;
+            min-height: 56px;
+
+            & input:-webkit-autofill,
+            & input:-webkit-autofill:hover,
+            & input:-webkit-autofill:focus,
+            & input:-webkit-autofill:active {
+                -webkit-text-fill-color: var(--theme-pg-color);
+                -webkit-box-shadow: 0 0 0px 1000px var(--f-inputs-background) inset;
+                transition: background-color 5000s ease-in-out 0s;
+            }
+
+            & input::placeholder {
+                color: #69778a;
+            }
+
+            & textarea::placeholder {
+                color: #3d4755;
+            }
+        }
+
+        .flabel, .fforminput .flabel {
+            color: #8294ab;
+        }
+    }
+}
