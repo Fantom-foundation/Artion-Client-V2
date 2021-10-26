@@ -31,7 +31,7 @@ export const getters = {
      * @param {AppState} state
      * @return {boolean}
      */
-    autoDarkMode(state) {
-        return state.autoDarkMode;
+    autoDarkTheme(state) {
+        return state.autoDarkTheme;
     },
 };

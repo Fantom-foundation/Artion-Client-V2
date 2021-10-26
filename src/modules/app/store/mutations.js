@@ -35,9 +35,9 @@ export const mutations = {
     },
     /**
      * @param {AppState} state
-     * @param {boolean} autoDarkMode
+     * @param {boolean} autoDarkTheme
      */
-    [SET_AUTO_DARK_MODE](state, autoDarkMode) {
-        state.autoDarkMode = autoDarkMode;
+    [SET_AUTO_DARK_MODE](state, autoDarkTheme) {
+        state.autoDarkTheme = autoDarkTheme;
     },
 };
