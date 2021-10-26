@@ -282,6 +282,10 @@ export default {
             this.onWalletAddressChange(value);
             // this.getFavoriteNfts(value);
         },
+
+        $route() {
+            this.init();
+        },
     },
 
     created() {
