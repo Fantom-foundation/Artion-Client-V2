@@ -6,6 +6,7 @@
 
         <wallet-picker />
         <f-app-theme :themes="['theme-default', 'theme-dark', 'theme-pg']" />
+        <app-dark-theme />
         <f-tooltip with-arrow />
         <f-notifications
             strategy="newest-first"
@@ -29,15 +30,14 @@ import FAppTheme from 'fantom-vue-components/src/components/FAppTheme/FAppTheme.
 import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.vue';
 import { getBearerToken, setUser } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
+import AppDarkTheme from '@/modules/app/components/AppDarkTheme/AppDarkTheme.vue';
 
-// import { FAppTheme } from '@skavel/fantom-vue-ui';
-// import FAppTheme from '@skavel/fantom-vue-ui/src/components/FAppTheme/FAppTheme.vue';
 // import AppLanguage from '@/modules/app/components/AppLanguage/AppLanguage.vue';
 
 export default {
     name: 'App',
 
-    components: { WalletPicker, FNotifications, FNetworkStatus, FTooltip, FAppTheme },
+    components: { AppDarkTheme, WalletPicker, FNotifications, FNetworkStatus, FTooltip, FAppTheme },
 
     data() {
         return {

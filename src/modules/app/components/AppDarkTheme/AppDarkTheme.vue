@@ -5,7 +5,6 @@
 <script>
 import FAppTheme from 'fantom-vue-components/src/components/FAppTheme/FAppTheme.vue';
 import { mapState } from 'vuex';
-import { SET_THEME } from '@/modules/app/store/mutations.js';
 
 const THEME_DARK = 'theme-dark';
 
@@ -14,7 +13,7 @@ export default {
 
     data() {
         return {
-            prevTheme: '',
+            prevTheme: 'theme-default',
             prefersColorScheme: null,
         };
     },
@@ -27,8 +26,11 @@ export default {
     },
 
     watch: {
-        theme(value) {
-            FAppTheme.setTheme(value);
+        theme: {
+            handler(value) {
+                FAppTheme.setTheme(value);
+            },
+            immediate: true,
         },
 
         autoDarkTheme(value) {
@@ -51,7 +53,6 @@ export default {
 
             if (this.prefersColorScheme) {
                 this.prefersColorScheme.addEventListener('change', _event => {
-                    console.log('!!!!', this.autoDarkTheme);
                     if (this.autoDarkTheme) {
                         this.setDarkTheme(_event.matches);
                     }
@@ -60,12 +61,14 @@ export default {
         },
 
         setDarkTheme(on = false) {
-            if (on) {
-                this.prevTheme = FAppTheme.getTheme();
-                this.$store.commit(`app/${SET_THEME}`, THEME_DARK);
-            } else if (this.prevTheme) {
-                this.$store.commit(`app/${SET_THEME}`, this.prevTheme);
-            }
+            this.$nextTick(() => {
+                if (on) {
+                    this.prevTheme = FAppTheme.getTheme();
+                    FAppTheme.setTheme(THEME_DARK);
+                } else if (this.prevTheme) {
+                    FAppTheme.setTheme(this.prevTheme);
+                }
+            });
         },
     },
 };
