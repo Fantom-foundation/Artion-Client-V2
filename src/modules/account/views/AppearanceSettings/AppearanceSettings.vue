@@ -2,7 +2,6 @@
     <div class="appearancesettings">
         <h1 class="mat-0">{{ $t('appearancesettings.title') }}</h1>
         <p>
-            {{ theme }}
             <f-dark-theme-switch
                 v-model="darkTheme"
                 :disabled="autoDarkThemeOn"
