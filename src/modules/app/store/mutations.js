@@ -2,6 +2,7 @@ export const SET_LANGUAGE = 'setLanguage';
 export const SET_THEME = 'setTheme';
 export const SET_TX_STATUS = 'setTxStatus';
 export const SET_NFTS_DENSITY = 'setNftsDensity';
+export const SET_AUTO_DARK_MODE = 'setAutoDarkMode';
 
 export const mutations = {
     /**
@@ -31,5 +32,12 @@ export const mutations = {
      */
     [SET_NFTS_DENSITY](state, nftsDensity) {
         state.nftsDensity = nftsDensity;
+    },
+    /**
+     * @param {AppState} state
+     * @param {boolean} autoDarkMode
+     */
+    [SET_AUTO_DARK_MODE](state, autoDarkMode) {
+        state.autoDarkMode = autoDarkMode;
     },
 };

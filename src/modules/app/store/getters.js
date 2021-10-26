@@ -27,4 +27,11 @@ export const getters = {
     nftsDensity(state) {
         return state.nftsDensity;
     },
+    /**
+     * @param {AppState} state
+     * @return {boolean}
+     */
+    autoDarkMode(state) {
+        return state.autoDarkMode;
+    },
 };
