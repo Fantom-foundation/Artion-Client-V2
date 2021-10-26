@@ -2,7 +2,7 @@
     <nav class="accountnavigation">
         <ul class="accountnavigation_list">
             <li v-for="item in dNavigation" :key="`accnav_${item.routeName}`" class="accountnavigation_item">
-                <router-link :to="{ name: item.routeName, query: { ...filters } }">
+                <router-link :to="{ name: item.routeName, params: item.routeParams || {}, query: { ...filters } }">
                     <app-iconset :icon="item.icon" size="24px" />{{ item.label }}
                     <span v-if="'counter' in item" class="accountnavigation_counter">{{ item.counter }}</span>
                 </router-link>
