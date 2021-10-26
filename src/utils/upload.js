@@ -32,3 +32,24 @@ export async function uploadUserFile(_file, _type = 'avatar') {
         });
     }
 }
+
+export async function uploadTokenData(_metadata, _imageFile) {
+    let data = new FormData();
+    data.append('file', _imageFile);
+    data.append('metadata', JSON.stringify(_metadata));
+    const options = {
+        method: 'POST',
+        headers: {
+            Authorization: 'Bearer ' + getBearerToken(),
+        },
+        body: data,
+    };
+
+    let url = artionFApolloClient.httpProviderOrigin + '/upload-image/token';
+
+    let response = await fetch(url, options);
+    console.log(response);
+    if (response.status === 200) {
+        return await response.text();
+    }
+}

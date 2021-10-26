@@ -2,7 +2,7 @@
     <f-form v-model="values" class="nftcreate_form" @submit="onSubmit">
         <div class="nftcreate_col">
             <div>
-                <a-upload-area>
+                <a-upload-area @input="setTokenImage">
                     Drop files here or browse <br />
                     JPG, PNG, BMP, GIF Max 15mb.
                 </a-upload-area>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="nftcreate_panel">
                     <f-form-input
-                        :validator="validator"
+                        :validator="royaltyValidator"
                         validate-on-change
                         validate-on-input
                         :error-message="$t('nftcreate.royaltyErr')"
@@ -83,28 +83,40 @@
                 </div>
             </div>
             <div class="nftcreate_btn">
-                <f-button type="submit" size="large" :disabled="isDisabled">{{ $t('nftcreate.mint') }}</f-button>
+                <a-button type="submit" size="large" :disabled="isDisabled" :loading="isLoading">{{
+                    $t('nftcreate.mint')
+                }}</a-button>
             </div>
             <div class="nftcreate_info">
                 <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm') }}</f-message>
             </div>
+            <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
         </div>
     </f-form>
 </template>
 <script>
 import ADropdownListbox from '@/common/components/ADropdownListbox/ADropdownListbox.vue';
+import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import FMessage from 'fantom-vue-components/src/components/FMessage/FMessage.vue';
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
-import { collections } from '@/common/constants/dummy/collections';
 import AUploadArea from '@/common/components/AUploadArea/AUploadArea.vue';
+import { getCollections } from '@/modules/nfts/queries/collections';
+import { uploadTokenData } from '@/utils/upload';
+import Web3 from 'web3';
+import contracts from '@/utils/artion-contracts-utils';
+import { notifications } from 'fantom-vue-components/src/plugins/notifications';
+import AButton from '@/common/components/AButton/AButton';
 
 export default {
     name: 'NftCreateForm',
-    components: { AUploadArea, ADropdownListbox, FMessage, AppIconset },
+    components: { AUploadArea, AButton, ADropdownListbox, FMessage, AppIconset, ASignTransaction },
     data() {
         return {
             values: {},
-            collections,
+            collections: [],
+            imageFile: null,
+            tx: {},
+            isLoading: false,
         };
     },
 
@@ -115,14 +127,74 @@ export default {
         },
     },
 
+    async created() {
+        const collections = await getCollections();
+        this.collections = collections.edges.map(edge => {
+            return {
+                label: edge.node.name,
+                value: edge.node.contract,
+                img: 'img/tmp/fantom.svg',
+            };
+        });
+    },
+
     methods: {
-        validator(_value) {
+        royaltyValidator(_value) {
             if (_value === '') return _value;
             _value = Number(_value);
             return !(_value >= 1 && _value <= 100);
         },
-        onSubmit(_data) {
-            console.log(_data);
+        setTokenImage(_files) {
+            this.imageFile = _files[0];
+        },
+        async onSubmit(_data) {
+            console.log('onSubmit', _data);
+            this.isLoading = true;
+            const val = _data.values;
+
+            const collection = this.collections.filter(col => col.value === val.collectionId)[0];
+
+            const _metadata = {
+                name: val.name,
+                description: val.description,
+                properties: {
+                    symbol: val.symbol,
+                    royalty: val.royalty,
+                    IP_Rights: val.linkToIp,
+                    collection: collection.label,
+                },
+            };
+
+            let tokenUri;
+            try {
+                tokenUri = await uploadTokenData(_metadata, this.imageFile);
+            } catch (err) {
+                notifications.add({
+                    type: 'error',
+                    text: `Sorry, something went wrong. Data of your token wasn't uploaded`,
+                });
+                return;
+            }
+
+            const web3 = new Web3();
+            this.tx = contracts.createNFT(
+                this.$wallet.account,
+                tokenUri,
+                '1000000000000000000', // 1 FTM
+                val.collectionId,
+                web3
+            );
+        },
+        onTransactionStatus(payload) {
+            console.log('onTransactionStatus', payload);
+            this.isLoading = false;
+
+            if (status === 'success') {
+                notifications.add({
+                    type: 'success',
+                    text: `The token was successfuly created`,
+                });
+            }
         },
     },
 };
