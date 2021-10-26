@@ -242,8 +242,8 @@ export default {
         async loadUser(userAddress) {
             if (userAddress) {
                 this.user = await getUser(userAddress);
-                this.avatar = getImageThumbUrl(this.user.avatarThumb);
-                this.banner = getIPFSUrl(this.user.banner);
+                this.avatar = this.user.avatarThumb ? getImageThumbUrl(this.user.avatarThumb) : '';
+                this.banner = this.user.banner ? getIPFSUrl(this.user.banner) : '';
             }
         },
 
