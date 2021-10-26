@@ -38,8 +38,18 @@ export default {
         },
     },
 
+    mounted() {
+        this.loadTokens();
+    },
+
     methods: {
         async loadTokens() {
+            const { contract } = this.token;
+
+            if (!contract) {
+                return;
+            }
+
             let pagination = { first: this.perPage };
             let filterSort = { filter: { collections: [this.token.contract] }, sortBy: 'CREATED', sortDir: 'DESC' };
             const tokens = await getTokens(pagination, filterSort);

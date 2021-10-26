@@ -1,5 +1,5 @@
 <template>
-    <f-details v-bind="$attrs" animate class="adetails" v-on="$listeners">
+    <f-details v-bind="$attrs" animate strategy="create" class="adetails" v-on="$listeners">
         <!-- copy slots -->
         <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>
