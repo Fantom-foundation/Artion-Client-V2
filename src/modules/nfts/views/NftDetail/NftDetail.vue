@@ -196,7 +196,7 @@
                     </div>
                 </template>
                 <template>
-                    <!--                    <nft-list :tokens="nftData" />-->
+                    <NftMoreFromCollectionList :contract="token.contract" />
                 </template>
             </a-details>
         </div>
@@ -237,6 +237,8 @@ import NftStartAuctionForm from '@/modules/nfts/components/NftStartAuctionForm/N
 import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
 import { checkWallet } from '@/plugins/wallet/utils.js';
 
+import NftMoreFromCollectionList from '@/modules/nfts/components/NftMoreFromCollectionList/NftMoreFromCollectionList.vue';
+
 export default {
     name: 'NftDetail',
 
@@ -254,6 +256,7 @@ export default {
         NftListingsGrid,
         NftDirectOffersGrid,
         NftTradeHistoryGrid,
+        NftMoreFromCollectionList,
     },
 
     data() {

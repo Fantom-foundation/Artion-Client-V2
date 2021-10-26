@@ -19,9 +19,9 @@
                 @change="updatePreview"
             />
             <img v-if="imagePreview" :src="imagePreview" alt="Preview Image" class="auploadarea_preview" />
-            <div v-if="imagePreview" class="auploadarea_overlay" @click.stop>
+            <div v-if="imagePreview" class="auploadarea_overlay" @click.stop="deleteImage">
                 <button aria-label="Remove image" data-tooltip="Remove image" @keyup.enter.space.stop="deleteImage">
-                    <app-iconset icon="close" @click.native.stop="deleteImage" />
+                    <app-iconset icon="close"/>
                 </button>
             </div>
             <div v-if="imagePreview === null" class="auploadarea_text">
@@ -44,12 +44,24 @@ export default {
             type: Boolean,
             default: false,
         },
+        initialPreview: {
+            type: String,
+            default: null,
+        },
     },
+
     data() {
         return {
             imagePreview: null,
         };
     },
+
+    watch: {
+        initialPreview(value) {
+            if (value) this.imagePreview = value;
+        },
+    },
+
     methods: {
         updatePreview(e) {
             let files;
