@@ -196,7 +196,7 @@
                     </div>
                 </template>
                 <template>
-                    <NftMoreFromCollectionList :contract="token.contract" />
+                    <nft-more-from-collection-list :token="token" />
                 </template>
             </a-details>
         </div>

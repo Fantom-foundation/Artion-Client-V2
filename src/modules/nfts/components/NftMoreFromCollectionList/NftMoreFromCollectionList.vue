@@ -14,9 +14,11 @@ export default {
     components: { NftList },
 
     props: {
-        contract: {
-            type: String,
-            default: '',
+        token: {
+            type: Object,
+            default() {
+                return {};
+            },
             required: true,
         },
     },
@@ -28,14 +30,18 @@ export default {
         };
     },
 
-    created() {
-        this.loadTokens();
+    watch: {
+        token(value) {
+            if (value) {
+                this.loadTokens();
+            }
+        },
     },
 
     methods: {
         async loadTokens() {
             let pagination = { first: this.perPage };
-            let filterSort = { collections: this.contract, sortBy: "CREATED", sortDir: "DESC" };
+            let filterSort = { filter: { collections: [this.token.contract] }, sortBy: 'CREATED', sortDir: 'DESC' };
             const tokens = await getTokens(pagination, filterSort);
             this.items = tokens.edges.map(edge => edge.node);
         },
