@@ -14,7 +14,7 @@ import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 import { Metamask } from '@/plugins/wallet/metamask/Metamask.js';
 import { Coinbase } from '@/plugins/wallet/coinbase/Coinbase.js';
-import { defer } from 'fantom-vue-components/src/utils';
+import { clone, defer } from 'fantom-vue-components/src/utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { fantomApolloClient } from '@/plugins/apollo/apollo-provider.js';
 import { delay } from 'fantom-vue-components/src/utils/function.js';
@@ -69,7 +69,7 @@ export class Wallet {
         let txHash = '';
 
         if (this.wallet) {
-            txHash = await this.wallet.signTransaction(tx, address);
+            txHash = await this.wallet.signTransaction(clone(tx), address);
 
             if (txHash && waitUntilVerified) {
                 await this._verifyTransaction(txHash);
