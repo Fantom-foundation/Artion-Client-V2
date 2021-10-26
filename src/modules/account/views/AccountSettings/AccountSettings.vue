@@ -30,7 +30,8 @@ export default {
                     route: 'account-settings-notifications',
                     icon: 'notify',
                 },
-                { label: this.$t('accountsettings.offers'), icon: 'tag' },
+                // { label: this.$t('accountsettings.offers'), icon: 'tag' },
+                { label: this.$t('accountsettings.appearance'), route: 'account-settings-appearance', icon: 'tag' },
             ],
         };
     },

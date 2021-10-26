@@ -308,7 +308,8 @@
         "title": "SETTINGS",
         "profile": "@:profile",
         "notifications": "Notifications",
-        "offers": "Offers"
+        "offers": "Offers",
+        "appearance": "Appearance"
     },
 
     "accountsettingsprofile": {
@@ -364,6 +365,13 @@
 
     "notificationsettings": {
         "title": "Notification Settings"
+    },
+
+    "appearancesettings": {
+        "title": "Appearance Settings",
+        "darkMode": "Dark Mode",
+        "autoDarkMode": "Auto Dark Mode",
+        "autoDarkModeInfo": "Sets the dark theme according to the system settings"
     },
 
     "notificationsettingsform": {

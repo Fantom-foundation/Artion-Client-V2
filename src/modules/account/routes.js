@@ -10,6 +10,7 @@ import AccountMyOffers from '@/modules/account/views/AccountMyOffers/AccountMyOf
 import AccountSettings from '@/modules/account/views/AccountSettings/AccountSettings.vue';
 import AccountSettingsProfile from '@/modules/account/views/AccountSettingsProfile/AccountSettingsProfile.vue';
 import NotificationSettings from '@/modules/account/views/NotificationSettings/NotificationSettings.vue';
+import AppearanceSettings from '@/modules/account/views/AppearanceSettings/AppearanceSettings.vue';
 
 export function getAccountRoutes() {
     return [
@@ -76,6 +77,11 @@ export function getAccountRoutes() {
                     path: 'notifications',
                     name: 'account-settings-notifications',
                     component: NotificationSettings,
+                },
+                {
+                    path: 'appearance',
+                    name: 'account-settings-appearance',
+                    component: AppearanceSettings,
                 },
             ],
         },
