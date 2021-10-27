@@ -298,7 +298,8 @@
         "price": "Price",
         "expires": "Expires",
         "withdrawSuccess": "You have successfully withdraw an offer",
-        "acceptSuccess": "You have successfully accepted an offer"
+        "acceptSuccess": "You have successfully accepted an offer",
+        "status": "Status"
     },
 
     "account": {

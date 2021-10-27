@@ -105,6 +105,13 @@ export default {
                     },
                 },
                 {
+                    name: 'closed',
+                    label: this.$t('nftDirectOffersGrid.status'),
+                    formatter(value, item) {
+                        return value ? 'Closed' : isExpired(item.deadline) ? 'Expired' : '';
+                    },
+                },
+                {
                     name: 'actions',
                 },
             ],
