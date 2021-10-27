@@ -109,9 +109,11 @@ import AButton from '@/common/components/AButton/AButton';
 import { checkSignIn } from '@/modules/account/auth';
 import { setUnlockableContent } from '@/modules/nfts/mutations/unlockables';
 import { toHex } from '@/utils/big-number';
+import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
 
 export default {
     name: 'NftCreateForm',
+    mixins: [eventBusMixin],
     components: { AUploadArea, AButton, ADropdownListbox, FMessage, AppIconset, ASignTransaction },
     data() {
         return {
@@ -175,6 +177,7 @@ export default {
                 },
             };
 
+            await this.checkWalletConnection();
             let signed = await checkSignIn();
             if (!signed) {
                 console.error('not signed');
@@ -262,6 +265,14 @@ export default {
             const tokenId = contracts.decodeMintedNftTokenId(receipt, web3);
             console.log('tokenId', tokenId, toHex(tokenId));
             return toHex(tokenId);
+        },
+
+        async checkWalletConnection() {
+            if (!this.$wallet.connected) {
+                const payload = {};
+                this._eventBus.emit('show-wallet-picker', payload);
+                await payload.promise;
+            }
         },
     },
 };
