@@ -12,6 +12,7 @@
     "startAuction": "Start Auction",
     "profile": "Profile",
     "reservePrice": "Reserve Price",
+    "redeem": "Redeem",
 
     "navigation": {
         "explore": "@:explore",
@@ -224,6 +225,15 @@
         "unlockContent": "Unlockable Content",
         "mint": "Mint",
         "messageFtm": "1 FTM are charged to create a new NFT."
+    },
+
+    "nftredeem": {
+        "updateShippingDetails": "Update Shipping Details",
+        "understandRedeeming": "I understand that redeeming will burn and destroy the digital NFT",
+        "fillOutForm": "Please fill out the form below, making sure the information you provide is accurate.",
+        "note": "Note: reedeeming the rewards will burn (destroy) the digital NFT.",
+        "redeemingSuccessful": "You successfully redeem NFT {name}",
+        "redeem": "@:redeem"
     },
 
     "pgModal": {

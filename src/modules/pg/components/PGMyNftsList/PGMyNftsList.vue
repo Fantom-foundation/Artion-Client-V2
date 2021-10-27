@@ -82,10 +82,8 @@ const TMP_TOKENS = [
     },*/
 ];
 
-// const RANDOM_TRADE_CONTRACT = process.env.VUE_APP_FANTOM_RANDOM_PURCHASE_CONTRACT_ADDRESS;
-
 export const CONTRACTS_FILTER = [
-    // RANDOM_TRADE_CONTRACT,
+    // '0x61af4d29f672e27a097291f72fc571304bc93521',
     '0x475631dbd805f46be62d8f87a4f07ca8afaf7e45',
 ];
 
