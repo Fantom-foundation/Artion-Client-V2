@@ -19,7 +19,6 @@
                     <div class="nftdetail_description">
                         {{ token.description }}
                     </div>
-                    <nft-detail-status />
                     <div class="nftdetail_status">
                         <div class="nftdetail_owner">
                             {{ $t('nftdetail.owned') }}
@@ -248,7 +247,6 @@ import { checkWallet } from '@/plugins/wallet/utils.js';
 
 import NftMoreFromCollectionList from '@/modules/nfts/components/NftMoreFromCollectionList/NftMoreFromCollectionList.vue';
 import AAddress from '@/common/components/AAddress/AAddress.vue';
-import NftDetailStatus from '@/modules/nfts/components/NftDetailStatus/NftDetailStatus.vue';
 import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import { compareAddresses } from '@/utils/address.js';
 import { isExpired } from '@/utils/date.js';
@@ -260,7 +258,6 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
-        NftDetailStatus,
         AAddress,
         NftAuction,
         NftStartAuctionForm,
