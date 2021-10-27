@@ -1,6 +1,6 @@
 <template>
     <span class="aaddress">
-        <img v-if="imgSrc" :src="imgSrc" aria-hidden="true" />
+        <img v-if="imgSrc" :src="imgSrc" aria-hidden="true" class="aaddress_avatar" alt="Avatar" />
         <f-ellipsis :text="address" overflow="middle" />
     </span>
 </template>
