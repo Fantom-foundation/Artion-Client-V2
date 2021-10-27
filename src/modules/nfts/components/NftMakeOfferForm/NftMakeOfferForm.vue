@@ -98,9 +98,6 @@ export default {
         async init() {
             this.payTokens = await PAY_TOKENS_WITH_PRICES();
             this.selectedPayToken = this.payTokens[0];
-
-            // TMP
-            // await this.$wallet._verifyTransaction('0xb9e742176ee9676b879e0cb79a063b76d30425cb77ec6114f185150ec18a0382');
         },
 
         priceValidator(value) {
@@ -124,13 +121,8 @@ export default {
         async setTx(values) {
             const web3 = new Web3();
             const { token } = this;
-
-            console.log(JSON.stringify(values));
-
             const price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
             const deadline = parseInt(values.deadline / 1000);
-
-            console.log(price, deadline, this.selectedPayToken.address);
 
             const tx = contracts.createOffer(
                 token.contract,
@@ -139,13 +131,8 @@ export default {
                 1,
                 price,
                 deadline,
-                // '1',
                 web3
             );
-            // tx.from = this.$wallet.account;
-
-            // console.log(JSON.stringify(tx));
-            // console.log('token: ', JSON.stringify(token));
 
             this.tx = tx;
         },
@@ -160,16 +147,10 @@ export default {
         },
 
         onSubmit(data) {
-            const { values } = data;
-
-            console.log('price', values.price, toHex(bToTokenValue(values.price, this.selectedPayToken.decimals)));
-            console.log('deadline', values.deadline, parseInt(values.deadline / 1000));
-
-            this.setTx(values);
+            this.setTx(data.values);
         },
 
         onTransactionStatus(payload) {
-            console.log('onTransactionStatus', JSON.stringify(payload));
             this.txStatus = payload.status;
 
             if (this.txStatus === 'success') {
@@ -177,8 +158,9 @@ export default {
                     type: 'success',
                     text: this.$t('nftMakeOfferForm.makeOfferSuccess'),
                 });
-                this.$emit('tx-success');
             }
+
+            this.$emit('transaction-status', payload);
         },
 
         datetimeInFormatterTimestamp,

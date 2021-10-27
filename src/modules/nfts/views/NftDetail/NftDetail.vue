@@ -208,11 +208,13 @@
                 </template>
             </a-details>
         </div>
-        <!--        <nft-make-offer-window ref="window" :title="$t('nftdetail.offer')" />-->
 
-        <a-window ref="makeOfferWindow" :title="$t('nftdetail.offer')" class="fwindow-width-4">
-            <nft-make-offer-form :token="token" @tx-success="onMakeOfferTxSuccess" />
-        </a-window>
+        <nft-make-offer-window
+            ref="makeOfferWindow"
+            :token="token"
+            :title="$t('nftdetail.offer')"
+            @tx-success="onMakeOfferTxSuccess"
+        />
 
         <a-window ref="startAuctionWindow" :title="$t('nftdetail.startAuction')" class="fwindow-width-5">
             <nft-start-auction-form :token="token" />
@@ -232,7 +234,6 @@ import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/N
 import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
-import NftMakeOfferForm from '@/modules/nfts/components/NftMakeOfferForm/NftMakeOfferForm.vue';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { getImageThumbUrl } from '@/utils/url.js';
 import { getTokens } from '@/modules/nfts/queries/tokens.js';
@@ -251,6 +252,7 @@ import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import { compareAddresses } from '@/utils/address.js';
 import { isExpired } from '@/utils/date.js';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
+import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow.vue';
 
 export default {
     name: 'NftDetail',
@@ -258,10 +260,10 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftMakeOfferWindow,
         AAddress,
         NftAuction,
         NftStartAuctionForm,
-        NftMakeOfferForm,
         ASignTransaction,
         ADetails,
         ADetailsGroup,
@@ -455,9 +457,6 @@ export default {
         onMakeOfferTxSuccess() {
             const { $refs } = this;
 
-            $refs.makeOfferWindow.hide();
-
-            // this.init();
             this.onWalletAddressChange();
             if ($refs.directOffersGrid) {
                 $refs.directOffersGrid.update();
