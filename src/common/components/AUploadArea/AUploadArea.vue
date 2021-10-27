@@ -1,10 +1,10 @@
 <template>
-    <div class="auploadarea">
+    <div class="auploadarea" :class="{ 'auploadarea-disabled': disabled }">
         <div
             class="auploadarea_content"
             tabindex="0"
-            @keyup.enter.space="$refs.file.click()"
-            @click="$refs.file.click()"
+            @keyup.enter.space="onActionKey"
+            @click="onClick"
             @dragover.prevent
             @drop.prevent="updatePreview"
         >
@@ -53,6 +53,10 @@ export default {
             type: String,
             default: null,
         },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -69,6 +73,10 @@ export default {
 
     methods: {
         updatePreview(e) {
+            if (this.disabled) {
+                return;
+            }
+
             let files;
             e.type === 'drop' ? (files = e.dataTransfer.files) : (files = e.target.files);
             console.log(files);
@@ -79,10 +87,29 @@ export default {
             this.imagePreview = URL.createObjectURL(files[0]);
             this.$emit('input', files);
         },
+
         deleteImage() {
+            if (this.disabled) {
+                return;
+            }
+
             this.imagePreview = null;
             this.$refs.file.value = '';
             this.$emit('input', []);
+        },
+
+        showFilePicker() {
+            if (!this.disabled) {
+                this.$refs.file.click();
+            }
+        },
+
+        onClick() {
+            this.showFilePicker();
+        },
+
+        onActionKey() {
+            this.showFilePicker();
         },
     },
 };
