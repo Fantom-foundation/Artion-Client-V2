@@ -53,7 +53,7 @@
 
                     <div class="mat-5">
                         <f-button
-                            v-if="userCreatedToken && !token.hasAuction"
+                            v-if="userOwnsToken && !token.hasAuction"
                             :label="$t('nftdetail.startAuction')"
                             @click.native="onStartAuctionClick"
                         />
@@ -108,7 +108,7 @@
                     <nft-direct-offers-grid
                         ref="directOffersGrid"
                         :token="token"
-                        :user-created-token="userCreatedToken"
+                        :user-owns-token="userOwnsToken"
                         @tx-success="onOfferTxSuccess"
                     />
                 </a-details>
@@ -252,6 +252,7 @@ import NftDetailStatus from '@/modules/nfts/components/NftDetailStatus/NftDetail
 import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import { compareAddresses } from '@/utils/address.js';
 import { isExpired } from '@/utils/date.js';
+import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 
 export default {
     name: 'NftDetail',
@@ -282,6 +283,7 @@ export default {
             liked: false,
             // token is created by user
             userCreatedToken: false,
+            userOwnsToken: false,
             userMadeOffer: true,
             tx: {},
             likedNftIds: [],
@@ -294,7 +296,8 @@ export default {
         }),
 
         showMakeOfferButton() {
-            return !this.userCreatedToken && !this.userMadeOffer;
+            console.log(this.userOwnsToken, this.userMadeOffer);
+            return !this.userOwnsToken && !this.userMadeOffer;
         },
     },
 
@@ -337,8 +340,9 @@ export default {
 
         async onWalletAddressChange() {
             this.userCreatedToken = await this.checkUserCreatedToken(this.token);
+            this.userOwnsToken = await this.checkUserOwnsToken(this.token);
 
-            if (!this.userCreatedToken) {
+            if (!this.userOwnsToken) {
                 this.userMadeOffer = await this.checkUserMadeOffer(this.token);
             }
         },
@@ -382,6 +386,29 @@ export default {
         },
 
         /**
+         * Checks, if user created the token
+         *
+         * @param {Object} token
+         * @return {Promise<boolean>}
+         */
+        async checkUserOwnsToken(token) {
+            let owns = false;
+
+            if (this.$wallet.connected && this.$wallet.account) {
+                const tokens = await getUserOwnershipTokens(this.$wallet.account, { first: 200 });
+
+                owns =
+                    tokens.edges.findIndex(
+                        edge => edge.node.tokenId === token.tokenId && edge.node.contract === token.contract
+                    ) > -1;
+
+                console.log('owns?', owns);
+            }
+
+            return owns;
+        },
+
+        /**
          * Checks, if user made an offer
          *
          * @param {Object} token
@@ -392,7 +419,7 @@ export default {
             const walletAddress = this.$wallet.account;
 
             if (this.$wallet.connected && walletAddress) {
-                const offers = await getTokenOffers(token.contract, token.tokenId, { first: 100 });
+                const offers = await getTokenOffers(token.contract, token.tokenId, { first: 200 });
 
                 madeOffer =
                     offers.edges.findIndex(edge => {

@@ -32,7 +32,7 @@
             <template #column-actions="{ item }">
                 <template v-if="!isExpired(item)">
                     <a-button
-                        v-if="userCreatedToken"
+                        v-if="userOwnsToken"
                         :loading="txStatus === 'pending' && pickedAddress === item.proposedBy"
                         :label="$t('nftDirectOffersGrid.accept')"
                         @click.native="onAcceptButtonClick(item)"
@@ -79,7 +79,7 @@ export default {
                 return {};
             },
         },
-        userCreatedToken: {
+        userOwnsToken: {
             type: Boolean,
             default: false,
         },
@@ -91,11 +91,12 @@ export default {
                 {
                     name: 'proposedBy',
                     label: this.$t('nftDirectOffersGrid.from'),
-                    width: '100px',
+                    width: '80px',
                 },
                 {
                     name: 'unitPrice',
                     label: this.$t('nftDirectOffersGrid.price'),
+                    width: '80px',
                 },
                 {
                     name: 'deadline',
@@ -110,6 +111,7 @@ export default {
                     formatter(value, item) {
                         return value ? 'Closed' : isExpired(item.deadline) ? 'Expired' : '';
                     },
+                    width: '50px',
                 },
                 {
                     name: 'actions',
@@ -118,6 +120,8 @@ export default {
             tx: {},
             txStatus: '',
             pickedAddress: '',
+            // tokens owned by user
+            ownedTokens: [],
         };
     },
 
@@ -129,16 +133,16 @@ export default {
 
     watch: {
         token: {
-            handler(value) {
+            async handler(value) {
                 if (value.contract) {
-                    this.loadOffers();
+                    await this.loadOffers();
                 }
             },
             immediate: true,
         },
 
-        /*walletAddress() {
-            this.loadOffers();
+        /*walletAddress(value) {
+            this.loadOwnedTokens(value);
         },*/
     },
 
