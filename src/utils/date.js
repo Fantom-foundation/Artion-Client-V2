@@ -29,3 +29,24 @@ export function dateInFormatterTimestamp(timestamp) {
 export function dateOutFormatterTimestamp(date) {
     return dayjs(date).valueOf();
 }
+
+/**
+ * Converts timestamp to date+time used in native date input element
+ *
+ * @param {number} timestamp Timestamp in seconds
+ * @return {string}
+ */
+export function datetimeInFormatterTimestamp(timestamp) {
+    return dayjs(timestamp).format('YYYY-MM-DDTHH:mm');
+}
+
+/**
+ * @param {*} date
+ * @return {boolean}
+ */
+export function isExpired(date) {
+    const now = dayjs();
+    const deadline = dayjs(date);
+
+    return deadline.diff(now) <= 0;
+}
