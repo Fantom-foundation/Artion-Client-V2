@@ -107,6 +107,8 @@ import contracts from '@/utils/artion-contracts-utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications';
 import AButton from '@/common/components/AButton/AButton';
 import { checkSignIn } from '@/modules/account/auth';
+import { setUnlockableContent } from '@/modules/nfts/mutations/unlockables';
+import { toHex } from '@/utils/big-number';
 
 export default {
     name: 'NftCreateForm',
@@ -115,6 +117,7 @@ export default {
         return {
             values: {},
             collections: [],
+            collection: null,
             imageFile: null,
             tx: {},
             isLoading: false,
@@ -149,15 +152,17 @@ export default {
             _value = Number(_value);
             return !(_value >= 1 && _value <= 100);
         },
+
         setTokenImage(_files) {
             this.imageFile = _files[0] || null;
         },
+
         async onSubmit(_data) {
             console.log('onSubmit', _data);
             this.isLoading = true;
             const val = _data.values;
 
-            const collection = this.collections.filter(col => col.value === val.collectionId)[0];
+            this.collection = this.collections.filter(col => col.value === val.collectionId)[0];
 
             const _metadata = {
                 name: val.name,
@@ -166,7 +171,7 @@ export default {
                     symbol: val.symbol,
                     royalty: val.royalty,
                     IP_Rights: val.linkToIp,
-                    collection: collection.label,
+                    collection: this.collection.label,
                 },
             };
 
@@ -203,17 +208,60 @@ export default {
                 web3
             );
         },
-        onTransactionStatus(payload) {
+
+        async onTransactionStatus(payload) {
             console.log('onTransactionStatus', payload);
-            if (payload.status !== 'pending') {
+            if (payload.status === 'error') {
                 this.isLoading = false;
+                return;
             }
             if (payload.status === 'success') {
+                console.log('txHash', payload.data);
+                let tokenId;
+                try {
+                    tokenId = await this.getMintedTokenId(payload.data);
+                } catch (e) {
+                    console.error('getMintedTokenId', e);
+                    notifications.add({
+                        type: 'error',
+                        text: `Sorry, something went wrong. The token was minted.`,
+                    });
+                    this.isLoading = false;
+                    return;
+                }
+
+                if (this.values.unlockContentToogle) {
+                    try {
+                        let res = await setUnlockableContent(this.collection.value, tokenId, this.values.unlockContent);
+                        console.log('setUnlockableContent', res);
+                    } catch (e) {
+                        console.error('setUnlockableContent', e);
+                        notifications.add({
+                            type: 'error',
+                            text: `Sorry, something went wrong. The token was minted, but the unlockable content was not attached.`,
+                        });
+                        this.isLoading = false;
+                        return;
+                    }
+                }
+
                 notifications.add({
                     type: 'success',
                     text: `The token was successfully created`,
                 });
+                this.$router.push({
+                    name: 'nft-detail',
+                    params: { tokenContract: this.collection.value, tokenId: tokenId },
+                });
             }
+        },
+
+        async getMintedTokenId(txHash) {
+            const web3 = this.$wallet.wallet._web3;
+            const receipt = await web3.eth.getTransactionReceipt(txHash);
+            const tokenId = contracts.decodeMintedNftTokenId(receipt, web3);
+            console.log('tokenId', tokenId, toHex(tokenId));
+            return toHex(tokenId);
         },
     },
 };
