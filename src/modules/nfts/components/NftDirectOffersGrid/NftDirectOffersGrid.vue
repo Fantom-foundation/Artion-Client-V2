@@ -91,12 +91,12 @@ export default {
                 {
                     name: 'proposedBy',
                     label: this.$t('nftDirectOffersGrid.from'),
-                    width: '80px',
+                    width: '110px',
                 },
                 {
                     name: 'unitPrice',
                     label: this.$t('nftDirectOffersGrid.price'),
-                    width: '80px',
+                    width: '110px',
                 },
                 {
                     name: 'deadline',
@@ -111,7 +111,7 @@ export default {
                     formatter(value, item) {
                         return value ? 'Closed' : isExpired(item.deadline) ? 'Expired' : '';
                     },
-                    width: '50px',
+                    width: '80px',
                 },
                 {
                     name: 'actions',
