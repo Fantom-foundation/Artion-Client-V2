@@ -999,6 +999,40 @@ function randomPurchase(tradeAddress, payToken, web3Client) {
     };
 }
 
+/**
+ * artionERC721Burn Executes an NFT token burn on Artion Tradable contract.
+ *
+ * @param {string} nftContract Address of the ERC-721 Artion NFT contract.
+ * @param {string} tokenID Identifier of the NFT token within the contract.
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string}}
+ */
+function artionERC721Burn(nftContract, tokenID, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "burn",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    };
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[tokenID]);
+
+    // return tx object
+    return {
+        from: undefined,
+        to: nftContract,
+        data: encodedAbi,
+    };
+}
+
 export default {
     createNFTCollection,
     createNFT,
@@ -1022,6 +1056,7 @@ export default {
     updateAuctionStartTime,
     updateAuctionEndTime,
     randomPurchase,
+    artionERC721Burn,
 }
 
 const createNFTContractAbi = {
