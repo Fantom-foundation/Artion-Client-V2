@@ -20,11 +20,12 @@
                 </button>-->
             </template>
         </f-form-input>
+        <!-- temporary, replace with own datetime component -->
         <f-form-input
-            type="date"
+            type="datetime-local"
             name="startTime"
             :validator="startTimeValidator"
-            :in-formatter="dateInFormatterTimestamp"
+            :in-formatter="datetimeInFormatterTimestamp"
             :out-formatter="dateOutFormatterTimestamp"
             validate-on-input
             field-size="large"
@@ -32,10 +33,10 @@
             class="col-6"
         />
         <f-form-input
-            type="date"
+            type="datetime-local"
             name="endTime"
             :validator="endTimeValidator"
-            :in-formatter="dateInFormatterTimestamp"
+            :in-formatter="datetimeInFormatterTimestamp"
             :out-formatter="dateOutFormatterTimestamp"
             validate-on-input
             field-size="large"
@@ -61,7 +62,7 @@ import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
 import { mapState } from 'vuex';
 import AButton from '@/common/components/AButton/AButton.vue';
-import { dateInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
+import { dateOutFormatterTimestamp, datetimeInFormatterTimestamp } from '@/utils/date.js';
 
 export default {
     name: 'NftStartAuctionForm',
@@ -81,9 +82,12 @@ export default {
         return {
             values: {
                 reservePrice: '',
-                startTime: dayjs().valueOf(),
+                startTime: dayjs()
+                    .add(2, 'minutes')
+                    .valueOf(),
                 endTime: dayjs()
                     .add(1, 'day')
+                    .add(2, 'minutes')
                     .valueOf(),
             },
             payTokens: [],
@@ -191,7 +195,7 @@ export default {
             console.log('onTransactionStatus', JSON.stringify(payload));
         },
 
-        dateInFormatterTimestamp,
+        datetimeInFormatterTimestamp,
         dateOutFormatterTimestamp,
     },
 };
