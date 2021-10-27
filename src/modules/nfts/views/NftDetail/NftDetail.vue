@@ -70,7 +70,7 @@
                         </div>
                         <div class="nftdetail_currentPrice_item nftdetail_currentPrice_btn">
                             <f-button @click.native="onBuyNowClick">{{ $t('nftdetail.buyNow') }}</f-button>
-                            <f-button v-if="!userCreatedToken" @click.native="onMakeOfferClick">
+                            <f-button v-if="showMakeOfferButton" @click.native="onMakeOfferClick">
                                 {{ $t('nftdetail.makeOffer') }}
                             </f-button>
                         </div>
@@ -109,6 +109,7 @@
                         ref="directOffersGrid"
                         :token="token"
                         :user-created-token="userCreatedToken"
+                        @tx-success="onOfferTxSuccess"
                     />
                 </a-details>
             </div>
@@ -248,6 +249,9 @@ import { checkWallet } from '@/plugins/wallet/utils.js';
 import NftMoreFromCollectionList from '@/modules/nfts/components/NftMoreFromCollectionList/NftMoreFromCollectionList.vue';
 import AAddress from '@/common/components/AAddress/AAddress.vue';
 import NftDetailStatus from '@/modules/nfts/components/NftDetailStatus/NftDetailStatus.vue';
+import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
+import { compareAddresses } from '@/utils/address.js';
+import { isExpired } from '@/utils/date.js';
 
 export default {
     name: 'NftDetail',
@@ -278,6 +282,7 @@ export default {
             liked: false,
             // token is created by user
             userCreatedToken: false,
+            userMadeOffer: true,
             tx: {},
             likedNftIds: [],
         };
@@ -287,6 +292,10 @@ export default {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
+
+        showMakeOfferButton() {
+            return !this.userCreatedToken && !this.userMadeOffer;
+        },
     },
 
     watch: {
@@ -302,6 +311,12 @@ export default {
 
     created() {
         this.init();
+
+        setTimeout(() => {
+            if (this.$refs.directOffersGrid) {
+                this.$refs.directOffersGrid.update();
+            }
+        }, 4500);
     },
 
     methods: {
@@ -322,6 +337,10 @@ export default {
 
         async onWalletAddressChange() {
             this.userCreatedToken = await this.checkUserCreatedToken(this.token);
+
+            if (!this.userCreatedToken) {
+                this.userMadeOffer = await this.checkUserMadeOffer(this.token);
+            }
         },
 
         async isUserFavorite(value) {
@@ -362,12 +381,32 @@ export default {
             return created;
         },
 
-        async onMakeOfferClick() {
-            const walletOk = await checkWallet();
+        /**
+         * Checks, if user made an offer
+         *
+         * @param {Object} token
+         * @return {Promise<boolean>}
+         */
+        async checkUserMadeOffer(token) {
+            let madeOffer = false;
+            const walletAddress = this.$wallet.account;
 
-            if (walletOk) {
-                this.$refs.makeOfferWindow.show();
+            if (this.$wallet.connected && walletAddress) {
+                const offers = await getTokenOffers(token.contract, token.tokenId, { first: 100 });
+
+                madeOffer =
+                    offers.edges.findIndex(edge => {
+                        const offer = edge.node;
+
+                        return (
+                            !offer.closed &&
+                            compareAddresses(offer.proposedBy, walletAddress) &&
+                            !isExpired(offer.deadline)
+                        );
+                    }) > -1;
             }
+
+            return madeOffer;
         },
 
         async checkWalletConnection() {
@@ -381,6 +420,14 @@ export default {
 
         onBuyNowClick() {},
 
+        async onMakeOfferClick() {
+            const walletOk = await checkWallet();
+
+            if (walletOk) {
+                this.$refs.makeOfferWindow.show();
+            }
+        },
+
         onStartAuctionClick() {
             if (!this.token.hasAuction && this.userCreatedToken) {
                 this.$refs.startAuctionWindow.show();
@@ -388,8 +435,20 @@ export default {
         },
 
         onMakeOfferTxSuccess() {
-            this.$refs.makeOfferWindow.hide();
-            this.$refs.directOffersGrid.update();
+            const { $refs } = this;
+
+            $refs.makeOfferWindow.hide();
+
+            // this.init();
+            this.onWalletAddressChange();
+            if ($refs.directOffersGrid) {
+                $refs.directOffersGrid.update();
+            }
+        },
+
+        onOfferTxSuccess() {
+            this.onWalletAddressChange();
+            // this.init();
         },
 
         async onLikeClick() {

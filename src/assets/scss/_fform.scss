@@ -3,13 +3,32 @@
 
     &:not(.fform-elemsautowidth) {
         .fforminput {
-            &_text, &_email, &_number, &_date, &_time, &_textarea, &_select, &_passwordfield, &_listbox,
-            &_dropdownlistbox, &_slider, &_combo-box, &_combobox, &_money-field, &_date-field, &_datetime-field,
-            &_a-price-field {
+            &_text,
+            &_email,
+            &_number,
+            &_date,
+            &_time,
+            &_textarea,
+            &_select,
+            &_passwordfield,
+            &_listbox,
+            &_dropdownlistbox,
+            &_slider,
+            &_combo-box,
+            &_combobox,
+            &_money-field,
+            &_date-field,
+            &_datetime-field,
+            &_a-price-field,
+            &_datetime-local {
                 //display: block;
                 width: 100%;
 
-                .finput, .fselect, .fdropdownlistbox, .fpasswordfield, .fcombobox {
+                .finput,
+                .fselect,
+                .fdropdownlistbox,
+                .fpasswordfield,
+                .fcombobox {
                     width: 100%;
                 }
 
@@ -27,7 +46,8 @@
         align-items: center;
     }
 
-    .flabel, .fforminput .flabel {
+    .flabel,
+    .fforminput .flabel {
         display: block;
         font-size: var(--f-font-size-4);
         //color: var(--f-color-grey-7);

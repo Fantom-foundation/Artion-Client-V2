@@ -11,10 +11,10 @@
             @token-selected="onTokenSelected"
         />
         <f-form-input
-            type="date"
+            type="datetime-local"
             name="deadline"
             :validator="deadlineValidator"
-            :in-formatter="dateInFormatterTimestamp"
+            :in-formatter="datetimeInFormatterTimestamp"
             :out-formatter="dateOutFormatterTimestamp"
             validate-on-input
             field-size="large"
@@ -38,7 +38,7 @@ import ASignTransaction from '@/common/components/ASignTransaction/ASignTransact
 import { getErc20TokenBalance } from '@/modules/wallet/queries/erc20-token-balance.js';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
-import { dateInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
+import { datetimeInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 
 export default {
@@ -180,7 +180,7 @@ export default {
             }
         },
 
-        dateInFormatterTimestamp,
+        datetimeInFormatterTimestamp,
         dateOutFormatterTimestamp,
     },
 };

@@ -63,6 +63,7 @@ import { compareAddresses } from '@/utils/address.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
+import { isExpired } from '@/utils/date.js';
 
 export default {
     name: 'NftDirectOffersGrid',
@@ -172,6 +173,7 @@ export default {
 
         update() {
             this.pageInfo = {};
+            this.items = [];
             this.$nextTick(() => {
                 this.$refs.grid.goToPageNum(1);
             });
@@ -180,16 +182,10 @@ export default {
 
         isExpired(offer) {
             if (!offer.closed) {
-                const now = dayjs();
-                const deadline = dayjs(offer.deadline);
-
-                return deadline.diff(now) <= 0;
+                return isExpired(offer.deadline);
             }
 
             return true;
-
-            /*console.log('isExpired', offer);
-            return false;*/
         },
 
         onAcceptButtonClick(offer) {
@@ -201,8 +197,6 @@ export default {
         },
 
         onTxSuccess(txCode) {
-            console.log('onTxSuccess', txCode);
-
             this.$notifications.add({
                 type: 'success',
                 text:
@@ -212,6 +206,7 @@ export default {
             });
 
             this.update();
+            this.$emit('tx-success');
         },
 
         onTransactionStatus(payload) {
