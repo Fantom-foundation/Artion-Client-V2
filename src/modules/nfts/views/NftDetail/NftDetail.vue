@@ -19,17 +19,25 @@
                     <div class="nftdetail_description">
                         {{ token.description }}
                     </div>
+                    <nft-detail-status />
                     <div class="nftdetail_status">
                         <div class="nftdetail_owner">
-                            <div class="nftdetail_owner_avatar">
-                                <img src="/img/tmp/owner-avatar.png" alt="avatar" />
-                            </div>
                             {{ $t('nftdetail.owned') }}
-                            <a href="#" class="nftdetail_owner_account">0xe1a6...18D2</a>
+                            <router-link
+                                :to="{
+                                    name: 'account',
+                                    params: { address: '0x0F715e6B91dC24c09CfEDefcC04Cb7e9E5eF06B0' },
+                                }"
+                            >
+                                <a-address
+                                    img-src="img/tmp/owner-avatar.png"
+                                    address="0x0F715e6B91dC24c09CfEDefcC04Cb7e9E5eF06B0"
+                                />
+                            </router-link>
                         </div>
                         <div class="nftdetail_views">
                             <app-iconset icon="view" />
-                            3 {{ $t('nftdetail.views') }}
+                            N {{ $t('nftdetail.views') }}
                         </div>
                         <div class="nftdetail_favorites" :class="{ 'color-clicked': liked }">
                             <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
@@ -238,6 +246,8 @@ import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
 import { checkWallet } from '@/plugins/wallet/utils.js';
 
 import NftMoreFromCollectionList from '@/modules/nfts/components/NftMoreFromCollectionList/NftMoreFromCollectionList.vue';
+import AAddress from '@/common/components/AAddress/AAddress.vue';
+import NftDetailStatus from '@/modules/nfts/components/NftDetailStatus/NftDetailStatus.vue';
 
 export default {
     name: 'NftDetail',
@@ -245,6 +255,8 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftDetailStatus,
+        AAddress,
         NftAuction,
         NftStartAuctionForm,
         NftMakeOfferForm,
