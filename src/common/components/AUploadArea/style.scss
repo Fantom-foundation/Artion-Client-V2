@@ -1,64 +1,78 @@
 @use "/src/assets/scss/aspect-ratio";
 
 .auploadarea {
-	width: 100%;
-	height: 100%;
-	&_content {
-		width: 100%;
-		height: 100%;
-		position: relative;
-		border: 2px dashed rgba(0, 0, 0, 0.6);
-		border-radius: var(--f-border-radius-3);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		&:hover {
-			cursor: pointer;
-		}
-	}
+    width: 100%;
+    height: 100%;
+    &_content {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        border: 2px dashed rgba(0, 0, 0, 0.6);
+        border-radius: var(--f-border-radius-3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+            cursor: pointer;
+        }
+    }
 
-	&_preview {
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-		margin-bottom: 0;
-	}
+    &_preview {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        margin-bottom: 0;
+    }
 
-	&_overlay {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		opacity: 0;
-		background-color: rgba(255, 255, 255, 0.4);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		cursor: pointer;
-    	transition: opacity 0.1s ease 0s;
-		button {
-			padding: 0;
-			border: none;
-			font: inherit;
-			color: inherit;
-			background-color: transparent;
-			cursor: pointer;
-		}
+    &_overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        background-color: rgba(255, 255, 255, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: opacity 0.1s ease 0s;
+        button {
+            padding: 0;
+            border: none;
+            font: inherit;
+            color: inherit;
+            background-color: transparent;
+            cursor: pointer;
+        }
 
-		&:hover,
-		&:focus-within {
-			opacity: 1;
-		}
-		svg {
-			width: 1em;
-		}
-	}
+        &:hover,
+        &:focus-within {
+            opacity: 1;
+        }
+        svg {
+            width: 1em;
+        }
+    }
 
-	&_text {
-		text-align: center;
-	}
+    &_text {
+        text-align: center;
+    }
+
+    &-disabled {
+        .auploadarea {
+            &_overlay {
+                display: none;
+            }
+
+            &_content {
+                &:hover {
+                    cursor: default;
+                }
+            }
+        }
+    }
 }
 
 @include aspect-ratio.aspectratio-1-1('.auploadarea');

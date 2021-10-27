@@ -1,11 +1,19 @@
 <template>
     <div class="account">
         <div class="account_banner">
-            <AUploadArea :initial-preview="banner" @input="uploadUserBanner" />
+            <AUploadArea
+                :initial-preview="banner"
+                @input="uploadUserBanner"
+                :disabled="userAddress !== walletAddress"
+            />
         </div>
         <div class="account_header">
             <div class="account_avatar">
-                <AUploadArea :initial-preview="avatar" @input="uploadUserAvatar" />
+                <AUploadArea
+                    :initial-preview="avatar"
+                    @input="uploadUserAvatar"
+                    :disabled="userAddress !== walletAddress"
+                />
             </div>
             <div class="account_title">{{ user.username || $t('account.unnamed') }}</div>
             <div class="account_subtitle">
