@@ -314,12 +314,6 @@ export default {
 
     created() {
         this.init();
-
-        setTimeout(() => {
-            if (this.$refs.directOffersGrid) {
-                this.$refs.directOffersGrid.update();
-            }
-        }, 4500);
     },
 
     methods: {
