@@ -106,6 +106,7 @@ import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications';
 import AButton from '@/common/components/AButton/AButton';
+import { checkSignIn } from '@/modules/account/auth';
 
 export default {
     name: 'NftCreateForm',
@@ -122,8 +123,12 @@ export default {
 
     computed: {
         isDisabled() {
-            // add wallet connection and image
-            return this.values.name === '';
+            return (
+                this.values.name === '' ||
+                this.values.symbol === '' ||
+                this.values.description === '' ||
+                !this.imageFile
+            );
         },
     },
 
@@ -145,7 +150,7 @@ export default {
             return !(_value >= 1 && _value <= 100);
         },
         setTokenImage(_files) {
-            this.imageFile = _files[0];
+            this.imageFile = _files[0] || null;
         },
         async onSubmit(_data) {
             console.log('onSubmit', _data);
@@ -165,14 +170,27 @@ export default {
                 },
             };
 
+            let signed = await checkSignIn();
+            if (!signed) {
+                console.error('not signed');
+                notifications.add({
+                    type: 'error',
+                    text: `You need to sign-in first`,
+                });
+                this.isLoading = false;
+                return;
+            }
+
             let tokenUri;
             try {
                 tokenUri = await uploadTokenData(_metadata, this.imageFile);
             } catch (err) {
+                console.error('uploadTokenData fail', err);
                 notifications.add({
                     type: 'error',
                     text: `Sorry, something went wrong. Data of your token wasn't uploaded`,
                 });
+                this.isLoading = false;
                 return;
             }
 
@@ -187,12 +205,13 @@ export default {
         },
         onTransactionStatus(payload) {
             console.log('onTransactionStatus', payload);
-            this.isLoading = false;
-
-            if (status === 'success') {
+            if (payload.status !== 'pending') {
+                this.isLoading = false;
+            }
+            if (payload.status === 'success') {
                 notifications.add({
                     type: 'success',
-                    text: `The token was successfuly created`,
+                    text: `The token was successfully created`,
                 });
             }
         },

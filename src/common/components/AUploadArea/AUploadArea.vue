@@ -82,6 +82,7 @@ export default {
         deleteImage() {
             this.imagePreview = null;
             this.$refs.file.value = '';
+            this.$emit('input', []);
         },
     },
 };

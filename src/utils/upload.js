@@ -2,7 +2,11 @@ import { notifications } from 'fantom-vue-components/src/plugins/notifications.j
 import { artionFApolloClient } from '@/plugins/apollo/apollo-provider.js';
 import { getBearerToken } from '@/modules/account/auth.js';
 
-export async function uploadUserFile(_file, _type = 'avatar') {
+export async function uploadUserFile(_files, _type = 'avatar') {
+    if (!_files[0]) {
+        return;
+    }
+
     const options = {
         method: 'POST',
         headers: {
@@ -11,7 +15,7 @@ export async function uploadUserFile(_file, _type = 'avatar') {
     };
 
     let data = new FormData();
-    data.append('file', _file[0]);
+    data.append('file', _files[0]);
     options.body = data;
 
     let url = artionFApolloClient.httpProviderOrigin + '/upload-image/user-' + _type;
@@ -51,5 +55,7 @@ export async function uploadTokenData(_metadata, _imageFile) {
     console.log(response);
     if (response.status === 200) {
         return await response.text();
+    } else {
+        throw await response.text();
     }
 }
