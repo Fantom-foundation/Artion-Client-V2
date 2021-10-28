@@ -36,7 +36,7 @@
                         </div>
                         <div class="nftdetail_views">
                             <app-iconset icon="view" />
-                            N {{ $t('nftdetail.views') }}
+                            {{ toInt(token.views) }} {{ $t('nftdetail.views') }}
                         </div>
                         <div class="nftdetail_favorites" :class="{ 'color-clicked': liked }">
                             <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
@@ -239,6 +239,7 @@ import AAddress from '@/common/components/AAddress/AAddress.vue';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 import NftCancelListingButton from '@/modules/nfts/components/NftCancelListingButton/NftCancelListingButton.vue';
 import NftDetailPrice from '@/modules/nfts/components/NftDetailPrice/NftDetailPrice.vue';
+import { incrementTokenViews } from '@/modules/nfts/mutations/views';
 
 export default {
     name: 'NftDetail',
@@ -309,6 +310,8 @@ export default {
 
                 this.onWalletAddressChange();
                 this.isUserFavorite(this.walletAddress);
+
+                incrementTokenViews(routeParams.tokenContract, toHex(routeParams.tokenId));
             }
         },
 

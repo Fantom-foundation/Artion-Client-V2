@@ -23,6 +23,7 @@ export async function getUserCreatedTokens(address = '', pagination = {}) {
                                 description
                                 image
                                 imageThumb
+                                likes
                             }
                         }
                     }
