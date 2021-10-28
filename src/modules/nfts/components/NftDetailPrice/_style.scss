@@ -9,4 +9,16 @@
         font-weight: 700;
         color: var(--f-color-grey-5);
     }
+
+    &_price {
+        display: flex;
+        align-items: center;
+        column-gap: var(--f-spacer-2);
+    }
+
+    &_usd {
+        font-weight: 400;
+        font-size: var(--f-font-size-3);
+        color: var(--nftdetail-text-color);
+    }
 }

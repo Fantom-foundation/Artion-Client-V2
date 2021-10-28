@@ -1,101 +1,104 @@
 @use "fantom-vue-components/src/assets/scss/tools/media";
 .nftdetail {
-	--nftdetail-text-color: var(--f-color-grey-5);
-	--nftdetail-desc-color: #121223;
-	--nftdetail-border-color: var(--f-color-grey-3);
-	&_main {
-		margin-top: var(--f-spacer-7);
-		display: grid;
-		grid-template-columns: minmax(320px, 500px) 1fr;
-		grid-template-rows: auto auto;
-		gap: var(--f-spacer-6);
-	}
+    --nftdetail-text-color: var(--f-color-grey-5);
+    --nftdetail-desc-color: #121223;
+    --nftdetail-border-color: var(--f-color-grey-3);
+    &_main {
+        margin-top: var(--f-spacer-7);
+        display: grid;
+        grid-template-columns: minmax(320px, 500px) 1fr;
+        grid-template-rows: auto auto;
+        gap: var(--f-spacer-6);
+    }
 
-	&_media {
-		grid-row-start: 1;
-		grid-row-end: 3;
-		border-radius: var( --f-border-radius-2);
-		overflow: hidden;
-	}
+    &_media {
+        grid-row-start: 1;
+        grid-row-end: 3;
+        border-radius: var(--f-border-radius-2);
+        overflow: hidden;
+    }
 
-	&_data {
-		grid-row: 2 / 5;
-		.adetails {
-			margin-top: var(--f-spacer-4);
-		}
-	}
+    &_data {
+        grid-row: 2 / 5;
+        .adetails {
+            margin-top: var(--f-spacer-4);
+        }
+    }
 
-	&_img {
-		position: relative;
-		padding-top: 100%;
-		top: 0;
-		left: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		img {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			object-fit: contain;
-			border: none;
-		}
-	}
+    &_img {
+        position: relative;
+        padding-top: 100%;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border: none;
+        }
+    }
 
-	&_details_wrap {
-		display: flex;
-		align-items: center;
-		column-gap: var(--f-spacer-2);
-		font-size: var(--f-font-size-4);
-	}
+    &_details_wrap {
+        display: flex;
+        align-items: center;
+        column-gap: var(--f-spacer-2);
+        font-size: var(--f-font-size-4);
+    }
 
-	&_property {
-		font-size: var(--f-font-size-3);
-		&_item {
-			span {
-				font-weight: bold;
-			}
-		}
-	}
+    &_property {
+        font-size: var(--f-font-size-3);
+        &_item {
+            span {
+                font-weight: bold;
+            }
+        }
+    }
 
-	&_about, &_chainBlock { font-size: var(--f-font-size-3); }
+    &_about,
+    &_chainBlock {
+        font-size: var(--f-font-size-3);
+    }
 
-	&_socialBlock {
-		display: flex;
-		align-items: center;
-		column-gap: var(--f-spacer-3);
-		margin-top: var(--f-spacer-3);
-	}
+    &_socialBlock {
+        display: flex;
+        align-items: center;
+        column-gap: var(--f-spacer-3);
+        margin-top: var(--f-spacer-3);
+    }
 
-	&_socialLink {
-		svg {
-			max-width: var(--f-spacer-4);
-			max-height: var(--f-spacer-4);
-		}
-		color: var(--f-doc-color) !important;
-	}
+    &_socialLink {
+        svg {
+            max-width: var(--f-spacer-4);
+            max-height: var(--f-spacer-4);
+        }
+        color: var(--f-doc-color) !important;
+    }
 
-	&_chainLine {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
+    &_chainLine {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-	&_product {
-		overflow: hidden;
-		width: 100%;
-	}
+    &_product {
+        overflow: hidden;
+        width: 100%;
+    }
 
-	&_infoWrap {
-		position: relative;
-		.asharebutton {
-			position: absolute;
-			top: 0;
-			right: 0;
-		}
-	}
+    &_infoWrap {
+        position: relative;
+        .asharebutton {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    }
 
     &_owneractions {
         display: inline-flex;
@@ -104,196 +107,174 @@
         margin-bottom: var(--f-spacer-2);
     }
 
-	&_category,
-	&_name  h1 {
-		margin-inline-end: 100px;
-		overflow: hidden;
-    	text-overflow: ellipsis;
-    	white-space: nowrap;
-	}
+    &_category,
+    &_name h1 {
+        margin-inline-end: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-	&_description {
-		font-size: var(--f-font-size-6);
-		font-weight: 500;
-		color: var(--nftdetail-desc-color);
-		margin-top: 10px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+    &_description {
+        font-size: var(--f-font-size-6);
+        font-weight: 500;
+        color: var(--nftdetail-desc-color);
+        margin-top: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
-	&_category {
-		color: var(--f-color-primary-5);
-		font-size: var(--f-font-size-4);
-	}
+    &_category {
+        color: var(--f-color-primary-5);
+        font-size: var(--f-font-size-4);
+    }
 
-	&_name {
-		margin-top: var(--f-spacer-3);
-		h1 {
-			margin-top: 0;
-			font-size: 32px;
-		}
-	}
+    &_name {
+        margin-top: var(--f-spacer-3);
+        h1 {
+            margin-top: 0;
+            font-size: 32px;
+        }
+    }
 
-	&_status {
-		margin-top: var(--f-spacer-6);
-		display: flex;
-		align-items: center;
-		column-gap: var(--f-spacer-4);
-		font-size: var(--f-font-size-3);
-		color: var(--nftdetail-text-color);
-	}
+    &_status {
+        margin-top: var(--f-spacer-6);
+        display: flex;
+        align-items: center;
+        column-gap: var(--f-spacer-4);
+        font-size: var(--f-font-size-3);
+        color: var(--nftdetail-text-color);
+    }
 
-	&_owner {
-		display: flex;
-		align-items: center;
-		column-gap: var(--f-spacer-2);
+    &_owner {
+        display: flex;
+        align-items: center;
+        column-gap: var(--f-spacer-2);
 
         .aaddress {
             max-width: 100px;
             margin-inline-end: var(--f-spacer-5);
         }
-	}
+    }
 
-	&_views svg,
-	&_favorites svg {
-		width: 1.125em;
-		&:hover {
-			cursor: pointer;
-		}
-	}
+    &_views svg,
+    &_favorites svg {
+        width: 1.125em;
+        &:hover {
+            cursor: pointer;
+        }
+    }
 
-	&_favorites {
-		&.color-clicked {
-			color: var(--f-color-primary-5);
-		}
+    &_favorites {
+        &.color-clicked {
+            color: var(--f-color-primary-5);
+        }
 
-		button {
-			padding: 0;
-			border: none;
-			font: inherit;
-			color: inherit;
-			background-color: transparent;
-			cursor: pointer;
-		}
-	}
+        button {
+            padding: 0;
+            border: none;
+            font: inherit;
+            color: inherit;
+            background-color: transparent;
+            cursor: pointer;
+        }
+    }
 
-	&_views,
-	&_favorites,
-	&_views .fsvgicon-icon,
-	&_favorites .fsvgicon-icon {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
+    &_views,
+    &_favorites,
+    &_views .fsvgicon-icon,
+    &_favorites .fsvgicon-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-	&_filter { margin-top: var(--f-spacer-4); }
+    &_filter {
+        margin-top: var(--f-spacer-4);
+    }
 
-	&_collection {
-		margin-top: var(--f-spacer-4);
+    &_collection {
+        margin-top: var(--f-spacer-4);
 
-		.fdetails.adetails .fdetails_content {
-			background: var(--f-doc-background-color);
-		}
+        .fdetails.adetails .fdetails_content {
+            background: var(--f-doc-background-color);
+        }
 
-		.nftlist {
-			display: flex;
-			flex-wrap: nowrap;
-			padding: 0;
-			padding-bottom: var(--f-spacer-4);
-			overflow-x: auto;
-		}
-	}
+        .nftlist {
+            display: flex;
+            flex-wrap: nowrap;
+            padding: 0;
+            padding-bottom: var(--f-spacer-4);
+            overflow-x: auto;
+        }
+    }
 
-	&_currentPrice {
-		padding: var(--f-spacer-3);
-		margin-top: var(--f-spacer-3);
-		border-radius: var(--f-border-radius-3);
-		border: 1px solid var(--nftdetail-border-color);
+    &_noPaddings {
+        &.adetails.fdetails .fdetails_content {
+            padding: 0;
+        }
+    }
 
-		&_item + &_item { margin-top: var(--f-spacer-4); }
-
-		&_label {
-	 		font-size: var(--f-font-size-5);
-			font-weight: 700;
-			color: var(--nftdetail-text-color);
-		}
-		&_wrap {
-			display: flex;
-			align-items: center;
-			column-gap: var(--f-spacer-2);
-		}
-		&_logo { img { max-width: 24px; } }
-		&_num {
-			font-weight: 700;
-			font-size: var(--f-font-size-7);
-			color: var(--nftdetail-desc-color);
-		}
-		&_usd {
-			font-weight: 400;
-    		font-size:  var(--f-font-size-3);
-    		color: var(--nftdetail-text-color);
-		}
-		&_btn {
-			display: flex;
-		}
-	}
-
-	&_noPaddings {
-		&.adetails.fdetails .fdetails_content {
-			padding: 0;
-		}
-	}
-
-	&_sail {
-		&_item {
-			display: flex;
-			align-items: center;
-			img { max-width: 18px; border-radius: 50%;}
-			& + & {
-				margin-top: 15px;
-			}
-		}
-	}
-
+    &_sail {
+        &_item {
+            display: flex;
+            align-items: center;
+            img {
+                max-width: 18px;
+                border-radius: 50%;
+            }
+            & + & {
+                margin-top: 15px;
+            }
+        }
+    }
 }
 
-
 @include media.media-max(1076px) {
-	.nftdetail {
-		&_data {
-			grid-row: auto;
-			grid-column: 1 / 3;
-		}
+    .nftdetail {
+        &_data {
+            grid-row: auto;
+            grid-column: 1 / 3;
+        }
 
-		&_info {
-			grid-row-start: 3;
-			grid-column: 1 / 3;
+        &_info {
+            grid-row-start: 3;
+            grid-column: 1 / 3;
 
-			.fdetails {
-				margin-top: var(--f-spacer-4);
-				border-radius: var(--f-border-radius-3);
-			}
-		}
-	}
+            .fdetails {
+                margin-top: var(--f-spacer-4);
+                border-radius: var(--f-border-radius-3);
+            }
+        }
+    }
 }
 
 @include media.media-max(944px) {
-	.nftdetail {
-		&_main {
-			grid-template-columns: 1fr;
-			grid-template-rows: 1fr;
-		}
+    .nftdetail {
+        &_main {
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+        }
 
-		&_data, &_info { grid-column: 1; }
-		&_data { border-top: 1px solid var(--f-color-grey-3); }
-		&_info { grid-row-start: 3; }
-		&_media { grid-row-end: auto; }
+        &_data,
+        &_info {
+            grid-column: 1;
+        }
+        &_data {
+            border-top: 1px solid var(--f-color-grey-3);
+        }
+        &_info {
+            grid-row-start: 3;
+        }
+        &_media {
+            grid-row-end: auto;
+        }
 
-		&_status {
-			align-items: flex-start;
-			flex-direction: column;
-			column-gap: 0;
-			row-gap: var(--f-spacer-2);
-		}
-	}
+        &_status {
+            align-items: flex-start;
+            flex-direction: column;
+            column-gap: 0;
+            row-gap: var(--f-spacer-2);
+        }
+    }
 }

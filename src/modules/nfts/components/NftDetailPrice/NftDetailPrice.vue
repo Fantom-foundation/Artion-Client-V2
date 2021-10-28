@@ -4,9 +4,9 @@
             <div class="nftdetailprice_label">
                 {{ $t('nftdetail.currentPrice') }}
             </div>
-            <div class="nftdetailprice_wrap">
+            <div class="nftdetailprice_price">
                 <a-token-value value="0x0001" :token="token.payToken" />
-                <div class="nftdetail_currentPrice_usd">($71644.838)</div>
+                <div class="nftdetailprice_usd">($71644.838)</div>
             </div>
         </template>
         <div class="nftdetailprice_buttons">
