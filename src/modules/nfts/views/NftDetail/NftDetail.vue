@@ -63,22 +63,13 @@
                         />
                     </div>
 
-                    <div class="nftdetail_currentPrice">
-                        <div class="nftdetail_currentPrice_item nftdetail_currentPrice_label">
-                            {{ $t('nftdetail.currentPrice') }}
-                        </div>
-                        <div class="nftdetail_currentPrice_item nftdetail_currentPrice_wrap">
-                            <div class="nftdetail_currentPrice_logo"><img src="/img/tmp/ftm.png" alt="FTM" /></div>
-                            <div class="nftdetail_currentPrice_num">5000</div>
-                            <div class="nftdetail_currentPrice_usd">($71644.838)</div>
-                        </div>
-                        <div class="nftdetail_currentPrice_item nftdetail_currentPrice_btn">
-                            <f-button @click.native="onBuyNowClick">{{ $t('nftdetail.buyNow') }}</f-button>
-                            <f-button v-if="showMakeOfferButton" @click.native="onMakeOfferClick">
-                                {{ $t('nftdetail.makeOffer') }}
-                            </f-button>
-                        </div>
-                    </div>
+                    <nft-detail-price
+                        ref="nftDetailPrice"
+                        :token="token"
+                        :user-owns-token="userOwnsToken"
+                        @tx-success="onMakeOfferTxSuccess"
+                    />
+
                     <a-share-button />
                 </div>
             </div>
@@ -214,13 +205,6 @@
             </a-details>
         </div>
 
-        <nft-make-offer-window
-            ref="makeOfferWindow"
-            :token="token"
-            :title="$t('nftdetail.offer')"
-            @tx-success="onMakeOfferTxSuccess"
-        />
-
         <a-window ref="startAuctionWindow" :title="$t('nftdetail.startAuction')" class="fwindow-width-5">
             <nft-start-auction-form :token="token" />
         </a-window>
@@ -249,16 +233,12 @@ import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
 import NftStartAuctionForm from '@/modules/nfts/components/NftStartAuctionForm/NftStartAuctionForm.vue';
 import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
-import { checkWallet } from '@/plugins/wallet/utils.js';
 
 import NftMoreFromCollectionList from '@/modules/nfts/components/NftMoreFromCollectionList/NftMoreFromCollectionList.vue';
 import AAddress from '@/common/components/AAddress/AAddress.vue';
-import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
-import { compareAddresses } from '@/utils/address.js';
-import { isExpired } from '@/utils/date.js';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
-import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow.vue';
 import NftCancelListingButton from '@/modules/nfts/components/NftCancelListingButton/NftCancelListingButton.vue';
+import NftDetailPrice from '@/modules/nfts/components/NftDetailPrice/NftDetailPrice.vue';
 
 export default {
     name: 'NftDetail',
@@ -266,8 +246,8 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftDetailPrice,
         NftCancelListingButton,
-        NftMakeOfferWindow,
         AAddress,
         NftAuction,
         NftStartAuctionForm,
@@ -290,7 +270,6 @@ export default {
             // token is created by user
             userCreatedToken: false,
             userOwnsToken: false,
-            userMadeOffer: true,
             tx: {},
             likedNftIds: [],
         };
@@ -300,11 +279,6 @@ export default {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
-
-        showMakeOfferButton() {
-            console.log(this.userOwnsToken, this.userMadeOffer);
-            return !this.userOwnsToken && !this.userMadeOffer;
-        },
     },
 
     watch: {
@@ -342,9 +316,7 @@ export default {
             this.userCreatedToken = await this.checkUserCreatedToken(this.token);
             this.userOwnsToken = await this.checkUserOwnsToken(this.token);
 
-            if (!this.userOwnsToken) {
-                this.userMadeOffer = await this.checkUserMadeOffer(this.token);
-            }
+            await this.$refs.nftDetailPrice.update();
         },
 
         async isUserFavorite(value) {
@@ -408,50 +380,12 @@ export default {
             return owns;
         },
 
-        /**
-         * Checks, if user made an offer
-         *
-         * @param {Object} token
-         * @return {Promise<boolean>}
-         */
-        async checkUserMadeOffer(token) {
-            let madeOffer = false;
-            const walletAddress = this.$wallet.account;
-
-            if (this.$wallet.connected && walletAddress) {
-                const offers = await getTokenOffers(token.contract, token.tokenId, { first: 200 });
-
-                madeOffer =
-                    offers.edges.findIndex(edge => {
-                        const offer = edge.node;
-
-                        return (
-                            !offer.closed &&
-                            compareAddresses(offer.proposedBy, walletAddress) &&
-                            !isExpired(offer.deadline)
-                        );
-                    }) > -1;
-            }
-
-            return madeOffer;
-        },
-
         async checkWalletConnection() {
             if (!this.$wallet.connected) {
                 const payload = {};
                 this._eventBus.emit('show-wallet-picker', payload);
                 let res = await payload.promise;
                 return res;
-            }
-        },
-
-        onBuyNowClick() {},
-
-        async onMakeOfferClick() {
-            const walletOk = await checkWallet();
-
-            if (walletOk) {
-                this.$refs.makeOfferWindow.show();
             }
         },
 

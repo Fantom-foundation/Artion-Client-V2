@@ -1,0 +1,12 @@
+.nftdetailprice {
+    padding: var(--f-spacer-3);
+    margin-top: var(--f-spacer-3);
+    border-radius: var(--f-border-radius-3);
+    border: 1px solid var(--f-color-grey-3);
+
+    &_label {
+        font-size: var(--f-font-size-5);
+        font-weight: 700;
+        color: var(--f-color-grey-5);
+    }
+}
