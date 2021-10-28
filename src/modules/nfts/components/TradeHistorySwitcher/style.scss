@@ -1,9 +1,19 @@
 .tradehistoryswitcher {
-	button {
-		border: 1px solid #eaeaf1;
+	--tradehistoryswitcher-btn-background: transparent;
+	--tradehistoryswitcher-color: var(--f-grey-color-5);
+	--tradehistoryswitcher-border-color: #eaeaf1;
+	--tradehistoryswitcher-border-hover-color: #eaeaf1;
+	.fbutton.btn {
+		border: 1px solid var(--tradehistoryswitcher-border-color);
    	border-radius: var(--f-border-radius-2);
-		color: var(--f-doc-background-color);
+		color: var(--tradehistoryswitcher-color);
 		padding: var(--f-spacer-2);
+		background: var(--tradehistoryswitcher-btn-background);
+		&:hover {
+			background: var(--tradehistoryswitcher-btn-background) !important;
+			color: var(--tradehistoryswitcher-color) !important;
+			border-color: var(--tradehistoryswitcher-border-hover-color) !important;
+		}
 	}
 
 	&_window {

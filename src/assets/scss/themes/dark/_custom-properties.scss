@@ -39,6 +39,10 @@
         --appheader-border-bottom: 1px solid var(--theme-dark-color-5);
     }
 
+    .appaboutcard {
+        --appaboutcard-text-color: #fff;
+    }
+
     .fplaceholder {
         --fplaceholder-bg-color2: var(--theme-dark-color-6);
     }
@@ -181,8 +185,63 @@
         }
     }
 
+    .tradehistoryswitcher {
+    --tradehistoryswitcher-btn-background: var(--theme-dark-color-6);
+	--tradehistoryswitcher-border-color: var(--theme-dark-color-5);
+    --tradehistoryswitcher-border-hover-color:var(--theme-dark-color-4);
+    }
+
+    .notificationsettingsform {
+        --notification-border: 1px solid var(--theme-dark-color-5);
+    }
+
+    .agrid {
+        --agrid-header-background-color: var(--theme-dark-color-7);
+        --fdatagrid-cell-hover-background-color: var(--theme-dark-color-5)
+    }
+
+    .apricefield {
+        --apricefield-border-color: var(--theme-dark-color-5);
+    }
+
+    .asharebutton {
+        --asharebutton-border-color: var(--theme-dark-color-5);
+    }
+
+    .accountsettings {
+        --accountsettings-sidebar-background-hover: var(--theme-dark-color-5);
+        --accountsettings-sidebar-border-color: var(--theme-dark-color-5);
+    }
+
+    .accountnavigation {
+        --accountnavigation-link-color: var(--f-color-grey-3);
+        --accountnavigation-link-active-color: var(--f-color-primary-5);
+    }
+
+    .auploadarea {
+        --auploadarea-border-color: var(--f-color-grey-3);
+    }
+
+    .density {
+        & button {
+            --density-border-color: var(--theme-dark-color-5);
+            --f-btn-main-color-hover: var(--theme-dark-color-5);
+            --f-btn-hover-background: var(--theme-dark-color-5);
+            --density-icon-color: #fff;
+        }
+    }
+
+    .walletbuttonmenu {
+        --f-navigationnode-item-hover-color: var(--theme-dark-color-5);
+    }
+
     .acurrencydropdown {
         --acurrencydropdown-background: var(--theme-dark-color-9);
+    }
+
+    .afilterchips .fchips {
+        --fchips-background-color: var(--theme-dark-color-8);
+        --fchips-border: 1px solid var(--theme-dark-color-5);
     }
 
     .nftcard {
@@ -191,6 +250,12 @@
         &:hover {
             border: 1px solid var(--nftcard-border-color);
         }
+    }
+
+    .nftdetail {
+        --nftdetail-text-color: var(--f-color-grey-2);
+        --nftdetail-desc-color: var(--f-color-grey-2);
+        --nftdetail-border-color: var(--theme-dark-color-5);
     }
 
     .fform {

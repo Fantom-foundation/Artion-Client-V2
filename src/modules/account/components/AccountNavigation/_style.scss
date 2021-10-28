@@ -3,7 +3,8 @@
 
 .accountnavigation {
     margin-top: var(--f-spacer-6);
-
+    --accountnavigation-link-color: var(--f-color-grey-5);
+    --accountnavigation-link-active-color: var(--f-color-grey-7);
     &_list {
         display: flex;
         width: 100%;
@@ -18,7 +19,7 @@
 
     @include linkTools.links() {
         display: flex;
-        color: var(--f-color-grey-5);
+        color: var(--accountnavigation-link-color);
         align-items: center;
         column-gap: var(--f-spacer-2);
         padding: var(--f-spacer-4) var(--f-spacer-6);
@@ -41,7 +42,7 @@
 
         &:hover,
         &.router-link-active {
-            color: var(--f-color-grey-7);
+            color: var(--accountnavigation-link-active-color);
         }
 
         &.router-link-active {

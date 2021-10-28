@@ -69,7 +69,7 @@
 <script>
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 export default {
-    name: 'NotificationSettingsList',
+    name: 'NotificationSettingsForm',
 
     data() {
         return {
