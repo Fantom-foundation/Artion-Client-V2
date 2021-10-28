@@ -1,12 +1,12 @@
 <template>
     <div v-show="token.hasListing || showMakeOfferButton" class="nftdetailprice grid">
-        <template v-if="token.hasListing">
+        <template v-if="token.hasListing && listing.unitPrice">
             <div class="nftdetailprice_label">
                 {{ $t('nftdetail.currentPrice') }}
             </div>
             <div class="nftdetailprice_price">
-                <a-token-value value="0x0001" :token="token.payToken" />
-                <div class="nftdetailprice_usd">($71644.838)</div>
+                <a-token-value :value="listing.unitPrice" :token="payToken.address" :fraction-digits="1" />
+                <div class="nftdetailprice_usd">({{ to$(listing.unitPrice) }})</div>
             </div>
         </template>
         <div class="nftdetailprice_buttons">
@@ -34,6 +34,10 @@ import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import { compareAddresses } from '@/utils/address.js';
 import { isExpired } from '@/utils/date.js';
 import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow.vue';
+import { getTokenListings } from '@/modules/nfts/queries/token-listings.js';
+import { toBigNumber } from '@/utils/big-number.js';
+import { formatTokenValue } from '@/utils/formatters.js';
+import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 
 export default {
     name: 'NftDetailPrice',
@@ -55,6 +59,8 @@ export default {
 
     data() {
         return {
+            listing: {},
+            payToken: {},
             userMadeOffer: true,
         };
     },
@@ -65,6 +71,18 @@ export default {
         },
     },
 
+    watch: {
+        token: {
+            handler(value) {
+                if (value.hasListing) {
+                    this.setListing();
+                    this.setPayToken();
+                }
+            },
+            immediate: true,
+        },
+    },
+
     methods: {
         update() {
             this.$nextTick(async () => {
@@ -72,6 +90,29 @@ export default {
                     this.userMadeOffer = await this.checkUserMadeOffer(this.token);
                 }
             });
+        },
+
+        async setListing() {
+            const { token } = this;
+
+            const data = await getTokenListings(token.contract, token.tokenId, { first: 200 });
+            const listings = data.edges.map(edge => edge.node);
+
+            for (let i = 0, len = listings.length; i < len; i++) {
+                if (!listings[i].closed) {
+                    this.listing = listings[i];
+                    break;
+                }
+            }
+
+            console.log('listing', this.listing);
+        },
+
+        async setPayToken() {
+            const payTokens = await PAY_TOKENS_WITH_PRICES();
+            const payTokenAddress = this.listing.payToken;
+
+            this.payToken = payTokens.find(token => token.address === payTokenAddress) || {};
         },
 
         /**
@@ -85,8 +126,6 @@ export default {
             const walletAddress = this.$wallet.account;
 
             if (this.$wallet.connected && walletAddress) {
-                console.log('walletAddress', walletAddress);
-
                 const offers = await getTokenOffers(token.contract, token.tokenId, { first: 200 });
 
                 madeOffer =
@@ -102,6 +141,13 @@ export default {
             }
 
             return madeOffer;
+        },
+
+        to$(value) {
+            const { payToken } = this;
+            const value$ = value ? toBigNumber(value).multipliedBy(payToken.price) : null;
+
+            return value$ ? formatTokenValue(value$, payToken.priceDecimals, 2, true) : '';
         },
 
         onBuyNowClick() {},
