@@ -64,6 +64,8 @@ export const Default = () => ({
                 'user',
                 'instagram',
                 'copy',
+                'nft',
+                'medium'
             ],
         };
     },

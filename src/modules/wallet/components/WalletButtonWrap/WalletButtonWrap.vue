@@ -40,6 +40,10 @@ export default {
                         route: 'account-settings',
                     },
                     {
+                        label: this.$t('walletMenu.collection'),
+                        route: 'collection-register',
+                    },
+                    {
                         label: this.$t('walletMenu.logout'),
                         action: 'logout',
                     },
