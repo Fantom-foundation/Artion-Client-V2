@@ -56,8 +56,13 @@
                             :label="$t('nftdetail.startAuction')"
                             @click.native="onStartAuctionClick"
                         />
+                        <nft-sell-button
+                            v-if="userOwnsToken && !tokenHasListing"
+                            :token="token"
+                            @tx-success="onSellNftTxSuccess"
+                        />
                         <nft-cancel-listing-button
-                            v-if="userOwnsToken && token.hasListing"
+                            v-if="userOwnsToken && tokenHasListing"
                             :token="token"
                             @tx-success="onCancelListingTxSuccess"
                         />
@@ -66,6 +71,7 @@
                     <nft-detail-price
                         ref="nftDetailPrice"
                         :token="token"
+                        :listing="listing"
                         :user-owns-token="userOwnsToken"
                         @tx-success="onMakeOfferTxSuccess"
                     />
@@ -238,8 +244,10 @@ import NftMoreFromCollectionList from '@/modules/nfts/components/NftMoreFromColl
 import AAddress from '@/common/components/AAddress/AAddress.vue';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 import NftCancelListingButton from '@/modules/nfts/components/NftCancelListingButton/NftCancelListingButton.vue';
+import NftSellButton from '@/modules/nfts/components/NftSellButton/NftSellButton.vue';
 import NftDetailPrice from '@/modules/nfts/components/NftDetailPrice/NftDetailPrice.vue';
 import { incrementTokenViews } from '@/modules/nfts/mutations/views';
+import { getTokenListings } from '@/modules/nfts/queries/token-listings.js';
 
 export default {
     name: 'NftDetail',
@@ -248,6 +256,7 @@ export default {
 
     components: {
         NftDetailPrice,
+        NftSellButton,
         NftCancelListingButton,
         AAddress,
         NftAuction,
@@ -271,6 +280,7 @@ export default {
             // token is created by user
             userCreatedToken: false,
             userOwnsToken: false,
+            listing: {},
             tx: {},
             likedNftIds: [],
         };
@@ -280,6 +290,13 @@ export default {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
+
+        tokenHasListing() {
+            // const { token } = this;
+            // console.log('hasListing', token.hasListing, token.lastListing, isExpired(token.lastListing));
+            // return token.hasListing || (token.lastListing ? !isExpired(token.lastListing) : false);
+            return !!this.listing.unitPrice && !this.listing.closed;
+        },
     },
 
     watch: {
@@ -294,7 +311,11 @@ export default {
     },
 
     created() {
+        const routeParams = this.$route.params;
+
         this.init();
+
+        incrementTokenViews(routeParams.tokenContract, toHex(routeParams.tokenId));
     },
 
     methods: {
@@ -310,8 +331,6 @@ export default {
 
                 this.onWalletAddressChange();
                 this.isUserFavorite(this.walletAddress);
-
-                incrementTokenViews(routeParams.tokenContract, toHex(routeParams.tokenId));
             }
         },
 
@@ -320,6 +339,7 @@ export default {
             this.userOwnsToken = await this.checkUserOwnsToken(this.token);
 
             await this.$refs.nftDetailPrice.update();
+            await this.setListing();
         },
 
         async isUserFavorite(value) {
@@ -390,6 +410,24 @@ export default {
                 let res = await payload.promise;
                 return res;
             }
+        },
+
+        async setListing() {
+            const { token } = this;
+
+            const data = await getTokenListings(token.contract, token.tokenId, { first: 200 });
+            const listings = data.edges.map(edge => edge.node);
+
+            this.listing = {};
+
+            for (let i = 0, len = listings.length; i < len; i++) {
+                if (!listings[i].closed) {
+                    this.listing = listings[i];
+                    break;
+                }
+            }
+
+            console.log('listing', this.listing);
         },
 
         onStartAuctionClick() {

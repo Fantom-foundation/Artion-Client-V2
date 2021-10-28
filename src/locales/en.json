@@ -140,6 +140,17 @@
         "makeOfferSuccess": "You have successfully submitted an offer"
     },
 
+    "nftsellform": {
+        "price": "Price",
+        "startingTime": "Starting At",
+        "listItem": "List Item",
+        "quantity": "Quantity",
+        "nonZeroPrice": "@:nonZeroPrice",
+        "nonZeroQuantity": "Quantity must be non zero value",
+        "badDate": "Bad date",
+        "sellSuccess": "You have successfully sell an item"
+    },
+
     "nftstartauctionform": {
         "reservePrice": "@:reservePrice",
         "reservePriceInfo": "Reserve price is your desired one you want to get from this auction",
@@ -377,6 +388,10 @@
     "nftcancellisting": {
         "cancelListing": "Cancel Listing",
         "cancelSuccessful": "You have successfully cancel the listing"
+    },
+
+    "nftsellbutton": {
+        "sell": "Sell"
     },
 
     "notificationsettings": {

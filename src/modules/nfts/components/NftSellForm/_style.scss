@@ -1,0 +1,10 @@
+.nftsellform {
+    &_row {
+        display: flex;
+        gap: var(--f-spacer-4);
+    }
+
+    &_quantityfield {
+        max-width: 100px;
+    }
+}
