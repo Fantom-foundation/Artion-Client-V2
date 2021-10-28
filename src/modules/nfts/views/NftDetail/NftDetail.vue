@@ -50,11 +50,16 @@
                         </div>
                     </div>
 
-                    <div class="mat-5">
+                    <div v-if="userOwnsToken && token.contract" class="nftdetail_owneractions">
                         <f-button
                             v-if="userOwnsToken && !token.hasAuction"
                             :label="$t('nftdetail.startAuction')"
                             @click.native="onStartAuctionClick"
+                        />
+                        <nft-cancel-listing-button
+                            v-if="userOwnsToken && token.hasListing"
+                            :token="token"
+                            @tx-success="onCancelListingTxSuccess"
                         />
                     </div>
 
@@ -253,6 +258,7 @@ import { compareAddresses } from '@/utils/address.js';
 import { isExpired } from '@/utils/date.js';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow.vue';
+import NftCancelListingButton from '@/modules/nfts/components/NftCancelListingButton/NftCancelListingButton.vue';
 
 export default {
     name: 'NftDetail',
@@ -260,6 +266,7 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftCancelListingButton,
         NftMakeOfferWindow,
         AAddress,
         NftAuction,
@@ -466,6 +473,14 @@ export default {
         onOfferTxSuccess() {
             this.onWalletAddressChange();
             // this.init();
+        },
+
+        onCancelListingTxSuccess() {
+            this.init();
+        },
+
+        onSellNftTxSuccess() {
+            this.init();
         },
 
         async onLikeClick() {

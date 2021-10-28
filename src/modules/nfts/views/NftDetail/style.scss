@@ -95,6 +95,13 @@
 		}
 	}
 
+    &_owneractions {
+        display: inline-flex;
+        gap: var(--f-spacer-2);
+        margin-top: var(--f-spacer-4);
+        margin-bottom: var(--f-spacer-2);
+    }
+
 	&_category,
 	&_name  h1 {
 		margin-inline-end: 100px;

@@ -374,6 +374,11 @@
         "savedSuccessfully": "Shipping address saved successfully"
     },
 
+    "nftcancellisting": {
+        "cancelListing": "Cancel Listing",
+        "cancelSuccessful": "You have successfully cancel the listing"
+    },
+
     "notificationsettings": {
         "title": "Notification Settings"
     },
