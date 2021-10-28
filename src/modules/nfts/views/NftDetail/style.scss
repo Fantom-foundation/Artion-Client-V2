@@ -1,6 +1,8 @@
 @use "fantom-vue-components/src/assets/scss/tools/media";
 .nftdetail {
-
+	--nftdetail-text-color: var(--f-color-grey-5);
+	--nftdetail-desc-color: #121223;
+	--nftdetail-border-color: var(--f-color-grey-3);
 	&_main {
 		margin-top: var(--f-spacer-7);
 		display: grid;
@@ -106,7 +108,7 @@
 	&_description {
 		font-size: var(--f-font-size-6);
 		font-weight: 500;
-		color: rgba(0,0,0,.6);
+		color: var(--nftdetail-desc-color);
 		margin-top: 10px;
 		overflow: hidden;
 		text-overflow: ellipsis;
@@ -131,7 +133,7 @@
 		align-items: center;
 		column-gap: var(--f-spacer-4);
 		font-size: var(--f-font-size-3);
-		color: var(--f-color-grey-5);
+		color: var(--nftdetail-text-color);
 	}
 
 	&_owner {
@@ -199,14 +201,14 @@
 		padding: var(--f-spacer-3);
 		margin-top: var(--f-spacer-3);
 		border-radius: var(--f-border-radius-3);
-		border: 1px solid var(--f-color-grey-3);
+		border: 1px solid var(--nftdetail-border-color);
 
 		&_item + &_item { margin-top: var(--f-spacer-4); }
 
 		&_label {
 	 		font-size: var(--f-font-size-5);
 			font-weight: 700;
-			color: var(--f-color-grey-5);
+			color: var(--nftdetail-text-color);
 		}
 		&_wrap {
 			display: flex;
@@ -217,12 +219,12 @@
 		&_num {
 			font-weight: 700;
 			font-size: var(--f-font-size-7);
-			color: #121223;
+			color: var(--nftdetail-desc-color);
 		}
 		&_usd {
 			font-weight: 400;
     		font-size:  var(--f-font-size-3);
-    		color: var(--f-color-grey-5);
+    		color: var(--nftdetail-text-color);
 		}
 		&_btn {
 			display: flex;

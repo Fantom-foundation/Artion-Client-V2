@@ -3,11 +3,12 @@
 .auploadarea {
     width: 100%;
     height: 100%;
+    --auploadarea-border-color: rgba(0, 0, 0, 0.6);
     &_content {
         width: 100%;
         height: 100%;
         position: relative;
-        border: 2px dashed rgba(0, 0, 0, 0.6);
+        border: 2px dashed var(--auploadarea-border-color);
         border-radius: var(--f-border-radius-3);
         display: flex;
         flex-direction: column;

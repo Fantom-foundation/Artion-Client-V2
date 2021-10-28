@@ -1,0 +1,6 @@
+.walletbuttonmenu {
+	--f-navigationnode-item-hover-color: var(--f-color-primary-5);
+	.faccordionnavigation .fnavigationnode_item:hover {
+		background: var(--f-navigationnode-item-hover-color);
+	}
+}

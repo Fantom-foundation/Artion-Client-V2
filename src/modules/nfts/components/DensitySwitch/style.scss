@@ -1,10 +1,12 @@
 .density {
 	display: flex;
+	--density-border-color: #eaeaf1;
+	--density-icon-color: rgb(112, 122, 131);
 	& button {
 		--f-btn-hover-background: rgb(243, 251, 254);
 		--f-btn-main-color-hover: #eaeaf1;
 		padding: 12px;
-		border: 1px solid #eaeaf1;
+		border: 1px solid var(--density-border-color);
 		font: inherit;
 		color: inherit;
 		background-color: transparent;
@@ -34,7 +36,7 @@
 		svg {
 			width: 19px;
 			height: auto;
-			color: rgb(112, 122, 131);;
+			color: var(--density-icon-color);
 			//color: rgb(53, 56, 64);
 			//fill: rgb(4, 17, 29);
 		}

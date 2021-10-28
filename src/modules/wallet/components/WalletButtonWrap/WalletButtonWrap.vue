@@ -1,7 +1,13 @@
 <template>
     <div class="walletbuttonwrap">
         <wallet-button v-on="$listeners" :wallet="wallet" @click="onWalletButtonClick" id="wb" />
-        <wallet-menu-popover ref="menu" :navigation="walletMenu" attach-to="#wb" @wallet-menu="onWalletMenu" />
+        <wallet-menu-popover
+            class="walletbuttonmenu"
+            ref="menu"
+            :navigation="walletMenu"
+            attach-to="#wb"
+            @wallet-menu="onWalletMenu"
+        />
     </div>
 </template>
 
@@ -125,3 +131,7 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+@use 'style.scss';
+</style>

@@ -3,6 +3,7 @@
 .apricefield {
     display: flex;
     align-items: center;
+    --apricefield-border-color: #eaeaf1;
 
     .inp-cont > .acurrencydropdown {
         margin-inline-start: 0;
@@ -38,7 +39,7 @@
     &_suffix {
         margin-inline-end: 0;
         min-height: 50px;
-        border-inline-start: 1px solid #eaeaf1;
+        border-inline-start: 1px solid var(--apricefield-border-color);
         display: flex;
         align-items: center;
         justify-content: center;
