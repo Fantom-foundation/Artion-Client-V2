@@ -47,17 +47,17 @@ let appConfig = {
                     // for subscriptions
                     ws: '',
                 },
-                {
+                /*{
                     http: 'https://xapi-nodeb.fantom.network/',
                     // for subscriptions
                     ws: '',
-                },
+                },*/
                 {
                     http: 'https://xapi-nodec.fantom.network/',
                     // for subscriptions
                     ws: '',
                 },
-                {
+                /*{
                     http: 'https://xapi-noded.fantom.network/',
                     // for subscriptions
                     ws: '',
@@ -71,7 +71,7 @@ let appConfig = {
                     http: 'https://xapi-nodef.fantom.network/',
                     // for subscriptions
                     ws: '',
-                },
+                },*/
             ],
             // index into providers array of default provider or 'random' - takes index randomly
             defaultProviderIndex: 'random',
