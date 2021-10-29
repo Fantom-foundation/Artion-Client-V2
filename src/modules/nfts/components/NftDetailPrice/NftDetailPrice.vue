@@ -3,8 +3,7 @@
         <template v-if="token.hasListing && listing.unitPrice">
             <div class="nftdetailprice_label">{{ $t('nftdetail.currentPrice') }}</div>
             <div class="nftdetailprice_price">
-                <a-token-value :value="listing.unitPrice" :token="payToken.address" :fraction-digits="1" no-symbol />
-                <div class="nftdetailprice_usd">({{ to$(listing.unitPrice) }})</div>
+                <a-token-value :value="listing.unitPrice" :token="payToken" :fraction-digits="1" no-symbol with-price />
             </div>
         </template>
         <div class="nftdetailprice_buttons">
@@ -32,8 +31,6 @@ import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import { compareAddresses } from '@/utils/address.js';
 import { isExpired } from '@/utils/date.js';
 import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow.vue';
-import { toBigNumber } from '@/utils/big-number.js';
-import { formatTokenValue } from '@/utils/formatters.js';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 
 export default {
@@ -135,13 +132,6 @@ export default {
             }
 
             return madeOffer;
-        },
-
-        to$(value) {
-            const { payToken } = this;
-            const value$ = value ? toBigNumber(value).multipliedBy(payToken.price) : null;
-
-            return value$ ? formatTokenValue(value$, payToken.priceDecimals, 2, true) : '';
         },
 
         onBuyNowClick() {},

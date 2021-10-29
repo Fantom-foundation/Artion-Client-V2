@@ -16,14 +16,14 @@
         column-gap: var(--f-spacer-2);
     }
 
-    &_usd {
-        font-weight: 400;
-        font-size: var(--f-font-size-3);
-        color: var(--nftdetail-text-color);
-    }
-
     .atokenvalue {
         font-weight: 700;
         font-size: var(--f-font-size-7);
+
+        &_price {
+            font-weight: 400;
+            font-size: var(--f-font-size-3);
+            color: var(--nftdetail-text-color);
+        }
     }
 }

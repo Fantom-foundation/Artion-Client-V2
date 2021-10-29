@@ -292,9 +292,6 @@ export default {
         }),
 
         tokenHasListing() {
-            // const { token } = this;
-            // console.log('hasListing', token.hasListing, token.lastListing, isExpired(token.lastListing));
-            // return token.hasListing || (token.lastListing ? !isExpired(token.lastListing) : false);
             return !!this.listing.unitPrice && !this.listing.closed;
         },
     },
@@ -426,8 +423,6 @@ export default {
                     break;
                 }
             }
-
-            console.log('listing', this.listing);
         },
 
         onStartAuctionClick() {

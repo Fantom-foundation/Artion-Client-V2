@@ -10,13 +10,16 @@
                 {{ tokenValue }}
             </span>
             <span v-if="!noSymbol" class="atokenvalue_symbol">{{ tokenSymbol }}</span>
+            <span v-if="withPrice" class="atokenvalue_price">({{ tokenPrice$ }})</span>
         </a-placeholder>
+
         <template v-else>
             <img v-if="dToken.img" :src="dToken.img" :alt="tokenSymbol" />
             <span class="atokenvalue_value">
                 {{ tokenValue }}
             </span>
             <span v-if="!noSymbol" class="currency">{{ tokenSymbol }}</span>
+            <span v-if="withPrice" class="atokenvalue_price">({{ tokenPrice$ }})</span>
         </template>
     </span>
 </template>
@@ -24,6 +27,7 @@
 <script>
 import { PAY_TOKENS } from '@/common/constants/pay-tokens.js';
 import { formatTokenValue } from '@/utils/formatters.js';
+import { toBigNumber } from '@/utils/big-number.js';
 
 const payTokens = PAY_TOKENS();
 
@@ -49,6 +53,11 @@ export default {
         },
         /** Hide symbol */
         noSymbol: {
+            type: Boolean,
+            default: false,
+        },
+        /** Show price in $ */
+        withPrice: {
             type: Boolean,
             default: false,
         },
@@ -101,6 +110,14 @@ export default {
 
         tokenSymbol() {
             return this.dToken.label;
+        },
+
+        tokenPrice$() {
+            const { value } = this;
+            const { dToken } = this;
+            const value$ = value ? toBigNumber(value).multipliedBy(dToken.price) : null;
+
+            return value$ ? formatTokenValue(value$, dToken.priceDecimals, 2, true) : '';
         },
     },
 
