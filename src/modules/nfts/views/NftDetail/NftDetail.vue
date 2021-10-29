@@ -68,6 +68,7 @@
                     <nft-detail-price
                         ref="nftDetailPrice"
                         :token="token"
+                        :token-owner="tokenOwner"
                         :listing="listing"
                         :user-owns-token="userOwnsToken"
                         @tx-success="onMakeOfferTxSuccess"

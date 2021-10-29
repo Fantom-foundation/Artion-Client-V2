@@ -1,26 +1,32 @@
 <template>
     <div v-show="token.hasListing || showMakeOfferButton" class="nftdetailprice grid">
         <template v-if="token.hasListing && listing.unitPrice">
-            <div class="nftdetailprice_label">{{ $t('nftdetail.currentPrice') }}</div>
+            <div class="nftdetailprice_label">{{ $t('nftdetailprice.currentPrice') }}</div>
             <div class="nftdetailprice_price">
                 <a-token-value :value="listing.unitPrice" :token="payToken" :fraction-digits="1" no-symbol with-price />
             </div>
         </template>
         <div class="nftdetailprice_buttons">
-            <f-button v-if="token.hasListing && !userOwnsToken" @click.native="onBuyNowClick">
-                {{ $t('nftdetail.buyNow') }}
-            </f-button>
+            <a-button
+                v-if="token.hasListing && !userOwnsToken"
+                :loading="txStatus === 'pending'"
+                @click.native="onBuyNowClick"
+            >
+                {{ $t('nftdetailprice.buyNow') }}
+            </a-button>
             <f-button v-if="showMakeOfferButton" @click.native="onMakeOfferClick">
-                {{ $t('nftdetail.makeOffer') }}
+                {{ $t('nftdetailprice.makeOffer') }}
             </f-button>
         </div>
 
         <nft-make-offer-window
             ref="makeOfferWindow"
             :token="token"
-            :title="$t('nftdetail.offer')"
+            :title="$t('nftdetailprice.offer')"
             @tx-success="onMakeOfferTxSuccess"
         />
+
+        <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
     </div>
 </template>
 
@@ -32,14 +38,24 @@ import { compareAddresses } from '@/utils/address.js';
 import { isExpired } from '@/utils/date.js';
 import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow.vue';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
+import AButton from '@/common/components/AButton/AButton.vue';
+import Web3 from 'web3';
+import contracts from '@/utils/artion-contracts-utils.js';
+import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 
 export default {
     name: 'NftDetailPrice',
 
-    components: { NftMakeOfferWindow, ATokenValue },
+    components: { ASignTransaction, AButton, NftMakeOfferWindow, ATokenValue },
 
     props: {
         token: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
+        tokenOwner: {
             type: Object,
             default() {
                 return {};
@@ -61,6 +77,8 @@ export default {
         return {
             payToken: {},
             userMadeOffer: true,
+            tx: {},
+            txStatus: '',
         };
     },
 
@@ -99,6 +117,18 @@ export default {
             });
         },
 
+        buyItem() {
+            const { token } = this;
+            const web3 = new Web3();
+            const tx = contracts.buyListedItem(token.contract, token.tokenId, this.tokenOwner.address, web3);
+
+            console.log(this.tokenOwner.address);
+
+            console.log(tx);
+
+            this.tx = tx;
+        },
+
         async setPayToken() {
             const payTokens = await PAY_TOKENS_WITH_PRICES();
             const payTokenAddress = this.listing.payToken;
@@ -134,7 +164,9 @@ export default {
             return madeOffer;
         },
 
-        onBuyNowClick() {},
+        onBuyNowClick() {
+            this.buyItem();
+        },
 
         async onMakeOfferClick() {
             const walletOk = await checkWallet();
@@ -146,6 +178,19 @@ export default {
 
         onMakeOfferTxSuccess() {
             this.$emit('tx-success');
+        },
+
+        onTransactionStatus(payload) {
+            this.txStatus = payload.status;
+
+            if (this.txStatus === 'success') {
+                this.$notifications.add({
+                    text: this.$t('nftdetailprice.buySuccessful'),
+                    type: 'success',
+                });
+
+                this.$emit('tx-success');
+            }
         },
     },
 };

@@ -179,8 +179,6 @@
         "owned": "Owned by",
         "views": "views",
         "favorites": "favorites",
-        "currentPrice": "Current Price",
-        "buyNow": "Buy Now",
         "priceHistory": "Price History",
         "listings": "Listings",
         "directOffers": "Direct Offers",
@@ -198,9 +196,15 @@
         "fantomOpera": "Fantom Opera",
         "chainId": "Chain ID",
         "fromCollection": "More from this collection",
-        "offer": "Place your offer",
-        "makeOffer": "Make offer",
         "startAuction": "@:startAuction"
+    },
+
+    "nftdetailprice": {
+        "currentPrice": "Current Price",
+        "buyNow": "Buy Now",
+        "buySuccessful": "You have successfully buyed an item",
+        "makeOffer": "Make offer",
+        "offer": "Place your offer"
     },
 
     "nftauction": {
@@ -387,7 +391,7 @@
 
     "nftcancellisting": {
         "cancelListing": "Cancel Listing",
-        "cancelSuccessful": "You have successfully cancel the listing"
+        "cancelSuccessful": "You have successfully canceled the listing"
     },
 
     "nftsellbutton": {
