@@ -25,7 +25,7 @@
                             <router-link
                                 :to="{
                                     name: 'account',
-                                    params: { address: '0x0F715e6B91dC24c09CfEDefcC04Cb7e9E5eF06B0' },
+                                    params: { address: tokenOwner.address },
                                 }"
                             >
                                 <a-address :owner="tokenOwner" />
