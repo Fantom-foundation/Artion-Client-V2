@@ -57,8 +57,12 @@
                 </button>
             </template>
         </f-form-input>
+        <div class="collectionregisterform_categories">
+            <div class="collectionregisterform_categories_label">{{ $t('collectionregisterform.category') }}</div>
+            <AddCategory @change="values.categories = $event" />
+        </div>
         <div class="collectionregisterform_group">
-			   <f-form-input
+            <f-form-input
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterCollection')"
@@ -69,7 +73,7 @@
                     <app-iconset icon="nft" size="24px" />
                 </template>
             </f-form-input>
-				<f-form-input
+            <f-form-input
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterWebsite')"
@@ -80,7 +84,7 @@
                     <app-iconset icon="web" size="24px" />
                 </template>
             </f-form-input>
-				<f-form-input
+            <f-form-input
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterDiscord')"
@@ -113,7 +117,7 @@
                     <app-iconset icon="instagram" size="24px" />
                 </template>
             </f-form-input>
-				<f-form-input
+            <f-form-input
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterMedium')"
@@ -124,7 +128,7 @@
                     <app-iconset icon="medium" size="24px" />
                 </template>
             </f-form-input>
-				<f-form-input
+            <f-form-input
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterTelegram')"
@@ -136,7 +140,13 @@
                 </template>
             </f-form-input>
         </div>
-        <f-form-input type="email" name="email" field-size="large" :placeholder="$t('collectionregisterform.emailAddress')" required>
+        <f-form-input
+            type="email"
+            name="email"
+            field-size="large"
+            :placeholder="$t('collectionregisterform.emailAddress')"
+            required
+        >
             <template #label>
                 {{ $t('collectionregisterform.contactEmail') }}
                 <button class="label_btn" :data-tooltip="$t('collectionregisterform.emailTooltip')">
@@ -144,32 +154,37 @@
                 </button>
             </template>
         </f-form-input>
-		  <f-button type="submit" :disabled="isDisabled">{{ $t('collectionregisterform.submit') }}</f-button>
+        <div class="collectionregisterform_btn">
+            <f-button type="submit" :disabled="isDisabled">{{ $t('collectionregisterform.submit') }}</f-button>
+        </div>
     </f-form>
 </template>
 
 <script>
 import AUploadArea from '@/common/components/AUploadArea/AUploadArea.vue';
+import AddCategory from '@/modules/collections/components/AddCategory/AddCategory.vue';
 export default {
     name: 'CollectionRegisterForm',
 
-    components: { AUploadArea },
+    components: { AUploadArea, AddCategory },
 
-	data(){
-		return {
-			values: {},
-			imageFile: null
-		}
-	},
+    data() {
+        return {
+            values: {
+                categories: [],
+            },
+            imageFile: null,
+        };
+    },
 
-	computed: {
+    computed: {
         isDisabled() {
             return (
                 this.values.name === '' ||
                 this.values.description === '' ||
                 this.values.royalty === '' ||
-					 this.values.fees === '' ||
-					 this.values.email === '' ||
+                this.values.fees === '' ||
+                this.values.email === '' ||
                 !this.imageFile
             );
         },
@@ -182,13 +197,13 @@ export default {
             return !(_value >= 1 && _value <= 100);
         },
 
-		  setTokenImage(_files) {
+        setTokenImage(_files) {
             this.imageFile = _files[0] || null;
         },
 
-		  onSubmit(_data) {
-			  console.log(_data)
-		  }
+        onSubmit(_data) {
+            console.log(_data);
+        },
     },
 };
 </script>

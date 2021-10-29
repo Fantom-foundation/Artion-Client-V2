@@ -212,6 +212,10 @@
         "sortbyFilters": "Sort by Filters"
     },
 
+    "addcategory": {
+        "addCategory": "Add Category"
+    },
+
     "collectionregisterform": {
         "registerCollection": "Register Collection",
         "useOwnerAddressOfCollection": "Please submit using the owner address of the collection. If you cannot use the owner address, please email us on contact@fantom.foundation with the information below (and proof of collection ownership, such as from the collection's official email address).",
@@ -236,6 +240,7 @@
         "enterInstagram": "Enter your Instagram profile link",
         "enterMedium": "Enter your Medium profile link",
         "enterTelegram": "Enter your Telegram profile link",
+        "category": "Category",
         "submit": "Submit"
     },
 

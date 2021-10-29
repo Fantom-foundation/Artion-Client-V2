@@ -116,7 +116,7 @@ export default {
         IconPlay,
         IconPause,
         IconNft,
-        IconMedium
+        IconMedium,
     },
 
     props: {

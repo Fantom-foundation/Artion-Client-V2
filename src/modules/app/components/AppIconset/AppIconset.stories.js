@@ -65,7 +65,7 @@ export const Default = () => ({
                 'instagram',
                 'copy',
                 'nft',
-                'medium'
+                'medium',
             ],
         };
     },

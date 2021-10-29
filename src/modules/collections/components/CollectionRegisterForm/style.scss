@@ -2,10 +2,12 @@
 .collectionregisterform {
 	max-width: 600px;
 	margin-left: 100px;
+	padding-bottom: var(--f-spacer-6);
 	& > .fforminput,
 		&__desc,
+		&_btn,
+		&_categories,
 		.auploadarea,
-		.fbutton,
 		.fforminput + .accountfrofileform_group,
 		.accountfrofileform_group + .fforminput {
 			margin-top: var(--f-spacer-4);
@@ -17,6 +19,10 @@
 		color: inherit;
 		background-color: transparent;
 		cursor: pointer;
+	}
+
+	&_categories_label {
+		margin-bottom: var(--f-spacer-3);
 	}
 	
 	&_group {
