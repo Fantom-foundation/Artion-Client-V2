@@ -322,13 +322,19 @@ export default {
             if (!routeParams.tokenContract || !routeParams.tokenId) {
                 this.$router.push({ name: '404' });
             } else {
-                this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
-
-                console.log(this.token);
-
-                this.onWalletAddressChange();
-                this.isUserFavorite(this.walletAddress);
+                this.update();
             }
+        },
+
+        async update() {
+            const routeParams = this.$route.params;
+
+            this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+
+            console.log(this.token);
+
+            this.onWalletAddressChange();
+            this.isUserFavorite(this.walletAddress);
         },
 
         async onWalletAddressChange() {
@@ -393,8 +399,6 @@ export default {
                     tokens.edges.findIndex(
                         edge => edge.node.tokenId === token.tokenId && edge.node.contract === token.contract
                     ) > -1;
-
-                console.log('owns?', owns);
             }
 
             return owns;
@@ -442,15 +446,15 @@ export default {
 
         onOfferTxSuccess() {
             this.onWalletAddressChange();
-            // this.init();
+            // this.update();
         },
 
         onCancelListingTxSuccess() {
-            this.init();
+            this.update();
         },
 
         onSellNftTxSuccess() {
-            this.init();
+            this.update();
         },
 
         async onLikeClick() {
