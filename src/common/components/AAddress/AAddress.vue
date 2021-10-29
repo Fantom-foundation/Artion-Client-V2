@@ -1,12 +1,14 @@
 <template>
     <span class="aaddress">
-        <img v-if="imgSrc" :src="imgSrc" aria-hidden="true" class="aaddress_avatar" alt="Avatar" />
-        <f-ellipsis :text="address" overflow="middle" />
+        <img v-if="avatarSrc" :src="avatarSrc" aria-hidden="true" class="aaddress_avatar" alt="Avatar" />
+        <span v-if="userName">{{ userName }}</span>
+        <f-ellipsis v-else :text="cAddress" overflow="middle" />
     </span>
 </template>
 
 <script>
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
+import { getImageThumbUrl } from '@/utils/url.js';
 
 export default {
     name: 'AAddress',
@@ -14,6 +16,16 @@ export default {
     components: { FEllipsis },
 
     props: {
+        owner: {
+            type: Object,
+            default() {
+                return {
+                    address: '',
+                    username: '',
+                    avatarThumb: '',
+                };
+            },
+        },
         address: {
             type: String,
             default: '',
@@ -21,6 +33,26 @@ export default {
         imgSrc: {
             type: String,
             default: '',
+        },
+    },
+
+    computed: {
+        avatarSrc() {
+            const { owner } = this;
+
+            if (owner.avatarThumb) {
+                return getImageThumbUrl(owner.avatarThumb);
+            }
+
+            return this.imgSrc;
+        },
+
+        cAddress() {
+            return this.owner.address || this.address;
+        },
+
+        userName() {
+            return this.owner.username || '';
         },
     },
 };

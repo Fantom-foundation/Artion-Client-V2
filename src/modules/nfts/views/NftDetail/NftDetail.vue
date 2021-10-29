@@ -28,7 +28,7 @@
                                     params: { address: '0x0F715e6B91dC24c09CfEDefcC04Cb7e9E5eF06B0' },
                                 }"
                             >
-                                <a-address :img-src="tokenOwner.avatarThumb" :address="tokenOwner.address" />
+                                <a-address :owner="tokenOwner" />
                             </router-link>
                         </div>
                         <div class="nftdetail_views">
