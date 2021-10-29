@@ -28,10 +28,7 @@
                                     params: { address: '0x0F715e6B91dC24c09CfEDefcC04Cb7e9E5eF06B0' },
                                 }"
                             >
-                                <a-address
-                                    img-src="img/tmp/owner-avatar.png"
-                                    address="0x0F715e6B91dC24c09CfEDefcC04Cb7e9E5eF06B0"
-                                />
+                                <a-address :img-src="tokenOwner.avatarThumb" :address="tokenOwner.address" />
                             </router-link>
                         </div>
                         <div class="nftdetail_views">
@@ -242,12 +239,12 @@ import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
 
 import NftMoreFromCollectionList from '@/modules/nfts/components/NftMoreFromCollectionList/NftMoreFromCollectionList.vue';
 import AAddress from '@/common/components/AAddress/AAddress.vue';
-import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 import NftCancelListingButton from '@/modules/nfts/components/NftCancelListingButton/NftCancelListingButton.vue';
 import NftSellButton from '@/modules/nfts/components/NftSellButton/NftSellButton.vue';
 import NftDetailPrice from '@/modules/nfts/components/NftDetailPrice/NftDetailPrice.vue';
 import { incrementTokenViews } from '@/modules/nfts/mutations/views';
 import { getTokenListings } from '@/modules/nfts/queries/token-listings.js';
+import { getTokenOwnerships } from '@/modules/nfts/queries/token-ownerships.js';
 
 export default {
     name: 'NftDetail',
@@ -281,6 +278,7 @@ export default {
             userCreatedToken: false,
             userOwnsToken: false,
             listing: {},
+            tokenOwner: {},
             tx: {},
             likedNftIds: [],
         };
@@ -322,6 +320,8 @@ export default {
             if (!routeParams.tokenContract || !routeParams.tokenId) {
                 this.$router.push({ name: '404' });
             } else {
+                this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
+
                 this.update();
             }
         },
@@ -338,8 +338,15 @@ export default {
         },
 
         async onWalletAddressChange() {
+            const { $wallet } = this;
+
             this.userCreatedToken = await this.checkUserCreatedToken(this.token);
-            this.userOwnsToken = await this.checkUserOwnsToken(this.token);
+
+            if ($wallet.connected && $wallet.account) {
+                this.userOwnsToken = this.tokenOwner.address === $wallet.account;
+            } else {
+                this.userOwnsToken = false;
+            }
 
             await this.$refs.nftDetailPrice.update();
             await this.setListing();
@@ -384,24 +391,14 @@ export default {
         },
 
         /**
-         * Checks, if user created the token
-         *
-         * @param {Object} token
-         * @return {Promise<boolean>}
+         * @param {string} tokenContract
+         * @param {string} tokenId
+         * @return {Promise<Object>}
          */
-        async checkUserOwnsToken(token) {
-            let owns = false;
+        async getTokenOwner(tokenContract, tokenId) {
+            const data = await getTokenOwnerships(tokenContract, tokenId, { first: 200 });
 
-            if (this.$wallet.connected && this.$wallet.account) {
-                const tokens = await getUserOwnershipTokens(this.$wallet.account, { first: 200 });
-
-                owns =
-                    tokens.edges.findIndex(
-                        edge => edge.node.tokenId === token.tokenId && edge.node.contract === token.contract
-                    ) > -1;
-            }
-
-            return owns;
+            return data.edges.length > 0 ? data.edges[0].node.ownerUser : {};
         },
 
         async checkWalletConnection() {
