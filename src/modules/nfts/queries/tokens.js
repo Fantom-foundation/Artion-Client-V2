@@ -39,6 +39,7 @@ export async function getTokens(pagination = {}, filterSort = {}) {
                             image
                             imageThumb
                             likes
+                            isLiked
                         }
                     }
                 }

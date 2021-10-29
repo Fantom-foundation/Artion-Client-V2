@@ -233,7 +233,6 @@ import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { getImageThumbUrl } from '@/utils/url.js';
 import { getTokens } from '@/modules/nfts/queries/tokens.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
-import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-tokens.js';
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
 import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
@@ -328,9 +327,9 @@ export default {
                 this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
 
                 console.log(this.token);
+                this.liked = this.token.isLiked;
 
                 this.onWalletAddressChange();
-                this.isUserFavorite(this.walletAddress);
             }
         },
 
@@ -342,22 +341,6 @@ export default {
             await this.setListing();
         },
 
-        async isUserFavorite(value) {
-            if (value) {
-                let pagination = { first: 20 };
-                let { edges } = await getUserFavoriteTokens(value, pagination);
-                if (edges.length) {
-                    this.likedNftIds = edges.map(edge => {
-                        return edge.node.tokenId;
-                    });
-                    if (this.likedNftIds.includes(this.token.tokenId)) {
-                        this.liked = true;
-                        return;
-                    }
-                    this.liked = false;
-                }
-            }
-        },
 
         /**
          * Checks, if user created the token

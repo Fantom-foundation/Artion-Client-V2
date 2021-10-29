@@ -22,6 +22,7 @@ export async function getToken(contract = '', id = '') {
                     lastOffer
                     lastBid
                     likes
+                    isLiked
                     views
                 }
             }

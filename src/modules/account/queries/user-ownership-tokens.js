@@ -26,6 +26,7 @@ export async function getUserOwnershipTokens(address = '', pagination = {}) {
                                     image
                                     imageThumb
                                     likes
+                                    isLiked
                                 }
                             }
                         }
