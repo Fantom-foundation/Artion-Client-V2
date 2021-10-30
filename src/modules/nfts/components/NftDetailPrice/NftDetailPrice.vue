@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { checkWallet } from '@/plugins/wallet/utils.js';
+import { checkUserBalance, checkWallet } from '@/plugins/wallet/utils.js';
 import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import { compareAddresses } from '@/utils/address.js';
@@ -121,16 +121,27 @@ export default {
             });
         },
 
-        buyItem() {
+        async buyItem() {
             const { token } = this;
             const web3 = new Web3();
-            const tx = contracts.buyListedItem(token.contract, token.tokenId, this.tokenOwner.address, web3);
 
-            console.log(this.tokenOwner.address);
+            if ((await checkUserBalance(this.listing.unitPrice, this.payToken.address)) !== null) {
+                /*const allowanceTx = await getUserAllowanceTx({
+                    value: this.listing.unitPrice,
+                    tokenAddress: this.payToken.address,
+                    contract: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+                });
 
-            console.log(tx);
+                console.log('allowanceTx', allowanceTx);*/
 
-            this.tx = tx;
+                console.log(token.contract, parseInt(token.tokenId, 16), this.tokenOwner.address);
+
+                const tx = contracts.buyListedItem(token.contract, token.tokenId, this.tokenOwner.address, web3);
+
+                console.log(tx);
+
+                this.tx = tx;
+            }
         },
 
         async setPayToken() {
