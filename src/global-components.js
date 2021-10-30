@@ -19,8 +19,6 @@ import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 import APlaceholder from '@/common/components/APlaceholder/APlaceholder.vue';
 import APriceField from '@/common/components/APriceField/APriceField.vue';
 import AWindow from '@/common/components/AWindow/AWindow.vue';
-import NftSellForm from '@/modules/nfts/components/NftSellForm/NftSellForm.vue';
-import NftMakeOfferForm from '@/modules/nfts/components/NftMakeOfferForm/NftMakeOfferForm';
 
 // install global components
 Vue.component('FIconset', FIconset);
@@ -44,5 +42,3 @@ Vue.component('AppIconset', AppIconset);
 Vue.component('APlaceholder', APlaceholder);
 Vue.component('APriceField', APriceField);
 Vue.component('AWindow', AWindow);
-Vue.component('NftSellForm', NftSellForm);
-Vue.component('NftMakeOfferForm', NftMakeOfferForm);

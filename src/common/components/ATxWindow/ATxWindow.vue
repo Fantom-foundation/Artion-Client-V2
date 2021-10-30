@@ -1,6 +1,6 @@
 <template>
     <a-window ref="window" :title="title" :closing-disabled="txStatus === 'pending'" class="fwindow-width-4">
-        <component :is="component" v-bind="$attrs" @transaction-status="onTransactionStatus" />
+        <slot :onTxStatus="onTransactionStatus"></slot>
     </a-window>
 </template>
 
@@ -19,12 +19,6 @@ export default {
         title: {
             type: String,
             default: '',
-        },
-        /** Child component */
-        component: {
-            type: String,
-            default: '',
-            required: true,
         },
     },
 

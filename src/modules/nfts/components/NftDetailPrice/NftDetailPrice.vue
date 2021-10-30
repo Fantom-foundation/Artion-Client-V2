@@ -19,13 +19,15 @@
             </f-button>
         </div>
 
-        <a-tx-window
-            ref="makeOfferWindow"
-            :token="token"
-            :title="$t('nftdetailprice.offer')"
-            component="nft-make-offer-form"
-            @transaction-status="onMakeOfferTransactionStatus"
-        />
+        <a-tx-window ref="makeOfferWindow" :title="$t('nftdetailprice.offer')" v-slot="{ onTxStatus }">
+            <nft-make-offer-form
+                :token="token"
+                @transaction-status="
+                    onTxStatus($event);
+                    onMakeOfferTransactionStatus($event);
+                "
+            />
+        </a-tx-window>
 
         <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
     </div>
@@ -43,11 +45,12 @@ import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import ATxWindow from '@/common/components/ATxWindow/ATxWindow.vue';
+import NftMakeOfferForm from '@/modules/nfts/components/NftMakeOfferForm/NftMakeOfferForm.vue';
 
 export default {
     name: 'NftDetailPrice',
 
-    components: { ATxWindow, ASignTransaction, AButton, ATokenValue },
+    components: { NftMakeOfferForm, ATxWindow, ASignTransaction, AButton, ATokenValue },
 
     props: {
         token: {

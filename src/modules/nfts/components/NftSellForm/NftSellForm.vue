@@ -171,7 +171,6 @@ export default {
                 });
             }
 
-            console.log('????');
             this.$emit('transaction-status', payload);
         },
 
