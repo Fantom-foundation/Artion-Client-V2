@@ -2,18 +2,24 @@
     <div class="nftsellbutton">
         <a-button :label="$t('nftsellbutton.sell')" :loading="txStatus === 'pending'" @click.native="onButtonClick" />
 
-        <nft-sell-window ref="window" :token="token" @transaction-status="onTransactionStatus" />
+        <a-tx-window
+            ref="window"
+            :token="token"
+            :title="$t('nftsellwindow.sellItem')"
+            component="nft-sell-form"
+            @transaction-status="onTransactionStatus"
+        />
     </div>
 </template>
 
 <script>
 import AButton from '@/common/components/AButton/AButton.vue';
-import NftSellWindow from '@/modules/nfts/components/NftSellWindow/NftSellWindow.vue';
+import ATxWindow from '@/common/components/ATxWindow/ATxWindow.vue';
 
 export default {
     name: 'NftSellButton',
 
-    components: { NftSellWindow, AButton },
+    components: { ATxWindow, AButton },
 
     props: {
         token: {
