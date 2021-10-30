@@ -1,5 +1,5 @@
 <template>
-    <div class="nftcancellisting">
+    <div class="nftcancellistingbutton">
         <a-button
             :label="$t('nftcancellisting.cancelListing')"
             :loading="txStatus === 'pending'"

@@ -398,6 +398,10 @@
         "sell": "Sell"
     },
 
+    "nftsellwindow": {
+        "sellItem": "Sell Item"
+    },
+
     "notificationsettings": {
         "title": "Notification Settings"
     },

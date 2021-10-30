@@ -7,15 +7,12 @@
 <script>
 import { copyMethods } from 'fantom-vue-components/src/utils/vue-helpers.js';
 import AWindow from '@/common/components/AWindow/AWindow.vue';
-import NftSellForm from '@/modules/nfts/components/NftSellForm/NftSellForm.vue';
 
 /**
  * Modal window that contains a component with transaction process
  */
 export default {
     name: 'ATxWindow',
-
-    components: { NftSellForm },
 
     props: {
         /** Window title */

@@ -49,7 +49,7 @@
 
                     <div v-if="userOwnsToken && token.contract" class="nftdetail_owneractions">
                         <f-button
-                            v-if="userOwnsToken && !token.hasAuction"
+                            v-if="userOwnsToken && !token.hasAuction && !tokenHasListing"
                             :label="$t('nftdetail.startAuction')"
                             @click.native="onStartAuctionClick"
                         />

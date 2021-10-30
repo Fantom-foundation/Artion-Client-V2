@@ -28,7 +28,7 @@ export default {
         },
         hidden: {
             type: Boolean,
-            default: false,
+            default: true,
         },
     },
 

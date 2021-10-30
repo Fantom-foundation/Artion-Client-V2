@@ -19,11 +19,12 @@
             </f-button>
         </div>
 
-        <nft-make-offer-window
+        <a-tx-window
             ref="makeOfferWindow"
             :token="token"
             :title="$t('nftdetailprice.offer')"
-            @tx-success="onMakeOfferTxSuccess"
+            component="nft-make-offer-form"
+            @transaction-status="onMakeOfferTransactionStatus"
         />
 
         <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
@@ -36,17 +37,17 @@ import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import { compareAddresses } from '@/utils/address.js';
 import { isExpired } from '@/utils/date.js';
-import NftMakeOfferWindow from '@/modules/nfts/components/NftMakeOfferWindow/NftMakeOfferWindow.vue';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
+import ATxWindow from '@/common/components/ATxWindow/ATxWindow.vue';
 
 export default {
     name: 'NftDetailPrice',
 
-    components: { ASignTransaction, AButton, NftMakeOfferWindow, ATokenValue },
+    components: { ATxWindow, ASignTransaction, AButton, ATokenValue },
 
     props: {
         token: {
@@ -176,8 +177,10 @@ export default {
             }
         },
 
-        onMakeOfferTxSuccess() {
-            this.$emit('tx-success');
+        onMakeOfferTransactionStatus(payload) {
+            if (payload.status === 'success') {
+                this.$emit('tx-success');
+            }
         },
 
         onTransactionStatus(payload) {
