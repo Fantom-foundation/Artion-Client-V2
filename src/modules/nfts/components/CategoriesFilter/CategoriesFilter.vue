@@ -8,8 +8,8 @@
     >
         <template v-slot="{ item }">
             <div class="categoriesfilter_item tes-4">
-                <app-iconset size="32px" :icon="item.icon" original />
-                {{ $t(item.label) }}
+                <div v-html="item.icon"></div>
+                {{ $t(item.name) }}
             </div>
         </template>
     </f-listbox>
@@ -18,12 +18,11 @@
 <script>
 import { CATEGORIES } from '@/common/constants/categories.js';
 import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue';
-import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 
 export default {
     name: 'CategoriesFilter',
 
-    components: { FListbox, AppIconset },
+    components: { FListbox },
 
     model: {
         prop: 'selected',

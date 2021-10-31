@@ -7,7 +7,7 @@
             <collections-filter v-model="dFilters.collections" />
         </a-details>
         <a-details :label="$t('categories')" :open="'category' in filters" id="test_nftfilters_categories">
-            <categories-filter v-model="dFilters.category" />
+            <categories-filter :categories="categories" v-model="dFilters.category" />
         </a-details>
     </a-details-group>
 </template>
@@ -19,6 +19,8 @@ import ADetails from '@/common/components/ADetails/ADetails.vue';
 import CategoriesFilter from '@/modules/nfts/components/CategoriesFilter/CategoriesFilter.vue';
 import CollectionsFilter from '@/modules/nfts/components/CollectionsFilter/CollectionsFilter.vue';
 import StatusFilter from '@/modules/nfts/components/StatusFilter/StatusFilter.vue';
+
+import { getCategories } from '@/modules/nfts/queries/categories.js';
 
 export default {
     name: 'NftFilters',
@@ -63,11 +65,19 @@ export default {
     data() {
         return {
             dFilters: { ...this.filters },
+            categories: [],
         };
     },
 
     created() {
+        this.init();
         this._dontEmitChange = false;
+    },
+
+    methods: {
+        async init() {
+            this.categories = await getCategories();
+        },
     },
 };
 </script>
