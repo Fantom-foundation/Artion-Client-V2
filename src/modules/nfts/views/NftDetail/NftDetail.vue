@@ -437,7 +437,7 @@ export default {
         },
 
         onStartAuctionClick() {
-            if (!this.token.hasAuction && this.userCreatedToken) {
+            if (!this.token.hasAuction && this.userOwnsToken) {
                 this.$refs.startAuctionWindow.show();
             }
         },

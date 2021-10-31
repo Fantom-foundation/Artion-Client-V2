@@ -12,7 +12,7 @@
         />
         <!-- temporary, replace with own datetime component -->
         <f-form-input
-            type="datetime-local"
+            type="datetime"
             name="deadline"
             :validator="deadlineValidator"
             :in-formatter="datetimeInFormatterTimestamp"

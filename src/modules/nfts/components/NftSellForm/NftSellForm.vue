@@ -13,7 +13,7 @@
         <div class="nftsellform_row">
             <!-- temporary, replace with own datetime component -->
             <f-form-input
-                type="datetime-local"
+                type="datetime"
                 name="startingTime"
                 :validator="startingTimeValidator"
                 :in-formatter="datetimeInFormatterTimestamp"

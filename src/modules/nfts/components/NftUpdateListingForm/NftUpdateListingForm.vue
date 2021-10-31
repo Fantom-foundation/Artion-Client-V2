@@ -134,9 +134,7 @@ export default {
             if (this.txStatus === 'success') {
                 this.$notifications.add({
                     type: 'success',
-                    text: this.update
-                        ? this.$t('nftupdatelistingform.updateSuccessful')
-                        : this.$t('nftupdatelistingform.sellSuccess'),
+                    text: this.$t('nftupdatelistingform.updateSuccessful'),
                 });
             }
 

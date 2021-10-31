@@ -22,7 +22,7 @@
         </f-form-input>
         <!-- temporary, replace with own datetime component -->
         <f-form-input
-            type="datetime-local"
+            type="datetime"
             name="startTime"
             :validator="startTimeValidator"
             :in-formatter="datetimeInFormatterTimestamp"
@@ -33,7 +33,7 @@
             class="col-6"
         />
         <f-form-input
-            type="datetime-local"
+            type="datetime"
             name="endTime"
             :validator="endTimeValidator"
             :in-formatter="datetimeInFormatterTimestamp"
