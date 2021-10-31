@@ -1,10 +1,10 @@
 <template>
     <div class="collection">
         <!-- TMP -->
-        <ul>
+        <!-- <ul>
             <li><router-link :to="{ name: 'collection-create' }">Create</router-link></li>
             <li><router-link :to="{ name: 'collection-register' }">Register</router-link></li>
-        </ul>
+        </ul> -->
 
         <router-view />
     </div>

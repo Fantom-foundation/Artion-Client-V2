@@ -1,0 +1,68 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+.collectionregisterform {
+	max-width: 600px;
+	margin-left: 100px;
+	padding-bottom: var(--f-spacer-6);
+	& > .fforminput,
+		&__desc,
+		&_btn,
+		&_categories,
+		.auploadarea,
+		.fforminput + .accountfrofileform_group,
+		.accountfrofileform_group + .fforminput {
+			margin-top: var(--f-spacer-4);
+		}
+	.label_btn {
+		padding: 0;
+		border: none;
+		font: inherit;
+		color: inherit;
+		background-color: transparent;
+		cursor: pointer;
+	}
+
+	&_categories_label {
+		margin-bottom: var(--f-spacer-3);
+	}
+	
+	&_group {
+		display: flex;
+		flex-direction: column;
+		margin-top: var(--f-spacer-4);
+
+		.fforminput + .fforminput {
+			.finput_inputcont {
+				border-top: none;
+			}
+		}
+
+		.finput-prefixslot {
+			svg { color: var(--f-color-grey-4) }
+		}
+
+		.finput_inputcont {
+			border-radius: 0;
+		}
+
+		.fforminput:first-child {
+			.finput_inputcont {
+				border-top-right-radius: var(--f-border-radius-2);
+				border-top-left-radius: var(--f-border-radius-2);
+			}
+		}
+
+		.fforminput:last-child {
+			.finput_inputcont {
+				border-bottom-right-radius: var(--f-border-radius-2);
+				border-bottom-left-radius: var(--f-border-radius-2);
+			}
+		}
+	}
+}
+
+@include media.media-max(768px) {
+	.collectionregisterform {
+		margin: 0 auto;
+		padding: 0 var(--f-spacer-3);
+	}
+}

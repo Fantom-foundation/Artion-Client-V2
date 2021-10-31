@@ -60,6 +60,7 @@
     "walletMenu": {
         "profile": "@:profile",
         "settings": "Settings",
+        "collection":"Register Existing Collecton",
         "logout": "Logout"
     },
 
@@ -231,6 +232,38 @@
     "nftlistfilters": {
         "groupFilters": "Group Filters",
         "sortbyFilters": "Sort by Filters"
+    },
+
+    "addcategory": {
+        "addCategory": "Add Category"
+    },
+
+    "collectionregisterform": {
+        "registerCollection": "Register Collection",
+        "useOwnerAddressOfCollection": "Please submit using the owner address of the collection. If you cannot use the owner address, please email us on contact@fantom.foundation with the information below (and proof of collection ownership, such as from the collection's official email address).",
+        "logoImage": "Logo Image",
+        "alsoBeUsedForNavigation": "This image will also be used for navigation. 300x300 recommended.",
+        "name": "Name",
+        "collectionName": "Collection Name",
+        "description": "Description",
+        "provideYourDescription": "Provide your description for your collection",
+        "royalty": "Royalty (%)",
+        "royaltyErr": "Value should be between 1 and 100",
+        "royaltyTooltip": "Each NFT under this collection exchanged through Artion will have a percentage of sale given to nominated wallet address.",
+        "feeRecipient": "Fee Recipient",
+        "feesTooltip": "The nominated Fantom Opera Network wallet address to receive roylties from each sale in this collection.",
+        "contactEmail": "Contact Email",
+        "emailAddress": "Email Address",
+        "emailTooltip": "We will use this email to notify you about your collection aplication. This will not be shared with others.",
+        "enterCollection": "Enter your collection's address",
+        "enterWebsite": "Enter your website url",
+        "enterDiscord": "Enter your Discord url",
+        "enterTwitter": "Enter your Twitter profile link",
+        "enterInstagram": "Enter your Instagram profile link",
+        "enterMedium": "Enter your Medium profile link",
+        "enterTelegram": "Enter your Telegram profile link",
+        "category": "Category",
+        "submit": "Submit"
     },
 
     "nftcreate": {

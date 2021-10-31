@@ -1,0 +1,48 @@
+.addcategory {
+	--asharebutton-border-color: #eaeaf1;
+	--asharebutton-background-hover-color: none;
+	button {
+		border: 1px solid var(--asharebutton-border-color);
+   	border-radius: var(--f-border-radius-2);
+		color: var(--f-doc-color);
+		padding: var(--f-spacer-2);
+		background: var(--f-doc-background-color);
+		margin-top: 0;
+		&:hover {
+			color: var(--f-doc-color) !important;
+			background: var(--asharebutton-background-hover-color) !important;
+			border-color: var(--asharebutton-border-color) !important;
+		}
+	}
+
+	&_window {
+		box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%);
+		border-radius: var(--f-border-radius-1);
+		background: none;
+		&.fpopover .fwindow_body {
+			padding: 0;
+		}
+	}
+
+	display: flex;
+	align-items: flex-start;
+	column-gap: var(--f-spacer-3);
+
+	&_listitem {
+		display: flex;
+		align-items: center;
+		color: var(--flistbox-item-color);
+		font-size: 1em;
+		gap: var(--f-spacer-4);
+		color: var(--f-doc-color);
+		padding: 0;
+		.fsvgicon-icon {
+			display: flex;
+			align-items: center;
+		}
+		svg {
+			max-width: var(--f-spacer-4);
+			height: auto;
+		}
+	}
+}
