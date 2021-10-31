@@ -58,11 +58,14 @@
                             :token="token"
                             @tx-success="onSellNftTxSuccess"
                         />
-                        <nft-cancel-listing-button
-                            v-if="userOwnsToken && tokenHasListing"
-                            :token="token"
-                            @tx-success="onCancelListingTxSuccess"
-                        />
+                        <template v-if="userOwnsToken && tokenHasListing">
+                            <nft-cancel-listing-button :token="token" @tx-success="onCancelListingTxSuccess" />
+                            <nft-update-listing-button
+                                :token="token"
+                                :listing="listing"
+                                @tx-success="onUpdateListingTxSuccess"
+                            />
+                        </template>
                     </div>
 
                     <nft-detail-price
@@ -246,6 +249,7 @@ import NftDetailPrice from '@/modules/nfts/components/NftDetailPrice/NftDetailPr
 import { incrementTokenViews } from '@/modules/nfts/mutations/views';
 import { getTokenListings } from '@/modules/nfts/queries/token-listings.js';
 import { getTokenOwnerships } from '@/modules/nfts/queries/token-ownerships.js';
+import NftUpdateListingButton from '@/modules/nfts/components/NftUpdateListingButton/NftUpdateListingButton.vue';
 
 export default {
     name: 'NftDetail',
@@ -253,6 +257,7 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftUpdateListingButton,
         NftDetailPrice,
         NftSellButton,
         NftCancelListingButton,
@@ -448,6 +453,10 @@ export default {
         },
 
         onCancelListingTxSuccess() {
+            this.update();
+        },
+
+        onUpdateListingTxSuccess() {
             this.update();
         },
 

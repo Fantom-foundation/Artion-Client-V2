@@ -97,8 +97,6 @@ export default {
             const { token } = this;
             const price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
 
-            console.log('??', token.contract, token.tokenId, this.selectedPayToken.address, price);
-
             this.tx = contracts.updateListing(
                 token.contract,
                 token.tokenId,
@@ -123,7 +121,6 @@ export default {
         },
 
         onTokenSelected(token) {
-            console.log('YT');
             this.selectedPayToken = token;
         },
 
