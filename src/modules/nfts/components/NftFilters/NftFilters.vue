@@ -4,7 +4,7 @@
             <status-filter v-model="dFilters.status" />
         </a-details>
         <a-details :label="$t('collections')" :open="'collections' in filters" id="test_nftfilters_collections">
-            <collections-filter v-model="dFilters.collections" />
+            <collections-filter :collections="collections" v-model="dFilters.collections" />
         </a-details>
         <a-details :label="$t('categories')" :open="'category' in filters" id="test_nftfilters_categories">
             <categories-filter :categories="categories" v-model="dFilters.category" />
@@ -21,6 +21,7 @@ import CollectionsFilter from '@/modules/nfts/components/CollectionsFilter/Colle
 import StatusFilter from '@/modules/nfts/components/StatusFilter/StatusFilter.vue';
 
 import { getCategories } from '@/modules/nfts/queries/categories.js';
+import { getCollections } from '@/modules/nfts/queries/collections.js';
 
 export default {
     name: 'NftFilters',
@@ -66,6 +67,7 @@ export default {
         return {
             dFilters: { ...this.filters },
             categories: [],
+            collections: [],
         };
     },
 
@@ -77,6 +79,14 @@ export default {
     methods: {
         async init() {
             this.categories = await getCategories();
+            let collections = await getCollections();
+            this.collections = collections.edges.map(edge => {
+                return {
+                    label: edge.node.name,
+                    value: edge.node.contract,
+                    img: 'https://cloudflare-ipfs.com/ipfs/QmP8idjiQxFZ1Wpe61fSmi6jPTT48apPEx4QVKDhhWNWya',
+                };
+            });
         },
     },
 };

@@ -57,6 +57,8 @@ export function filtersToQueryFilters(filters, defaultFilters) {
             if (status) {
                 qFilters.filter[status] = true;
             }
+        } else if (filterName === 'collections') {
+            qFilters.filter['collections'] = filter.value;
         } else if (filterName === 'category') {
             qFilters.filter['categories'] = filter.value;
         } else if (filterName === 'sortBy') {
