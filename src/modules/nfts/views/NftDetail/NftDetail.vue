@@ -71,7 +71,6 @@
                     <nft-detail-price
                         ref="nftDetailPrice"
                         :token="token"
-                        :token-owner="tokenOwner"
                         :listing="listing"
                         :user-owns-token="userOwnsToken"
                         @tx-success="onMakeOfferTxSuccess"
@@ -98,7 +97,12 @@
                         </div>
                     </template>
                     <template>
-                        <NftListingsGrid />
+                        <nft-listings-grid
+                            ref="listingsGrid"
+                            :token="token"
+                            :user-owns-token="userOwnsToken"
+                            @tx-success="onOfferTxSuccess"
+                        />
                     </template>
                 </a-details>
                 <a-details class="adetails_p0">
@@ -454,6 +458,10 @@ export default {
 
         onCancelListingTxSuccess() {
             this.update();
+
+            /*if (this.$refs.listingsGrid) {
+                this.$refs.listingsGrid.update();
+            }*/
         },
 
         onUpdateListingTxSuccess() {

@@ -14,6 +14,7 @@
     "reservePrice": "Reserve Price",
     "redeem": "Redeem",
     "price": "Price",
+    "from": "From",
 
     "navigation": {
         "explore": "@:explore",
@@ -60,7 +61,7 @@
     "walletMenu": {
         "profile": "@:profile",
         "settings": "Settings",
-        "collection":"Register Existing Collecton",
+        "collection": "Register Existing Collecton",
         "logout": "Logout"
     },
 
@@ -126,10 +127,6 @@
 
     "nftcard": {
         "favorite": "Favorite"
-    },
-
-    "nftlistingsgrid": {
-        "buy": "Buy"
     },
 
     "nftMakeOfferForm": {
@@ -349,12 +346,24 @@
     "nftDirectOffersGrid": {
         "accept": "Accept",
         "withdraw": "Withdraw",
-        "from": "From",
+        "from": "@:from",
         "price": "@:price",
         "expires": "Expires",
         "withdrawSuccess": "You have successfully withdraw an offer",
         "acceptSuccess": "You have successfully accepted an offer",
-        "status": "Status"
+        "status": "@:status"
+    },
+
+    "nftlistingsgrid": {
+        "from": "@:from",
+        "price": "@:price",
+        "status": "@:status",
+        "buy": "Buy"
+    },
+
+    "itemstatuses": {
+        "closed": "Closed",
+        "expired": "Expired"
     },
 
     "account": {

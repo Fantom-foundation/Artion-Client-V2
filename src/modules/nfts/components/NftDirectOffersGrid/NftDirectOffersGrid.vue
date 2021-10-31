@@ -64,6 +64,8 @@ import ASignTransaction from '@/common/components/ASignTransaction/ASignTransact
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
 import { isExpired } from '@/utils/date.js';
+import { i18n } from '@/plugins/vue-i18n.js';
+import { objectEquals } from 'fantom-vue-components/src/utils';
 
 export default {
     name: 'NftDirectOffersGrid',
@@ -109,7 +111,11 @@ export default {
                     name: 'closed',
                     label: this.$t('nftDirectOffersGrid.status'),
                     formatter(value, item) {
-                        return value ? 'Closed' : isExpired(item.deadline) ? 'Expired' : '';
+                        return value
+                            ? i18n.t('itemstatuses.closed')
+                            : isExpired(item.deadline)
+                            ? i18n.t('itemstatuses.expired')
+                            : '';
                     },
                     width: '80px',
                 },
@@ -133,8 +139,8 @@ export default {
 
     watch: {
         token: {
-            async handler(value) {
-                if (value.contract) {
+            async handler(value, oldValue) {
+                if (value.contract && !objectEquals(value, oldValue)) {
                     await this.loadOffers();
                 }
             },

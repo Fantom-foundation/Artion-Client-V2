@@ -59,12 +59,6 @@ export default {
                 return {};
             },
         },
-        tokenOwner: {
-            type: Object,
-            default() {
-                return {};
-            },
-        },
         listing: {
             type: Object,
             default() {
@@ -123,9 +117,10 @@ export default {
 
         async buyItem() {
             const { token } = this;
+            const { listing } = this;
             const web3 = new Web3();
 
-            if ((await checkUserBalance(this.listing.unitPrice, this.payToken.address)) !== null) {
+            if ((await checkUserBalance(listing.unitPrice, this.payToken.address)) !== null) {
                 /*const allowanceTx = await getUserAllowanceTx({
                     value: this.listing.unitPrice,
                     tokenAddress: this.payToken.address,
@@ -134,9 +129,9 @@ export default {
 
                 console.log('allowanceTx', allowanceTx);*/
 
-                console.log(token.contract, parseInt(token.tokenId, 16), this.tokenOwner.address);
+                console.log(token.contract, parseInt(token.tokenId, 16), listing.owner);
 
-                const tx = contracts.buyListedItem(token.contract, token.tokenId, this.tokenOwner.address, web3);
+                const tx = contracts.buyListedItem(token.contract, token.tokenId, listing.owner, web3);
 
                 console.log(tx);
 
