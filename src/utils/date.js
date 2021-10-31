@@ -11,6 +11,14 @@ export function dateToUTCTimestamp(date) {
 }
 
 /**
+ * @param {*} date
+ * @return {string}
+ */
+export function dateToDatetime(date) {
+    return dayjs(date).format('YYYY-MM-DDTHH:mm');
+}
+
+/**
  * Converts timestamp to date used in native date input element
  *
  * @param {number} timestamp Timestamp in seconds
@@ -37,7 +45,7 @@ export function dateOutFormatterTimestamp(date) {
  * @return {string}
  */
 export function datetimeInFormatterTimestamp(timestamp) {
-    return dayjs(timestamp).format('YYYY-MM-DDTHH:mm');
+    return dateToDatetime(timestamp);
 }
 
 /**

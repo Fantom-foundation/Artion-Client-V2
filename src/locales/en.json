@@ -13,6 +13,7 @@
     "profile": "Profile",
     "reservePrice": "Reserve Price",
     "redeem": "Redeem",
+    "price": "Price",
 
     "navigation": {
         "explore": "@:explore",
@@ -131,7 +132,7 @@
     },
 
     "nftMakeOfferForm": {
-        "price": "Price",
+        "price": "@:price",
         "offerExpiration": "Offer Expiration",
         "placeOffer": "Place Offer",
         "nonZeroPrice": "@:nonZeroPrice",
@@ -141,7 +142,7 @@
     },
 
     "nftsellform": {
-        "price": "Price",
+        "price": "@:price",
         "startingTime": "Starting At",
         "listItem": "List Item",
         "quantity": "Quantity",
@@ -149,6 +150,12 @@
         "nonZeroQuantity": "Quantity must be non zero value",
         "badDate": "Bad date",
         "sellSuccess": "You have successfully sell an item"
+    },
+
+    "nftupdatelistingform": {
+        "price": "@:price",
+        "updateItem": "Update Item",
+        "updateSuccessful": "You have successfully updated your listing"
     },
 
     "nftstartauctionform": {
@@ -301,7 +308,7 @@
         "minutes": "minutes",
         "seconds": "seconds",
         "hasEnded": "Auction has ended",
-        "price": "Price",
+        "price": "@:price",
         "minted": "Minted",
         "insufficientBalance": "Insufficient {token} Balance"
     },
@@ -310,7 +317,7 @@
         "accept": "Accept",
         "withdraw": "Withdraw",
         "from": "From",
-        "price": "Price",
+        "price": "@:price",
         "expires": "Expires",
         "withdrawSuccess": "You have successfully withdraw an offer",
         "acceptSuccess": "You have successfully accepted an offer",
@@ -392,6 +399,11 @@
     "nftcancellisting": {
         "cancelListing": "Cancel Listing",
         "cancelSuccessful": "You have successfully canceled the listing"
+    },
+
+    "nftupdatelisting": {
+        "updateListing": "Update Listing",
+        "updateItem": "Update Your Listing"
     },
 
     "nftsellbutton": {

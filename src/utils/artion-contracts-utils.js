@@ -450,7 +450,7 @@ const ZERO_AMOUNT = '0x0';
  * @param {Web3} web3Client Instance of an initialized Web3 client.
  * @return {{to: address, data: string, value string}}
  */
- function updateListing(nftAddress, tokenID, payToken, newPricePerItem, startingTime, web3Client) {
+ function updateListing(nftAddress, tokenID, payToken, newPricePerItem, web3Client) {
 
     const abi = {
         "inputs": [
@@ -481,7 +481,7 @@ const ZERO_AMOUNT = '0x0';
         "type": "function"
       }
 
-    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, newPricePerItem, startingTime])
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, newPricePerItem])
 
     // return tx object
     return {
