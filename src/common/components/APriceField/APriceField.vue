@@ -7,7 +7,12 @@
             </template>
 
             <template #prefix>
-                <a-currency-dropdown :currencies="currencies" @token-selected="onTokenSelected" />
+                <a-currency-dropdown
+                    :currencies="currencies"
+                    :selected="selected"
+                    :select-immediately="selectImmediately"
+                    @token-selected="onTokenSelected"
+                />
             </template>
 
             <template #suffix>
@@ -26,7 +31,7 @@ export default {
 
     model: {
         prop: 'value',
-        event: 'change',
+        event: 'input',
     },
 
     components: { ACurrencyDropdown },
@@ -35,6 +40,16 @@ export default {
         value: {
             type: [String, Number],
             default: '',
+        },
+        /** Selected pay token address */
+        selected: {
+            type: String,
+            default: '',
+        },
+        /** Fire 'token-selected' event immediately  */
+        selectImmediately: {
+            type: Boolean,
+            default: false,
         },
         /** @type {PayToken[]} */
         currencies: {
@@ -77,7 +92,6 @@ export default {
         },
 
         dValue(value) {
-            console.log('dVAlue change');
             this.$emit('change', value);
         },
     },

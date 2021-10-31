@@ -34,6 +34,7 @@
 </template>
 <script>
 import ADropdownListbox from '@/common/components/ADropdownListbox/ADropdownListbox.vue';
+import { compareAddresses } from '@/utils/address.js';
 
 export default {
     name: 'ACurrencyDropdown',
@@ -48,6 +49,16 @@ export default {
                 return [];
             },
         },
+        /** Selected pay token address */
+        selected: {
+            type: String,
+            default: '',
+        },
+        /** Fire 'token-selected' event immediately  */
+        selectImmediately: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -59,20 +70,70 @@ export default {
 
     watch: {
         currencies: {
+            handler() {
+                const selectedToken = this.getSelectedTokenByAddress(this.selected);
+
+                this.value = selectedToken ? selectedToken.value : null;
+
+                if (this.selectImmediately && selectedToken) {
+                    this.onSelected(selectedToken);
+                }
+            },
+            immediate: true,
+        },
+        selected: {
             handler(value) {
-                this.value = value && value.length > 0 ? value[0].value : 0;
+                const selectedToken = this.getSelectedTokenByAddress(value);
+
+                this.value = selectedToken ? selectedToken.value : null;
+
+                if (this.selectImmediately && selectedToken) {
+                    this.onSelected(selectedToken);
+                }
             },
             immediate: true,
         },
     },
 
     methods: {
+        /**
+         * @return {Object|null}
+         */
+        getSelectedToken() {
+            return this.getSelectedTokenByValue(this.value);
+        },
+
+        /**
+         * @param {string} tokenAddress
+         * @return {null|*}
+         */
+        getSelectedTokenByAddress(tokenAddress) {
+            const { currencies } = this;
+
+            if (currencies.length > 0) {
+                return tokenAddress
+                    ? currencies.find(token => compareAddresses(token.address, tokenAddress))
+                    : currencies[0];
+            }
+
+            return null;
+        },
+
+        /**
+         * @param {string} value Token code
+         * @return {*}
+         */
+        getSelectedTokenByValue(value) {
+            return this.currencies.find(token => token.value === value);
+        },
+
+        windowHide() {
+            this.rotated = !this.rotated;
+        },
+
         onSelected(item) {
             this.rotated = !this.rotated;
             this.$emit('token-selected', item);
-        },
-        windowHide() {
-            this.rotated = !this.rotated;
         },
     },
 };
