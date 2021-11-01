@@ -68,7 +68,15 @@ export function filtersToQueryFilters(filters, defaultFilters) {
                 qFilters.filter['collections'] = filter.value;
             }
         } else if (filterName === 'category') {
-            qFilters.filter['categories'] = filter.value;
+            if (qFilters.filter['categories']) {
+                if (isArray(qFilters.filter['categories'])) {
+                    qFilters.filter['categories'].push(filter.value);
+                } else {
+                    qFilters.filter['categories'] = [qFilters.filter['categories'], filter.value];
+                }
+            } else {
+                qFilters.filter['categories'] = filter.value;
+            }
         } else if (filterName === 'sortBy') {
             const sbFilter = sortByFilters[filter.value];
 
