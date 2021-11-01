@@ -141,8 +141,15 @@ export default {
 
         setBuyTx() {
             const { token } = this;
+            const { listing } = this;
             const web3 = new Web3();
-            const tx = contracts.buyListedItem(token.contract, token.tokenId, this.listing.owner, web3);
+            const tx = contracts.buyListedItemWithPayToken(
+                token.contract,
+                token.tokenId,
+                listing.owner,
+                listing.payToken,
+                web3
+            );
 
             console.log(tx);
             tx._code = 'buy';
@@ -199,7 +206,7 @@ export default {
 
         onMakeOfferTransactionStatus(payload) {
             if (payload.status === 'success') {
-                this.$emit('tx-success');
+                this.$emit('tx-success', 'make_offer');
             }
         },
 
@@ -216,7 +223,7 @@ export default {
                         type: 'success',
                     });
 
-                    this.$emit('tx-success');
+                    this.$emit('tx-success', 'buy');
                 }
             }
         },

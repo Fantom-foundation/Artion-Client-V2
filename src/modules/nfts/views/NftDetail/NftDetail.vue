@@ -73,7 +73,7 @@
                         :token="token"
                         :listing="listing"
                         :user-owns-token="userOwnsToken"
-                        @tx-success="onMakeOfferTxSuccess"
+                        @tx-success="onNftDetailPriceTxSuccess"
                     />
 
                     <a-share-button />
@@ -101,7 +101,7 @@
                             ref="listingsGrid"
                             :token="token"
                             :user-owns-token="userOwnsToken"
-                            @tx-success="onOfferTxSuccess"
+                            @tx-success="onBuyTxSuccess"
                         />
                     </template>
                 </a-details>
@@ -321,6 +321,12 @@ export default {
         this.init();
 
         incrementTokenViews(routeParams.tokenContract, toHex(routeParams.tokenId));
+
+        // TMP
+        setTimeout(() => {
+            this.update();
+            console.log('update');
+        }, 4000);
     },
 
     methods: {
@@ -330,8 +336,6 @@ export default {
             if (!routeParams.tokenContract || !routeParams.tokenId) {
                 this.$router.push({ name: '404' });
             } else {
-                this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
-
                 this.update();
             }
         },
@@ -339,6 +343,7 @@ export default {
         async update() {
             const routeParams = this.$route.params;
 
+            this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
 
             console.log(this.token);
@@ -442,13 +447,21 @@ export default {
             }
         },
 
-        onMakeOfferTxSuccess() {
+        onNftDetailPriceTxSuccess(code) {
             const { $refs } = this;
 
-            this.onWalletAddressChange();
-            if ($refs.directOffersGrid) {
-                $refs.directOffersGrid.update();
+            if (code === 'make_offer') {
+                this.onWalletAddressChange();
+                if ($refs.directOffersGrid) {
+                    $refs.directOffersGrid.update();
+                }
+            } else if (code === 'buy') {
+                this.update();
             }
+        },
+
+        onBuyTxSuccess() {
+            this.update();
         },
 
         onOfferTxSuccess() {

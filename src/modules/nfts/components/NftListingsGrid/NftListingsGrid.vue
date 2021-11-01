@@ -120,7 +120,11 @@ export default {
         token: {
             async handler(value, oldValue) {
                 if (value.contract && !objectEquals(value, oldValue)) {
-                    await this.loadListings();
+                    if (this.items.length > 0) {
+                        this.update();
+                    } else {
+                        await this.loadListings();
+                    }
                 }
             },
             immediate: true,
@@ -162,7 +166,13 @@ export default {
         setBuyTx(listing) {
             const { token } = this;
             const web3 = new Web3();
-            const tx = contracts.buyListedItem(token.contract, token.tokenId, listing.owner, web3);
+            const tx = contracts.buyListedItemWithPayToken(
+                token.contract,
+                token.tokenId,
+                listing.owner,
+                listing.payToken,
+                web3
+            );
 
             console.log(tx);
             tx._code = 'buy';
