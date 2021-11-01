@@ -72,7 +72,7 @@ export default {
         listing: {
             handler(value) {
                 if (value.unitPrice) {
-                    this.setValues(value);
+                    this.setValues(value, this.selectedPayToken);
                 }
             },
             immediate: true,
@@ -106,8 +106,10 @@ export default {
             );
         },
 
-        setValues(listing) {
-            this.values.price = bFromTokenValue(listing.unitPrice, this.selectedPayToken.decimals).toNumber();
+        setValues(listing, selectedPayToken) {
+            if ('decimals' in selectedPayToken) {
+                this.values.price = bFromTokenValue(listing.unitPrice, selectedPayToken.decimals).toNumber();
+            }
         },
 
         priceValidator(value) {
@@ -121,6 +123,10 @@ export default {
         },
 
         onTokenSelected(token) {
+            if (!('decimals' in this.selectedPayToken)) {
+                this.setValues(this.listing, token);
+            }
+
             this.selectedPayToken = token;
         },
 
