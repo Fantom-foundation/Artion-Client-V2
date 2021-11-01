@@ -8,7 +8,7 @@
 
     --theme-dark-color-9: #222431;
     --theme-dark-color-8: #252736;
-    --theme-dark-color-7: #2C2E3F;
+    --theme-dark-color-7: #2c2e3f;
     --theme-dark-color-6: #33364a;
     //--theme-dark-color-5: #41455e;
     --theme-dark-color-5: #3e425b;
@@ -55,10 +55,12 @@
         --f-input-color: #fff;
         --f-input-hover-border: var(--f-inputs-border) var(--theme-dark-color-5);
         //--f-input-focus-border: var(--f-inputs-border) var(--f-color-primary-5-l);
-        --f-input-focus-box-shadow: var(--f-inputs-focus-box-shadow) hsla(var(--f-color-primary-h), var(--f-color-primary-s), 64%, 0.35);
+        --f-input-focus-box-shadow: var(--f-inputs-focus-box-shadow)
+            hsla(var(--f-color-primary-h), var(--f-color-primary-s), 64%, 0.35);
         --f-input-invalid-color: var(--theme-dark-invalid-color);
         --f-input-invalid-border: var(--f-inputs-border) var(--theme-dark-invalid-color);
-        --f-input-invalid-focus-box-shadow: var(--f-inputs-focus-box-shadow) hsla(var(--f-color-red-h), var(--f-color-red-s), 63%, 0.35);
+        --f-input-invalid-focus-box-shadow: var(--f-inputs-focus-box-shadow)
+            hsla(var(--f-color-red-h), var(--f-color-red-s), 63%, 0.35);
         --f-input-readonly-background: var(--f-inputs-background);
         --f-input-background: var(--theme-dark-color-6);
     }
@@ -175,6 +177,10 @@
         --fdetails-border: 1px solid var(--theme-dark-color-5);
     }
 
+    .nftdetailprice {
+        border-color: var(--theme-dark-color-5);
+    }
+
     .adetails {
         &.fdetails {
             .fdetails {
@@ -186,9 +192,9 @@
     }
 
     .tradehistoryswitcher {
-    --tradehistoryswitcher-btn-background: var(--theme-dark-color-6);
-	--tradehistoryswitcher-border-color: var(--theme-dark-color-5);
-    --tradehistoryswitcher-border-hover-color:var(--theme-dark-color-4);
+        --tradehistoryswitcher-btn-background: var(--theme-dark-color-6);
+        --tradehistoryswitcher-border-color: var(--theme-dark-color-5);
+        --tradehistoryswitcher-border-hover-color: var(--theme-dark-color-4);
     }
 
     .notificationsettingsform {
@@ -197,7 +203,7 @@
 
     .agrid {
         --agrid-header-background-color: var(--theme-dark-color-7);
-        --fdatagrid-cell-hover-background-color: var(--theme-dark-color-5)
+        --fdatagrid-cell-hover-background-color: var(--theme-dark-color-5);
     }
 
     .apricefield {
