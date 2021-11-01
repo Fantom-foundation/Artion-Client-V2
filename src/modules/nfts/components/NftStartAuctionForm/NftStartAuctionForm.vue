@@ -88,7 +88,7 @@ export default {
             values: {
                 reservePrice: '',
                 startTime: dayjs()
-                    .add(2, 'minutes')
+                    // .add(2, 'minutes')
                     .valueOf(),
                 endTime: dayjs()
                     .add(1, 'day')
@@ -147,9 +147,7 @@ export default {
                 web3
             );
 
-            console.log('tx: ', tx);
-
-            // this.tx = tx;
+            this.tx = tx;
         },
 
         reservePriceValidator(value) {
