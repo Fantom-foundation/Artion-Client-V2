@@ -48,6 +48,8 @@ export function filtersToQueryFilters(filters, defaultFilters) {
     const strQFilters = JSON.stringify(qFilters);
     const fFilters = flattenFilters(filters);
 
+    console.log(fFilters);
+
     fFilters.forEach(filter => {
         const { filterName } = filter;
 
@@ -58,7 +60,16 @@ export function filtersToQueryFilters(filters, defaultFilters) {
                 qFilters.filter[status] = true;
             }
         } else if (filterName === 'collections') {
-            qFilters.filter['collections'] = filter.value;
+            if (qFilters.filter['collections']) {
+                if (isArray(qFilters.filter['collections'])) {
+                    qFilters.filter['collections'].push(filter.value);
+                } else {
+                    qFilters.filter['collections'] = [qFilters.filter['collections'], filter.value];
+                }
+            } else {
+                qFilters.filter['collections'] = filter.value;
+            }
+            console.log(qFilters.filter['collections']);
         } else if (filterName === 'category') {
             qFilters.filter['categories'] = filter.value;
         } else if (filterName === 'sortBy') {
