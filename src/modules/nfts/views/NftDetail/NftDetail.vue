@@ -321,12 +321,6 @@ export default {
         this.init();
 
         incrementTokenViews(routeParams.tokenContract, toHex(routeParams.tokenId));
-
-        // TMP
-        setTimeout(() => {
-            this.update();
-            console.log('update');
-        }, 4000);
     },
 
     methods: {
