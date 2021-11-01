@@ -17,6 +17,7 @@
             animation-out="scale-center-leave-active"
         />
         <f-network-status />
+        <f-aria-alert />
     </div>
 </template>
 
@@ -27,6 +28,7 @@ import FNetworkStatus from 'fantom-vue-components/src/components/FNetworkStatus/
 import FNotifications from 'fantom-vue-components/src/components/FNotifications/FNotifications.vue';
 import FTooltip from 'fantom-vue-components/src/components/FTooltip/FTooltip.vue';
 import FAppTheme from 'fantom-vue-components/src/components/FAppTheme/FAppTheme.vue';
+import FAriaAlert from 'fantom-vue-components/src/components/FAriaAlert/FAriaAlert.vue';
 import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.vue';
 import { getBearerToken, setUser } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
@@ -37,7 +39,7 @@ import AppDarkTheme from '@/modules/app/components/AppDarkTheme/AppDarkTheme.vue
 export default {
     name: 'App',
 
-    components: { AppDarkTheme, WalletPicker, FNotifications, FNetworkStatus, FTooltip, FAppTheme },
+    components: { AppDarkTheme, WalletPicker, FNotifications, FNetworkStatus, FTooltip, FAppTheme, FAriaAlert },
 
     data() {
         return {
