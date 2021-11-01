@@ -31,7 +31,7 @@
                             </div>
                         </template>
                     </a-dropdown-listbox>
-                    <f-form-input :label="$t('nftcreate.name')" field-size="large" type="text" name="name" />
+                    <f-form-input :label="$t('nftcreate.name')" field-size="large" type="text" name="name" required />
                     <f-form-input
                         :label="$t('nftcreate.symbol')"
                         field-size="large"
@@ -128,12 +128,7 @@ export default {
 
     computed: {
         isDisabled() {
-            return (
-                this.values.name === '' ||
-                this.values.symbol === '' ||
-                this.values.description === '' ||
-                !this.imageFile
-            );
+            return this.values.name === '' || !this.imageFile;
         },
     },
 
@@ -150,7 +145,7 @@ export default {
 
     methods: {
         royaltyValidator(_value) {
-            if (_value === '') return _value;
+            if (_value === '') return false;
             _value = Number(_value);
             return !(_value >= 1 && _value <= 100);
         },
