@@ -25,6 +25,13 @@ import AWindow from '@/common/components/AWindow/AWindow.vue';
 export default {
     name: 'CoinbaseWalletNoticeWindow',
 
+    props: {
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+    },
+
     computed: {
         ...mapState('wallet', {
             chainId: 'chainId',
@@ -36,7 +43,7 @@ export default {
             handler() {
                 const { $wallet } = this;
 
-                if ($wallet.is('coinbase')) {
+                if ($wallet.is('coinbase') && !this.disabled) {
                     if ($wallet.isCorrectChainId()) {
                         this.hide();
                     } else {

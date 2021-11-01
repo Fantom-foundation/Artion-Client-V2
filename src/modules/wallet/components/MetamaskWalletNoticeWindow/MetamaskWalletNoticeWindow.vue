@@ -12,6 +12,13 @@ import { mapState } from 'vuex';
 export default {
     name: 'MetamaskWalletNoticeWindow',
 
+    props: {
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+    },
+
     computed: {
         ...mapState('wallet', {
             chainId: 'chainId',
@@ -23,7 +30,7 @@ export default {
             handler() {
                 const { $wallet } = this;
 
-                if ($wallet.is('metamask')) {
+                if ($wallet.is('metamask') && !this.disabled) {
                     if ($wallet.isCorrectChainId()) {
                         this.hide();
                     } else {

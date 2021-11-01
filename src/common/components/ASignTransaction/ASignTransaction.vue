@@ -1,7 +1,7 @@
 <template>
     <div class="asigntransaction" :hidden="hidden || null" aria-hidden="true">
-        <metamask-wallet-notice-window ref="metamaskNotice" />
-        <coinbase-wallet-notice-window ref="coinbaseNotice" />
+        <metamask-wallet-notice-window ref="metamaskNotice" :disabled="!tx.to" />
+        <coinbase-wallet-notice-window ref="coinbaseNotice" :disabled="!tx.to" />
     </div>
 </template>
 
