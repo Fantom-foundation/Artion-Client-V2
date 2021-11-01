@@ -603,10 +603,11 @@ const ZERO_AMOUNT = '0x0';
  * @param {number|BN|string} reservePrice Item cannot be sold for less than this price in wei
  * @param {string} startTimestamp Unix epoch in seconds for the auction start time
  * @param {string} endTimestamp Unix epoch in seconds for the auction end time
+ * @param {bool} minBidReserve If set to true, then minimum bid is set to reserve price, otherwise nothing happens
  * @param {Web3} web3Client Instance of an initialized Web3 client.
  * @return {{to: address, data: string, value string}}
  */
- function createAuction(nftAddress, tokenID, payToken, reservePrice, startTimestamp, endTimestamp, web3Client) {
+ function createAuction(nftAddress, tokenID, payToken, reservePrice, startTimestamp, endTimestamp, minBidReserve, web3Client) {
 
     const abi = {
         "inputs": [
@@ -636,6 +637,11 @@ const ZERO_AMOUNT = '0x0';
                 "type": "uint256"
             },
             {
+                "internalType": "bool",
+                "name": "minBidReserve",
+                "type": "bool"
+            },
+            {
                 "internalType": "uint256",
                 "name": "_endTimestamp",
                 "type": "uint256"
@@ -647,7 +653,7 @@ const ZERO_AMOUNT = '0x0';
         "type": "function"
     }
 
-    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, reservePrice, startTimestamp, endTimestamp])
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, reservePrice, startTimestamp, minBidReserve, endTimestamp])
 
     // return tx object
     return {
