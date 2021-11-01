@@ -164,10 +164,11 @@
         "placeOffer": "Place Offer",
         "nonZeroPrice": "@:nonZeroPrice",
         "startAuction": "@:startAuction",
+        "minBid": "Minimum bid should be equal or greater than reserve price",
         "badDate": "Bad date",
         "fillDate": "Fill the date please",
-        "startDateLower": "Start date must be lower than end time",
-        "endDateGreater": "End date must be greater than start time"
+        "startDateLower": "Start date must be lower than end date",
+        "endDateGreater": "End date must be greater than start date"
     },
 
     "densityswitch": {
@@ -200,8 +201,7 @@
         "network": "Network",
         "fantomOpera": "Fantom Opera",
         "chainId": "Chain ID",
-        "fromCollection": "More from this collection",
-        "startAuction": "@:startAuction"
+        "fromCollection": "More from this collection"
     },
 
     "nftdetailprice": {
@@ -438,6 +438,11 @@
         "savedSuccessfully": "Shipping address saved successfully"
     },
 
+    "nftcancelauction": {
+        "cancelAuction": "Cancel Auction",
+        "cancelSuccessful": "You have successfully canceled the auction"
+    },
+
     "nftcancellisting": {
         "cancelListing": "Cancel Listing",
         "cancelSuccessful": "You have successfully canceled the listing"
@@ -454,6 +459,14 @@
 
     "nftsellwindow": {
         "sellItem": "Sell Item"
+    },
+
+    "nftstartauctionbutton": {
+        "startAuction": "@:startAuction"
+    },
+
+    "nftstartauctionwindow": {
+        "title": "@:startAuction"
     },
 
     "notificationsettings": {

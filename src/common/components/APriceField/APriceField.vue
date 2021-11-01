@@ -97,6 +97,14 @@ export default {
     },
 
     methods: {
+        /**
+         * @param {function} [validator]
+         * @return {Promise<null|*>}
+         */
+        async validate(validator) {
+            return this.$refs.input.validate(validator);
+        },
+
         onTokenSelected(item) {
             this.factor = item.price;
             this.$emit('token-selected', item);

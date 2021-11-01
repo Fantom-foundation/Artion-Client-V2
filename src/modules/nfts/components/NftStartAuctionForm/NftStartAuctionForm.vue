@@ -1,5 +1,10 @@
 <template>
-    <f-form class="nftstartauctionform grid" v-model="values" @submit="onSubmit">
+    <f-form
+        class="nftstartauctionform grid"
+        v-model="values"
+        @submit="onSubmit"
+        :aria-label="$t('nftstartauctionwindow.title')"
+    >
         <f-form-input
             ref="priceField"
             type="a-price-field"
@@ -30,7 +35,7 @@
             validate-on-input
             field-size="large"
             :label="$t('nftstartauctionform.startTime')"
-            class="col-6"
+            class="md:col-6"
         />
         <f-form-input
             type="datetime"
@@ -41,11 +46,12 @@
             validate-on-input
             field-size="large"
             :label="$t('nftstartauctionform.auctionExpiration')"
-            class="col-6"
+            class="md:col-6"
         />
+        <f-form-input type="checkbox" :label="$t('nftstartauctionform.minBid')" name="minBid" />
 
         <div class="fform_buttons">
-            <a-button type="submit" size="large" :disabled="!isFormValid" :loading="txStatus.status === 'pending'">
+            <a-button type="submit" size="large" :loading="txStatus === 'pending'">
                 {{ $t('nftstartauctionform.startAuction') }}
             </a-button>
         </div>
@@ -60,7 +66,6 @@ import { bToTokenValue, toHex } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
-import { mapState } from 'vuex';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { dateOutFormatterTimestamp, datetimeInFormatterTimestamp } from '@/utils/date.js';
 
@@ -93,14 +98,11 @@ export default {
             payTokens: [],
             selectedPayToken: null,
             tx: {},
+            txStatus: '',
         };
     },
 
     computed: {
-        ...mapState('app', {
-            txStatus: 'txStatus',
-        }),
-
         isFormValid() {
             const { values } = this;
 
@@ -132,7 +134,7 @@ export default {
             const startTime = parseInt(values.startTime / 1000);
             const endTime = parseInt(values.endTime / 1000);
 
-            console.log('token.tokenId', token.tokenId, this.selectedPayToken.address);
+            console.log('token.tokenId', token.tokenId, this.selectedPayToken.address, values.minBid);
 
             const tx = contracts.createAuction(
                 token.contract,
@@ -141,12 +143,13 @@ export default {
                 reservePrice,
                 startTime,
                 endTime,
+                values.minBid,
                 web3
             );
 
             console.log('tx: ', tx);
 
-            this.tx = tx;
+            // this.tx = tx;
         },
 
         reservePriceValidator(value) {
@@ -188,11 +191,22 @@ export default {
         onSubmit(data) {
             const { values } = data;
 
-            this.setTx(values);
+            if (this.isFormValid) {
+                this.setTx(values);
+            }
         },
 
         onTransactionStatus(payload) {
-            console.log('onTransactionStatus', JSON.stringify(payload));
+            this.txStatus = payload.status;
+
+            if (this.txStatus === 'success') {
+                this.$notifications.add({
+                    type: 'success',
+                    text: this.$t('nftstartauctionform.startSuccess'),
+                });
+            }
+
+            this.$emit('transaction-status', payload);
         },
 
         datetimeInFormatterTimestamp,

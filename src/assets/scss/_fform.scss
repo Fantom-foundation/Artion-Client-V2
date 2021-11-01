@@ -66,4 +66,8 @@
             max-width: 44%;
         }
     }
+
+    &.grid {
+        --f-row-gap: var(--f-spacer-5);
+    }
 }

@@ -48,17 +48,19 @@
                     </div>
 
                     <div v-if="userOwnsToken && token.contract" class="nftdetail_owneractions">
-                        <f-button
-                            v-if="userOwnsToken && !token.hasAuction && !tokenHasListing"
-                            :label="$t('nftdetail.startAuction')"
-                            @click.native="onStartAuctionClick"
-                        />
-                        <nft-sell-button
-                            v-if="userOwnsToken && !tokenHasListing"
-                            :token="token"
-                            @tx-success="onSellNftTxSuccess"
-                        />
-                        <template v-if="userOwnsToken && tokenHasListing">
+                        <template v-if="!token.hasAuction">
+                            <nft-start-auction-button
+                                v-if="!tokenHasListing"
+                                :token="token"
+                                @tx-success="onStartAuctionTxSuccess"
+                            />
+                            <nft-sell-button v-if="!tokenHasListing" :token="token" @tx-success="onSellNftTxSuccess" />
+                        </template>
+                        <template v-else>
+                            <nft-cancel-auction-button :token="token" @tx-success="onCancelAuctionTxSuccess" />
+                        </template>
+
+                        <template v-if="tokenHasListing">
                             <nft-cancel-listing-button :token="token" @tx-success="onCancelListingTxSuccess" />
                             <nft-update-listing-button
                                 :token="token"
@@ -216,10 +218,6 @@
             </a-details>
         </div>
 
-        <a-window ref="startAuctionWindow" :title="$t('nftdetail.startAuction')" class="fwindow-width-5">
-            <nft-start-auction-form :token="token" />
-        </a-window>
-
         <a-sign-transaction :tx="tx" hidden />
     </div>
 </template>
@@ -242,7 +240,6 @@ import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-t
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
 import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
-import NftStartAuctionForm from '@/modules/nfts/components/NftStartAuctionForm/NftStartAuctionForm.vue';
 import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
 
 import NftMoreFromCollectionList from '@/modules/nfts/components/NftMoreFromCollectionList/NftMoreFromCollectionList.vue';
@@ -254,6 +251,8 @@ import { incrementTokenViews } from '@/modules/nfts/mutations/views';
 import { getTokenListings } from '@/modules/nfts/queries/token-listings.js';
 import { getTokenOwnerships } from '@/modules/nfts/queries/token-ownerships.js';
 import NftUpdateListingButton from '@/modules/nfts/components/NftUpdateListingButton/NftUpdateListingButton.vue';
+import NftStartAuctionButton from '@/modules/nfts/components/NftStartAuctionButton/NftStartAuctionButton.vue';
+import NftCancelAuctionButton from '@/modules/nfts/components/NftCancelAuctionButton/NftCancelAuctionButton.vue';
 
 export default {
     name: 'NftDetail',
@@ -261,13 +260,14 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftCancelAuctionButton,
+        NftStartAuctionButton,
         NftUpdateListingButton,
         NftDetailPrice,
         NftSellButton,
         NftCancelListingButton,
         AAddress,
         NftAuction,
-        NftStartAuctionForm,
         ASignTransaction,
         ADetails,
         ADetailsGroup,
@@ -435,12 +435,6 @@ export default {
             }
         },
 
-        onStartAuctionClick() {
-            if (!this.token.hasAuction && this.userOwnsToken) {
-                this.$refs.startAuctionWindow.show();
-            }
-        },
-
         onNftDetailPriceTxSuccess(code) {
             const { $refs } = this;
 
@@ -463,6 +457,10 @@ export default {
             // this.update();
         },
 
+        onCancelAuctionTxSuccess() {
+            this.update();
+        },
+
         onCancelListingTxSuccess() {
             this.update();
 
@@ -476,6 +474,10 @@ export default {
         },
 
         onSellNftTxSuccess() {
+            this.update();
+        },
+
+        onStartAuctionTxSuccess() {
             this.update();
         },
 
