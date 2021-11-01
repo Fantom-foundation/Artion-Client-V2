@@ -141,7 +141,11 @@ export default {
         token: {
             async handler(value, oldValue) {
                 if (value.contract && !objectEquals(value, oldValue)) {
-                    await this.loadOffers();
+                    if (this.items.length > 0) {
+                        this.update();
+                    } else {
+                        await this.loadOffers();
+                    }
                 }
             },
             immediate: true,
