@@ -55,7 +55,7 @@ import ASignTransaction from '@/common/components/ASignTransaction/ASignTransact
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
 import { getTokenListings } from '@/modules/nfts/queries/token-listings.js';
-import { checkUserBalance } from '@/plugins/wallet/utils.js';
+import { checkUserBalance, getUserAllowanceTx } from '@/plugins/wallet/utils.js';
 import { i18n } from '@/plugins/vue-i18n.js';
 import { objectEquals } from 'fantom-vue-components/src/utils';
 
@@ -106,9 +106,7 @@ export default {
             ],
             tx: {},
             txStatus: '',
-            pickedAddress: '',
-            // tokens owned by user
-            ownedTokens: [],
+            pickedListing: null,
         };
     },
 
@@ -127,10 +125,6 @@ export default {
             },
             immediate: true,
         },
-
-        /*walletAddress(value) {
-            this.loadOwnedTokens(value);
-        },*/
     },
 
     methods: {
@@ -145,26 +139,35 @@ export default {
         },
 
         async buyItem(listing) {
-            const { token } = this;
-            const web3 = new Web3();
-
             if ((await checkUserBalance(listing.unitPrice, listing.payToken)) !== null) {
-                /*const allowanceTx = await getUserAllowanceTx({
+                const allowanceTx = await getUserAllowanceTx({
                     value: listing.unitPrice,
-                    tokenAddress: this.payToken.address,
+                    tokenAddress: listing.payToken,
                     contract: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
                 });
 
-                console.log('allowanceTx', allowanceTx);*/
+                console.log('allowanceTx', allowanceTx);
 
-                console.log(token.contract, parseInt(token.tokenId, 16), listing.owner);
+                if (allowanceTx) {
+                    allowanceTx._code = 'buy_allowance';
 
-                const tx = contracts.buyListedItem(token.contract, token.tokenId, listing.owner, web3);
-
-                console.log(tx);
-
-                this.tx = tx;
+                    this.tx = allowanceTx;
+                    this.pickedListing = listing;
+                } else {
+                    this.setBuyTx(listing);
+                }
             }
+        },
+
+        setBuyTx(listing) {
+            const { token } = this;
+            const web3 = new Web3();
+            const tx = contracts.buyListedItem(token.contract, token.tokenId, listing.owner, web3);
+
+            console.log(tx);
+            tx._code = 'buy';
+
+            this.tx = tx;
         },
 
         update() {
@@ -187,18 +190,20 @@ export default {
             });
 
             this.update();
+            this.pickedListing = null;
             this.$emit('tx-success');
         },
 
         onTransactionStatus(payload) {
+            const txCode = payload.code;
             this.txStatus = payload.status;
 
             if (this.txStatus === 'success') {
-                this.onTxSuccess();
-            }
-
-            if (this.txStatus !== 'pending') {
-                this.pickedAddress = '';
+                if (txCode === 'buy_allowance') {
+                    this.setBuyTx(this.pickedListing);
+                } else if (txCode === 'buy') {
+                    this.onTxSuccess();
+                }
             }
         },
     },

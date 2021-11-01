@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { checkUserBalance, checkWallet } from '@/plugins/wallet/utils.js';
+import { checkUserBalance, checkWallet, getUserAllowanceTx } from '@/plugins/wallet/utils.js';
 import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
 import { compareAddresses } from '@/utils/address.js';
@@ -116,27 +116,38 @@ export default {
         },
 
         async buyItem() {
-            const { token } = this;
             const { listing } = this;
-            const web3 = new Web3();
 
             if ((await checkUserBalance(listing.unitPrice, this.payToken.address)) !== null) {
-                /*const allowanceTx = await getUserAllowanceTx({
-                    value: this.listing.unitPrice,
+                const allowanceTx = await getUserAllowanceTx({
+                    value: listing.unitPrice,
                     tokenAddress: this.payToken.address,
                     contract: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
                 });
 
-                console.log('allowanceTx', allowanceTx);*/
+                console.log('allowanceTx', allowanceTx);
 
-                console.log(token.contract, parseInt(token.tokenId, 16), listing.owner);
+                if (allowanceTx) {
+                    allowanceTx._code = 'buy_allowance';
 
-                const tx = contracts.buyListedItem(token.contract, token.tokenId, listing.owner, web3);
+                    this.tx = allowanceTx;
+                } else {
+                    this.setBuyTx();
+                }
 
-                console.log(tx);
-
-                this.tx = tx;
+                // console.log(token.contract, parseInt(token.tokenId, 16), listing.owner);
             }
+        },
+
+        setBuyTx() {
+            const { token } = this;
+            const web3 = new Web3();
+            const tx = contracts.buyListedItem(token.contract, token.tokenId, this.listing.owner, web3);
+
+            console.log(tx);
+            tx._code = 'buy';
+
+            this.tx = tx;
         },
 
         async setPayToken() {
@@ -193,15 +204,20 @@ export default {
         },
 
         onTransactionStatus(payload) {
+            const txCode = payload.code;
             this.txStatus = payload.status;
 
             if (this.txStatus === 'success') {
-                this.$notifications.add({
-                    text: this.$t('nftdetailprice.buySuccessful'),
-                    type: 'success',
-                });
+                if (txCode === 'buy_allowance') {
+                    this.setBuyTx();
+                } else if (txCode === 'buy') {
+                    this.$notifications.add({
+                        text: this.$t('nftdetailprice.buySuccessful'),
+                        type: 'success',
+                    });
 
-                this.$emit('tx-success');
+                    this.$emit('tx-success');
+                }
             }
         },
     },
