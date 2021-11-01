@@ -44,7 +44,7 @@ export class FApolloClient {
     }
 
     resetHttpApolloProviders() {
-        this.httpApolloProviders = this.setHttpApolloProviders(this.apolloProviders, this.defaultHttpProvider);
+        this.httpApolloProviders = this.setHttpApolloProviders(this.apolloProviders);
         this.lastOperationName = '';
     }
 
@@ -58,7 +58,7 @@ export class FApolloClient {
 
     getHttpLink() {
         return new HttpLink({
-            uri: this.httpProvider,
+            uri: () => this.getCurrentHttpProvider(),
         });
     }
 
@@ -100,7 +100,7 @@ export class FApolloClient {
                     }, 600);
                 }
 
-                this.resetHttpApolloProviders();
+                // this.resetHttpApolloProviders();
             }
         });
     }
@@ -136,6 +136,10 @@ export class FApolloClient {
                     ) {
                         this.setHttpProvider(this.httpApolloProviders.pop());
                         this.lastOperationName = _operation.operationName;
+                    }
+
+                    if (this.httpApolloProviders.length === 0) {
+                        this.resetHttpApolloProviders();
                     }
 
                     return !!_error;
