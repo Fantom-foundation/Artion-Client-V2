@@ -48,8 +48,6 @@ export function filtersToQueryFilters(filters, defaultFilters) {
     const strQFilters = JSON.stringify(qFilters);
     const fFilters = flattenFilters(filters);
 
-    console.log(fFilters);
-
     fFilters.forEach(filter => {
         const { filterName } = filter;
 
@@ -69,7 +67,6 @@ export function filtersToQueryFilters(filters, defaultFilters) {
             } else {
                 qFilters.filter['collections'] = filter.value;
             }
-            console.log(qFilters.filter['collections']);
         } else if (filterName === 'category') {
             qFilters.filter['categories'] = filter.value;
         } else if (filterName === 'sortBy') {
