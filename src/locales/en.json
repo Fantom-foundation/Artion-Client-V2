@@ -9,6 +9,7 @@
     "your_profile": "Your Profile",
     "nonZeroPrice": "Price must be non zero value",
     "insufficientBalance": "Insufficient balance",
+    "insufficientTokenBalance": "Insufficient {token} Balance",
     "startAuction": "Start Auction",
     "updateAuction": "Update Auction",
     "profile": "Profile",
@@ -352,7 +353,7 @@
         "hasEnded": "Auction has ended",
         "price": "@:price",
         "minted": "Minted",
-        "insufficientBalance": "Insufficient {token} Balance"
+        "insufficientBalance": "@:insufficientTokenBalance"
     },
 
     "nftDirectOffersGrid": {

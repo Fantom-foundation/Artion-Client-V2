@@ -118,7 +118,7 @@ export default {
         async buyItem() {
             const { listing } = this;
 
-            if ((await checkUserBalance(listing.unitPrice, this.payToken.address)) !== null) {
+            if ((await checkUserBalance(listing.unitPrice, this.payToken.address, this.payToken.label)) !== null) {
                 const allowanceTx = await getUserAllowanceTx({
                     value: listing.unitPrice,
                     tokenAddress: this.payToken.address,

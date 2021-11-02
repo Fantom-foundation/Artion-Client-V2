@@ -58,6 +58,8 @@ import { getTokenListings } from '@/modules/nfts/queries/token-listings.js';
 import { checkUserBalance, getUserAllowanceTx } from '@/plugins/wallet/utils.js';
 import { i18n } from '@/plugins/vue-i18n.js';
 import { objectEquals } from 'fantom-vue-components/src/utils';
+import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
+import { compareAddresses } from '@/utils/address.js';
 
 export default {
     name: 'NftListingsGrid',
@@ -107,6 +109,7 @@ export default {
             tx: {},
             txStatus: '',
             pickedListing: null,
+            payTokens: [],
         };
     },
 
@@ -131,7 +134,15 @@ export default {
         },
     },
 
+    created() {
+        this.init();
+    },
+
     methods: {
+        async init() {
+            this.payTokens = await PAY_TOKENS_WITH_PRICES();
+        },
+
         async loadPage(pagination = { first: this.perPage }) {
             const { token } = this;
 
@@ -143,7 +154,13 @@ export default {
         },
 
         async buyItem(listing) {
-            if ((await checkUserBalance(listing.unitPrice, listing.payToken)) !== null) {
+            if (
+                (await checkUserBalance(
+                    listing.unitPrice,
+                    listing.payToken,
+                    this.getPayTokenLabel(listing.payToken)
+                )) !== null
+            ) {
                 const allowanceTx = await getUserAllowanceTx({
                     value: listing.unitPrice,
                     tokenAddress: listing.payToken,
@@ -161,6 +178,12 @@ export default {
                     this.setBuyTx(listing);
                 }
             }
+        },
+
+        getPayTokenLabel(address) {
+            const token = this.payTokens.find(token => compareAddresses(token.address, address));
+
+            return token ? token.label : '';
         },
 
         setBuyTx(listing) {

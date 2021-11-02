@@ -61,14 +61,17 @@ export async function getUserBalance(tokenAddress = '', userAddress = '') {
  *
  * @param {string|number|BigNumber} value
  * @param {string} tokenAddress
+ * @param {string} [tokenSymbol]
  * @return {Promise<null|BigNumber>} null or balance
  */
-export async function checkUserBalance(value, tokenAddress) {
+export async function checkUserBalance(value, tokenAddress, tokenSymbol) {
     const balance = await getUserBalance(tokenAddress);
 
     if (toBigNumber(value).isGreaterThan(balance)) {
         notifications.add({
-            text: i18n.t('insufficientBalance'),
+            text: tokenSymbol
+                ? i18n.t('insufficientTokenBalance', { token: tokenSymbol })
+                : i18n.t('insufficientBalance'),
             type: 'error',
         });
 
