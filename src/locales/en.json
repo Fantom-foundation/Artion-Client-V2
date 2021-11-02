@@ -10,6 +10,7 @@
     "nonZeroPrice": "Price must be non zero value",
     "insufficientBalance": "Insufficient balance",
     "startAuction": "Start Auction",
+    "updateAuction": "Update Auction",
     "profile": "Profile",
     "reservePrice": "Reserve Price",
     "redeem": "Redeem",
@@ -164,11 +165,13 @@
         "placeOffer": "Place Offer",
         "nonZeroPrice": "@:nonZeroPrice",
         "startAuction": "@:startAuction",
+        "updateAuction": "@:updateAuction",
         "minBid": "Minimum bid should be equal or greater than reserve price",
         "badDate": "Bad date",
         "fillDate": "Fill the date please",
         "startDateLower": "Start date must be lower than end date",
-        "endDateGreater": "End date must be greater than start date"
+        "endDateGreater": "End date must be greater than start date",
+        "startSuccess": "You have successfully started the auction"
     },
 
     "densityswitch": {
@@ -421,7 +424,8 @@
         "enterState": "Enter state",
         "enterCountry": "Enter country",
         "enterZip": "Enter zip",
-        "save": "Save"
+        "save": "Save",
+        "saveOk": "Profile saved successfully"
     },
 
     "accountshippingaddressform": {
@@ -467,6 +471,14 @@
 
     "nftstartauctionwindow": {
         "title": "@:startAuction"
+    },
+
+    "nftupdateauctionbutton": {
+        "updateAuction": "@:updateAuction"
+    },
+
+    "nftupdateauctionwindow": {
+        "title": "@:updateAuction"
     },
 
     "notificationsettings": {

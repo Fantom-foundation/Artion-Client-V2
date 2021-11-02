@@ -8,7 +8,6 @@
                     name="username"
                     :placeholder="$t('accountprofileform.enterUsername')"
                     :label="$t('accountprofileform.username')"
-                    required
                 />
                 <f-form-input
                     type="textarea"
@@ -16,7 +15,6 @@
                     :placeholder="$t('accountprofileform.enterBio')"
                     name="bio"
                     :label="$t('accountprofileform.bio')"
-                    required
                 />
                 <f-form-input
                     type="email"
@@ -240,6 +238,13 @@ export default {
 
             let result = await Promise.all([updateUser(userData), updateShippingAddress(shippingAddressData)]);
             console.log(result);
+
+            if (result[0]) {
+                this.$notifications.add({
+                    text: this.$t('accountprofileform.saveOk'),
+                    type: 'success',
+                });
+            }
         },
 
         async checkUserSingIn() {
