@@ -75,7 +75,7 @@ export function filtersToQueryFilters(filters, defaultFilters) {
                     qFilters.filter['categories'] = [qFilters.filter['categories'], filter.value];
                 }
             } else {
-                qFilters.filter['categories'] = filter.value;
+                qFilters.filter['categories'] = [parseInt(filter.value)];
             }
         } else if (filterName === 'sortBy') {
             const sbFilter = sortByFilters[filter.value];

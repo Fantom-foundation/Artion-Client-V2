@@ -3,7 +3,7 @@
         :data="cCategories"
         :value="parseInt(selected, 10)"
         @component-change="onListboxItemSelected"
-        multiselect
+        __multiselect
         :aria-label="$t('categories')"
         class="categoriesfilter"
     >
@@ -39,26 +39,36 @@ export default {
             },
         },
         selected: {
-            type: [Array, String],
+            // type: [Array, String],
+            type: [Number, String],
             default: '',
         },
     },
 
     computed: {
         cCategories() {
-            return this.categories.map((category, idx) => {
+            const tmp = this.categories.map((category, idx) => {
                 // return { ...category, value: category.id, label: this.$t(category.label), id: undefined };
                 return { ...category, value: category.id, id: undefined, _idx: idx };
             });
+
+            console.log(tmp);
+
+            return tmp;
         },
     },
 
+    created() {
+        console.log(this.selected);
+    },
+
     methods: {
-        onListboxItemSelected(items) {
-            this.$emit(
+        onListboxItemSelected(item) {
+            this.$emit('change', this.categories[item._idx].id);
+            /*this.$emit(
                 'change',
                 items.map(item => item.value)
-            );
+            );*/
         },
     },
 };
