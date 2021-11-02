@@ -3,8 +3,9 @@
         <a-dropdown-listbox
             v-bind="$attrs"
             :data="currencies"
+            :disabled="disabled"
             v-model="value"
-            @click.native="rotated = !rotated"
+            @click.native="onDropdownClick"
             @component-change="onSelected"
             @window-hide="windowHide"
         >
@@ -56,6 +57,11 @@ export default {
         },
         /** Fire 'token-selected' event immediately  */
         selectImmediately: {
+            type: Boolean,
+            default: false,
+        },
+        /** */
+        disabled: {
             type: Boolean,
             default: false,
         },
@@ -128,12 +134,22 @@ export default {
         },
 
         windowHide() {
+            this.toggleRotated();
+        },
+
+        toggleRotated() {
             this.rotated = !this.rotated;
         },
 
         onSelected(item) {
-            this.rotated = !this.rotated;
+            this.toggleRotated();
             this.$emit('token-selected', item);
+        },
+
+        onDropdownClick() {
+            if (!this.disabled) {
+                this.toggleRotated();
+            }
         },
     },
 };
