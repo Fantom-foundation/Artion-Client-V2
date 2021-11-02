@@ -35,6 +35,11 @@
         "domain_names": "Domain Names"
     },
 
+    "collection": {
+        "artion": "Artion",
+        "gasly": "Pierre Gasly"
+    },
+
     "statuses": {
         "buy_now": "Buy Now",
         "has_bids": "Has Bids",

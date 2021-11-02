@@ -8,6 +8,7 @@
 import { clone, isArray } from 'fantom-vue-components/src/utils';
 import AFilterChips from '@/common/components/AFilterChips/AFilterChips.vue';
 import { STATUSES } from '@/common/constants/statuses.js';
+import { COLLECTIONS } from '@/common/constants/collections.js';
 import { CATEGORIES } from '@/common/constants/categories.js';
 import { GROUP_FILTERS } from '@/common/constants/group-filter.js';
 import { SORT_BY_FILTERS } from '@/common/constants/sort-by-filters.js';
@@ -64,6 +65,7 @@ export default {
             const translations = {
                 status: {},
                 category: {},
+                collections: {},
                 group: {},
                 sortBy: {},
             };
@@ -74,6 +76,10 @@ export default {
 
             CATEGORIES().forEach(item => {
                 translations.category[item.id] = this.$t(item.label);
+            });
+
+            COLLECTIONS().forEach(item => {
+                translations.collections[item.value] = this.$t(item.label);
             });
 
             GROUP_FILTERS().forEach(item => {

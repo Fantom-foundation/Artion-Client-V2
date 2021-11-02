@@ -58,9 +58,25 @@ export function filtersToQueryFilters(filters, defaultFilters) {
                 qFilters.filter[status] = true;
             }
         } else if (filterName === 'collections') {
-            qFilters.filter['collections'] = filter.value;
+            if (qFilters.filter['collections']) {
+                if (isArray(qFilters.filter['collections'])) {
+                    qFilters.filter['collections'].push(filter.value);
+                } else {
+                    qFilters.filter['collections'] = [qFilters.filter['collections'], filter.value];
+                }
+            } else {
+                qFilters.filter['collections'] = filter.value;
+            }
         } else if (filterName === 'category') {
-            qFilters.filter['categories'] = filter.value;
+            if (qFilters.filter['categories']) {
+                if (isArray(qFilters.filter['categories'])) {
+                    qFilters.filter['categories'].push(filter.value);
+                } else {
+                    qFilters.filter['categories'] = [qFilters.filter['categories'], filter.value];
+                }
+            } else {
+                qFilters.filter['categories'] = filter.value;
+            }
         } else if (filterName === 'sortBy') {
             const sbFilter = sortByFilters[filter.value];
 

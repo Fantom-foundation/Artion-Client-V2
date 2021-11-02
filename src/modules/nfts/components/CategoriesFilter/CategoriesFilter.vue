@@ -3,6 +3,7 @@
         :data="cCategories"
         :value="parseInt(selected, 10)"
         @component-change="onListboxItemSelected"
+        multiselect
         :aria-label="$t('categories')"
         class="categoriesfilter"
     >
@@ -38,7 +39,7 @@ export default {
             },
         },
         selected: {
-            type: [Number, String],
+            type: [Array, String],
             default: '',
         },
     },
@@ -53,8 +54,11 @@ export default {
     },
 
     methods: {
-        onListboxItemSelected(item) {
-            this.$emit('change', this.categories[item._idx].id);
+        onListboxItemSelected(items) {
+            this.$emit(
+                'change',
+                items.map(item => item.value)
+            );
         },
     },
 };
