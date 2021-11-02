@@ -12,6 +12,17 @@ import { SET_TX_STATUS } from '@/modules/app/store/mutations.js';
 import MetamaskWalletNoticeWindow from '@/modules/wallet/components/MetamaskWalletNoticeWindow/MetamaskWalletNoticeWindow.vue';
 import CoinbaseWalletNoticeWindow from '@/modules/wallet/components/CoinbaseWalletNoticeWindow/CoinbaseWalletNoticeWindow.vue';
 
+/**
+ * Transaction status object - 'transaction-status' event payload.
+ * @typedef {Object} TransactionStatus
+ * @property {('success'|'error'|'pending')} status
+ * @property {string} data Tx hash (success) or error text (error)
+ * @property {string} [code]
+ */
+
+/**
+ *
+ */
 export default {
     name: 'ASignTransaction',
 

@@ -170,8 +170,12 @@
         "badDate": "Bad date",
         "fillDate": "Fill the date please",
         "startDateLower": "Start date must be lower than end date",
+        "dateLowerNow": "Date must greater than now",
         "endDateGreater": "End date must be greater than start date",
-        "startSuccess": "You have successfully started the auction"
+        "startSuccess": "You have successfully started the auction",
+        "updatePriceSuccess": "You have successfully updated reserve price",
+        "updateStartTimeSuccess": "You have successfully updated start time",
+        "updateEndTimeSuccess": "You have successfully updated auction expiration"
     },
 
     "densityswitch": {

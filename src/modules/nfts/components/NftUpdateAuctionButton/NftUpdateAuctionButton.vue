@@ -1,18 +1,20 @@
 <template>
-    <div class="nftstartauctionbutton">
+    <div class="nftupdateauctionbutton">
         <a-button
-            :label="$t('nftstartauctionbutton.startAuction')"
+            :label="$t('nftupdateauctionbutton.updateAuction')"
             :loading="txStatus === 'pending'"
             @click.native="onButtonClick"
         />
 
         <a-tx-window
             ref="window"
-            :title="$t('nftstartauctionwindow.title')"
+            :title="$t('nftupdateauctionwindow.title')"
             v-slot="{ onTxStatus }"
             class="fwindow-width-5"
         >
             <nft-auction-form
+                update
+                :auction="auction"
                 :token="token"
                 @transaction-status="
                     onTxStatus($event);
@@ -29,11 +31,18 @@ import ATxWindow from '@/common/components/ATxWindow/ATxWindow.vue';
 import NftAuctionForm from '@/modules/nfts/components/NftAuctionForm/NftAuctionForm.vue';
 
 export default {
-    name: 'NftStartAuctionButton',
+    name: 'NftUpdateAuctionButton',
 
     components: { NftAuctionForm, ATxWindow, AButton },
 
     props: {
+        /** @type {Auction} */
+        auction: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
         token: {
             type: Object,
             default() {
@@ -56,7 +65,7 @@ export default {
         onTransactionStatus(payload) {
             this.txStatus = payload.status;
 
-            if (this.txStatus === 'success') {
+            if (this.txStatus === 'success' && payload.transactionsLeft === 0) {
                 this.$emit('tx-success');
             }
         },

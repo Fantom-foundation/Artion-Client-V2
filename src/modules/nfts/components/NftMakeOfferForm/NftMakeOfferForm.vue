@@ -10,7 +10,6 @@
             validate-on-input
             @token-selected="onTokenSelected"
         />
-        <!-- temporary, replace with own datetime component -->
         <f-form-input
             type="datetime"
             name="deadline"

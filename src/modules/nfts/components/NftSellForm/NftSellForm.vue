@@ -11,7 +11,6 @@
             @token-selected="onTokenSelected"
         />
         <div class="nftsellform_row">
-            <!-- temporary, replace with own datetime component -->
             <f-form-input
                 type="datetime"
                 name="startingTime"

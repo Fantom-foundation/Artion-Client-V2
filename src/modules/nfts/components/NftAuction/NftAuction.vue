@@ -25,7 +25,6 @@
 
 <script>
 import ADetails from '@/common/components/ADetails/ADetails.vue';
-import { getAuction } from '@/modules/nfts/queries/auction.js';
 
 export default {
     name: 'NftAuction',
@@ -33,29 +32,17 @@ export default {
     components: { ADetails },
 
     props: {
-        token: {
+        auction: {
             type: Object,
             default() {
                 return {};
             },
         },
-    },
-
-    data() {
-        return {
-            auction: {},
-        };
-    },
-
-    created() {
-        this.loadAuction();
-    },
-
-    methods: {
-        async loadAuction() {
-            this.auction = await getAuction(this.token.contract, this.token.tokenId);
-
-            console.log('AUCTION', this.auction);
+        token: {
+            type: Object,
+            default() {
+                return {};
+            },
         },
     },
 };

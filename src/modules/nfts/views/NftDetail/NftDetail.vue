@@ -48,7 +48,7 @@
                     </div>
 
                     <div v-if="userOwnsToken && token.contract" class="nftdetail_owneractions">
-                        <template v-if="!token.hasAuction">
+                        <template v-if="!tokenHasAuction">
                             <nft-start-auction-button
                                 v-if="!tokenHasListing"
                                 :token="token"
@@ -58,6 +58,7 @@
                         </template>
                         <template v-else>
                             <nft-cancel-auction-button :token="token" @tx-success="onCancelAuctionTxSuccess" />
+                            <nft-update-auction-button :token="token" @tx-success="onUpdateAuctionTxSuccess" />
                         </template>
 
                         <template v-if="tokenHasListing">
@@ -82,7 +83,7 @@
                 </div>
             </div>
             <div class="nftdetail_data">
-                <nft-auction v-if="token.hasAuction" :token="token" />
+                <nft-auction v-if="tokenHasAuction" :auction="auction" :token="token" />
 
                 <a-details>
                     <template #label>
@@ -253,6 +254,8 @@ import { getTokenOwnerships } from '@/modules/nfts/queries/token-ownerships.js';
 import NftUpdateListingButton from '@/modules/nfts/components/NftUpdateListingButton/NftUpdateListingButton.vue';
 import NftStartAuctionButton from '@/modules/nfts/components/NftStartAuctionButton/NftStartAuctionButton.vue';
 import NftCancelAuctionButton from '@/modules/nfts/components/NftCancelAuctionButton/NftCancelAuctionButton.vue';
+import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionButton/NftUpdateAuctionButton.vue';
+import { getAuction } from '@/modules/nfts/queries/auction.js';
 
 export default {
     name: 'NftDetail',
@@ -260,6 +263,7 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftUpdateAuctionButton,
         NftCancelAuctionButton,
         NftStartAuctionButton,
         NftUpdateListingButton,
@@ -288,6 +292,8 @@ export default {
             userCreatedToken: false,
             userOwnsToken: false,
             listing: {},
+            /** @type {Auction} */
+            auction: {},
             tokenOwner: {},
             tx: {},
             likedNftIds: [],
@@ -301,6 +307,10 @@ export default {
 
         tokenHasListing() {
             return !!this.listing.unitPrice && !this.listing.closed;
+        },
+
+        tokenHasAuction() {
+            return this.token.hasAuction || !this.auction.closed;
         },
     },
 
@@ -339,8 +349,11 @@ export default {
 
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+            // this.auction = this.token.hasAuction ? await getAuction(this.token.contract, this.token.tokenId) : {};
+            this.auction = await getAuction(this.token.contract, this.token.tokenId);
 
-            console.log(this.token);
+            console.log('token: ', this.token);
+            console.log('auction: ', JSON.stringify(this.auction));
 
             this.onWalletAddressChange();
             this.isUserFavorite(this.walletAddress);
@@ -458,6 +471,10 @@ export default {
         },
 
         onCancelAuctionTxSuccess() {
+            this.update();
+        },
+
+        onUpdateAuctionTxSuccess() {
             this.update();
         },
 
