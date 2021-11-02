@@ -11,6 +11,7 @@
                     :currencies="currencies"
                     :selected="selected"
                     :select-immediately="selectImmediately"
+                    :disabled="currencyDropdownDisabled"
                     @token-selected="onTokenSelected"
                 />
             </template>
@@ -48,6 +49,11 @@ export default {
         },
         /** Fire 'token-selected' event immediately  */
         selectImmediately: {
+            type: Boolean,
+            default: false,
+        },
+        /** */
+        currencyDropdownDisabled: {
             type: Boolean,
             default: false,
         },
