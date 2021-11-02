@@ -6,8 +6,34 @@ import { login } from '@/modules/account/mutations/login.js';
 import { getUser } from '@/modules/account/queries/user.js';
 import { router } from '@/main.js';
 
+function isBearerTokenValid(token) {
+    try {
+        const parts = token.split('.');
+        if (parts.length !== 3) return false;
+        const expiration = JSON.parse(atob(parts[1])).exp;
+        const now = new Date().getTime() / 1000;
+        const expirationIn = expiration - now;
+
+        // expiring in less then 2 minutes?
+        if (expirationIn < 60 * 2) {
+            console.warn('Bearer token expired');
+            return false;
+        }
+        return true;
+    } catch (e) {
+        console.warn('Parsing JWT Bearer Token failed', e);
+        return false;
+    }
+}
+
 export function getBearerToken() {
-    return wallet.getBearerToken();
+    const token = wallet.getBearerToken();
+    if (token && !isBearerTokenValid(token)) {
+        console.warn('Bearer token invalid - logging out');
+        wallet.logout();
+        return '';
+    }
+    return token;
 }
 
 export async function signIn() {
