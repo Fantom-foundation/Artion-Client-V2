@@ -87,7 +87,7 @@
             bottom: 0;
             left: -100%;
             right: 0;
-            background-color: #fff;
+            background-color: var(--appheader-background);
             height: calc(100vh - 80px);
             width: 100%;
             flex-direction: column;
@@ -100,13 +100,17 @@
 
         &_burger { display: block; }
 
+        .appsearchbar {
+            padding: 0 var(--f-spacer-3);
+        }
+
         .appmenu {
             flex-direction: column;
             width: 100%;
             gap: 0;
 
             a {
-                padding: 15px;
+                padding: var(--f-spacer-3);
             }
         }
     }

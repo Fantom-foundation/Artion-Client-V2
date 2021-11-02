@@ -62,7 +62,7 @@
                     </div>
                     <div class="account_view_filters_list">
                         <!--                        <NftListFilters v-model="filters" />-->
-                        <DensitySwitch />
+                        <DensitySwitch v-if="!isActivityPage" />
                     </div>
                 </div>
                 <div class="account_view_chips">
@@ -146,13 +146,13 @@ export default {
                     counter: 0,
                 },
                 {
-                    routeName: 'account-activity',
+                    routeName: 'account-offers',
                     label: this.$t('account.hidden'),
                     icon: 'eyeslash',
                     counter: 0,
                 },
                 {
-                    routeName: 'account-offers',
+                    routeName: 'account-activity',
                     label: this.$t('account.activity'),
                     icon: 'history',
                 },
@@ -170,6 +170,10 @@ export default {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
+
+        isActivityPage() {
+            return this.$route.matched.some(({ name }) => name === 'account-activity');
+        },
     },
 
     watch: {

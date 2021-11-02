@@ -13,7 +13,7 @@
 		height: 2px;
 		width: 100%;
 		transition: all 0.3s ease 0s;
-		background-color: #000;
+		background-color: var(--f-doc-color);
 	}
 
 	&::before,
