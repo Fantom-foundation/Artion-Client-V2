@@ -1,4 +1,5 @@
 import { bFromTokenValue } from '@/utils/big-number.js';
+import { i18n } from '@/plugins/vue-i18n.js';
 
 export const localeOptions = {
     currLocale: 'en-US',
@@ -39,4 +40,20 @@ export function formatTokenValue(value, tokenPriceDecimals = 18, _fractionDigits
         _fractionDigits,
         _currency ? localeOptions.currency : ''
     );
+}
+
+/**
+ * @param {string|number} value
+ * @return {VueI18n.DateTimeFormatResult|null}
+ */
+export function dateFormatter(value) {
+    return value ? i18n.d(new Date(value), 'short') : null;
+}
+
+/**
+ * @param {string|number} value
+ * @return {VueI18n.DateTimeFormatResult|null}
+ */
+export function datetimeFormatter(value) {
+    return value ? i18n.d(new Date(value), 'shortDatetime') : null;
 }
