@@ -227,9 +227,23 @@
 
     "nftauction": {
         "reservePrice": "@:reservePrice",
-        "saleEndsIn": "Sale ends in",
-        "placeBid": "Place bid",
+        "saleEnds": "Sale ends",
+        "saleStarts": "Sale starts",
         "highestBid": "Highest Bid"
+    },
+
+    "nftbid": {
+        "placeBid": "Place Bid"
+    },
+
+    "nftbidform": {
+        "price": "Price",
+        "place": "Place",
+        "nonZeroPrice": "@:nonZeroPrice",
+        "insufficientTokenBalance": "Insufficient {token} Balance",
+        "newBidIsBelowCurrent": "Bid is below current bid",
+        "newBidIsBelowMin": "Bid is below min bid",
+        "placeBidSuccessful": "You have successfully placed a bid"
     },
 
     "ashareButton": {
