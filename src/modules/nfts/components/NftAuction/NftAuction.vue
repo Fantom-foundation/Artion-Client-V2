@@ -4,7 +4,12 @@
             <template #label>
                 <div class="nftdetail_details_wrap">
                     <template v-if="auctionHasStarted">
-                        {{ $t('nftauction.saleEnds') }} {{ auctionEndsIn }} ({{ auctionEndTime }})
+                        <template v-if="auctionHasFinished">
+                            {{ $t('nftauction.saleEnded') }}
+                        </template>
+                        <template v-else>
+                            {{ $t('nftauction.saleEnds') }} {{ auctionEndsIn }} ({{ auctionEndTime }})
+                        </template>
                     </template>
                     <template v-else>
                         {{ $t('nftauction.saleStarts') }} {{ auctionStartsIn }} ({{ auctionStartTime }})
@@ -28,8 +33,13 @@
                             />
                             <span v-else>-</span>
                         </div>
-                        <div v-if="!isOwner">
-                            <nft-bid-button :token="token" :auction="auction" @tx-success="onBidTxSuccess" />
+                        <nft-result-auction-button
+                            v-if="userOwnsToken && auctionHasFinished && auction.lastBidder"
+                            :token="token"
+                            @tx-success="onTxSuccess"
+                        />
+                        <div v-if="!userOwnsToken && !auctionHasFinished">
+                            <nft-bid-button :token="token" :auction="auction" @tx-success="onTxSuccess" />
                         </div>
                     </template>
                 </div>
@@ -44,14 +54,14 @@ import dayjs from 'dayjs';
 import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import { datetimeFormatter } from '@/utils/formatters.js';
 import { getPayToken } from '@/utils/pay-tokens.js';
-import { mapState } from 'vuex';
-import { compareAddresses } from '@/utils/address.js';
 import NftBidButton from '@/modules/nfts/components/NftBidButton/NftBidButton.vue';
+import { isExpired } from '@/utils/date.js';
+import NftResultAuctionButton from '@/modules/nfts/components/NftResultAuctionButton/NftResultAuctionButton.vue';
 
 export default {
     name: 'NftAuction',
 
-    components: { NftBidButton, ATokenValue, ADetails },
+    components: { NftResultAuctionButton, NftBidButton, ATokenValue, ADetails },
 
     props: {
         /** @type {Auction} */
@@ -67,6 +77,10 @@ export default {
                 return {};
             },
         },
+        userOwnsToken: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -76,10 +90,6 @@ export default {
     },
 
     computed: {
-        ...mapState('wallet', {
-            walletAddress: 'account',
-        }),
-
         auctionHasStarted() {
             return dayjs(this.auction.startTime).diff(dayjs()) <= 0;
         },
@@ -100,10 +110,8 @@ export default {
             return dayjs(this.auction.endTime).fromNow();
         },
 
-        isOwner() {
-            const { owner } = this.auction;
-
-            return owner ? compareAddresses(owner, this.walletAddress) : false;
+        auctionHasFinished() {
+            return isExpired(this.auction.endTime);
         },
     },
 
@@ -123,7 +131,7 @@ export default {
             this.payToken = (await getPayToken(auction.payToken)) || {};
         },
 
-        onBidTxSuccess() {
+        onTxSuccess() {
             this.$emit('tx-success');
         },
     },

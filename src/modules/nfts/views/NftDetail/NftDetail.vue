@@ -54,7 +54,7 @@
                         </template>
                         <template v-else>
                             <nft-cancel-auction-button :token="token" @tx-success="update" />
-                            <nft-update-auction-button :token="token" @tx-success="update" />
+                            <nft-update-auction-button v-if="!auctionHasFinished" :token="token" @tx-success="update" />
                         </template>
 
                         <template v-if="tokenHasListing">
@@ -75,7 +75,13 @@
                 </div>
             </div>
             <div class="nftdetail_data">
-                <nft-auction v-if="tokenHasAuction" :auction="auction" :token="token" @tx-success="update" />
+                <nft-auction
+                    v-if="tokenHasAuction"
+                    :user-owns-token="userOwnsToken"
+                    :auction="auction"
+                    :token="token"
+                    @tx-success="update"
+                />
 
                 <a-details>
                     <template #label>
@@ -248,6 +254,7 @@ import NftStartAuctionButton from '@/modules/nfts/components/NftStartAuctionButt
 import NftCancelAuctionButton from '@/modules/nfts/components/NftCancelAuctionButton/NftCancelAuctionButton.vue';
 import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionButton/NftUpdateAuctionButton.vue';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
+import { isExpired } from '@/utils/date.js';
 
 export default {
     name: 'NftDetail',
@@ -302,7 +309,13 @@ export default {
         },
 
         tokenHasAuction() {
-            return this.token.hasAuction || !this.auction.closed;
+            const { auction } = this;
+
+            return this.token.hasAuction || (auction.contract ? !auction.closed : false);
+        },
+
+        auctionHasFinished() {
+            return isExpired(this.auction.endTime);
         },
     },
 

@@ -229,6 +229,7 @@
     "nftauction": {
         "reservePrice": "@:reservePrice",
         "saleEnds": "Sale ends",
+        "saleEnded": "Sale ended",
         "saleStarts": "Sale starts",
         "highestBid": "Highest Bid"
     },
@@ -465,6 +466,11 @@
         "zip": "Zip",
         "save": "Save",
         "savedSuccessfully": "Shipping address saved successfully"
+    },
+
+    "nftresultauction": {
+        "acceptBid": "Accept Highest Bid",
+        "acceptBidSuccessful": "You have successfully accepted the highest bid"
     },
 
     "nftcancelauction": {
