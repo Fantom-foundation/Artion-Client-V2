@@ -49,25 +49,17 @@
 
                     <div v-if="userOwnsToken && token.contract" class="nftdetail_owneractions">
                         <template v-if="!tokenHasAuction">
-                            <nft-start-auction-button
-                                v-if="!tokenHasListing"
-                                :token="token"
-                                @tx-success="onStartAuctionTxSuccess"
-                            />
-                            <nft-sell-button v-if="!tokenHasListing" :token="token" @tx-success="onSellNftTxSuccess" />
+                            <nft-start-auction-button v-if="!tokenHasListing" :token="token" @tx-success="update" />
+                            <nft-sell-button v-if="!tokenHasListing" :token="token" @tx-success="update" />
                         </template>
                         <template v-else>
-                            <nft-cancel-auction-button :token="token" @tx-success="onCancelAuctionTxSuccess" />
-                            <nft-update-auction-button :token="token" @tx-success="onUpdateAuctionTxSuccess" />
+                            <nft-cancel-auction-button :token="token" @tx-success="update" />
+                            <nft-update-auction-button :token="token" @tx-success="update" />
                         </template>
 
                         <template v-if="tokenHasListing">
-                            <nft-cancel-listing-button :token="token" @tx-success="onCancelListingTxSuccess" />
-                            <nft-update-listing-button
-                                :token="token"
-                                :listing="listing"
-                                @tx-success="onUpdateListingTxSuccess"
-                            />
+                            <nft-cancel-listing-button :token="token" @tx-success="update" />
+                            <nft-update-listing-button :token="token" :listing="listing" @tx-success="update" />
                         </template>
                     </div>
 
@@ -104,7 +96,7 @@
                             ref="listingsGrid"
                             :token="token"
                             :user-owns-token="userOwnsToken"
-                            @tx-success="onBuyTxSuccess"
+                            @tx-success="update"
                         />
                     </template>
                 </a-details>
@@ -471,41 +463,9 @@ export default {
             }
         },
 
-        onBuyTxSuccess() {
-            this.update();
-        },
-
         onOfferTxSuccess() {
             this.onWalletAddressChange();
             // this.update();
-        },
-
-        onCancelAuctionTxSuccess() {
-            this.update();
-        },
-
-        onUpdateAuctionTxSuccess() {
-            this.update();
-        },
-
-        onCancelListingTxSuccess() {
-            this.update();
-
-            /*if (this.$refs.listingsGrid) {
-                this.$refs.listingsGrid.update();
-            }*/
-        },
-
-        onUpdateListingTxSuccess() {
-            this.update();
-        },
-
-        onSellNftTxSuccess() {
-            this.update();
-        },
-
-        onStartAuctionTxSuccess() {
-            this.update();
         },
 
         async onLikeClick() {
