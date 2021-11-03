@@ -83,7 +83,7 @@
                 </div>
             </div>
             <div class="nftdetail_data">
-                <nft-auction v-if="tokenHasAuction" :auction="auction" :token="token" />
+                <nft-auction v-if="tokenHasAuction" :auction="auction" :token="token" @tx-success="update" />
 
                 <a-details>
                     <template #label>
@@ -349,14 +349,24 @@ export default {
 
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
-            // this.auction = this.token.hasAuction ? await getAuction(this.token.contract, this.token.tokenId) : {};
-            this.auction = await getAuction(this.token.contract, this.token.tokenId);
+
+            if (this.auction.contract) {
+                setTimeout(() => {
+                    this.loadAuction();
+                }, 500);
+            } else {
+                await this.loadAuction();
+            }
 
             console.log('token: ', this.token);
             console.log('auction: ', JSON.stringify(this.auction));
 
             this.onWalletAddressChange();
             this.isUserFavorite(this.walletAddress);
+        },
+
+        async loadAuction() {
+            this.auction = await getAuction(this.token.contract, this.token.tokenId);
         },
 
         async onWalletAddressChange() {

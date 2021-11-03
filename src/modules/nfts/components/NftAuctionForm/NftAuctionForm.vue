@@ -11,7 +11,7 @@
             :currencies="payTokens"
             :selected="auction.payToken"
             :select-immediately="true"
-            currency-dropdown-disabled
+            :currency-dropdown-disabled="update"
             name="reservePrice"
             :validator="reservePriceValidator"
             validate-on-input
@@ -210,16 +210,16 @@ export default {
             const { initialValues } = this;
             const { transactions } = this;
 
-            if (values.reservePrice !== initialValues.reservePrice) {
-                transactions.push(this.getUpdateAuctionReservePriceTx(values.reservePrice));
-            }
-
             if (values.startTime !== initialValues.startTime) {
                 transactions.push(this.getUpdateAuctionStartTimeTx(values.startTime));
             }
 
             if (values.endTime !== initialValues.endTime) {
                 transactions.push(this.getUpdateAuctionEndTimeTx(values.endTime));
+            }
+
+            if (values.reservePrice !== initialValues.reservePrice) {
+                transactions.push(this.getUpdateAuctionReservePriceTx(values.reservePrice));
             }
 
             if (transactions.length > 0) {
@@ -243,13 +243,11 @@ export default {
                 values.minBid = !!auction.minBidAmount;
 
                 values.startTime = dayjs(auction.startTime)
-                    .second(0)
-                    .millisecond(0)
+                    .startOf('minute')
                     .valueOf();
 
                 values.endTime = dayjs(auction.endTime)
-                    .second(0)
-                    .millisecond(0)
+                    .startOf('minute')
                     .valueOf();
 
                 this.initialValues = { ...values };
