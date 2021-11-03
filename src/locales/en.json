@@ -177,6 +177,7 @@
         "fillDate": "Fill the date please",
         "startDateLower": "Start date must be lower than end date",
         "dateLowerNow": "Date must greater than now",
+        "dateLowerNowPlus5": "End date must greater than now + 5 minutes",
         "endDateGreater": "End date must be greater than start date",
         "startSuccess": "You have successfully started the auction",
         "updatePriceSuccess": "You have successfully updated reserve price",

@@ -349,7 +349,7 @@ export default {
         endTimeValidator(value) {
             const ts = dateOutFormatterTimestamp(value || this.values.endTime);
             const tsStartTime = dateOutFormatterTimestamp(this.values.startTime);
-            const tsNow = Date.now();
+            const tsNow = dayjs().add(7, 'minutes');
             let msg = '';
 
             if (isNaN(ts)) {
@@ -357,7 +357,7 @@ export default {
             } else if (ts <= tsStartTime) {
                 msg = this.$t('nftstartauctionform.endDateGreater');
             } else if (ts <= tsNow) {
-                msg = this.$t('nftstartauctionform.dateLowerNow');
+                msg = this.$t('nftstartauctionform.dateLowerNowPlus5');
             }
 
             return msg;
