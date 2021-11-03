@@ -31,12 +31,15 @@ export default {
     methods: {
         ...copyMethods(AWindow, ['show', 'hide', 'toggle'], 'window'),
 
+        /**
+         * @param {TransactionStatus} payload
+         */
         onTransactionStatus(payload) {
             this.txStatus = payload.status;
 
             this.$emit('transaction-status', payload);
 
-            if (this.txStatus === 'success') {
+            if (this.txStatus === 'success' && (payload.code ? payload.code.indexOf('allowance') === -1 : true)) {
                 this.$nextTick(() => {
                     this.hide();
                 });
