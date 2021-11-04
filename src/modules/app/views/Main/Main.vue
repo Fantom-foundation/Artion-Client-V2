@@ -16,3 +16,7 @@ export default {
     components: { AppHeader },
 };
 </script>
+
+<style lang="scss">
+@use "style";
+</style>
