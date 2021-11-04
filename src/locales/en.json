@@ -231,7 +231,8 @@
         "saleEnds": "Sale ends",
         "saleEnded": "Sale ended",
         "saleStarts": "Sale starts",
-        "highestBid": "Highest Bid"
+        "highestBid": "Highest Bid",
+        "canWithdrawIn": "You can withdraw your bid {in}"
     },
 
     "nftbid": {
@@ -476,6 +477,11 @@
     "nftcancelauction": {
         "cancelAuction": "Cancel Auction",
         "cancelSuccessful": "You have successfully canceled the auction"
+    },
+
+    "nftwithdrawbid": {
+        "withdrawBid": "Withdraw Bid",
+        "withdrawBidSuccessful": "You have successfully withdrawn the bid"
     },
 
     "nftcancellisting": {

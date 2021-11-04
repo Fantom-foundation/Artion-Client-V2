@@ -16,34 +16,42 @@
                     </template>
                 </div>
             </template>
-            <template>
-                <div class="grid">
-                    <div class="flex gap-3">
-                        <span>{{ $t('nftauction.reservePrice') }}:</span>
-                        <a-token-value :value="auction.reservePrice" :token="payToken" no-symbol />
+
+            <div class="grid">
+                <div class="flex gap-3 ali-center">
+                    <span>{{ $t('nftauction.reservePrice') }}:</span>
+                    <a-token-value :value="auction.reservePrice" :token="payToken" no-symbol />
+                </div>
+                <template v-if="auctionHasStarted">
+                    <div class="flex gap-3 ali-center">
+                        <span>{{ $t('nftauction.highestBid') }}:</span>
+                        <a-token-value v-if="auction.lastBid" :value="auction.lastBid" :token="payToken" no-symbol />
+                        <span v-else>-</span>
                     </div>
-                    <template v-if="auctionHasStarted">
-                        <div class="flex gap-3">
-                            <span>{{ $t('nftauction.highestBid') }}:</span>
-                            <a-token-value
-                                v-if="auction.lastBid"
-                                :value="auction.lastBid"
-                                :token="payToken"
-                                no-symbol
-                            />
-                            <span v-else>-</span>
-                        </div>
-                        <nft-result-auction-button
-                            v-if="userOwnsToken && auctionHasFinished && auction.lastBidder"
+                    <nft-result-auction-button
+                        v-if="userOwnsToken && auctionHasFinished && auction.lastBidder"
+                        :token="token"
+                        @tx-success="onTxSuccess"
+                    />
+                    <nft-bid-button
+                        v-if="!userOwnsToken && !auctionHasFinished"
+                        :token="token"
+                        :auction="auction"
+                        @tx-success="onTxSuccess"
+                    />
+                    <div v-if="showWithdrawBidButton" class="flex gap-3 ali-center">
+                        <nft-withdraw-bid-button
+                            :disabled="withdrawBidButtonDisabled"
                             :token="token"
                             @tx-success="onTxSuccess"
                         />
-                        <div v-if="!userOwnsToken && !auctionHasFinished">
-                            <nft-bid-button :token="token" :auction="auction" @tx-success="onTxSuccess" />
-                        </div>
-                    </template>
-                </div>
-            </template>
+
+                        <span v-if="withdrawBidButtonDisabled"
+                            >({{ $t('nftauction.canWithdrawIn', { in: withdrawBidTime }) }})</span
+                        >
+                    </div>
+                </template>
+            </div>
         </a-details>
     </div>
 </template>
@@ -57,11 +65,13 @@ import { getPayToken } from '@/utils/pay-tokens.js';
 import NftBidButton from '@/modules/nfts/components/NftBidButton/NftBidButton.vue';
 import { isExpired } from '@/utils/date.js';
 import NftResultAuctionButton from '@/modules/nfts/components/NftResultAuctionButton/NftResultAuctionButton.vue';
+import NftWithdrawBidButton from '@/modules/nfts/components/NftWithdrawBidButton/NftWithdrawBidButton.vue';
+import { mapState } from 'vuex';
 
 export default {
     name: 'NftAuction',
 
-    components: { NftResultAuctionButton, NftBidButton, ATokenValue, ADetails },
+    components: { NftWithdrawBidButton, NftResultAuctionButton, NftBidButton, ATokenValue, ADetails },
 
     props: {
         /** @type {Auction} */
@@ -90,6 +100,10 @@ export default {
     },
 
     computed: {
+        ...mapState('wallet', {
+            walletAddress: 'account',
+        }),
+
         auctionHasStarted() {
             return dayjs(this.auction.startTime).diff(dayjs()) <= 0;
         },
@@ -112,6 +126,22 @@ export default {
 
         auctionHasFinished() {
             return isExpired(this.auction.endTime);
+        },
+
+        showWithdrawBidButton() {
+            return this.auctionHasFinished && this.auction.lastBidder === this.walletAddress;
+        },
+
+        withdrawBidButtonDisabled() {
+            return dayjs().diff(this.auction.endTime, 'hours') < 12;
+        },
+
+        withdrawBidTime() {
+            return datetimeFormatter(
+                dayjs(this.auction.endTime)
+                    .add(12, 'hours')
+                    .valueOf()
+            );
         },
     },
 
