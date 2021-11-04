@@ -84,7 +84,8 @@
                     @tx-success="update"
                 />
 
-                <a-details>
+                <!-- TO DO -->
+                <a-details hidden>
                     <template #label>
                         <div class="nftdetail_details_wrap">
                             <app-iconset icon="graf" /> {{ $t('nftdetail.priceHistory') }}
@@ -92,6 +93,7 @@
                     </template>
                     PriceHistory component
                 </a-details>
+
                 <a-details class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
@@ -121,7 +123,9 @@
                     />
                 </a-details>
             </div>
-            <a-details-group class="nftdetail_info" rounded>
+
+            <!-- TO DO -->
+            <a-details-group hidden class="nftdetail_info" rounded>
                 <a-details>
                     <template #label>
                         <div class="nftdetail_details_wrap">
@@ -202,9 +206,12 @@
                 </a-details>
             </a-details-group>
         </div>
-        <div class="nftdetail_filter">
+
+        <!-- TO DO -->
+        <div hidden class="nftdetail_filter">
             <nft-trade-history-grid />
         </div>
+
         <div class="nftdetail_collection">
             <a-details>
                 <template #label>
