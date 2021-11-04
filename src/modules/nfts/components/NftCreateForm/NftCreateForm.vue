@@ -147,7 +147,7 @@ export default {
         royaltyValidator(_value) {
             if (_value === '') return false;
             _value = Number(_value);
-            return !(_value >= 1 && _value <= 100);
+            return !(_value >= 0 && _value <= 100);
         },
 
         setTokenImage(_files) {
@@ -166,7 +166,7 @@ export default {
                 description: val.description,
                 properties: {
                     symbol: val.symbol,
-                    royalty: val.royalty,
+                    royalty: Number(val.royalty) ? val.royalty : null,
                     IP_Rights: val.linkToIp,
                     collection: this.collection.label,
                 },
