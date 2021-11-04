@@ -146,7 +146,7 @@ export default {
                     counter: 0,
                 },
                 {
-                    routeName: 'account-offers',
+                    routeName: 'account-hidden',
                     label: this.$t('account.hidden'),
                     icon: 'eyeslash',
                     counter: 0,
@@ -157,7 +157,7 @@ export default {
                     icon: 'history',
                 },
                 {
-                    routeName: 'account-my-offers',
+                    routeName: 'account-offers',
                     label: this.$t('account.offers'),
                     icon: 'tag',
                     counter: 0,

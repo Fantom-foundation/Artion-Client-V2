@@ -446,6 +446,14 @@
         "date": "Date"
     },
 
+    "accountoffersgrid": {
+        "item": "Item",
+        "price": "Price",
+        "qty": "Quantity",
+        "from": "From",
+        "date": "Date"
+    },
+
     "accountprofileform": {
         "username": "Username",
         "enterUsername": "Enter username",

@@ -5,6 +5,7 @@ import AccountSingleItems from '@/modules/account/views/AccountSingleItems/Accou
 import AccountCreated from '@/modules/account/views/AccountCreated/AccountCreated.vue';
 import AccountFavorited from '@/modules/account/views/AccountFavorited/AccountFavorited.vue';
 import AccountActivity from '@/modules/account/views/AccountActivity/AccountActivity.vue';
+import AccountHidden from '@/modules/account/views/AccountHidden/AccountHidden.vue';
 import AccountOffers from '@/modules/account/views/AccountOffers/AccountOffers.vue';
 import AccountMyOffers from '@/modules/account/views/AccountMyOffers/AccountMyOffers.vue';
 import AccountSettings from '@/modules/account/views/AccountSettings/AccountSettings.vue';
@@ -42,6 +43,11 @@ export function getAccountRoutes() {
                     path: '/account/:address?/activity',
                     name: 'account-activity',
                     component: AccountActivity,
+                },
+                {
+                    path: '/account/:address?/hidden',
+                    name: 'account-hidden',
+                    component: AccountHidden,
                 },
                 {
                     path: '/account/:address?/offers',
