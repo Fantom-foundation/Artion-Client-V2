@@ -107,7 +107,6 @@
         margin-bottom: var(--f-spacer-2);
     }
 
-    &_category,
     &_name h1 {
         margin-inline-end: 100px;
         overflow: hidden;
@@ -122,11 +121,6 @@
         margin-top: 10px;
         overflow: hidden;
         text-overflow: ellipsis;
-    }
-
-    &_category {
-        color: var(--f-color-primary-5);
-        font-size: var(--f-font-size-4);
     }
 
     &_name {

@@ -8,7 +8,8 @@
             </div>
             <div class="nftdetail_product">
                 <div class="nftdetail_infoWrap">
-                    <div class="nftdetail_category">Spooky Skeletoons</div>
+                    <nft-detail-collection :contract="token.contract" />
+
                     <div class="nftdetail_name">
                         <h1>
                             <a-placeholder block :content-loaded="!!token.tokenId" replacement-text="token name">
@@ -255,6 +256,7 @@ import NftCancelAuctionButton from '@/modules/nfts/components/NftCancelAuctionBu
 import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionButton/NftUpdateAuctionButton.vue';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { isExpired } from '@/utils/date.js';
+import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/NftDetailCollection.vue';
 
 export default {
     name: 'NftDetail',
@@ -262,6 +264,7 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftDetailCollection,
         NftUpdateAuctionButton,
         NftCancelAuctionButton,
         NftStartAuctionButton,
