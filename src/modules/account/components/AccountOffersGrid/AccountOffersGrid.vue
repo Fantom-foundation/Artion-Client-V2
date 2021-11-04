@@ -17,6 +17,7 @@
         >
             <template #column-token="{ item }">
                 <router-link
+                    v-if="item.token !== null"
                     :to="{ name: 'nft-detail', params: { tokenContract: item.contract, tokenId: item.tokenId } }"
                 >
                     <a-address
@@ -125,20 +126,9 @@ export default {
 
     methods: {
         async loadPage(pagination = { first: this.perPage }) {
-            let data = await getUserOffers(this.userAddress, pagination);
+            const data = await getUserOffers(this.userAddress, pagination);
             console.log(data);
-            return this.getOffersData(data);
-        },
-
-        getOffersData(value) {
-            let offers = { edges: [], pageInfo: {} };
-            let edges = { edges: [] };
-            value.edges
-                .filter(item => item.node.hasOffer)
-                .forEach(item => {
-                    offers.edges = edges.edges.concat(item.node.offers.edges);
-                });
-            return offers;
+            return await getUserOffers(this.userAddress, pagination);
         },
 
         async loadOffers() {
