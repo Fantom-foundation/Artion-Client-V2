@@ -162,6 +162,12 @@ export default {
                     icon: 'tag',
                     counter: 0,
                 },
+                {
+                    routeName: 'account-my-offers',
+                    label: this.$t('account.myOffers'),
+                    icon: 'tag',
+                    counter: 0,
+                },
             ],
         };
     },
@@ -172,7 +178,9 @@ export default {
         }),
 
         isActivityPage() {
-            return this.$route.matched.some(({ name }) => name === 'account-activity');
+            return this.$route.matched.some(
+                ({ name }) => name === 'account-activity' || name === 'account-offers' || name === 'account-my-offers'
+            );
         },
     },
 

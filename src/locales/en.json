@@ -421,6 +421,7 @@
         "hidden": "Hidden",
         "activity": "Activity",
         "offers": "Offers",
+        "myOffers": "My offers",
         "filter": "Filter",
         "filters": "Filters"
     },
@@ -451,6 +452,13 @@
         "price": "Price",
         "qty": "Quantity",
         "from": "From",
+        "date": "Date"
+    },
+
+    "accountmyoffersgrid": {
+        "item": "Item",
+        "price": "Price",
+        "qty": "Quantity",
         "date": "Date"
     },
 
