@@ -371,7 +371,7 @@ export default {
         },
 
         async loadAuction() {
-            this.auction = await getAuction(this.token.contract, this.token.tokenId);
+            this.auction = (await getAuction(this.token.contract, this.token.tokenId)) || {};
         },
 
         async onWalletAddressChange() {
