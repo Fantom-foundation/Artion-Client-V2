@@ -29,10 +29,14 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .accountactivity {
     display: flex;
     flex-direction: column;
     gap: var(--f-spacer-4);
+
+    .accountactivityfilter {
+        max-width: 320px;
+    }
 }
 </style>

@@ -167,11 +167,8 @@ export default {
         },
 
         update() {
-            this.pageInfo = {};
-            this.items = [];
-            this.$nextTick(() => {
-                this.$refs.grid.goToPageNum(1);
-            });
+            this._resetData();
+            this.$refs.grid.goToPageNum(1);
         },
 
         chooseActivityType(value) {

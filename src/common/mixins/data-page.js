@@ -137,5 +137,11 @@ export const dataPageMixin = {
                 });
             }
         },
+
+        _resetData() {
+            this.pageInfo = {};
+            this.items = [];
+            this.totalItems = 0;
+        },
     },
 };
