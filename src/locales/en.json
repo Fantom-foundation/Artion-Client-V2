@@ -65,6 +65,23 @@
         "mostly_viewed": "Mostly Viewed"
     },
 
+    "activity_types": {
+        "unknown": "UNKNOWN",
+        "listing_created": "Listing Created",
+        "listing_updated": "Listing Updated",
+        "listing_cancelled": "Listing Cancelled",
+        "listing_sold": "Listing Sold",
+        "offer_created": "Offer Created",
+        "offer_cancelled": "Offer Cancelled",
+        "offer_sold": "Offer Sold",
+        "auction_created": "Auction Created",
+        "auction_bid": "Auction Bid",
+        "auction_bid_withdraw": "Auction Bid Withdraw",
+        "auction_cancelled": "Auction Cancelled",
+        "auction_resolved": "Auction Resolved",
+        "auction_updated": "Auction Updated"
+    },
+
     "walletMenu": {
         "profile": "@:profile",
         "settings": "Settings",
@@ -405,6 +422,7 @@
         "hidden": "Hidden",
         "activity": "Activity",
         "offers": "Offers",
+        "myOffers": "My offers",
         "filter": "Filter",
         "filters": "Filters"
     },
@@ -419,6 +437,30 @@
 
     "accountsettingsprofile": {
         "title": "Profile Settings"
+    },
+
+    "accountactivitylist": {
+        "event": "Event",
+        "item": "Item",
+        "price": "Price",
+        "qty": "Quantity",
+        "owner": "Owner",
+        "date": "Date"
+    },
+
+    "accountoffersgrid": {
+        "item": "Item",
+        "price": "Price",
+        "qty": "Quantity",
+        "from": "From",
+        "date": "Date"
+    },
+
+    "accountmyoffersgrid": {
+        "item": "Item",
+        "price": "Price",
+        "qty": "Quantity",
+        "date": "Date"
     },
 
     "accountprofileform": {
