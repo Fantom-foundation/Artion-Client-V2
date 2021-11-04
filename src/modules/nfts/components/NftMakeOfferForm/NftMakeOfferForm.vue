@@ -40,6 +40,7 @@ import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
 import { datetimeInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
 import AButton from '@/common/components/AButton/AButton.vue';
+import { getUserAllowanceTx } from '@/plugins/wallet/utils.js';
 
 export default {
     name: 'NftMakeOfferForm',
@@ -68,6 +69,7 @@ export default {
             accountBalance: 0,
             tx: {},
             txStatus: '',
+            storedValues: {},
         };
     },
 
@@ -78,6 +80,11 @@ export default {
     },
 
     watch: {
+        /**
+         * @param {PayToken} token
+         * @param {PayToken|null} oldValue
+         * @return {Promise<void>}
+         */
         async selectedPayToken(token, oldValue) {
             const balance = await getErc20TokenBalance(this.$wallet.account, token.address);
 
@@ -99,6 +106,57 @@ export default {
             this.selectedPayToken = this.payTokens[0];
         },
 
+        /**
+         * @param {Object} values
+         */
+        async placeOffer(values) {
+            const { storedValues } = this;
+
+            storedValues.price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
+            storedValues.deadline = parseInt(values.deadline / 1000);
+
+            const allowanceTx = await getUserAllowanceTx({
+                value: storedValues.price,
+                tokenAddress: this.selectedPayToken.address,
+                contract: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+            });
+
+            if (allowanceTx) {
+                allowanceTx._code = 'create_offer_allowance';
+
+                this.tx = allowanceTx;
+            } else {
+                this.setCreateOfferTx(storedValues.price, storedValues.deadline);
+            }
+        },
+
+        /**
+         * @param {string} price
+         * @param {number} deadline
+         */
+        setCreateOfferTx(price, deadline) {
+            const web3 = new Web3();
+            const { token } = this;
+
+            const tx = contracts.createOffer(
+                token.contract,
+                token.tokenId,
+                this.selectedPayToken.address,
+                1,
+                price,
+                deadline,
+                web3
+            );
+
+            tx._code = 'create_offer';
+
+            this.tx = tx;
+        },
+
+        /**
+         * @param {string} value
+         * @return {VueI18n.TranslateResult|string}
+         */
         priceValidator(value) {
             const val = parseFloat(value);
 
@@ -111,29 +169,14 @@ export default {
             return '';
         },
 
+        /**
+         * @param {string} value
+         * @return {VueI18n.TranslateResult|string}
+         */
         deadlineValidator(value) {
             const now = dayjs().valueOf();
 
             return dayjs(value).valueOf() <= now ? this.$t('nftMakeOfferForm.badDate') : '';
-        },
-
-        async setTx(values) {
-            const web3 = new Web3();
-            const { token } = this;
-            const price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
-            const deadline = parseInt(values.deadline / 1000);
-
-            const tx = contracts.createOffer(
-                token.contract,
-                token.tokenId,
-                this.selectedPayToken.address,
-                1,
-                price,
-                deadline,
-                web3
-            );
-
-            this.tx = tx;
         },
 
         revalidatePriceField() {
@@ -141,22 +184,37 @@ export default {
             this.$refs.priceField.$refs.input.$refs.input.validate();
         },
 
+        /**
+         * @param {PayToken} token
+         */
         onTokenSelected(token) {
             this.selectedPayToken = token;
         },
 
+        /**
+         * @param {Object} data
+         */
         onSubmit(data) {
-            this.setTx(data.values);
+            this.placeOffer(data.values);
         },
 
+        /**
+         * @param {TransactionStatus} payload
+         */
         onTransactionStatus(payload) {
+            const txCode = payload.code;
             this.txStatus = payload.status;
 
             if (this.txStatus === 'success') {
-                this.$notifications.add({
-                    type: 'success',
-                    text: this.$t('nftMakeOfferForm.makeOfferSuccess'),
-                });
+                if (txCode === 'create_offer_allowance') {
+                    this.setCreateOfferTx(this.storedValues.price, this.storedValues.deadline);
+                } else if (txCode === 'create_offer') {
+                    this.storedValues = {};
+                    this.$notifications.add({
+                        type: 'success',
+                        text: this.$t('nftMakeOfferForm.makeOfferSuccess'),
+                    });
+                }
             }
 
             this.$emit('transaction-status', payload);

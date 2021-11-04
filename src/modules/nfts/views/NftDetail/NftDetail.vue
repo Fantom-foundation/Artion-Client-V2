@@ -116,7 +116,7 @@
                         ref="directOffersGrid"
                         :token="token"
                         :user-owns-token="userOwnsToken"
-                        @tx-success="onOfferTxSuccess"
+                        @tx-success="update"
                     />
                 </a-details>
             </div>
@@ -474,11 +474,6 @@ export default {
             } else if (code === 'buy') {
                 this.update();
             }
-        },
-
-        onOfferTxSuccess() {
-            this.onWalletAddressChange();
-            // this.update();
         },
 
         async onLikeClick() {

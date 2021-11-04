@@ -113,6 +113,15 @@ export async function getUserAllowance(tokenAddress = '', contract = '', userAdd
  * @return {Promise<null|{data: string, chainId: string, to: string, value: string}>}
  */
 export async function getUserAllowanceTx({ value = '', tokenAddress = '', contract = '', txCode = 'allowance' }) {
+    const bValue = toBigNumber(value);
+    const tx = erc20Utils.erc20IncreaseAllowanceTx(tokenAddress, contract, toHex(bValue.plus(10)));
+
+    tx._code = txCode;
+
+    return tx;
+}
+
+/*export async function getUserAllowanceTx({ value = '', tokenAddress = '', contract = '', txCode = 'allowance' }) {
     const allowance = await getUserAllowance(tokenAddress, contract);
     const bValue = toBigNumber(value);
 
@@ -125,4 +134,4 @@ export async function getUserAllowanceTx({ value = '', tokenAddress = '', contra
     }
 
     return null;
-}
+}*/
