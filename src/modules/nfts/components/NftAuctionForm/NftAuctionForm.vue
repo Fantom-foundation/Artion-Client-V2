@@ -165,7 +165,7 @@ export default {
         },
 
         async loadAuction() {
-            this.auction = await getAuction(this.token.contract, this.token.tokenId);
+            this.auction = (await getAuction(this.token.contract, this.token.tokenId)) || {};
 
             this.setValues(this.auction, this.selectedPayToken);
         },
