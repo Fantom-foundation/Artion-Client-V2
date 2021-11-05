@@ -203,10 +203,8 @@ export default {
         },
 
         $route(value) {
-            if (!value.params.address) {
-                this.userAddress = this.walletAddress;
-                this.update();
-            }
+            this.userAddress = value.params.address || this.walletAddress;
+            this.update();
         },
 
         userAddress: {
