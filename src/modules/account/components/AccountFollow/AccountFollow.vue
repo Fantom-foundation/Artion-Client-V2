@@ -1,7 +1,7 @@
 <template>
     <div class="accountfollow">
-        <div class="accountfollow_btn">
-            <a-button :loading="loading" :label="label" @click.native="onClick" />
+        <div class="accountfollow_btn" v-if="!isItMe">
+            <a-button :loading="loading" :label="label" @click.native="onClick" size="small" />
         </div>
         <div class="accountfollow_followers" @click="showFollowersList">
             <b>{{ followersCounter }}</b>
@@ -26,6 +26,7 @@ import AButton from '@/common/components/AButton/AButton.vue';
 import AccountFollowWindow from '@/modules/account/components/AccountFollowWindow/AccountFollowWindow.vue';
 import { getUserFollowers, getUserFollowing } from '@/modules/account/queries/subscription.js';
 import { followUser, unFollowUser } from '@/modules/account/mutations/subscription.js';
+import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { toInt } from '@/utils/big-number.js';
 import { mapState } from 'vuex';
@@ -54,14 +55,27 @@ export default {
         };
     },
 
+    //  created() {
+    //      this.init();
+    //  },
+
     computed: {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
+
+        isItMe() {
+            return this.walletAddress === this.userAddress;
+        },
     },
 
-    created() {
-        this.init();
+    watch: {
+        userAddress: {
+            handler: function(newValue, oldValue) {
+                if (newValue !== oldValue) this.init();
+            },
+            immediate: true,
+        },
     },
 
     methods: {
@@ -80,28 +94,48 @@ export default {
                 : (this.label = this.$t('accountfollow.follow'));
         },
 
+        async checkWalletConnection() {
+            if (!this.$wallet.connected) {
+                const payload = {};
+                this._eventBus.emit('show-wallet-picker', payload);
+                await payload.promise;
+            }
+        },
+
         async onClick() {
-            this.loading = true;
-            if (!this.isFollwed) {
-                await followUser(this.userAddress);
-                this.followersCounter++;
-                this.isFollwed = true;
-                this.label = this.$t('accountfollow.unFollow');
-                notifications.add({
-                    type: 'success',
-                    text: this.$t('accountfollow.subscribed'),
-                });
+            let ok = true;
+            await this.checkWalletConnection();
+            if (!getBearerToken()) {
+                ok = await signIn();
+            }
+            if (ok) {
+                this.loading = true;
+                if (!this.isFollwed) {
+                    await followUser(this.userAddress);
+                    this.followersCounter++;
+                    this.isFollwed = true;
+                    this.label = this.$t('accountfollow.unFollow');
+                    notifications.add({
+                        type: 'success',
+                        text: this.$t('accountfollow.subscribed'),
+                    });
+                } else {
+                    await unFollowUser(this.userAddress);
+                    this.isFollwed = false;
+                    if (this.followersCounter > 0) this.followersCounter--;
+                    this.label = this.$t('accountfollow.follow');
+                    notifications.add({
+                        type: 'success',
+                        text: this.$t('accountfollow.unsubscribed'),
+                    });
+                }
+                this.loading = false;
             } else {
-                await unFollowUser(this.userAddress);
-                this.isFollwed = false;
-                if (this.followersCounter > 0) this.followersCounter--;
-                this.label = this.$t('accountfollow.follow');
-                notifications.add({
-                    type: 'success',
-                    text: this.$t('accountfollow.unsubscribed'),
+                this.$notifications.add({
+                    type: 'error',
+                    text: 'Some problems',
                 });
             }
-            this.loading = false;
         },
 
         showFollowersList() {

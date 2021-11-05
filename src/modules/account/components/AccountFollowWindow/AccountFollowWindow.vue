@@ -20,6 +20,7 @@
             :total-items="totalItems"
             :per-page="perPage"
             @change="_onGridPageChange"
+            @row-click="onRowClick"
         >
             <template #column-token="{ item }">
                 <router-link :to="{ name: 'account', params: { address: item.address } }">
@@ -83,10 +84,6 @@ export default {
         };
     },
 
-    created() {
-        console.log(111);
-    },
-
     watch: {
         isFollowers: {
             async handler(value, oldValue) {
@@ -124,6 +121,10 @@ export default {
             // this.$nextTick(() => {
             //     this.$refs.grid.goToPageNum(1);
             // });
+        },
+
+        onRowClick() {
+            this.$refs.window.hide();
         },
 
         _getItemsFromData(data) {
