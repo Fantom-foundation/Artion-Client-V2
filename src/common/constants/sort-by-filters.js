@@ -40,22 +40,37 @@ export function SORT_BY_FILTERS() {
         {
             value: 'saleEndsAt',
             label: 'sort_by.ending_soon',
-            disabled: true,
+            queryFilter: {
+                sortBy: 'AUCTION_UNTIL',
+                sortDir: 'ASC',
+                filter: {
+                    hasAuction: true,
+                },
+            },
         },
         {
             value: 'price',
             label: 'sort_by.most_expensive',
-            disabled: true,
+            queryFilter: {
+                sortBy: 'PRICE',
+                sortDir: 'DESC',
+            },
         },
         {
             value: 'cheapest',
             label: 'sort_by.cheapest',
-            disabled: true,
+            queryFilter: {
+                sortBy: 'PRICE',
+                sortDir: 'ASC',
+            },
         },
         {
             value: 'lastSalePrice',
             label: 'sort_by.highest_last_sale',
-            disabled: true,
+            queryFilter: {
+                sortBy: 'LAST_TRADE_AMOUNT',
+                sortDir: 'DESC',
+            },
         },
         {
             value: 'viewed',

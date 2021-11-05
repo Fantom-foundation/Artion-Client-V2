@@ -81,9 +81,11 @@ export function filtersToQueryFilters(filters, defaultFilters) {
             const sbFilter = sortByFilters[filter.value];
 
             if (sbFilter) {
-                Object.keys(sbFilter).forEach(key => {
-                    qFilters[key] = sbFilter[key];
-                });
+                qFilters.sortBy = sbFilter.sortBy;
+                qFilters.sortDir = sbFilter.sortDir;
+                if (sbFilter.filter) {
+                    Object.assign(qFilters.filter, sbFilter.filter);
+                }
             }
         }
     });
