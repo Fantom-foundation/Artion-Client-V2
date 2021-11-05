@@ -5,7 +5,7 @@ export async function getCollections() {
     const query = {
         query: gql`
             query GetCollections {
-                collections(first: 50) {
+                collections(first: 5000) {
                     totalCount
                     pageInfo {
                         startCursor
