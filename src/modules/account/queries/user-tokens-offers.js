@@ -6,7 +6,7 @@ export async function getUserOffers(address = '', pagination = {}) {
         query: gql`
             query GetUserOffers($address: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
                 user(address: $address) {
-                    createdTokens(first: $first, after: $after, last: $last, before: $before) {
+                    myOffers(first: $first, after: $after, last: $last, before: $before) {
                         totalCount
                         pageInfo {
                             startCursor
@@ -17,35 +17,20 @@ export async function getUserOffers(address = '', pagination = {}) {
                         edges {
                             cursor
                             node {
-                                hasOffer
-                                offers(first: $first, after: $after, last: $last, before: $before) {
-                                    totalCount
-                                    pageInfo {
-                                        startCursor
-                                        endCursor
-                                        hasNextPage
-                                        hasPreviousPage
-                                    }
-                                    edges {
-                                        cursor
-                                        node {
-                                            contract
-                                            tokenId
-                                            token {
-                                                contract
-                                                imageThumb
-                                                name
-                                            }
-                                            proposedBy
-                                            quantity
-                                            payToken
-                                            unitPrice
-                                            created
-                                            deadline
-                                            closed
-                                        }
-                                    }
+                                contract
+                                tokenId
+                                token {
+                                    contract
+                                    imageThumb
+                                    name
                                 }
+                                proposedBy
+                                quantity
+                                payToken
+                                unitPrice
+                                created
+                                deadline
+                                closed
                             }
                         }
                     }
@@ -59,5 +44,5 @@ export async function getUserOffers(address = '', pagination = {}) {
         fetchPolicy: 'network-only',
     };
 
-    return gqlQuery(query, 'user.createdTokens');
+    return gqlQuery(query, 'user.myOffers');
 }
