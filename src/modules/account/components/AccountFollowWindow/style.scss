@@ -1,0 +1,49 @@
+.fwindow-width-5 {
+}
+.accountfollowwindow {
+	a:not(.btn) {
+		color: inherit;
+	}
+		&_list {
+		}
+
+		&_item {
+			display: flex;
+			column-gap: var(--f-spacer-3);
+			align-items: center;
+			&_img {
+				position: relative;
+				top: 0;
+				left: 0;
+				display: flex;
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				border: none;
+				overflow: hidden;
+				align-items: center;
+				justify-content: center;
+				img {
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						border: none;
+				}
+			}
+	
+
+			&_data {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+
+				span:last-child {
+					max-width: 200px;
+				}
+			}
+		}
+		thead.fdatagrid_thead { display: none !important; }
+}
