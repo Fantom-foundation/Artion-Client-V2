@@ -138,7 +138,7 @@ export default {
             return {
                 label: edge.node.name,
                 value: edge.node.contract,
-                img: 'img/tmp/fantom.svg',
+                img: 'https://artion-api-c.fantom.network/images/collection/' + edge.node.contract + '/',
             };
         });
     },

@@ -84,7 +84,7 @@ export default {
                 return {
                     label: edge.node.name,
                     value: edge.node.contract,
-                    img: 'https://cloudflare-ipfs.com/ipfs/QmP8idjiQxFZ1Wpe61fSmi6jPTT48apPEx4QVKDhhWNWya',
+                    img: 'https://artion-api-c.fantom.network/images/collection/' + edge.node.contract + '/',
                 };
             });
         },

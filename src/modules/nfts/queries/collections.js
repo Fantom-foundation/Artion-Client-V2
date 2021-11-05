@@ -5,7 +5,7 @@ export async function getCollections() {
     const query = {
         query: gql`
             query GetCollections {
-                collections {
+                collections(first: 50) {
                     totalCount
                     pageInfo {
                         startCursor
@@ -17,11 +17,8 @@ export async function getCollections() {
                         cursor
                         node {
                             contract
-                            type
                             name
-                            symbol
-                            created
-                            isActive
+                            image
                         }
                     }
                 }
