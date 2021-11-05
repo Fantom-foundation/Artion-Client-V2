@@ -11,11 +11,7 @@ export async function getCollection(contract = '') {
             query GetCollection($contract: Address!) {
                 collection(contract: $contract) {
                     contract
-                    type
                     name
-                    symbol
-                    created
-                    isActive
                 }
             }
         `,
