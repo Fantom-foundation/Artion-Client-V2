@@ -23,7 +23,7 @@
                     </template>
                 </f-copy-button>
             </div>
-            <div class="account_join">Joined September 2021</div>
+            <div class="account_join"><AccountFollow :user-address="userAddress" /></div>
             <div class="account_btn">
                 <AShareButton />
             </div>
@@ -86,6 +86,7 @@ import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterCh
 import { routeQueryMixin } from '@/common/mixins/route-query.js';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 import FCopyButton from 'fantom-vue-components/src/components/FCopyButton/FCopyButton.vue';
+import AccountFollow from '@/modules/account/components/AccountFollow/AccountFollow.vue';
 import { mapState } from 'vuex';
 import { getUser } from '@/modules/account/queries/user.js';
 import AccountNavigation from '@/modules/account/components/AccountNavigation/AccountNavigation.vue';
@@ -105,6 +106,7 @@ export default {
 
     components: {
         AccountNavigation,
+        AccountFollow,
         AUploadArea,
         AShareButton,
         // AppIconset,

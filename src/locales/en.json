@@ -456,6 +456,17 @@
         "date": "Date"
     },
 
+    "accountfollow": {
+        "follow": "Follow",
+        "unFollow": "Unfollow",
+        "followers": "Followers",
+        "following": "Following",
+        "subscribed": "You successfully subscribed",
+        "unsubscribed":"You successfully cancel your subscription",
+        "follows": "Follows",
+        "followings": "Followings"
+    },
+
     "accountmyoffersgrid": {
         "item": "Item",
         "price": "Price",
