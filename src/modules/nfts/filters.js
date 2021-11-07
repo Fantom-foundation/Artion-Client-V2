@@ -2,7 +2,7 @@
  * Functions related to nft filters
  */
 
-import { isArray } from 'fantom-vue-components/src/utils';
+import { isArray, isObject } from 'fantom-vue-components/src/utils';
 import { STATUSES } from '@/common/constants/statuses.js';
 import { SORT_BY_FILTERS } from '@/common/constants/sort-by-filters.js';
 
@@ -25,10 +25,10 @@ export function flattenFilters(filters) {
 
         if (isArray(filter)) {
             filter.forEach(code => {
-                fFilters.push({
-                    value: code,
-                    filterName,
-                });
+                let data = isObject(code)
+                    ? { label: code.label, value: code.value, filterName }
+                    : { value: code, filterName };
+                fFilters.push(data);
             });
         } else {
             fFilters.push({
@@ -58,14 +58,10 @@ export function filtersToQueryFilters(filters, defaultFilters) {
                 qFilters.filter[status] = true;
             }
         } else if (filterName === 'collections') {
-            if (qFilters.filter['collections']) {
-                if (isArray(qFilters.filter['collections'])) {
-                    qFilters.filter['collections'].push(filter.value);
-                } else {
-                    qFilters.filter['collections'] = [qFilters.filter['collections'], filter.value];
-                }
+            if (isArray(qFilters.filter['collections'])) {
+                qFilters.filter['collections'].push(filter.value);
             } else {
-                qFilters.filter['collections'] = filter.value;
+                qFilters.filter['collections'] = [filter.value];
             }
         } else if (filterName === 'category') {
             if (qFilters.filter['categories']) {
