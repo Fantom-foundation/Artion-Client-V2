@@ -398,6 +398,7 @@
         "expires": "Expires",
         "withdrawSuccess": "You have successfully withdraw an offer",
         "acceptSuccess": "You have successfully accepted an offer",
+        "cantAccept": "Cancel auction first to accept this offer",
         "status": "@:status"
     },
 

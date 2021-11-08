@@ -69,6 +69,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        tokenHasAuction: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -82,7 +86,7 @@ export default {
 
     computed: {
         showMakeOfferButton() {
-            return !this.userOwnsToken && !this.userMadeOffer;
+            return !this.userOwnsToken && !this.userMadeOffer && !this.tokenHasAuction;
         },
     },
 

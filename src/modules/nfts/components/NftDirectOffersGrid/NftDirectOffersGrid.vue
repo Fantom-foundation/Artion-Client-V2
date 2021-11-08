@@ -35,6 +35,8 @@
                         v-if="userOwnsToken"
                         :loading="txStatus === 'pending' && pickedAddress === item.proposedBy"
                         :label="$t('nftDirectOffersGrid.accept')"
+                        :disabled="tokenHasAuction"
+                        :data-tooltip="tokenHasAuction ? $t('nftDirectOffersGrid.cantAccept') : null"
                         @click.native="onAcceptButtonClick(item)"
                     />
                     <a-button
@@ -82,6 +84,10 @@ export default {
             },
         },
         userOwnsToken: {
+            type: Boolean,
+            default: false,
+        },
+        tokenHasAuction: {
             type: Boolean,
             default: false,
         },

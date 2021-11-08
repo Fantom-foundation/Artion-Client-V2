@@ -69,6 +69,7 @@
                         :token="token"
                         :listing="listing"
                         :user-owns-token="userOwnsToken"
+                        :token-has-auction="tokenHasAuction"
                         @tx-success="onNftDetailPriceTxSuccess"
                     />
 
@@ -95,7 +96,7 @@
                     PriceHistory component
                 </a-details>
 
-                <a-details class="adetails_p0">
+                <a-details open class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
                             <app-iconset icon="tag" /> {{ $t('nftdetail.listings') }}
@@ -110,7 +111,7 @@
                         />
                     </template>
                 </a-details>
-                <a-details class="adetails_p0">
+                <a-details open class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
                             <app-iconset icon="list" /> {{ $t('nftdetail.directOffers') }}
@@ -120,6 +121,7 @@
                         ref="directOffersGrid"
                         :token="token"
                         :user-owns-token="userOwnsToken"
+                        :token-has-auction="tokenHasAuction"
                         @tx-success="update"
                     />
                 </a-details>
