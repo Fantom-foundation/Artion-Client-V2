@@ -8,7 +8,7 @@
 import { clone, isArray } from 'fantom-vue-components/src/utils';
 import AFilterChips from '@/common/components/AFilterChips/AFilterChips.vue';
 import { STATUSES } from '@/common/constants/statuses.js';
-import { COLLECTIONS } from '@/common/constants/collections.js';
+//import { COLLECTIONS } from '@/common/constants/collections.js';
 import { CATEGORIES } from '@/common/constants/categories.js';
 import { GROUP_FILTERS } from '@/common/constants/group-filter.js';
 import { SORT_BY_FILTERS } from '@/common/constants/sort-by-filters.js';
@@ -65,7 +65,7 @@ export default {
             const translations = {
                 status: {},
                 category: {},
-                collections: {},
+                // collections: {},
                 group: {},
                 sortBy: {},
             };
@@ -78,9 +78,9 @@ export default {
                 translations.category[item.id] = this.$t(item.label);
             });
 
-            COLLECTIONS().forEach(item => {
-                translations.collections[item.value] = this.$t(item.label);
-            });
+            // COLLECTIONS().forEach(item => {
+            //     translations.collections[item.value] = this.$t(item.label);
+            // });
 
             GROUP_FILTERS().forEach(item => {
                 translations.group[item.value] = this.$t(item.label);
@@ -114,15 +114,17 @@ export default {
         getChipsFromFilters(filters) {
             const { translations } = this;
             let chips = flattenFilters(filters);
-
             chips = chips.filter(chip => {
-                const transl = translations[chip.filterName];
+                if (chip.filterName !== 'collections') {
+                    const transl = translations[chip.filterName];
 
-                if (transl) {
-                    chip.label = transl[chip.value];
+                    if (transl) {
+                        chip.label = transl[chip.value];
+                    }
+
+                    return !!transl;
                 }
-
-                return !!transl;
+                return true;
             });
 
             return chips;
@@ -133,32 +135,31 @@ export default {
          * @return {{}}
          */
         getFiltersFromChips(data) {
-            const { translations } = this;
-            const { dFilters } = this;
+            // const { translations } = this;
+            // const { dFilters } = this;
             let filters = {};
-
             if (data.length === 0) {
                 return {};
             } else {
                 data.forEach(chip => {
+                    let chipValue = chip.filterName === 'collections' ? chip : chip.value;
                     if (chip.filterName in filters) {
                         if (!isArray(filters[chip.filterName])) {
                             filters[chip.filterName] = [filters[chip.filterName]];
                         }
 
-                        filters[chip.filterName].push(chip.value);
+                        filters[chip.filterName].push(chipValue);
                     } else {
-                        filters[chip.filterName] = chip.value;
+                        filters[chip.filterName] = [chipValue];
                     }
                 });
 
                 // copy dFilters which are not in translations
-                Object.keys(dFilters).forEach(filterName => {
-                    if (!(filterName in translations)) {
-                        filters = { ...filters, [filterName]: dFilters[filterName] };
-                    }
-                });
-
+                // Object.keys(dFilters).forEach(filterName => {
+                //     if (!(filterName in translations)) {
+                //         filters = { ...filters, [filterName]: dFilters[filterName] };
+                //     }
+                // });
                 return filters;
             }
         },
