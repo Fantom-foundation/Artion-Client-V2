@@ -82,6 +82,7 @@
                     :auction="auction"
                     :token="token"
                     @tx-success="update"
+                    @auction-time-up="update"
                 />
 
                 <!-- TO DO -->

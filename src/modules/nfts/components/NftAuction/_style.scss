@@ -1,1 +1,9 @@
-.nftauction {}
+.nftauction {
+    &_countdown {
+        &-red {
+            .fcountdown_amount {
+                color: var(--f-color-red-4);
+            }
+        }
+    }
+}

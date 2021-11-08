@@ -1,18 +1,44 @@
 <template>
     <div class="nftauction">
-        <a-details open>
+        <a-details open disabled>
             <template #label>
-                <div class="nftdetail_details_wrap">
+                <div class="nftdetail_details_wrap__ grid">
                     <template v-if="auctionHasStarted">
                         <template v-if="auctionHasFinished">
-                            {{ $t('nftauction.saleEnded') }}
+                            <div>{{ $t('nftauction.saleEnded') }}</div>
                         </template>
                         <template v-else>
-                            {{ $t('nftauction.saleEnds') }} {{ auctionEndsIn }} ({{ auctionEndTime }})
+                            <div>
+                                {{ $t('nftauction.saleEnds') }}
+                                <template v-if="!showEndCountdown">{{ auctionEndsIn }} ({{ auctionEndTime }})</template>
+                                <template v-else>{{ auctionEndTime }}</template>
+                            </div>
+                            <f-countdown
+                                v-if="showEndCountdown"
+                                :date="auction.endTime"
+                                :css-classes="countdownCssClasses"
+                                with-labels
+                                use-two-digit-numbers
+                                :show="getCountdownShow(auction.endTime)"
+                                @time-up="onAuctionEndTimeUp"
+                            />
                         </template>
                     </template>
                     <template v-else>
-                        {{ $t('nftauction.saleStarts') }} {{ auctionStartsIn }} ({{ auctionStartTime }})
+                        <div>
+                            {{ $t('nftauction.saleStarts') }}
+                            <span v-if="!showStartCountdown">{{ auctionStartsIn }}</span>
+                            ({{ auctionStartTime }})
+                        </div>
+                        <f-countdown
+                            v-if="showStartCountdown"
+                            :date="auction.startTime"
+                            :css-classes="countdownCssClasses"
+                            with-labels
+                            use-two-digit-numbers
+                            :show="getCountdownShow(auction.startTime)"
+                            @time-up="onAuctionStartTimeUp"
+                        />
                     </template>
                 </div>
             </template>
@@ -67,11 +93,12 @@ import { isExpired } from '@/utils/date.js';
 import NftResultAuctionButton from '@/modules/nfts/components/NftResultAuctionButton/NftResultAuctionButton.vue';
 import NftWithdrawBidButton from '@/modules/nfts/components/NftWithdrawBidButton/NftWithdrawBidButton.vue';
 import { mapState } from 'vuex';
+import FCountdown from 'fantom-vue-components/src/components/FCountdown/FCountdown.vue';
 
 export default {
     name: 'NftAuction',
 
-    components: { NftWithdrawBidButton, NftResultAuctionButton, NftBidButton, ATokenValue, ADetails },
+    components: { NftWithdrawBidButton, NftResultAuctionButton, NftBidButton, ATokenValue, ADetails, FCountdown },
 
     props: {
         /** @type {Auction} */
@@ -96,6 +123,13 @@ export default {
     data() {
         return {
             payToken: {},
+            countdownCssClasses: [
+                {
+                    // an hour
+                    time: 60 * 60 * 1000,
+                    cssClass: 'nftauction_countdown-red',
+                },
+            ],
         };
     },
 
@@ -143,6 +177,14 @@ export default {
                     .valueOf()
             );
         },
+
+        showStartCountdown() {
+            return !this.auctionHasStarted && dayjs(this.auction.startTime).diff(dayjs(), 'days') < 3;
+        },
+
+        showEndCountdown() {
+            return this.auctionHasStarted && dayjs(this.auction.endTime).diff(dayjs(), 'days') < 3;
+        },
     },
 
     watch: {
@@ -161,8 +203,20 @@ export default {
             this.payToken = (await getPayToken(auction.payToken)) || {};
         },
 
+        getCountdownShow(date) {
+            return dayjs(date).diff(dayjs(), 'days') < 1 ? 'hms' : 'dhms';
+        },
+
         onTxSuccess() {
             this.$emit('tx-success');
+        },
+
+        onAuctionStartTimeUp() {
+            this.$emit('auction-time-up');
+        },
+
+        onAuctionEndTimeUp() {
+            this.$emit('auction-time-up');
         },
     },
 };
