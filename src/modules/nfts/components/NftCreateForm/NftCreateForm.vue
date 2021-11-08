@@ -21,6 +21,11 @@
                                     name="collectionId"
                                     style="width:0;height:0;opacity: 0;"
                                     :modelValue="item.value"
+                                    :validator="collectionValidator"
+                                    :error-message="$t('nftcreate.collectionErr')"
+                                    validate-on-change
+                                    validate-on-input
+                                    required
                                 />
                             </div>
                         </template>
@@ -111,6 +116,7 @@ import { setUnlockableContent } from '@/modules/nfts/mutations/unlockables';
 import { toHex } from '@/utils/big-number';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
 import appConfig from '@/app.config';
+import { estimateMintFeeGas } from '@/modules/nfts/queries/estimate-mint';
 
 export default {
     name: 'NftCreateForm',
@@ -151,6 +157,16 @@ export default {
             return !(_value >= 0 && _value <= 100);
         },
 
+        async collectionValidator(_collectionId) {
+            const estimation = await estimateMintFeeGas(
+                this.$wallet.account || '0x0000000000000000000000000000000000000001',
+                _collectionId,
+                'dummy'
+            );
+            console.log('collectionValidator', _collectionId, estimation.error);
+            return estimation.error != null;
+        },
+
         setTokenImage(_files) {
             this.imageFile = _files[0] || null;
         },
@@ -185,6 +201,17 @@ export default {
                 return;
             }
 
+            const estimation = await estimateMintFeeGas(this.$wallet.account, val.collectionId, 'dummy');
+            console.log('estimation', estimation);
+            if (estimation.error != null) {
+                notifications.add({
+                    type: 'error',
+                    text: this.$t('nftcreate.collectionErr') + ' ' + estimation.error,
+                });
+                this.isLoading = false;
+                return;
+            }
+
             let tokenUri;
             try {
                 tokenUri = await uploadTokenData(_metadata, this.imageFile);
@@ -202,7 +229,7 @@ export default {
             this.tx = contracts.createNFT(
                 this.$wallet.account,
                 tokenUri,
-                '1000000000000000000', // 1 FTM
+                estimation.platformFee,
                 val.collectionId,
                 web3
             );
@@ -223,7 +250,7 @@ export default {
                     console.error('getMintedTokenId', e);
                     notifications.add({
                         type: 'error',
-                        text: `Sorry, something went wrong. The token was minted.`,
+                        text: `Sorry, something went wrong. The token was minted, but unable to get new token id.`,
                     });
                     this.isLoading = false;
                     return;

@@ -312,6 +312,7 @@
 
     "nftcreate": {
         "collection": "Collection",
+        "collectionErr": "Chosen collection does not allow to mint new tokens from your address.",
         "name": "Name",
         "symbol": "Symbol",
         "description": "Description",
