@@ -22,6 +22,7 @@ import StatusFilter from '@/modules/nfts/components/StatusFilter/StatusFilter.vu
 
 import { getCategories } from '@/modules/nfts/queries/categories.js';
 import { getCollections } from '@/modules/nfts/queries/collections.js';
+import appConfig from '@/app.config';
 
 export default {
     name: 'NftFilters',
@@ -84,7 +85,7 @@ export default {
                 return {
                     label: edge.node.name,
                     value: edge.node.contract,
-                    img: 'https://artion-api-c.fantom.network/images/collection/' + edge.node.contract + '/',
+                    img: appConfig.collectionImagesUrl + edge.node.contract + '/',
                 };
             });
         },

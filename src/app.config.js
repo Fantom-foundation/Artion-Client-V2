@@ -110,6 +110,8 @@ let appConfig = {
     explorerUrl: 'https://ftmscan.com/',
     // used in links pointing to validators
     explorerUrl2: 'https://explorer.fantom.network/',
+    // URL for collections images
+    collectionImagesUrl: 'https://artion-api-c.fantom.network/images/collection/',
     // default options for production build
     build: {
         // output dir for production build

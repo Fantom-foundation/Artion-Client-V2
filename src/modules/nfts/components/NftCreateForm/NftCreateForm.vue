@@ -110,6 +110,7 @@ import { checkSignIn } from '@/modules/account/auth';
 import { setUnlockableContent } from '@/modules/nfts/mutations/unlockables';
 import { toHex } from '@/utils/big-number';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
+import appConfig from '@/app.config';
 
 export default {
     name: 'NftCreateForm',
@@ -138,7 +139,7 @@ export default {
             return {
                 label: edge.node.name,
                 value: edge.node.contract,
-                img: 'https://artion-api-c.fantom.network/images/collection/' + edge.node.contract + '/',
+                img: appConfig.collectionImagesUrl + edge.node.contract + '/',
             };
         });
     },
