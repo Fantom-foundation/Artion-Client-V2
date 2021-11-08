@@ -349,7 +349,9 @@ export default {
         endTimeValidator(value) {
             const ts = dateOutFormatterTimestamp(value || this.values.endTime);
             const tsStartTime = dateOutFormatterTimestamp(this.values.startTime);
-            const tsNow = dayjs().add(7, 'minutes');
+            const tsNow = dayjs()
+                .add(5, 'minutes')
+                .valueOf();
             let msg = '';
 
             if (isNaN(ts)) {
@@ -405,8 +407,6 @@ export default {
             let msg = '';
 
             this.txStatus = payload.status;
-
-            console.log('!!!', this.txStatus, txCode);
 
             if (this.txStatus === 'success') {
                 if (txCode === 'start_auction') {
