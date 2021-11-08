@@ -93,6 +93,8 @@ import AccountNavigation from '@/modules/account/components/AccountNavigation/Ac
 import { defer } from 'fantom-vue-components/src/utils';
 import { getUserTokenCounters } from '@/modules/account/queries/user-token-counters.js';
 import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-tokens.js';
+import { getUserActivity } from '@/modules/account/queries/user-activity.js';
+import { getUserOffers } from '@/modules/account/queries/user-tokens-offers.js';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 import { signIn, getBearerToken } from '@/modules/account/auth.js';
 import { uploadUserFile } from '@/utils/upload.js';
@@ -157,6 +159,7 @@ export default {
                     routeName: 'account-activity',
                     label: this.$t('account.activity'),
                     icon: 'history',
+                    counter: 0,
                 },
                 {
                     routeName: 'account-offers',
@@ -228,6 +231,8 @@ export default {
             defer(() => {
                 this.updateTokenCounters();
                 this.updateFavoriteCounters();
+                this.updateOffersCounters();
+                this.updateActivityCounters();
                 this.updateOwnershipCounters();
             }, 200);
         },
@@ -295,6 +300,36 @@ export default {
 
             if (favoriteCounters.edges.length) {
                 accountNavigation.updateCounter('account-favorited', toInt(favoriteCounters.totalCount));
+            }
+        },
+
+        /**
+         * @return {Promise<void>}
+         */
+        async updateActivityCounters() {
+            const { accountNavigation } = this.$refs;
+            const activityCounters = await getUserActivity(this.userAddress);
+            if (!activityCounters) {
+                return;
+            }
+
+            if (activityCounters.edges.length) {
+                accountNavigation.updateCounter('account-activity', toInt(activityCounters.totalCount));
+            }
+        },
+
+        /**
+         * @return {Promise<void>}
+         */
+        async updateOffersCounters() {
+            const { accountNavigation } = this.$refs;
+            const offerCounters = await getUserOffers(this.userAddress);
+            if (!offerCounters) {
+                return;
+            }
+
+            if (offerCounters.edges.length) {
+                accountNavigation.updateCounter('account-offers', toInt(offerCounters.totalCount));
             }
         },
 

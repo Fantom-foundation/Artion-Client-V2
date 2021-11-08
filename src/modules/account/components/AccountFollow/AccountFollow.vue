@@ -1,13 +1,30 @@
 <template>
     <div class="accountfollow">
         <div class="accountfollow_btn" v-if="!isItMe">
-            <a-button :loading="loading" :label="label" @click.native="onClick" size="small" />
+            <a-button
+                :loading="loading"
+                tabindex="0"
+                :label="label"
+                @keyup.enter.space="onClick"
+                @click.native="onClick"
+                size="small"
+            />
         </div>
-        <div class="accountfollow_followers" @click="showFollowersList">
+        <div
+            class="accountfollow_followers"
+            tabindex="0"
+            @keyup.enter.space="showFollowersList"
+            @click="showFollowersList"
+        >
             <b>{{ followersCounter }}</b>
             {{ $t('accountfollow.followers') }}
         </div>
-        <div class="accountfollow_following" @click="showFollowingList">
+        <div
+            class="accountfollow_following"
+            tabindex="0"
+            @keyup.enter.space="showFollowingList"
+            @click="showFollowingList"
+        >
             <b>{{ followingCounter }}</b>
             {{ $t('accountfollow.following') }}
         </div>
@@ -28,12 +45,15 @@ import { getUserFollowers, getUserFollowing } from '@/modules/account/queries/su
 import { followUser, unFollowUser } from '@/modules/account/mutations/subscription.js';
 import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
+import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { toInt } from '@/utils/big-number.js';
 import { mapState } from 'vuex';
 export default {
     name: 'AccountFollow',
 
     components: { AButton, AccountFollowWindow },
+
+    mixins: [eventBusMixin],
 
     props: {
         userAddress: {
