@@ -52,8 +52,8 @@ export default {
         collections: {
             handler: async function(newValue) {
                 if (newValue && newValue.length && this.selected.length && typeof this.selected[0] === 'string') {
-                     let res;
-                    if(isArray(this.selected)) {
+                    let res;
+                    if (isArray(this.selected)) {
                         res = this.selected.map(item => {
                             return newValue.find(collection => collection.value === item);
                         });
