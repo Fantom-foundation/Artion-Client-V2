@@ -2,7 +2,7 @@
     <div class="nftauction">
         <a-details open disabled>
             <template #label>
-                <div class="nftdetail_details_wrap__ grid">
+                <div class="nftauction_label grid">
                     <template v-if="auctionHasStarted">
                         <template v-if="auctionHasFinished">
                             <div>{{ $t('nftauction.saleEnded') }}</div>
@@ -27,13 +27,12 @@
                     <template v-else>
                         <div>
                             {{ $t('nftauction.saleStarts') }}
-                            <span v-if="!showStartCountdown">{{ auctionStartsIn }}</span>
-                            ({{ auctionStartTime }})
+                            <span v-if="!showStartCountdown">{{ auctionStartsIn }} ({{ auctionStartTime }})</span>
+                            <template v-else>{{ auctionStartTime }}</template>
                         </div>
                         <f-countdown
                             v-if="showStartCountdown"
                             :date="auction.startTime"
-                            :css-classes="countdownCssClasses"
                             with-labels
                             use-two-digit-numbers
                             :show="getCountdownShow(auction.startTime)"
