@@ -91,7 +91,8 @@
 
     "page": {
         "explore": {
-            "title": "Browse NFT's"
+            "title": "Browse NFT's",
+            "filters": "Filters"
         },
         "account": {
             "title": "Your profile"
@@ -420,6 +421,8 @@
         "closed": "Closed",
         "expired": "Expired"
     },
+
+   
 
     "account": {
         "unnamed": "Unnamed",

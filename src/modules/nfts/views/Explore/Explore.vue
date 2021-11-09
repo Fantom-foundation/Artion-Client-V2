@@ -1,7 +1,16 @@
 <template>
-    <div class="explore">
-        <div class="explore_sidebar">
-            <div class="h3">Filters</div>
+    <div class="explore" :class="{ no_aside: isSideClose }">
+        <div class="explore_sidebar" :class="{ close: isSideClose }">
+            <div class="h3 explore_sidebar_wrap">
+                <button
+                    :aria-label="$t('account.filters')"
+                    :data-tooltip="$t('account.filters')"
+                    @click="isSideClose = !isSideClose"
+                >
+                    <span class="explore_sidebar_label">{{ $t('page.explore.filters') }}</span>
+                    <span class="explore_sidebar_icon"><app-iconset icon="arrowright" size="24px"/></span>
+                </button>
+            </div>
             <nft-filters v-model="filters" />
         </div>
         <div>
@@ -48,6 +57,7 @@ export default {
             filters: {},
             results: -1,
             labels: {},
+            isSideClose: false,
         };
     },
 

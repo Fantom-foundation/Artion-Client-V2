@@ -2,9 +2,11 @@
 @use "fantom-vue-components/src/assets/scss/settings/breakpoints";
 
 .explore {
+    --explore-border: 1px solid var(--f-color-grey-3, #dedede);
     .h3 {
-        padding-left: var(--f-spacer-4);
+       // padding-left: var(--f-spacer-4);
         max-height: 77px;
+        margin: 0;
     }
 
     &_nftlist_header {
@@ -25,11 +27,59 @@
     .nftfilterchips {
         padding: 0 var(--f-spacer-4) var(--f-spacer-4) var(--f-spacer-4);
     }
+
+    &_sidebar {
+        border-right: var(--explore-border);
+        button {
+			padding: 0;
+			border: none;
+			font: inherit;
+			color: inherit;
+			background-color: transparent;
+			cursor: pointer;
+		}
+
+		&_wrap {
+			button {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: var(--f-spacer-5) var(--f-spacer-4);
+				border: var(--account-border);
+				width: 100%;
+				&:hover {
+					svg {
+						color: inherit;
+					}
+				}
+			}
+		}
+
+		&_label {
+			display: flex;
+			align-items: center;
+			column-gap: var(--f-spacer-2);
+			font-weight: 700;
+		}
+		&_icon {  svg { color: var(--f-color-grey-4);transform: rotate(180deg) } }
+
+		&.close {
+			.nftfilters, .explore_sidebar_label { display: none; }
+			.explore_sidebar_icon { svg { transform: rotate(0) } }
+		}
+
+        .nftfilters .fdetails {
+            border-right: 0;
+        }
+    }
 }
 
 @include media.media-min(breakpoints.$breakpoint-md) {
     .explore {
         display: grid;
         grid-template-columns: 280px 1fr;
+        &.no_aside {
+			grid-template-columns: auto 1fr;
+		}
     }
 }

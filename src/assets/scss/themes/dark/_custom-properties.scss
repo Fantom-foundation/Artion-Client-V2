@@ -282,6 +282,10 @@
         --account-border: 1px solid var(--theme-dark-color-5);
     }
 
+    .explore {
+        --explore-border: 1px solid var(--theme-dark-color-5);
+    }
+
     /*
     @include buttons {
         --f-button-light-hover-background-color: var(--theme-dark-color-5);
