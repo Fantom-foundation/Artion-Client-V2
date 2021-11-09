@@ -50,7 +50,7 @@ export function SORT_BY_FILTERS() {
         },
         {
             value: 'price',
-            label: 'sort_by.most_expensive',
+            label: 'sort_by.highest_price',
             queryFilter: {
                 sortBy: 'PRICE',
                 sortDir: 'DESC',
@@ -58,7 +58,7 @@ export function SORT_BY_FILTERS() {
         },
         {
             value: 'cheapest',
-            label: 'sort_by.cheapest',
+            label: 'sort_by.lowest_price',
             queryFilter: {
                 sortBy: 'PRICE',
                 sortDir: 'ASC',

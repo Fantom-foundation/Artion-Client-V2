@@ -59,8 +59,8 @@
         "recently_listed": "Recently Listed",
         "recently_sold": "Recently Sold",
         "ending_soon": "Ending Soon",
-        "most_expensive": "Most expensive",
-        "cheapest": "Cheapest",
+        "highest_price": "Highest Price",
+        "lowest_price": "Lowest Price",
         "highest_last_sale": "Highest Last Sale",
         "mostly_viewed": "Mostly Viewed"
     },
