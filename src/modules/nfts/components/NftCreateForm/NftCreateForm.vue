@@ -11,31 +11,30 @@
         <div class="nftcreate_col">
             <div class="nftcreate_wrap">
                 <div class="nftcreate_panel">
-                    <a-dropdown-listbox :label="$t('nftcreate.collection')" class="collection_list" :data="collections">
+                    <f-form-input
+                        type="a-dropdown-listbox"
+                        name="collectionId"
+                        :label="$t('nftcreate.collection')"
+                        class="collection_list"
+                        :data="collections"
+                        :validator="collectionValidator"
+                        :error-message="$t('nftcreate.collectionErr')"
+                        required
+                    >
                         <template #button-label="{ item }">
-                            <div class="flex ali-center">
+                            <div class="flex ali-center gap-2">
                                 <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
                                 <span>{{ item.label }}</span>
-                                <f-form-input
-                                    type="text"
-                                    name="collectionId"
-                                    style="width:0;height:0;opacity: 0;"
-                                    :modelValue="item.value"
-                                    :validator="collectionValidator"
-                                    :error-message="$t('nftcreate.collectionErr')"
-                                    validate-on-change
-                                    validate-on-input
-                                    required
-                                />
                             </div>
                         </template>
                         <template #item="{ item }">
-                            <div class="flex ali-center">
+                            <div class="flex ali-center gap-2">
                                 <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
                                 <span>{{ item.label }}</span>
                             </div>
                         </template>
-                    </a-dropdown-listbox>
+                    </f-form-input>
+
                     <f-form-input :label="$t('nftcreate.name')" field-size="large" type="text" name="name" required />
                     <f-form-input
                         :label="$t('nftcreate.symbol')"
@@ -87,10 +86,13 @@
                     />
                 </div>
             </div>
+            <div v-if="fileError" class="pat-5 flex juc-center">
+                <f-message type="error" with-icon>{{ fileError }}</f-message>
+            </div>
             <div class="nftcreate_btn">
-                <a-button type="submit" size="large" :disabled="isDisabled" :loading="isLoading">{{
-                    $t('nftcreate.mint')
-                }}</a-button>
+                <a-button type="submit" size="large" :loading="isLoading">
+                    {{ $t('nftcreate.mint') }}
+                </a-button>
             </div>
             <div class="nftcreate_info">
                 <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm') }}</f-message>
@@ -100,7 +102,6 @@
     </f-form>
 </template>
 <script>
-import ADropdownListbox from '@/common/components/ADropdownListbox/ADropdownListbox.vue';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import FMessage from 'fantom-vue-components/src/components/FMessage/FMessage.vue';
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
@@ -121,22 +122,17 @@ import { estimateMintFeeGas } from '@/modules/nfts/queries/estimate-mint';
 export default {
     name: 'NftCreateForm',
     mixins: [eventBusMixin],
-    components: { AUploadArea, AButton, ADropdownListbox, FMessage, AppIconset, ASignTransaction },
+    components: { AUploadArea, AButton, FMessage, AppIconset, ASignTransaction },
     data() {
         return {
             values: {},
             collections: [],
-            collection: null,
+            collection: {},
             imageFile: null,
+            fileError: '',
             tx: {},
             isLoading: false,
         };
-    },
-
-    computed: {
-        isDisabled() {
-            return this.values.name === '' || !this.imageFile;
-        },
     },
 
     async created() {
@@ -173,6 +169,13 @@ export default {
 
         async onSubmit(_data) {
             console.log('onSubmit', _data);
+            if (!this.imageFile) {
+                this.fileError = this.$t('nftcreate.fileError');
+                return;
+            } else {
+                this.fileError = '';
+            }
+
             this.isLoading = true;
             const val = _data.values;
 
@@ -195,7 +198,7 @@ export default {
                 console.error('not signed');
                 notifications.add({
                     type: 'error',
-                    text: `You need to sign-in first`,
+                    text: this.$t('nftcreate.signInFirst'),
                 });
                 this.isLoading = false;
                 return;
@@ -219,7 +222,7 @@ export default {
                 console.error('uploadTokenData fail', err);
                 notifications.add({
                     type: 'error',
-                    text: `Sorry, something went wrong. Data of your token wasn't uploaded`,
+                    text: this.$t('nftcreate.wasntUploaded'),
                 });
                 this.isLoading = false;
                 return;
@@ -250,7 +253,7 @@ export default {
                     console.error('getMintedTokenId', e);
                     notifications.add({
                         type: 'error',
-                        text: `Sorry, something went wrong. The token was minted, but unable to get new token id.`,
+                        text: this.$t('nftcreate.noNewTokenId'),
                     });
                     this.isLoading = false;
                     return;
@@ -264,7 +267,7 @@ export default {
                         console.error('setUnlockableContent', e);
                         notifications.add({
                             type: 'error',
-                            text: `Sorry, something went wrong. The token was minted, but the unlockable content was not attached.`,
+                            text: this.$t('nftcreate.unlockableNotAttached'),
                         });
                         this.isLoading = false;
                         return;
@@ -273,7 +276,7 @@ export default {
 
                 notifications.add({
                     type: 'success',
-                    text: `The token was successfully created`,
+                    text: this.$t('nftcreate.success'),
                 });
                 this.$router.push({
                     name: 'nft-detail',

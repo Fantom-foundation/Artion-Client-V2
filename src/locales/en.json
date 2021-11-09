@@ -324,6 +324,12 @@
         "linkToIpPlaceholder": "Enter Link",
         "unlockContent": "Unlockable Content",
         "mint": "Mint",
+        "fileError": "Pick a file please",
+        "signInFirst": "You need to sign-in first",
+        "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded",
+        "noNewTokenId": "Sorry, something went wrong. The token was minted, but unable to get new token id.",
+        "unlockableNotAttached": "Sorry, something went wrong. The token was minted, but the unlockable content was not attached.",
+        "success": "The token was successfully created.",
         "messageFtm": "1 FTM are charged to create a new NFT."
     },
 
@@ -464,7 +470,7 @@
         "followers": "Followers",
         "following": "Following",
         "subscribed": "You successfully subscribed",
-        "unsubscribed":"You successfully cancel your subscription",
+        "unsubscribed": "You successfully cancel your subscription",
         "follows": "Follows",
         "followings": "Followings"
     },

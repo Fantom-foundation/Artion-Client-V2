@@ -1,5 +1,11 @@
 <template>
-    <f-dropdown-listbox v-bind="$attrs" button-class="inp inp-lg" class="adropdownlistbox" v-on="$listeners">
+    <f-dropdown-listbox
+        ref="dlistbox"
+        v-bind="$attrs"
+        button-class="inp inp-lg"
+        class="adropdownlistbox"
+        v-on="$listeners"
+    >
         <!-- copy slots -->
         <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
             <slot :name="name" v-bind="data"></slot>
@@ -24,6 +30,16 @@ export default {
     },
 
     inheritAttrs: false,
+
+    methods: {
+        /**
+         * @param {function} [validator]
+         * @return {Promise<null|*>}
+         */
+        async validate(validator) {
+            return this.$refs.dlistbox.validate(validator);
+        },
+    },
 };
 </script>
 
