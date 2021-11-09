@@ -116,8 +116,8 @@ import { checkSignIn } from '@/modules/account/auth';
 import { setUnlockableContent } from '@/modules/nfts/mutations/unlockables';
 import { toHex } from '@/utils/big-number';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
-import appConfig from '@/app.config';
 import { estimateMintFeeGas } from '@/modules/nfts/queries/estimate-mint';
+import { getCollectionImageUrl } from '@/utils/url.js';
 
 export default {
     name: 'NftCreateForm',
@@ -141,7 +141,7 @@ export default {
             return {
                 label: edge.node.name,
                 value: edge.node.contract,
-                img: appConfig.collectionImagesUrl + edge.node.contract + '/',
+                img: getCollectionImageUrl(edge.node.contract),
             };
         });
     },

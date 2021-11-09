@@ -13,6 +13,18 @@ export function getImageThumbUrl(imageThumbUrl) {
 }
 
 /**
+ * @param {string} contract
+ * @return {string}
+ */
+export function getCollectionImageUrl(contract) {
+    if (!contract) {
+        return '';
+    }
+
+    return `${artionFApolloClient.getCurrentHttpProviderOrigin()}/images/collection/${contract}/`;
+}
+
+/**
  * @param {string} hash
  * @return {string}
  */
