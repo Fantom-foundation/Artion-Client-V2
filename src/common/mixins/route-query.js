@@ -4,17 +4,26 @@
  * @param {string} propertyName Name of property defined in `data`. Property has to be of type Object.
  * @return {{watch: {[p: string]: {handler(*): void, immediate: boolean}, $route: {handler(*): void, immediate: boolean}}, created(): void}}
  */
-import { clone } from 'fantom-vue-components/src/utils';
+import { clone, isObject, isArray } from 'fantom-vue-components/src/utils';
+import { getCollection } from '@/modules/nfts/queries/collection.js';
 
 export function routeQueryMixin(propertyName) {
     return {
         watch: {
             $route: {
-                handler(value) {
+                async handler(value) {
                     if (!this.__ignoreRouteChange) {
                         this.__ignorePropertyChange = true;
+                        let query;
+                        let transformCollectionQuery = await this.transformCollectionQuery(value.query, this.filters);
+                        query = clone(value.query);
+                        if (isArray(transformCollectionQuery)) {
+                            query.collections = [...transformCollectionQuery];
+                        } else if (typeof transformCollectionQuery.collections === 'string') {
+                            query.collections = [transformCollectionQuery.collections];
+                        }
 
-                        this[propertyName] = { ...value.query };
+                        this[propertyName] = { ...query };
 
                         this.$nextTick(() => {
                             this.__ignorePropertyChange = false;
@@ -57,6 +66,43 @@ export function routeQueryMixin(propertyName) {
                 if (newRoute !== oldRoute) return true;
 
                 return false;
+            },
+
+            async transformCollectionQuery(newValue, oldValue) {
+                if (isArray(newValue.collections) && !isObject(newValue.collections[0])) {
+                    let res = Promise.all(
+                        newValue.collections.map(async newItem => {
+                            let item;
+                            if (oldValue.collections && isArray(oldValue.collections)) {
+                                item = oldValue.collections.find(oldItem => oldItem.value === newItem);
+                                if (item === undefined) {
+                                    let { name, contract } = await getCollection(newItem);
+                                    item = { label: name, value: contract };
+                                }
+                            } else {
+                                let { name, contract } = await getCollection(newItem);
+                                item = { label: name, value: contract };
+                            }
+                            return item;
+                        })
+                    );
+                    return await res;
+                } else if (typeof newValue.collections === 'string') {
+                    let item;
+                    if (oldValue.collections && isArray(oldValue.collections)) {
+                        item = oldValue.collections.find(oldItem => oldItem.value === newValue.collections);
+                        if (item === undefined) {
+                            let { name, contract } = await getCollection(newValue.collections);
+                            item = { label: name, value: contract };
+                        }
+                    } else {
+                        let { name, contract } = await getCollection(newValue.collections);
+                        item = { label: name, value: contract };
+                    }
+                    return [item];
+                }
+
+                return newValue;
             },
         },
     };

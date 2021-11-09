@@ -20,7 +20,6 @@
 import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue';
 import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
 import { collectionsData } from '@/common/constants/dummy/collections-data.js';
-import { isArray } from 'fantom-vue-components/src/utils';
 
 export default {
     name: 'CollectionsFilter',
@@ -45,25 +44,6 @@ export default {
             default() {
                 return [];
             },
-        },
-    },
-
-    watch: {
-        collections: {
-            handler: async function(newValue) {
-                if (newValue && newValue.length && this.selected.length && typeof this.selected[0] === 'string') {
-                    let res;
-                    if (isArray(this.selected)) {
-                        res = this.selected.map(item => {
-                            return newValue.find(collection => collection.value === item);
-                        });
-                    } else {
-                        res = [newValue.find(collection => collection.value === this.selected)];
-                    }
-                    this.$emit('change', res);
-                }
-            },
-            immediate: true,
         },
     },
 
