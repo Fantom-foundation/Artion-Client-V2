@@ -1,11 +1,16 @@
 <template>
     <f-listbox
-        :data="collections"
+        :data="items"
+        :per-page="perPage"
+        :total-items="totalItems"
         :value="typeof selected === 'string' ? [selected] : selected"
-        @component-change="onListboxItemSelected"
         :aria-label="$t('collections')"
+        strategy="remote"
         multiselect
         prepend-selected-items
+        searchable
+        @component-change="onListboxItemSelected"
+        @page-change="_onListboxPageChange"
         class="collectionsfilter"
     >
         <template v-slot="{ item }">
@@ -20,11 +25,16 @@
 import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue';
 import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
 import { collectionsData } from '@/common/constants/dummy/collections-data.js';
+import { dataPageMixin } from '@/common/mixins/data-page.js';
+import { getCollections } from '@/modules/nfts/queries/collections.js';
+import { getCollectionImageUrl } from '@/utils/url.js';
 
 export default {
     name: 'CollectionsFilter',
 
     components: { FListbox, FImage },
+
+    mixins: [dataPageMixin],
 
     model: {
         prop: 'selected',
@@ -47,7 +57,31 @@ export default {
         },
     },
 
+    mounted() {
+        this.loadCollections();
+    },
+
     methods: {
+        async loadPage(pagination = { first: this.perPage }) {
+            return await getCollections(pagination);
+        },
+
+        async loadCollections() {
+            await this._loadPage();
+        },
+
+        _getItemsFromData(data) {
+            console.log('_getItemsFromData??', data.edges.length, this.totalItems);
+            // return data.edges.map(edge => edge.node);
+            return data.edges.map(edge => {
+                return {
+                    label: edge.node.name,
+                    value: edge.node.contract,
+                    img: getCollectionImageUrl(edge.node.contract),
+                };
+            });
+        },
+
         onListboxItemSelected(items) {
             this.$emit(
                 'change',
