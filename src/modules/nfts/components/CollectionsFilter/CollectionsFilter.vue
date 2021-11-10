@@ -5,10 +5,12 @@
         :total-items="totalItems"
         :value="typeof selected === 'string' ? [selected] : selected"
         :aria-label="$t('collections')"
+        searchable
         strategy="remote"
         multiselect
+        :throttle-input-interval="300"
         prepend-selected-items
-        searchable
+        field-size="large"
         @component-change="onListboxItemSelected"
         @page-change="_onListboxPageChange"
         class="collectionsfilter"
@@ -71,7 +73,6 @@ export default {
         },
 
         _getItemsFromData(data) {
-            console.log('_getItemsFromData??', data.edges.length, this.totalItems);
             // return data.edges.map(edge => edge.node);
             return data.edges.map(edge => {
                 return {

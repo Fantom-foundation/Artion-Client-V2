@@ -142,11 +142,8 @@ export const dataPageMixin = {
         async _onListboxPageChange(pagination) {
             this.loading = true;
 
-            console.log('_onListboxPageChange', JSON.stringify(pagination));
-            console.log('this.pageInfo', JSON.stringify(this.pageInfo));
-
             const data = await this._loadPage({
-                pagination: this._getPaginationVariables(pagination),
+                pagination: { ...this._getPaginationVariables(pagination), search: pagination.filterText || '' },
                 dontSetItems: true,
             });
 
