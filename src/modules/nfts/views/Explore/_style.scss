@@ -2,6 +2,7 @@
 @use "fantom-vue-components/src/assets/scss/settings/breakpoints";
 
 .explore {
+	 --explore-sidebar-background: #fff;
     --explore-border: 1px solid var(--f-color-grey-3, #dedede);
     .h3 {
        // padding-left: var(--f-spacer-4);
@@ -72,6 +73,38 @@
             border-right: 0;
         }
     }
+
+	 &_filterButton {
+		bottom: var(--f-spacer-4);
+		display: none;
+		-webkit-box-pack: center;
+		justify-content: center;
+		position: fixed;
+		width: 100%;
+		z-index: 4;
+		&_counter {
+			background-color: #fff;
+			color: var(--f-color-primary-5);
+			width: 30px;
+			height: 30px;
+			line-height: 30px;
+			border-radius: var(--f-border-radius-4);
+			text-align: center;
+			align-items: center;
+			margin-left: var(--f-spacer-2);
+		}
+		.fbutton {
+			align-items: center;
+			background-color: var(--f-color-primary-5);
+			border-radius: var(--f-border-radius-7);
+			box-shadow: rgb(0 0 0 / 25%) 0px 1px 20px;
+			display: flex;
+			font-weight: 600;
+			height: 50px;
+			justify-content: center;
+			width: 292px;
+		}
+	}
 }
 
 @include media.media-min(breakpoints.$breakpoint-md) {
@@ -82,4 +115,29 @@
 			grid-template-columns: auto 1fr;
 		}
     }
+}
+
+
+@include media.media-max(600px) {
+	.explore {
+
+		&_filterButton {
+			display: flex;
+		}
+
+		&_sidebar {
+			position: fixed;
+			left: 0px;
+			bottom: 0px;
+			width: 100%;
+			z-index: 70;
+			height: calc(100% - 78px);
+			background: var(--explore-sidebar-background);
+			overflow: auto;
+			filter: drop-shadow(rgba(0, 0, 0, 0.25) 0px 4px 4px);
+			transition: left 0.3s ease 0s, opacity 0.3s ease 0s;
+			opacity: 1;
+			&.close { left: -100%; opacity: 0; }
+		}
+	}
 }

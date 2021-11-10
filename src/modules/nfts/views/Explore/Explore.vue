@@ -3,8 +3,8 @@
         <div class="explore_sidebar" :class="{ close: isSideClose }">
             <div class="h3 explore_sidebar_wrap">
                 <button
-                    :aria-label="$t('account.filters')"
-                    :data-tooltip="$t('account.filters')"
+                    :aria-label="$t('page.explore.filters')"
+                    :data-tooltip="$t('page.explore.filters')"
                     @click="isSideClose = !isSideClose"
                 >
                     <span class="explore_sidebar_label">{{ $t('page.explore.filters') }}</span>
@@ -33,6 +33,12 @@
                 @loading="onNftMainListLoading"
             />
         </div>
+        <div class="explore_filterButton">
+            <f-button @click.native="isSideClose = !isSideClose">
+                {{ $t('page.explore.filters') }}
+                <span v-if="filterNumber" class="explore_filterButton_counter">{{ filterNumber }}</span>
+            </f-button>
+        </div>
     </div>
 </template>
 
@@ -43,6 +49,7 @@ import { routeQueryMixin } from '@/common/mixins/route-query.js';
 import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters.vue';
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 import NftMainList from '@/modules/nfts/components/NftMainList/NftMainList.vue';
+import { isArray } from 'fantom-vue-components/src/utils';
 import { mapState } from 'vuex';
 
 export default {
@@ -61,10 +68,25 @@ export default {
         };
     },
 
+    created() {
+        if (document.body.clientWidth <= 600) this.isSideClose = true;
+    },
+
     computed: {
         ...mapState('app', {
             density: 'nftsDensity',
         }),
+
+        filterNumber() {
+            let counter = 0;
+            let values = Object.values(this.filters);
+            values.forEach(item => {
+                if (isArray(item) && item.length) counter += item.length;
+                else counter += 1;
+            });
+
+            return counter;
+        },
     },
 
     methods: {
