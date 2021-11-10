@@ -1,7 +1,16 @@
 <template>
-    <div class="explore">
-        <div class="explore_sidebar">
-            <div class="h3">Filters</div>
+    <div class="explore" :class="{ no_aside: isSideClose }">
+        <div class="explore_sidebar" :class="{ close: isSideClose }">
+            <div class="h3 explore_sidebar_wrap">
+                <button
+                    :aria-label="$t('page.explore.filters')"
+                    :data-tooltip="$t('page.explore.filters')"
+                    @click="isSideClose = !isSideClose"
+                >
+                    <span class="explore_sidebar_label">{{ $t('page.explore.filters') }}</span>
+                    <span class="explore_sidebar_icon"><app-iconset icon="arrowright" size="24px"/></span>
+                </button>
+            </div>
             <nft-filters v-model="filters" />
         </div>
         <div>
@@ -24,6 +33,12 @@
                 @loading="onNftMainListLoading"
             />
         </div>
+        <div class="explore_filterButton">
+            <f-button @click.native="isSideClose = !isSideClose">
+                {{ $t('page.explore.filters') }}
+                <span v-if="filterNumber" class="explore_filterButton_counter">{{ filterNumber }}</span>
+            </f-button>
+        </div>
     </div>
 </template>
 
@@ -34,6 +49,7 @@ import { routeQueryMixin } from '@/common/mixins/route-query.js';
 import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters.vue';
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 import NftMainList from '@/modules/nfts/components/NftMainList/NftMainList.vue';
+import { isArray } from 'fantom-vue-components/src/utils';
 import { mapState } from 'vuex';
 
 export default {
@@ -48,13 +64,29 @@ export default {
             filters: {},
             results: -1,
             labels: {},
+            isSideClose: false,
         };
+    },
+
+    created() {
+        if (document.body.clientWidth <= 600) this.isSideClose = true;
     },
 
     computed: {
         ...mapState('app', {
             density: 'nftsDensity',
         }),
+
+        filterNumber() {
+            let counter = 0;
+            let values = Object.values(this.filters);
+            values.forEach(item => {
+                if (isArray(item) && item.length) counter += item.length;
+                else counter += 1;
+            });
+
+            return counter;
+        },
     },
 
     methods: {
