@@ -54,6 +54,9 @@
     &_property {
         font-size: var(--f-font-size-3);
         &_item {
+            display: flex;
+            align-items: flex-end;
+            column-gap: var(--f-spacer-2);
             span {
                 font-weight: bold;
             }
@@ -84,6 +87,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        a {
+            max-width: 100px;
+        }
     }
 
     &_product {

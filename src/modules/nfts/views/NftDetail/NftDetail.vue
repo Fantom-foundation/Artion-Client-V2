@@ -128,86 +128,7 @@
             </div>
 
             <!-- TO DO -->
-            <a-details-group hidden class="nftdetail_info" rounded>
-                <a-details>
-                    <template #label>
-                        <div class="nftdetail_details_wrap">
-                            <app-iconset icon="property" /> {{ $t('nftdetail.properties') }}
-                        </div>
-                    </template>
-                    <template>
-                        <div class="nftdetail_property">
-                            <div class="nftdetail_property_item">
-                                <span>{{ $t('nftdetail.symbol') }}:</span> ARTY
-                            </div>
-                            <div class="nftdetail_property_item">
-                                <span>{{ $t('nftdetail.royalty') }}:</span> 0.01%
-                            </div>
-                            <div class="nftdetail_property_item">
-                                <span>{{ $t('nftdetail.recipient') }}:</span>
-                                <a target="_blank" href="#">0xfbB8...0a80</a>
-                            </div>
-                            <div class="nftdetail_property_item">
-                                <span>{{ $t('nftdetail.ipRights') }}:</span> {{ $t('nftdetail.notAvailable') }}
-                            </div>
-                            <div class="nftdetail_property_item">
-                                <span>{{ $t('nftdetail.collection') }}:</span> {{ $t('nftdetail.nftCollection') }}
-                            </div>
-                        </div>
-                    </template>
-                </a-details>
-                <a-details class="title_wrap">
-                    <template #label>
-                        <div class="nftdetail_details_wrap">
-                            <app-iconset icon="about" /> {{ $t('nftdetail.about') }} Rarity Names
-                        </div>
-                    </template>
-                    <template>
-                        <div class="nftdetail_about">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias neque, perspiciatis animi eum
-                            consequuntur temporibus nulla, iusto minus cumque suscipit architecto quasi! Iusto, expedita
-                            quos nostrum dolores adipisci deleniti fugit!
-                        </div>
-                        <div class="nftdetail_socialBlock">
-                            <a href="#" class="nftdetail_socialLink" target="_blank">
-                                <app-iconset icon="web" />
-                            </a>
-                            <a href="#" class="nftdetail_socialLink" target="_blank">
-                                <app-iconset icon="twitter" />
-                            </a>
-                            <a href="#" class="nftdetail_socialLink" target="_blank">
-                                <app-iconset icon="telegram" />
-                            </a>
-                            <a href="#" class="nftdetail_socialLink" target="_blank">
-                                <app-iconset icon="discord" />
-                            </a>
-                        </div>
-                    </template>
-                </a-details>
-                <a-details>
-                    <template #label>
-                        <div class="nftdetail_details_wrap">
-                            <app-iconset icon="chain" />{{ $t('nftdetail.chainInfo') }}
-                        </div>
-                    </template>
-                    <template>
-                        <div class="nftdetail_chainBlock">
-                            <div class="nftdetail_chainLine">
-                                <span>{{ $t('nftdetail.collection') }}</span>
-                                <a href="#" target="_blank">0x1DaD...79B9</a>
-                            </div>
-                            <div class="nftdetail_chainLine">
-                                <span>{{ $t('nftdetail.network') }}</span>
-                                <span>{{ $t('nftdetail.fantomOpera') }}</span>
-                            </div>
-                            <div class="nftdetail_chainLine">
-                                <span>{{ $t('nftdetail.chainId') }}</span>
-                                <span>250</span>
-                            </div>
-                        </div>
-                    </template>
-                </a-details>
-            </a-details-group>
+            <nft-detail-info :info="tokenInfo" />
         </div>
 
         <!-- TO DO -->
@@ -233,10 +154,10 @@
 </template>
 
 <script>
-import ADetailsGroup from '@/common/components/ADetailsGroup/ADetailsGroup';
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 import ADetails from '@/common/components/ADetails/ADetails';
 import AShareButton from '@/common/components/AShareButton/AShareButton';
+import NftDetailInfo from '@/modules/nfts/components/NftDetailInfo/NftDetailInfo.vue';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
 import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
 import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
@@ -274,6 +195,7 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftDetailInfo,
         NftDetailCollection,
         NftUpdateAuctionButton,
         NftCancelAuctionButton,
@@ -286,7 +208,6 @@ export default {
         NftAuction,
         ASignTransaction,
         ADetails,
-        ADetailsGroup,
         AppIconset,
         AShareButton,
         NftListingsGrid,
@@ -309,6 +230,7 @@ export default {
             tokenOwner: {},
             tx: {},
             likedNftIds: [],
+            tokenInfo: {},
         };
     },
 
@@ -368,6 +290,7 @@ export default {
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
 
+            this.tokenInfo = { name: this.token.name, contract: this.token.contract, desc: this.token.description };
             if (this.auction.contract) {
                 setTimeout(() => {
                     this.loadAuction();
