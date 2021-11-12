@@ -3,6 +3,7 @@ import WC from '@walletconnect/client';
 import WalletConnectQRCodeModal from '@walletconnect/qrcode-modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import Web3 from 'web3';
+import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 
 const OPERA_CHAIN_ID = parseInt(appConfig.mainnet.chainId, 16);
 
@@ -78,15 +79,26 @@ export class WalletConnect {
      * @return {Promise<*|string>} Tx hash
      */
     async signTransaction(tx, address) {
+        let hash = '';
+
         if (this._walletConnect) {
             if (address) {
                 tx.from = address;
             }
 
-            return await this._walletConnect.sendTransaction(tx);
+            const msgId = this.showNotification();
+
+            try {
+                hash = await this._walletConnect.sendTransaction(tx);
+
+                this.hideNotification(msgId);
+            } catch (error) {
+                this.hideNotification(msgId);
+                throw new Error(error);
+            }
         }
 
-        return '';
+        return hash;
     }
 
     /**
@@ -95,11 +107,22 @@ export class WalletConnect {
      * @return {Promise<string>}
      */
     async personalSign(message, account) {
+        let msg = '';
+
         if (this._walletConnect) {
-            return await this._walletConnect.signPersonalMessage([message, account]);
+            const msgId = this.showNotification();
+
+            try {
+                msg = await this._walletConnect.signPersonalMessage([message, account]);
+
+                this.hideNotification(msgId);
+            } catch (error) {
+                this.hideNotification(msgId);
+                throw new Error(error);
+            }
         }
 
-        return '';
+        return msg;
     }
 
     /**
@@ -157,8 +180,6 @@ export class WalletConnect {
         this._setAccount(accounts[0]);
         this._setChainId(chainId);
 
-        console.log('connectint WalletConnect', accounts, chainId);
-
         return accounts;
     }
 
@@ -176,6 +197,18 @@ export class WalletConnect {
      */
     _setAccount(account = '') {
         this.selectedAddress = account;
+    }
+
+    showNotification() {
+        return notifications.add({
+            type: 'info',
+            text: 'Confirm on phone',
+            hideAfter: 10000000,
+        });
+    }
+
+    hideNotification(msgId = '') {
+        notifications.hide(msgId);
     }
 
     /**

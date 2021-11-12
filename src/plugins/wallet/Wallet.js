@@ -231,7 +231,7 @@ export class Wallet {
 
     deleteBearerToken(account) {
         if (account) {
-            store.commit(`wallet/${DELETE_BT}`, account);
+            store.commit(`wallet/${DELETE_BT}`, account.toLowerCase());
         }
     }
 
