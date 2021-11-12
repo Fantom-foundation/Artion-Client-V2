@@ -76,9 +76,6 @@ export class Metamask {
                         this._wallet.onAccountsChange(accounts[0]);
                     }
                 });
-                provider.on('disconnect', () => {
-                    window.location.reload();
-                });
             }
         }
 

@@ -21,5 +21,10 @@ export function WALLETS() {
             label: 'Coinbase Wallet',
             icon: 'coinbase',
         },
+        {
+            id: 'walletconnect',
+            label: 'WalletConnect',
+            icon: 'walletconnect',
+        },
     ];
 }

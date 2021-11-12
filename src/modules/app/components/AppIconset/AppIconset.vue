@@ -57,6 +57,7 @@ import IconPlay from '@/assets/vue-icons/IconPlay.vue';
 import IconPause from '@/assets/vue-icons/IconPause.vue';
 import IconNft from '@/assets/vue-icons/IconNft.vue';
 import IconMedium from '@/assets/vue-icons/IconMedium.vue';
+import IconWalletconnect from '@/assets/vue-icons/IconWalletconnect.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -117,6 +118,7 @@ export default {
         IconPause,
         IconNft,
         IconMedium,
+        IconWalletconnect,
     },
 
     props: {

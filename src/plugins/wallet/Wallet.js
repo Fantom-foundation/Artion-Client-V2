@@ -14,11 +14,13 @@ import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 import { Metamask } from '@/plugins/wallet/metamask/Metamask.js';
 import { Coinbase } from '@/plugins/wallet/coinbase/Coinbase.js';
+import { WalletConnect } from '@/plugins/wallet/walletconnect/WalletConnect.js';
 import { clone, defer } from 'fantom-vue-components/src/utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { fantomApolloClient } from '@/plugins/apollo/apollo-provider.js';
 import { delay } from 'fantom-vue-components/src/utils/function.js';
 import { toBigNumber, toHex } from '@/utils/big-number.js';
+import { compareAddresses } from '@/utils/address.js';
 
 // import Web3 from 'web3';
 // import store from '@/store';
@@ -29,6 +31,7 @@ export let wallet = null;
 
 implementsWalletInterface(Metamask);
 implementsWalletInterface(Coinbase);
+implementsWalletInterface(WalletConnect);
 
 /**
  *
@@ -50,6 +53,7 @@ export class Wallet {
         this.wallet = null;
         /** Keys are wallet names, values are wallet instances */
         this._wallets = {};
+        this._logoutInProgress = false;
         this.account = '';
         this.chainId = 0;
         this.connected = false;
@@ -109,7 +113,13 @@ export class Wallet {
         return this.wallet ? walletName === this.wallet.name() : false;
     }
 
-    logout() {
+    async logout(dontDisconnectWallet = false) {
+        if (this._logoutInProgress) {
+            return;
+        }
+
+        this._logoutInProgress = true;
+
         this.deleteBearerToken(this.account);
         this.user = null;
 
@@ -117,17 +127,20 @@ export class Wallet {
         this.account = '';
         this.chainId = 0;
 
-        if (this.wallet) {
-            this.wallet.disconnect();
+        if (this.wallet && !dontDisconnectWallet) {
+            await this.wallet.disconnect();
             this.wallet = null;
         }
 
         defer(() => {
-            console.log('logout');
             this._setChainId(0);
             this._setAccount('');
             this._setWalletName('');
             this._setUserName('');
+
+            this._logoutInProgress = false;
+
+            window.location.reload();
         });
     }
 
@@ -148,7 +161,7 @@ export class Wallet {
     }
 
     /**
-     * @param {'metamask'|'coinbase'} walletName
+     * @param {'metamask'|'coinbase'|'walletconnect'} walletName
      * @param {boolean} [pick]
      * @return {Promise<boolean>}
      */
@@ -204,16 +217,16 @@ export class Wallet {
     setBearerToken(bt) {
         if (this.account && bt) {
             store.commit(`wallet/${SET_BT}`, {
-                account: this.account,
+                account: this.account.toLowerCase(),
                 bt,
             });
         }
     }
 
     getBearerToken() {
-        const account = this.account || store.state.wallet.account;
+        const account = this.account || store.state.wallet.account || '';
 
-        return store.state.wallet.bt[account] || '';
+        return store.state.wallet.bt[account.toLowerCase()] || '';
     }
 
     deleteBearerToken(account) {
@@ -223,7 +236,7 @@ export class Wallet {
     }
 
     setUser(user) {
-        if (this.account && user && this.account === user.address) {
+        if (this.account && user && compareAddresses(this.account, user.address)) {
             this.user = user;
 
             this._setUserName(user.username || '');
@@ -249,6 +262,7 @@ export class Wallet {
                 variables: {
                     address: address,
                 },
+                fetchPolicy: 'network-only',
             },
             'account.txCount',
             fantomApolloClient
@@ -369,10 +383,14 @@ export class Wallet {
     _setAccount(account) {
         this.account = account;
         store.commit(`wallet/${SET_ACCOUNT}`, account);
+
+        if (!account) {
+            this.logout();
+        }
     }
 
     /**
-     * @param {'metamask'|'coinbase'|''} walletName
+     * @param {'metamask'|'coinbase'|'walletconnect'|''} walletName
      * @private
      */
     _setWalletName(walletName) {
@@ -396,8 +414,8 @@ export class Wallet {
     }
 
     /**
-     * @param {'metamask'|'coinbase'} walletName
-     * @return {null|Metamask|Coinbase}
+     * @param {'metamask'|'coinbase'|'walletconnect'} walletName
+     * @return {null|Metamask|Coinbase|WalletConnect}
      * @private
      */
     _createWalletInstance(walletName) {
@@ -405,6 +423,8 @@ export class Wallet {
             return new Metamask(this);
         } else if (walletName === 'coinbase') {
             return new Coinbase(this);
+        } else if (walletName === 'walletconnect') {
+            return new WalletConnect(this);
         }
 
         return null;

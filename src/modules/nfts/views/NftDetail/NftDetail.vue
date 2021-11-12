@@ -188,6 +188,7 @@ import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionBu
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { isExpired } from '@/utils/date.js';
 import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/NftDetailCollection.vue';
+import { compareAddresses } from '@/utils/address.js';
 
 export default {
     name: 'NftDetail',
@@ -316,7 +317,7 @@ export default {
             this.userCreatedToken = await this.checkUserCreatedToken(this.token);
 
             if ($wallet.connected && $wallet.account) {
-                this.userOwnsToken = this.tokenOwner.address === $wallet.account;
+                this.userOwnsToken = compareAddresses(this.tokenOwner.address, $wallet.account);
             } else {
                 this.userOwnsToken = false;
             }

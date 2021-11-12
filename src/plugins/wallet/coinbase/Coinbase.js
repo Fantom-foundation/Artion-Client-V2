@@ -25,7 +25,7 @@ export class Coinbase {
     }
 
     async init() {
-        if (!this._initialized && !appConfig.isChromeExtension) {
+        if (!this._initialized) {
             this._walletLink = new WalletLink({
                 appName: appConfig.name,
                 appLogoUrl:
@@ -114,6 +114,8 @@ export class Coinbase {
     }
 
     async disconnect() {
+        alert('wer?');
+
         await this._walletLink.disconnect();
 
         this._web3.eth.defaultAccount = null;
@@ -125,12 +127,6 @@ export class Coinbase {
     }
 
     async connect() {
-        /*
-        setTimeout(() => {
-            this.adjustPopup();
-        }, 100);
-        */
-
         const accounts = await this._provider.enable();
 
         this._web3.eth.defaultAccount = accounts[0];
@@ -139,39 +135,5 @@ export class Coinbase {
         // console.log('accounts: ', accounts, this._provider);
 
         return accounts;
-    }
-
-    /**
-     * @return {Promise<[]>}
-     */
-    async getAccounts() {
-        let accounts = [];
-
-        if (this._provider) {
-            try {
-                accounts = await this._provider.request({ method: 'eth_accounts' });
-            } catch (_error) {
-                console.error(_error);
-            }
-        }
-
-        return accounts;
-    }
-
-    async requestAccounts() {
-        if (this._provider) {
-            try {
-                return await this._provider.request({ method: 'eth_requestAccounts' });
-            } catch (_error) {
-                // userRejectedRequest error
-                if (_error.code === 4001) {
-                    // EIP-1193 userRejectedRequest error
-                    // If this happens, the user rejected the connection request.
-                    console.log('Please connect to MetaMask.');
-                } else {
-                    console.error(_error);
-                }
-            }
-        }
     }
 }
