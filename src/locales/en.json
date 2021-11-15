@@ -155,7 +155,8 @@
         "offerFor": "Offer for",
         "price": "Price",
         "minBid": "Min Bid",
-        "topBid": "Top Bid"
+        "topBid": "Top Bid",
+        "left": "left"
     },
 
     "nftMakeOfferForm": {
