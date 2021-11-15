@@ -100,7 +100,7 @@ let appConfig = {
     // if `true`, every route will be redirected to 'under maintenance' page
     underMaintenance: false,
     // use hash in address
-    routerHashMode: true,
+    routerHashMode: false,
     // Opera chain id
     chainId: '0xfa',
     // JSON-RPC endpointAdd
