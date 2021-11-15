@@ -39,9 +39,9 @@ export async function getCollections(pagination = { first: 5000 }, search = null
             }
         `,
         variables: {
-            ...pagination,
             search,
             mintableBy,
+            ...pagination,
         },
         // fetchPolicy: 'network-only',
     };
