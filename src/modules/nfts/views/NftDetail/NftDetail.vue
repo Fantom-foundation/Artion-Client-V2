@@ -3,7 +3,7 @@
         <div class="nftdetail_main">
             <div class="nftdetail_media">
                 <div class="nftdetail_img">
-                    <f-image :src="getImageThumbUrl(token.imageThumb)" :alt="token.name" />
+                    <f-image :src="token.image" :alt="token.name" />
                 </div>
             </div>
             <div class="nftdetail_product">
