@@ -22,7 +22,7 @@ export function PAY_TOKENS() {
         {
             address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
             label: 'wFTM',
-            img: 'img/WFTM.png',
+            img: '/img/WFTM.png',
             price: 1,
             priceDecimals: 18,
             decimals: 18,
