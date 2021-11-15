@@ -3,8 +3,11 @@
         <a-search-field
             field-size="large"
             :aria-label="$t('appsearchbar.label')"
-            :placeholder="$t('appsearchbar.placeholder')"
+            :placeholder="$t('appsearchbar.placeholderTmp')"
             no-label
+            v-model="searchText"
+            @keyup.n.native.enter.prevent="onEnterKey"
+            @delete-text="onDeleteText"
         />
     </div>
 </template>
@@ -16,6 +19,37 @@ export default {
     components: { ASearchField },
 
     name: 'AppSearchBar',
+
+    data() {
+        return {
+            searchText: '',
+        };
+    },
+
+    watch: {
+        $route: {
+            handler(value) {
+                console.log('$route', value.query);
+                this.searchText = value.query.search || '';
+            },
+            immediate: true,
+        },
+    },
+
+    methods: {
+        onEnterKey() {
+            const searchText = this.searchText.trim();
+
+            if (searchText) {
+                console.log('eee');
+                this.$router.push({ name: 'explore', query: { search: searchText } });
+            }
+        },
+
+        onDeleteText() {
+            this.$router.push({ name: 'explore', query: { ...(this.$route.query || {}), search: undefined } });
+        },
+    },
 };
 </script>
 

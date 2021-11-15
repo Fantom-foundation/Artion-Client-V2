@@ -139,6 +139,7 @@
 
     "appsearchbar": {
         "label": "Search bar",
+        "placeholderTmp": "Search items",
         "placeholder": "Search items, collections and accounts"
     },
 

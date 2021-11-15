@@ -168,7 +168,7 @@ export default {
          * @param {Array} data
          */
         onAFilterChipsChange(data) {
-            this.dFilters = this.getFiltersFromChips(data);
+            this.dFilters = { ...this.getFiltersFromChips(data), search: this.dFilters.search || undefined };
         },
     },
 };

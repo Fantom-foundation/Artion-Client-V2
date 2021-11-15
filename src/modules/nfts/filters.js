@@ -86,6 +86,10 @@ export function filtersToQueryFilters(filters, defaultFilters) {
         }
     });
 
+    if (filters.search) {
+        qFilters.filter.search = filters.search;
+    }
+
     if (defaultFilters && JSON.stringify(qFilters) === strQFilters) {
         return defaultFilters;
     }
