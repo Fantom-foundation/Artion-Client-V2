@@ -8,6 +8,8 @@ import { bFromTokenValue } from '@/utils/big-number.js';
  * @property {string} label
  * @property {string} img
  * @property {number} price
+ * @property {number} priceDecimals
+ * @property {number} decimals
  * @property {string} value Code
  * @property {boolean} _update Update price
  */
@@ -27,24 +29,36 @@ export function PAY_TOKENS() {
             value: 'wftm',
             _update: true,
         },
-        /*{
+        {
             address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
             label: 'DAI',
             img: '',
             price: 1,
             priceDecimals: 18,
             decimals: 18,
-            value: 'day',
+            value: 'dai',
+            _update: true,
         },
         {
             address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
             label: 'USDC',
             img: '',
             price: 1,
-            priceDecimals: 18,
-            decimals: 18,
+            priceDecimals: 6,
+            decimals: 6,
             value: 'usdc',
-        },*/
+            _update: true,
+        },
+        {
+            address: '0x049d68029688eabf473097a2fc38ef61633a3c7a',
+            label: 'fUSDT',
+            img: '',
+            price: 1,
+            priceDecimals: 6,
+            decimals: 6,
+            value: 'fusdt',
+            _update: true,
+        },
     ];
 }
 
