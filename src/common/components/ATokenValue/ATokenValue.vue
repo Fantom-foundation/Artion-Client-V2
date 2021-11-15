@@ -138,7 +138,11 @@ export default {
 
     methods: {
         getPayTokenByAddress(address) {
-            return payTokens.find(token => token.address === address);
+            let payToken = payTokens.find(token => token.address === address);
+            if (!payToken) {
+                console.error('unable to display unknown payToken', address);
+            }
+            return payToken;
         },
     },
 };
