@@ -178,7 +178,7 @@
         "nonZeroPrice": "@:nonZeroPrice",
         "nonZeroQuantity": "Quantity must be non zero value",
         "badDate": "Bad date",
-        "sellSuccess": "You have successfully sell an item"
+        "sellSuccess": "You have successfully listed this NFT"
     },
 
     "nftupdatelistingform": {
