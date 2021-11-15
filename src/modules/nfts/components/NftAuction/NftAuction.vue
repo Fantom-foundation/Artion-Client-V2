@@ -14,7 +14,7 @@
                                 <template v-else>{{ auctionEndTime }}</template>
                             </div>
                             <f-countdown
-                                v-if="showEndCountdown"
+                                v-if="showEndCountdown && auction.endTime"
                                 :date="auction.endTime"
                                 :css-classes="countdownCssClasses"
                                 with-labels
@@ -31,7 +31,7 @@
                             <template v-else>{{ auctionStartTime }}</template>
                         </div>
                         <f-countdown
-                            v-if="showStartCountdown"
+                            v-if="showStartCountdown && auction.startTime"
                             :date="auction.startTime"
                             with-labels
                             use-two-digit-numbers
