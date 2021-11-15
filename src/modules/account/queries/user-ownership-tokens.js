@@ -74,3 +74,32 @@ export async function getUserOwnershipTokens(address = '', pagination = {}, coll
 
     return gqlQuery(query, 'user.ownerships');
 }
+
+export async function getUserOwnershipTokensCount(address = '', pagination = {}, collection = null) {
+    const query = {
+        query: gql`
+            query GetUserOwnershipTokens(
+                $collection: Address
+                $address: Address!
+                $first: Int
+                $after: Cursor
+                $last: Int
+                $before: Cursor
+            ) {
+                user(address: $address) {
+                    ownerships(collection: $collection, first: $first, after: $after, last: $last, before: $before) {
+                        totalCount
+                    }
+                }
+            }
+        `,
+        variables: {
+            address,
+            collection,
+            ...pagination,
+        },
+        fetchPolicy: 'network-only',
+    };
+
+    return gqlQuery(query, 'user.ownerships');
+}

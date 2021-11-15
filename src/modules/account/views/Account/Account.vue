@@ -92,9 +92,9 @@ import { getUser } from '@/modules/account/queries/user.js';
 import AccountNavigation from '@/modules/account/components/AccountNavigation/AccountNavigation.vue';
 import { defer } from 'fantom-vue-components/src/utils';
 import { getUserTokenCounters } from '@/modules/account/queries/user-token-counters.js';
-import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-tokens.js';
-import { getUserActivity } from '@/modules/account/queries/user-activity.js';
-import { getUserOffers } from '@/modules/account/queries/user-tokens-offers.js';
+import { getUserFavoriteTokensCount } from '@/modules/account/queries/user-favorite-tokens.js';
+import { getUserActivityCount } from '@/modules/account/queries/user-activity.js';
+import { getUserOffersCount } from '@/modules/account/queries/user-tokens-offers.js';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 import { signIn, getBearerToken } from '@/modules/account/auth.js';
 import { uploadUserFile } from '@/utils/upload.js';
@@ -293,14 +293,12 @@ export default {
          */
         async updateFavoriteCounters() {
             const { accountNavigation } = this.$refs;
-            const favoriteCounters = await getUserFavoriteTokens(this.userAddress);
+            const favoriteCounters = await getUserFavoriteTokensCount(this.userAddress);
             if (!favoriteCounters) {
                 return;
             }
 
-            if (favoriteCounters.edges.length) {
-                accountNavigation.updateCounter('account-favorited', toInt(favoriteCounters.totalCount));
-            }
+            accountNavigation.updateCounter('account-favorited', toInt(favoriteCounters.totalCount));
         },
 
         /**
@@ -308,14 +306,12 @@ export default {
          */
         async updateActivityCounters() {
             const { accountNavigation } = this.$refs;
-            const activityCounters = await getUserActivity(this.userAddress);
+            const activityCounters = await getUserActivityCount(this.userAddress);
             if (!activityCounters) {
                 return;
             }
 
-            if (activityCounters.edges.length) {
-                accountNavigation.updateCounter('account-activity', toInt(activityCounters.totalCount));
-            }
+            accountNavigation.updateCounter('account-activity', toInt(activityCounters.totalCount));
         },
 
         /**
@@ -323,14 +319,12 @@ export default {
          */
         async updateOffersCounters() {
             const { accountNavigation } = this.$refs;
-            const offerCounters = await getUserOffers(this.userAddress);
+            const offerCounters = await getUserOffersCount(this.userAddress);
             if (!offerCounters) {
                 return;
             }
 
-            if (offerCounters.edges.length) {
-                accountNavigation.updateCounter('account-offers', toInt(offerCounters.totalCount));
-            }
+            accountNavigation.updateCounter('account-offers', toInt(offerCounters.totalCount));
         },
 
         /**
@@ -343,9 +337,7 @@ export default {
                 return;
             }
 
-            if (favoriteCounters.edges.length) {
-                accountNavigation.updateCounter('account-single-items', toInt(favoriteCounters.totalCount));
-            }
+            accountNavigation.updateCounter('account-single-items', toInt(favoriteCounters.totalCount));
         },
 
         /**

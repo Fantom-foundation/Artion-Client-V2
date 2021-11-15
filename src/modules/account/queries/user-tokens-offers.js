@@ -46,3 +46,24 @@ export async function getUserOffers(address = '', pagination = {}) {
 
     return gqlQuery(query, 'user.myOffers');
 }
+
+export async function getUserOffersCount(address = '', pagination = {}) {
+    const query = {
+        query: gql`
+            query GetUserOffers($address: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
+                user(address: $address) {
+                    myOffers(first: $first, after: $after, last: $last, before: $before) {
+                        totalCount
+                    }
+                }
+            }
+        `,
+        variables: {
+            address,
+            ...pagination,
+        },
+        fetchPolicy: 'network-only',
+    };
+
+    return gqlQuery(query, 'user.myOffers');
+}
