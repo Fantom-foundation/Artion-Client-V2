@@ -8,7 +8,9 @@
                     @click="isSideClose = !isSideClose"
                 >
                     <span class="explore_sidebar_label">{{ $t('page.explore.filters') }}</span>
-                    <span class="explore_sidebar_icon"><app-iconset icon="filter-arrow" rotate="180deg" size="24px"/></span>
+                    <span class="explore_sidebar_icon">
+                        <app-iconset icon="filter-arrow" rotate="180deg" size="24px" />
+                    </span>
                 </button>
             </div>
             <nft-filters v-model="filters" />
