@@ -77,10 +77,12 @@ export default {
         ) {
             const tokens = await getUserFavoriteTokens(this.userAddress, pagination, filterSort);
             if (tokens.edges) {
-                tokens.edges = tokens.edges.map(item => {
-                    item.node = { ...item.node.token };
-                    return item;
-                });
+                tokens.edges = tokens.edges
+                    .filter(item => item.node.token)
+                    .map(item => {
+                        item.node = { ...item.node.token };
+                        return item;
+                    });
                 return tokens;
             }
         },
