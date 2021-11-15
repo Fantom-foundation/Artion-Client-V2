@@ -136,7 +136,9 @@ export default {
     },
 
     async created() {
-        const collections = await getCollections();
+        let mintableBy = this.$wallet.account || '0x0000000000000000000000000000000000000000';
+        console.log('loading collections mintable by', mintableBy);
+        const collections = await getCollections({ first: 5000 }, null, mintableBy);
         this.collections = collections.edges.map(edge => {
             return {
                 label: edge.node.name,
