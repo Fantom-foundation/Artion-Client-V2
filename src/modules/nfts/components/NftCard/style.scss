@@ -28,7 +28,7 @@
 		padding-bottom: var(--f-spacer-2);
 		gap: var(--f-spacer-1);
 		color: var(--f-color-grey-5);
-        font-size: var(--f-font-size-4);
+        font-size: var(--f-font-size-3);
 
 		button {
 			padding: 0;
@@ -100,9 +100,9 @@
 		margin-right: 16px;
 
 		& .nftcard_label {
-			display: flex;
+			/*display: flex;
 			align-items: center;
-			gap: var(--f-spacer-1);
+			gap: var(--f-spacer-1);*/
 			svg {
 				width: 1em;
 			}
@@ -129,7 +129,7 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		font-size: var(--f-font-size-4);
+		font-size: var(--f-font-size-3);
 	}
 
 	&_price {
@@ -139,7 +139,7 @@
 		align-items: flex-end;
 
 		& .nftcard_crypto {
-			font-size: var(--f-font-size-4);
+			font-size: var(--f-font-size-3);
 		}
 	}
 

@@ -22,16 +22,29 @@
             <div class="nftcard_content">
                 <div class="nftcard_top">
                     <div class="nftcard_itemName">
-                        <!--                        <div class="nftcard_label">Artion <app-iconset icon="check" /></div>-->
+                        <div class="nftcard_label">
+                            {{ nftData.collection.name }}
+                            <!--                            <app-iconset icon="check" />-->
+                        </div>
                         <div class="nftcard_name">{{ nftData.name }}</div>
                     </div>
-                    <!--                    <div class="nftcard_price">
-                        <div class="nftcard_label">Auction</div>
-                        <div class="nftcard_crypto">
-                            <f-image :src="nftData.cryptoLogo" :alt="nftData.cryptoName" />
-                            {{ nftData.crypto }}
+                    <div v-if="nftData.listingPrice || nftData.offeredPrice" class="nftcard_price">
+                        <div class="nftcard_label">Price</div>
+                        <div v-if="nftData.listingPrice" class="nftcard_crypto">
+                            <a-token-value
+                                :token="nftData.listingPrice.payToken"
+                                :value="nftData.listingPrice.amount"
+                                no-symbol
+                            />
                         </div>
-                    </div>-->
+                        <div v-if="nftData.offeredPrice" class="nftcard_crypto">
+                            <a-token-value
+                                :token="nftData.offeredPrice.payToken"
+                                :value="nftData.offeredPrice.amount"
+                                no-symbol
+                            />
+                        </div>
+                    </div>
                 </div>
                 <!--                <div class="nftcard_bottom">
                     <div class="nftcard_time">
@@ -58,10 +71,12 @@ import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { toInt } from '@/utils/big-number.js';
+import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 
 export default {
     // components: { AppIconset },
     name: 'NftCard',
+    components: { ATokenValue },
     mixins: [eventBusMixin],
     props: {
         nftData: {
