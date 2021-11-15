@@ -137,7 +137,7 @@
         </div>
 
         <div class="nftdetail_collection">
-            <a-details>
+            <a-details strategy="create">
                 <template #label>
                     <div class="nftdetail_details_wrap">
                         <app-iconset icon="collection" /> {{ $t('nftdetail.fromCollection') }}

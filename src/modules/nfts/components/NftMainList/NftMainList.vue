@@ -56,9 +56,9 @@ export default {
         },
     },
 
-    created() {
+    /*created() {
         this.loadTokens();
-    },
+    },*/
 
     methods: {
         async loadPage(

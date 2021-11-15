@@ -1,12 +1,22 @@
 <template>
     <a-details-group class="nftfilters">
-        <a-details :label="$t('status')" :open="'status' in filters" id="test_nftfilters_status">
+        <a-details :label="$t('status')" :open="'status' in filters" strategy="render" id="test_nftfilters_status">
             <status-filter v-model="dFilters.status" />
         </a-details>
-        <a-details :label="$t('collections')" :open="'collections' in filters" id="test_nftfilters_collections">
+        <a-details
+            :label="$t('collections')"
+            :open="'collections' in filters"
+            strategy="render"
+            id="test_nftfilters_collections"
+        >
             <collections-filter :collections="collections" v-model="dFilters.collections" />
         </a-details>
-        <a-details :label="$t('categories')" :open="'category' in filters" id="test_nftfilters_categories">
+        <a-details
+            :label="$t('categories')"
+            :open="'category' in filters"
+            strategy="render"
+            id="test_nftfilters_categories"
+        >
             <categories-filter :categories="categories" v-model="dFilters.category" />
         </a-details>
     </a-details-group>

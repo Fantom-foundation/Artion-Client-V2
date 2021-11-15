@@ -27,7 +27,7 @@ export async function getCollections(pagination = { first: 5000 }) {
         variables: {
             ...pagination,
         },
-        fetchPolicy: 'network-only',
+        // fetchPolicy: 'network-only',
     };
 
     return gqlQuery(query, 'collections');
