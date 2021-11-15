@@ -33,6 +33,30 @@ export async function getUserOwnershipTokens(address = '', pagination = {}, coll
                                     image
                                     imageThumb
                                     likes
+                                    hasBids
+                                    collection {
+                                        contract
+                                        name
+                                    }
+                                    listingPrice {
+                                        amount
+                                        payToken
+                                    }
+                                    auctionedPrice {
+                                        amount
+                                        payToken
+                                    }
+                                    auctionReservePrice {
+                                        amount
+                                        payToken
+                                    }
+                                    offeredPrice {
+                                        amount
+                                        payToken
+                                    }
+                                    auction {
+                                        endTime
+                                    }
                                 }
                             }
                         }

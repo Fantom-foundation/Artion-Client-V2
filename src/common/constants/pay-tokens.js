@@ -27,7 +27,7 @@ export function PAY_TOKENS() {
             value: 'wftm',
             _update: true,
         },
-        {
+        /*{
             address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
             label: 'DAI',
             img: '',
@@ -44,7 +44,7 @@ export function PAY_TOKENS() {
             priceDecimals: 18,
             decimals: 18,
             value: 'usdc',
-        },
+        },*/
     ];
 }
 

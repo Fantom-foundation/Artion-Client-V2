@@ -22,16 +22,58 @@
             <div class="nftcard_content">
                 <div class="nftcard_top">
                     <div class="nftcard_itemName">
-                        <!--                        <div class="nftcard_label">Artion <app-iconset icon="check" /></div>-->
-                        <div class="nftcard_name">{{ nftData.name }}</div>
-                    </div>
-                    <!--                    <div class="nftcard_price">
-                        <div class="nftcard_label">Auction</div>
-                        <div class="nftcard_crypto">
-                            <f-image :src="nftData.cryptoLogo" :alt="nftData.cryptoName" />
-                            {{ nftData.crypto }}
+                        <div v-if="nftData.collection" class="nftcard_label" :data-tooltip="nftData.collection.name">
+                            {{ nftData.collection.name }}
+                            <!--                            <app-iconset icon="check" />-->
                         </div>
-                    </div>-->
+                        <div class="nftcard_name" :data-tooltip="nftData.name">{{ nftData.name }}</div>
+                    </div>
+                    <div v-if="nftData.auctionReservePrice || nftData.auctionedPrice" class="nftcard_price">
+                        <div class="nftcard_label">
+                            {{ !nftData.auctionedPrice ? $t('nftcard.minBid') : $t('nftcard.topBid') }}
+                        </div>
+                        <div v-if="nftData.auctionReservePrice && !nftData.auctionedPrice">
+                            <a-token-value
+                                :token="nftData.auctionReservePrice.payToken"
+                                :value="nftData.auctionReservePrice.amount"
+                                no-symbol
+                            />
+                        </div>
+                        <div v-if="nftData.auctionedPrice">
+                            <a-token-value
+                                :token="nftData.auctionedPrice.payToken"
+                                :value="nftData.auctionedPrice.amount"
+                                no-symbol
+                            />
+                        </div>
+                        <div v-if="auctionEndTime" class="nftcard_timeleft">{{ auctionEndTime }} left</div>
+                        <!--                        <div v-if="nftData.auctionedPrice" class="nftcard_offerprice">
+                            <span class="nftcard_offerprice_label">ddd</span>
+                            <a-token-value
+                                :token="nftData.auctionedPrice.payToken"
+                                :value="nftData.auctionedPrice.amount"
+                                no-symbol
+                            />
+                        </div>-->
+                    </div>
+                    <div v-else-if="nftData.listingPrice || nftData.offeredPrice" class="nftcard_price">
+                        <div class="nftcard_label">{{ $t('nftcard.price') }}</div>
+                        <div v-if="nftData.listingPrice">
+                            <a-token-value
+                                :token="nftData.listingPrice.payToken"
+                                :value="nftData.listingPrice.amount"
+                                no-symbol
+                            />
+                        </div>
+                        <div v-if="nftData.offeredPrice" class="nftcard_offerprice">
+                            <span class="nftcard_offerprice_label">{{ $t('nftcard.offerFor') }}</span>
+                            <a-token-value
+                                :token="nftData.offeredPrice.payToken"
+                                :value="nftData.offeredPrice.amount"
+                                no-symbol
+                            />
+                        </div>
+                    </div>
                 </div>
                 <!--                <div class="nftcard_bottom">
                     <div class="nftcard_time">
@@ -58,10 +100,13 @@ import { getBearerToken, signIn } from '@/modules/account/auth.js';
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { toInt } from '@/utils/big-number.js';
+import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
+import dayjs from 'dayjs';
 
 export default {
     // components: { AppIconset },
     name: 'NftCard',
+    components: { ATokenValue },
     mixins: [eventBusMixin],
     props: {
         nftData: {
@@ -78,6 +123,14 @@ export default {
             liked: null,
             showLikes: false,
         };
+    },
+
+    computed: {
+        auctionEndTime() {
+            const { auction } = this.nftData;
+
+            return auction ? dayjs(auction.endTime).fromNow(true) : '';
+        },
     },
 
     watch: {

@@ -126,7 +126,7 @@ export default {
             handler(value) {
                 if (value) {
                     if (typeof value === 'string') {
-                        this.dToken = this.getPayTokenByAddress(value);
+                        this.dToken = this.getPayTokenByAddress(value) || {};
                     } else {
                         this.dToken = value;
                     }
