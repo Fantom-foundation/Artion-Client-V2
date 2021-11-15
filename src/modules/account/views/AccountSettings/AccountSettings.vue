@@ -25,11 +25,11 @@ export default {
         return {
             navigation: [
                 { label: this.$t('accountsettings.profile'), route: 'account-settings-profile', icon: 'user' },
-                {
+                /*{
                     label: this.$t('accountsettings.notifications'),
                     route: 'account-settings-notifications',
                     icon: 'notify',
-                },
+                },*/
                 // { label: this.$t('accountsettings.offers'), icon: 'tag' },
                 { label: this.$t('accountsettings.appearance'), route: 'account-settings-appearance', icon: 'tag' },
             ],

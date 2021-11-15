@@ -149,12 +149,12 @@ export default {
                     icon: 'like',
                     counter: 0,
                 },
-                {
+                /*{
                     routeName: 'account-hidden',
                     label: this.$t('account.hidden'),
                     icon: 'eyeslash',
                     counter: 0,
-                },
+                },*/
                 {
                     routeName: 'account-activity',
                     label: this.$t('account.activity'),
@@ -167,12 +167,12 @@ export default {
                     icon: 'tag',
                     counter: 0,
                 },
-                {
+                /*{
                     routeName: 'account-my-offers',
                     label: this.$t('account.myOffers'),
                     icon: 'tag',
                     counter: 0,
-                },
+                },*/
             ],
         };
     },

@@ -85,7 +85,7 @@
     "walletMenu": {
         "profile": "@:profile",
         "settings": "Settings",
-        "collection": "Register Existing Collecton",
+        "collection": "Register Existing Collection",
         "logout": "Logout"
     },
 
