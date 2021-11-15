@@ -2,7 +2,10 @@
     <div class="nftdetail container">
         <div class="nftdetail_main">
             <div class="nftdetail_media">
-                <div class="nftdetail_img">
+                <div v-if="token.imageMimetype && token.imageMimetype.startsWith('video/')" class="nftdetail_video">
+                    <a-video :src="token.image" :poster="getImageThumbUrl(token.imageThumb)" loop />
+                </div>
+                <div v-else class="nftdetail_img">
                     <f-image :src="token.image" :alt="token.name" />
                 </div>
             </div>
@@ -189,6 +192,7 @@ import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { isExpired } from '@/utils/date.js';
 import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/NftDetailCollection.vue';
 import { compareAddresses } from '@/utils/address.js';
+import AVideo from '@/common/components/AVideo/AVideo';
 
 export default {
     name: 'NftDetail',
@@ -215,6 +219,7 @@ export default {
         NftDirectOffersGrid,
         NftTradeHistoryGrid,
         NftMoreFromCollectionList,
+        AVideo,
     },
 
     data() {

@@ -12,6 +12,7 @@ export async function getToken(contract = '', id = '') {
                     description
                     image
                     imageThumb
+                    imageMimetype
                     created
                     hasListing
                     hasOffer
