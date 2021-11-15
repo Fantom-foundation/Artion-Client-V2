@@ -151,7 +151,11 @@
     },
 
     "nftcard": {
-        "favorite": "Favorite"
+        "favorite": "Favorite",
+        "offerFor": "Offer for",
+        "price": "Price",
+        "minBid": "Min Bid",
+        "topBid": "Top Bid"
     },
 
     "nftMakeOfferForm": {
@@ -421,8 +425,6 @@
         "closed": "Closed",
         "expired": "Expired"
     },
-
-   
 
     "account": {
         "unnamed": "Unnamed",
