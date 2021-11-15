@@ -18,6 +18,7 @@ import { mapState } from 'vuex';
 // const SOURCES_BASE_URL = 'https://sandbox.pbro.zenithies.dev/M0qoc7s3';
 // const SOURCES_BASE_URL = 'pg';
 
+/*
 const TMP_TOKENS = [
     {
         contract: '0x475631dbd805f46be62d8f87a4f07ca8afaf7e45',
@@ -66,7 +67,7 @@ const TMP_TOKENS = [
         // image: `${SOURCES_BASE_URL}/monza.mp4`,
         // startingPrice: '0x1b1ae4d6e2ef500000',
     },
-    /*{
+    /!*{
         contract: '0x61af4d29f672e27a097291f72fc571304bc93521',
         tokenId: '0x4',
         name: "Pierre Gasly<br>'In The Making'",
@@ -79,8 +80,9 @@ const TMP_TOKENS = [
         // tmp data
         videoSrc: `${SOURCES_BASE_URL}/limited_blue.mp4`,
         price: '0x56bc75e2d63100000',
-    },*/
+    },*!/
 ];
+*/
 
 export const CONTRACTS_FILTER = [
     // '0x61af4d29f672e27a097291f72fc571304bc93521',
@@ -130,15 +132,9 @@ export default {
         },
 
         async loadTokens() {
-            console.log(TMP_TOKENS);
+            const data = await getUserOwnershipTokens(this.walletAddress, { first: 200 }, CONTRACTS_FILTER[0]);
 
-            const data = await getUserOwnershipTokens(this.walletAddress, { first: 200 });
-            const tokens = data.edges.map(token => token.node.token);
-
-            console.log(tokens);
-
-            return tokens.filter(token => CONTRACTS_FILTER.includes(token.contract));
-            // return [];
+            return data.edges.map(token => token.node.token);
         },
     },
 };

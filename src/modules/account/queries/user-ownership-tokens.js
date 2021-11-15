@@ -1,12 +1,19 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 
-export async function getUserOwnershipTokens(address = '', pagination = {}) {
+export async function getUserOwnershipTokens(address = '', pagination = {}, collection = null) {
     const query = {
         query: gql`
-            query GetUserOwnershipTokens($address: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
+            query GetUserOwnershipTokens(
+                $collection: Address
+                $address: Address!
+                $first: Int
+                $after: Cursor
+                $last: Int
+                $before: Cursor
+            ) {
                 user(address: $address) {
-                    ownerships(first: $first, after: $after, last: $last, before: $before) {
+                    ownerships(collection: $collection, first: $first, after: $after, last: $last, before: $before) {
                         totalCount
                         pageInfo {
                             startCursor
@@ -35,6 +42,7 @@ export async function getUserOwnershipTokens(address = '', pagination = {}) {
         `,
         variables: {
             address,
+            collection,
             ...pagination,
         },
         fetchPolicy: 'network-only',

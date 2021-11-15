@@ -72,10 +72,10 @@ export default {
 
     methods: {
         async loadPage(
-            pagination = { first: this.perPage },
-            filterSort = filtersToQueryFilters(this.filters, getDefaultFilters())
+            pagination = { first: this.perPage }
+            // filterSort = filtersToQueryFilters(this.filters, getDefaultFilters())
         ) {
-            const tokens = await getUserOwnershipTokens(this.userAddress, pagination, filterSort);
+            const tokens = await getUserOwnershipTokens(this.userAddress, pagination);
             if (tokens.edges.length) {
                 tokens.edges = tokens.edges.map(item => {
                     item.node = { ...item.node.token };
