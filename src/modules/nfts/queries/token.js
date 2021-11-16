@@ -24,6 +24,10 @@ export async function getToken(contract = '', id = '') {
                     lastBid
                     likes
                     views
+                    collection {
+                        contract
+                        name
+                    }
                 }
             }
         `,

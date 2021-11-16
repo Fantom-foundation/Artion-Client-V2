@@ -11,7 +11,7 @@
             </div>
             <div class="nftdetail_product">
                 <div class="nftdetail_infoWrap">
-                    <nft-detail-collection :contract="token.contract" />
+                    <nft-detail-collection :collection="token.collection" />
 
                     <div class="nftdetail_name">
                         <h1>

@@ -9,44 +9,16 @@
 </template>
 
 <script>
-import { getCollection } from '@/modules/nfts/queries/collection.js';
-
 export default {
     name: 'NftDetailCollection',
 
     props: {
-        contract: {
-            type: String,
-            default: '',
-            required: true,
-        },
-    },
-
-    data() {
-        return {
-            /** @type {Collection} */
-            collection: {},
-        };
-    },
-
-    watch: {
-        contract: {
-            handler(value) {
-                if (value) {
-                    this.loadCollection(value);
-                }
+        /** @type {Collection} */
+        collection: {
+            type: Object,
+            default() {
+                return {};
             },
-            immediate: true,
-        },
-    },
-
-    methods: {
-        /**
-         * @param {string} contract
-         * @return {Promise<void>}
-         */
-        async loadCollection(contract) {
-            this.collection = (await getCollection(contract)) || {};
         },
     },
 };
