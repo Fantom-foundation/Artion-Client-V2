@@ -16,7 +16,7 @@
                     <div class="nftdetail_name">
                         <h1>
                             <a-placeholder block :content-loaded="!!token.tokenId" replacement-text="token name">
-                                {{ token.name }}
+                                {{ token.name }} <small class="nftdetail_tokenid">#{{ toInt(token.tokenId) }}</small>
                             </a-placeholder>
                         </h1>
                     </div>

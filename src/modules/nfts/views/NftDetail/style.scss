@@ -228,6 +228,10 @@
             }
         }
     }
+
+    &_tokenid {
+        color: var(--nftdetail-text-color);
+    }
 }
 
 @include media.media-max(1076px) {
