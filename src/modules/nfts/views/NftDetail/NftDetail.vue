@@ -135,7 +135,7 @@
         </div>
 
         <!-- TO DO -->
-        <div hidden class="nftdetail_filter">
+        <div class="nftdetail_filter">
             <nft-trade-history-grid />
         </div>
 
