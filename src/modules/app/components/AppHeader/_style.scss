@@ -1,6 +1,10 @@
 @use "fantom-vue-components/src/assets/scss/tools/media";
 @use "@/assets/scss/variables";
 
+:root {
+    --appheader-height: 81px;
+}
+
 .appheader {
     --appheader-background: #fff;
     --appheader-border-bottom: 1px solid var(--f-color-grey-3);
@@ -8,6 +12,7 @@
     position: sticky;
     top: 0;
     width: 100%;
+    height: var(--appheader-height);
 
     display: flex;
     flex-direction: column;
