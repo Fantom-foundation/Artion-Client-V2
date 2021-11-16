@@ -6,7 +6,7 @@
             :placeholder="$t('appsearchbar.placeholderTmp')"
             no-label
             v-model="searchText"
-            @keyup.n.native.enter.prevent="onEnterKey"
+            @keyup.native.enter.prevent="onEnterKey"
             @delete-text="onDeleteText"
         />
     </div>
@@ -29,7 +29,6 @@ export default {
     watch: {
         $route: {
             handler(value) {
-                console.log('$route', value.query);
                 this.searchText = value.query.search || '';
             },
             immediate: true,
@@ -41,7 +40,6 @@ export default {
             const searchText = this.searchText.trim();
 
             if (searchText) {
-                console.log('eee');
                 this.$router.push({ name: 'explore', query: { search: searchText } });
             }
         },

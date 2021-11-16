@@ -10,13 +10,15 @@
         </template>
 
         <template #icon>
-            <app-iconset icon="close" size="14px" />
+            <app-iconset v-if="!loading" icon="close" size="14px" />
+            <span v-else><f-dots-loader size="7px"/></span>
         </template>
     </f-search-field>
 </template>
 
 <script>
 import FSearchField from 'fantom-vue-components/src/components/FSearchField/FSearchField.vue';
+import FDotsLoader from 'fantom-vue-components/src/components/FDotsLoader/FDotsLoader.vue';
 
 /**
  * FSearchField wrapper
@@ -24,7 +26,14 @@ import FSearchField from 'fantom-vue-components/src/components/FSearchField/FSea
 export default {
     name: 'ASearchField',
 
-    components: { FSearchField },
+    components: { FSearchField, FDotsLoader },
+
+    props: {
+        loading: {
+            type: Boolean,
+            default: false,
+        },
+    },
 };
 </script>
 

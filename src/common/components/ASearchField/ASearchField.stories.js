@@ -10,7 +10,17 @@ export const Default = () => ({
     //language=HTML
     template: `
         <div>
-            <a-search-field />
+            <a-search-field field-size="large" />
+        </div>
+    `,
+});
+
+export const Loading = () => ({
+    components: { ASearchField },
+    //language=HTML
+    template: `
+        <div>
+            <a-search-field loading field-size="large" />
         </div>
     `,
 });
