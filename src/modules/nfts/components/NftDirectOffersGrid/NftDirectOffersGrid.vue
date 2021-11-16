@@ -55,7 +55,6 @@
 <script>
 import FDataGrid from 'fantom-vue-components/src/components/FDataGrid/FDataGrid.vue';
 import { getTokenOffers } from '@/modules/nfts/queries/token-offers.js';
-import dayjs from 'dayjs';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import AAddress from '@/common/components/AAddress/AAddress.vue';
@@ -68,6 +67,7 @@ import contracts from '@/utils/artion-contracts-utils.js';
 import { isExpired } from '@/utils/date.js';
 import { i18n } from '@/plugins/vue-i18n.js';
 import { objectEquals } from 'fantom-vue-components/src/utils';
+import { datetimeFormatter } from '@/utils/formatters.js';
 
 export default {
     name: 'NftDirectOffersGrid',
@@ -110,8 +110,9 @@ export default {
                     name: 'deadline',
                     label: this.$t('nftDirectOffersGrid.expires'),
                     formatter(value) {
-                        return dayjs(value).format('DD.MM.YYYY HH:mm');
+                        return datetimeFormatter(value);
                     },
+                    width: '150px',
                 },
                 {
                     name: 'closed',
