@@ -136,8 +136,14 @@
     }
 }
 
-.no_aside .explore_sidebar_cont {
-    overflow: visible;
+.no_aside .explore_sidebar {
+    &_cont {
+        overflow: visible;
+    }
+
+    &_wrap {
+        border-bottom: none;
+    }
 }
 
 @include media.media-min(breakpoints.$breakpoint-md) {
