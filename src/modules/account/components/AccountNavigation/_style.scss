@@ -17,7 +17,16 @@
         position: relative;
     }
 
+    &_counter {
+        font-size: var(--f-font-size-2);
+        background: var(--f-color-grey-2);
+        padding: var(--f-spacer-1) var(--f-spacer-2);
+        border-radius: var(--f-border-radius-rounded);
+    }
+
     @include linkTools.links() {
+        position: relative;
+        top: 1px;
         display: flex;
         color: var(--accountnavigation-link-color);
         align-items: center;
@@ -32,12 +41,14 @@
             bottom: 0%;
             content: '';
             display: block;
-            height: 4px;
+            height: 1px;
             left: 0px;
             position: absolute;
             width: 100%;
+            /*
             border-top-left-radius: var(--f-border-radius-2);
             border-top-right-radius: var(--f-border-radius-2);
+            */
         }
 
         &:hover,

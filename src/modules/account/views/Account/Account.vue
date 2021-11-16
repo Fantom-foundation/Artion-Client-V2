@@ -134,19 +134,19 @@ export default {
                 {
                     routeName: 'account-single-items',
                     label: this.$t('account.collected'),
-                    icon: 'solid1',
+                    // icon: 'solid1',
                     counter: 0,
                 },
                 {
                     routeName: 'account-created',
                     label: this.$t('account.created'),
-                    icon: 'paint',
+                    // icon: 'paint',
                     counter: 0,
                 },
                 {
                     routeName: 'account-favorited',
                     label: this.$t('account.favorited'),
-                    icon: 'like',
+                    // icon: 'like',
                     counter: 0,
                 },
                 /*{
@@ -158,13 +158,13 @@ export default {
                 {
                     routeName: 'account-activity',
                     label: this.$t('account.activity'),
-                    icon: 'history',
+                    // icon: 'history',
                     counter: 0,
                 },
                 {
                     routeName: 'account-offers',
                     label: this.$t('account.offers'),
-                    icon: 'tag',
+                    // icon: 'tag',
                     counter: 0,
                 },
                 /*{

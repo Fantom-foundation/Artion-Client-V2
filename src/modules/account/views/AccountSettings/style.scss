@@ -6,7 +6,7 @@
 	display: flex;
 	&_sidebar {
 		padding: 0 var(--f-spacer-2);
-		border-right: 1px solid var(--accountsettings-sidebar-border-color); 
+		border-right: 1px solid var(--accountsettings-sidebar-border-color);
 		min-width: 250px;
 		width: 340px;
 	}
@@ -20,7 +20,7 @@
 	}
 
 	.fnavigation > ul > li.fnavigationnode {
-		border-radius: 12px;
+		//border-radius: 12px;
 		overflow: hidden;
 		.fnavigationnode_item {
 			&:hover,
