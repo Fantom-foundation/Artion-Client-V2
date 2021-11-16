@@ -23,7 +23,7 @@
                     </div> -->
                     <div class="nftdetail_property_item">
                         <span>{{ $t('nftdetail.collection') }}:</span>
-                        <nft-detail-collection :contract="info.contract" />
+                        <nft-detail-collection :collection="info.collection" />
                     </div>
                 </div>
             </template>

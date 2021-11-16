@@ -296,7 +296,12 @@ export default {
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
 
-            this.tokenInfo = { name: this.token.name, contract: this.token.contract, desc: this.token.description };
+            this.tokenInfo = {
+                name: this.token.name,
+                contract: this.token.contract,
+                desc: this.token.description,
+                collection: { ...this.token.collection },
+            };
             if (this.auction.contract) {
                 setTimeout(() => {
                     this.loadAuction();
@@ -304,9 +309,6 @@ export default {
             } else {
                 await this.loadAuction();
             }
-
-            console.log('token: ', this.token);
-            console.log('auction: ', JSON.stringify(this.auction));
 
             this.onWalletAddressChange();
             this.isUserFavorite(this.walletAddress);
