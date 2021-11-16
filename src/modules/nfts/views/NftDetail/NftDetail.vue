@@ -16,7 +16,7 @@
                     <div class="nftdetail_name">
                         <h1>
                             <a-placeholder block :content-loaded="!!token.tokenId" replacement-text="token name">
-                                #{{ toInt(token.tokenId) }} {{ token.name }}
+                                {{ token.name }}
                             </a-placeholder>
                         </h1>
                     </div>
@@ -131,7 +131,7 @@
             </div>
 
             <!-- TO DO -->
-            <nft-detail-info :info="tokenInfo" />
+            <nft-detail-info :info="token" />
         </div>
 
         <!-- TO DO -->
@@ -236,7 +236,6 @@ export default {
             tokenOwner: {},
             tx: {},
             likedNftIds: [],
-            tokenInfo: {},
         };
     },
 
@@ -296,12 +295,6 @@ export default {
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
 
-            this.tokenInfo = {
-                name: this.token.name,
-                contract: this.token.contract,
-                desc: this.token.description,
-                collection: { ...this.token.collection },
-            };
             if (this.auction.contract) {
                 setTimeout(() => {
                     this.loadAuction();

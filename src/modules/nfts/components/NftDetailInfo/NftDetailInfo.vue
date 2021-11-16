@@ -8,9 +8,10 @@
             </template>
             <template>
                 <div class="nftdetail_property">
-                    <!-- <div class="nftdetail_property_item">
-                        <span>{{ $t('nftdetail.symbol') }}:</span> ARTY
+                    <div class="nftdetail_property_item">
+                        <span>{{ $t('nftdetail.symbol') }}:</span> {{ info.symbol }}
                     </div>
+                    <!--
                     <div class="nftdetail_property_item">
                         <span>{{ $t('nftdetail.royalty') }}:</span> 0.01%
                     </div>
@@ -18,9 +19,12 @@
                         <span>{{ $t('nftdetail.recipient') }}:</span>
                         <a target="_blank" href="#">0xfbB8...0a80</a>
                     </div>
+                    -->
                     <div class="nftdetail_property_item">
-                        <span>{{ $t('nftdetail.ipRights') }}:</span> {{ $t('nftdetail.notAvailable') }}
-                    </div> -->
+                        <span>{{ $t('nftdetail.ipRights') }}:</span>
+                        <a v-if="info.ipRights" :href="info.ipRights">{{ info.ipRights }}</a>
+                        <span v-else>{{ $t('nftdetail.notAvailable') }}</span>
+                    </div>
                     <div class="nftdetail_property_item">
                         <span>{{ $t('nftdetail.collection') }}:</span>
                         <nft-detail-collection :collection="info.collection" />
@@ -28,30 +32,50 @@
                 </div>
             </template>
         </a-details>
-        <a-details class="title_wrap">
+        <a-details class="title_wrap" v-if="info.collection">
             <template #label>
                 <div class="nftdetail_details_wrap">
-                    <app-iconset icon="about" /> {{ $t('nftdetail.about') }} {{ info.name }}
+                    <app-iconset icon="about" /> {{ $t('nftdetail.about') }} {{ info.collection.name }}
                 </div>
             </template>
             <template>
                 <div class="nftdetail_about">
-                    {{ info.desc }}
+                    {{ info.collection.description }}
                 </div>
-                <!-- <div class="nftdetail_socialBlock">
-                    <a href="#" class="nftdetail_socialLink" target="_blank">
+                <div class="nftdetail_socialBlock">
+                    <a
+                        v-if="info.collection.siteUrl"
+                        :href="info.collection.siteUrl"
+                        class="nftdetail_socialLink"
+                        target="_blank"
+                    >
                         <app-iconset icon="web" />
                     </a>
-                    <a href="#" class="nftdetail_socialLink" target="_blank">
+                    <a
+                        v-if="info.collection.twitterHandle"
+                        :href="'https://twitter.com/' + info.collection.twitterHandle"
+                        class="nftdetail_socialLink"
+                        target="_blank"
+                    >
                         <app-iconset icon="twitter" />
                     </a>
-                    <a href="#" class="nftdetail_socialLink" target="_blank">
+                    <a
+                        v-if="info.collection.telegram"
+                        :href="'https://t.me/' + info.collection.telegram"
+                        class="nftdetail_socialLink"
+                        target="_blank"
+                    >
                         <app-iconset icon="telegram" />
                     </a>
-                    <a href="#" class="nftdetail_socialLink" target="_blank">
+                    <a
+                        v-if="info.collection.discord"
+                        :href="info.collection.discord"
+                        class="nftdetail_socialLink"
+                        target="_blank"
+                    >
                         <app-iconset icon="discord" />
                     </a>
-                </div> -->
+                </div>
             </template>
         </a-details>
         <a-details>
@@ -62,7 +86,6 @@
                 <div class="nftdetail_chainBlock">
                     <div class="nftdetail_chainLine">
                         <span>{{ $t('nftdetail.collection') }}</span>
-                        <!-- <a href="#" target="_blank">0x1DaD...79B9</a> -->
                         <router-link
                             :to="{ name: 'explore', query: { collections: this.$route.params.tokenContract } }"
                         >
@@ -72,6 +95,10 @@
                                 overflow="middle"
                             />
                         </router-link>
+                    </div>
+                    <div class="nftdetail_chainLine">
+                        <span>{{ $t('nftdetail.tokenId') }}</span>
+                        <span>{{ toInt(info.tokenId) }} / {{ info.tokenId }}</span>
                     </div>
                     <div class="nftdetail_chainLine">
                         <span>{{ $t('nftdetail.network') }}</span>
@@ -92,6 +119,7 @@ import ADetailsGroup from '@/common/components/ADetailsGroup/ADetailsGroup';
 import ADetails from '@/common/components/ADetails/ADetails';
 import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/NftDetailCollection.vue';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
+import { toInt } from '@/utils/big-number.js';
 export default {
     name: 'NftDetailInfo',
 
@@ -107,6 +135,10 @@ export default {
         ADetails,
         NftDetailCollection,
         FEllipsis,
+    },
+
+    methods: {
+        toInt,
     },
 };
 </script>

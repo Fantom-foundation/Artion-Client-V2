@@ -10,6 +10,8 @@ export async function getToken(contract = '', id = '') {
                     tokenId
                     name
                     description
+                    symbol
+                    ipRights
                     image
                     imageThumb
                     imageMimetype
@@ -27,6 +29,13 @@ export async function getToken(contract = '', id = '') {
                     collection {
                         contract
                         name
+                        description
+                        discord
+                        email
+                        telegram
+                        siteUrl
+                        mediumHandle
+                        twitterHandle
                     }
                 }
             }
