@@ -94,7 +94,7 @@ import { defer } from 'fantom-vue-components/src/utils';
 import { getUserTokenCounters } from '@/modules/account/queries/user-token-counters.js';
 import { getUserFavoriteTokensCount } from '@/modules/account/queries/user-favorite-tokens.js';
 import { getUserActivityCount } from '@/modules/account/queries/user-activity.js';
-import { getUserOffersCount } from '@/modules/account/queries/user-tokens-offers.js';
+import { getUserMyOffersCount, getUserOffersCount } from '@/modules/account/queries/user-tokens-offers.js';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
 import { signIn, getBearerToken } from '@/modules/account/auth.js';
 import { uploadUserFile } from '@/utils/upload.js';
@@ -167,12 +167,12 @@ export default {
                     // icon: 'tag',
                     counter: 0,
                 },
-                /*{
+                {
                     routeName: 'account-my-offers',
                     label: this.$t('account.myOffers'),
-                    icon: 'tag',
+                    //icon: 'tag',
                     counter: 0,
-                },*/
+                },
             ],
         };
     },
@@ -232,6 +232,7 @@ export default {
                 this.updateTokenCounters();
                 this.updateFavoriteCounters();
                 this.updateOffersCounters();
+                this.updateMyOffersCounters();
                 this.updateActivityCounters();
                 this.updateOwnershipCounters();
             }, 200);
@@ -325,6 +326,19 @@ export default {
             }
 
             accountNavigation.updateCounter('account-offers', toInt(offerCounters.totalCount));
+        },
+
+        /**
+         * @return {Promise<void>}
+         */
+        async updateMyOffersCounters() {
+            const { accountNavigation } = this.$refs;
+            const offerCounters = await getUserMyOffersCount(this.userAddress);
+            if (!offerCounters) {
+                return;
+            }
+
+            accountNavigation.updateCounter('account-my-offers', toInt(offerCounters.totalCount));
         },
 
         /**

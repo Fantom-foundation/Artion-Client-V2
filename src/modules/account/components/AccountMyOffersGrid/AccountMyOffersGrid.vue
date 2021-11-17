@@ -59,6 +59,7 @@ import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import { toInt } from '@/utils/big-number.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import { datetimeFormatter } from '@/utils/formatters.js';
+import { getUserMyOffers } from '@/modules/account/queries/user-tokens-offers';
 
 export default {
     name: 'AccountMyOffersGrid',
@@ -120,7 +121,7 @@ export default {
 
     methods: {
         async loadPage(pagination = { first: this.perPage }) {
-            console.log(pagination);
+            return await getUserMyOffers(this.userAddress, pagination);
         },
 
         async loadMyOffers() {

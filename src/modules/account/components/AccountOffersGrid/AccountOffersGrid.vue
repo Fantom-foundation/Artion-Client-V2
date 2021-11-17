@@ -126,8 +126,6 @@ export default {
 
     methods: {
         async loadPage(pagination = { first: this.perPage }) {
-            const data = await getUserOffers(this.userAddress, pagination);
-            console.log(data);
             return await getUserOffers(this.userAddress, pagination);
         },
 
