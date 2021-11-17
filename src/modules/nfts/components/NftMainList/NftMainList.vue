@@ -65,8 +65,6 @@ export default {
             pagination = { first: this.perPage },
             filterSort = filtersToQueryFilters(this.filters, getDefaultFilters())
         ) {
-            console.log('filterSort', JSON.stringify(filterSort), JSON.stringify(this.filters));
-
             const tokens = await getTokens(pagination, filterSort);
 
             this.$emit('tokens-count', this.totalItems);

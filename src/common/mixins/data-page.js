@@ -94,7 +94,7 @@ export const dataPageMixin = {
                 dontSetItems: true,
             });
 
-            if (this.pageInfo.hasNextPage && data.edges && data.edges.length > 0) {
+            if ((this.pageInfo.hasNextPage || pagination.isLastPage) && data.edges && data.edges.length > 0) {
                 const items = this._getItemsFromData(data);
 
                 if (pagination.currPage < pagination.prevPage) {
