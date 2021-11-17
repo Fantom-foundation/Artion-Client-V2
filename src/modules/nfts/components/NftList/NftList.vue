@@ -1,5 +1,6 @@
 <template>
     <f-infinite-scroll
+        ref="infScroll"
         :total-items="totalItems"
         :per-page="perPage"
         :curr-page="currPage"
@@ -93,6 +94,17 @@ export default {
     methods: {
         searchFavoriteNft(id) {
             return this.likedNftIds.includes(id);
+        },
+
+        /**
+         * @param {number} pageNum
+         */
+        goToPageNum(pageNum) {
+            const { infScroll } = this.$refs;
+
+            if (infScroll) {
+                infScroll.goToPage(pageNum, true);
+            }
         },
     },
 };

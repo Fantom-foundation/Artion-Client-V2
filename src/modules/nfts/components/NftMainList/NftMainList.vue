@@ -1,6 +1,7 @@
 <template>
     <div class="nftmainList">
         <nft-list
+            ref="nftList"
             :tokens="items"
             :loading="loading"
             :total-items="totalItems"
@@ -48,7 +49,12 @@ export default {
 
     watch: {
         filters() {
-            this.loadTokens();
+            this._resetData();
+
+            this.$nextTick(() => {
+                this.$refs.nftList.goToPageNum(1);
+                this.loadTokens();
+            });
         },
 
         loading(value) {
