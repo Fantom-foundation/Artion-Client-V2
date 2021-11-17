@@ -62,7 +62,8 @@
         "highest_price": "Highest Price",
         "lowest_price": "Lowest Price",
         "highest_last_sale": "Highest Last Sale",
-        "mostly_viewed": "Mostly Viewed"
+        "mostly_viewed": "Mostly Viewed",
+        "mostly_liked": "Mostly Liked"
     },
 
     "activity_types": {
