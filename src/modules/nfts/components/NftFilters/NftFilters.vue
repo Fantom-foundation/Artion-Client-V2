@@ -3,6 +3,9 @@
         <a-details :label="$t('status')" :open="'status' in filters" strategy="render" id="test_nftfilters_status">
             <status-filter v-model="dFilters.status" />
         </a-details>
+        <a-details :label="$t('price')" :open="'price' in filters" strategy="render" id="test_nftfilters_price">
+            <price-filter v-model="dFilters.price" />
+        </a-details>
         <a-details
             :label="$t('collections')"
             :open="'collections' in filters"
@@ -29,6 +32,7 @@ import ADetails from '@/common/components/ADetails/ADetails.vue';
 import CategoriesFilter from '@/modules/nfts/components/CategoriesFilter/CategoriesFilter.vue';
 import CollectionsFilter from '@/modules/nfts/components/CollectionsFilter/CollectionsFilter.vue';
 import StatusFilter from '@/modules/nfts/components/StatusFilter/StatusFilter.vue';
+import PriceFilter from '@/modules/nfts/components/PriceFilter/PriceFilter';
 
 import { getCategories } from '@/modules/nfts/queries/categories.js';
 import { getCollections } from '@/modules/nfts/queries/collections.js';
@@ -37,7 +41,7 @@ import { getCollectionImageUrl } from '@/utils/url.js';
 export default {
     name: 'NftFilters',
 
-    components: { StatusFilter, CollectionsFilter, CategoriesFilter, ADetails, ADetailsGroup },
+    components: { StatusFilter, PriceFilter, CollectionsFilter, CategoriesFilter, ADetails, ADetailsGroup },
 
     model: {
         prop: 'filters',

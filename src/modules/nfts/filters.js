@@ -5,6 +5,7 @@
 import { isArray, isObject } from 'fantom-vue-components/src/utils';
 import { STATUSES } from '@/common/constants/statuses.js';
 import { SORT_BY_FILTERS } from '@/common/constants/sort-by-filters.js';
+import {bFromTokenValue, toHex} from "@/utils/big-number";
 
 const statuses = {};
 const sortByFilters = {};
@@ -42,6 +43,8 @@ export function flattenFilters(filters) {
 }
 
 export function filtersToQueryFilters(filters, defaultFilters) {
+    console.log('filters', filters);
+
     const qFilters = {
         filter: {},
     };
@@ -56,6 +59,13 @@ export function filtersToQueryFilters(filters, defaultFilters) {
 
             if (status) {
                 qFilters.filter[status] = true;
+            }
+        } else if (filterName === 'price') {
+            let val = filter.value ? toHex(bFromTokenValue(filter.value, -6)) : null;
+            if (typeof qFilters.filter.priceMin === 'undefined') {
+                qFilters.filter.priceMin = val;
+            } else {
+                qFilters.filter.priceMax = val;
             }
         } else if (filterName === 'collections') {
             if (isArray(qFilters.filter['collections'])) {
