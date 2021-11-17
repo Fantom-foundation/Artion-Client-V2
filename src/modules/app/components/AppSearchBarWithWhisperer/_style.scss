@@ -1,0 +1,31 @@
+.appsearchbarwithwhisperer {
+    position: relative;
+    width: 100%;
+
+    .asearchfield,
+    .finput,
+    .finput_inputcont {
+        width: 100%;
+        max-width: 768px;
+    }
+
+    &_popover {
+        --fwindow-offset-top: 60px;
+
+        top: 50px;
+        width: 100%;
+        max-width: 768px;
+        //min-width: 400px;
+
+        &.fdropdownlistbox_fwindow.fpopover {
+            --fwindow-popover-body-padding: 10px;
+        }
+    }
+
+    /*.popover {
+        border-radius: 10px;
+        box-shadow: 0 4px 40px rgb(0 0 0 / 15%);
+        border: 1px solid #eaeaf1;
+        background-color: #fff;
+    }*/
+}

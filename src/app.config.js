@@ -115,6 +115,10 @@ let appConfig = {
         // output dir for production build
         outputDir: 'dist',
     },
+    // feature toggles
+    toggles: {
+        searchBarWithWhisperer: false,
+    },
 };
 
 if (appConfig.module === 'pg') {
