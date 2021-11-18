@@ -28,7 +28,7 @@ export default {
                 {
                     label: this.$t('accountsettings.notifications'),
                     route: 'account-settings-notifications',
-                    icon: 'notify',
+                    // icon: 'notify',
                 },
                 // { label: this.$t('accountsettings.offers'), icon: 'tag' },
                 {

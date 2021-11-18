@@ -141,8 +141,8 @@ export default {
             if (ok) {
                 console.log(data.values);
                 let values = {};
-                if (!this.yourActivity) Object.keys(sNotifications()).forEach(name => this.values[name] = false);
-                if (!this.followerActivity) Object.keys(fNotifications()).forEach(name => this.values[name] = false);
+                if (!this.yourActivity) Object.keys(sNotifications()).forEach(name => (this.values[name] = false));
+                if (!this.followerActivity) Object.keys(fNotifications()).forEach(name => (this.values[name] = false));
 
                 Object.assign(values, data.values);
                 Object.assign(values, this.values);

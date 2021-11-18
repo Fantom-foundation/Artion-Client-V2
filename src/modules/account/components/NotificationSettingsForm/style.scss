@@ -1,5 +1,7 @@
 .notificationsettingsform {
 	--notification-border: 1px solid var(--f-color-primary-3);
+    --notification-focus-background-color: var(--f-color-primary-2);
+
 	margin-top: var(--f-spacer-5);
 
 	&_lists {
@@ -27,10 +29,14 @@
 		& + & {
 			border-top: var(--notification-border);
 		}
+
+        &:focus-within {
+            background: var(--notification-focus-background-color);
+        }
 	}
 
-	&_content { 
-		flex: 1; 
+	&_content {
+		flex: 1;
 		&:hover { cursor: pointer; }
 	}
 
