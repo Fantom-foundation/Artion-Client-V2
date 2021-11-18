@@ -30,12 +30,13 @@ export async function getToken(contract = '', id = '') {
                         contract
                         name
                         description
-                        discord
                         email
+                        site
+                        discord
                         telegram
-                        siteUrl
-                        mediumHandle
-                        twitterHandle
+                        twitter
+                        medium
+                        instagram
                     }
                 }
             }

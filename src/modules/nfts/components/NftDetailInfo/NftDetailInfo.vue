@@ -44,16 +44,16 @@
                 </div>
                 <div class="nftdetail_socialBlock">
                     <a
-                        v-if="info.collection.siteUrl"
-                        :href="info.collection.siteUrl"
+                        v-if="info.collection.site"
+                        :href="info.collection.site"
                         class="nftdetail_socialLink"
                         target="_blank"
                     >
                         <app-iconset icon="web" />
                     </a>
                     <a
-                        v-if="info.collection.twitterHandle"
-                        :href="'https://twitter.com/' + info.collection.twitterHandle"
+                        v-if="info.collection.twitter"
+                        :href="info.collection.twitter"
                         class="nftdetail_socialLink"
                         target="_blank"
                     >
@@ -61,7 +61,7 @@
                     </a>
                     <a
                         v-if="info.collection.telegram"
-                        :href="'https://t.me/' + info.collection.telegram"
+                        :href="info.collection.telegram"
                         class="nftdetail_socialLink"
                         target="_blank"
                     >
@@ -74,6 +74,22 @@
                         target="_blank"
                     >
                         <app-iconset icon="discord" />
+                    </a>
+                    <a
+                        v-if="info.collection.medium"
+                        :href="info.collection.medium"
+                        class="nftdetail_socialLink"
+                        target="_blank"
+                    >
+                        <app-iconset icon="medium" />
+                    </a>
+                    <a
+                        v-if="info.collection.instagram"
+                        :href="info.collection.instagram"
+                        class="nftdetail_socialLink"
+                        target="_blank"
+                    >
+                        <app-iconset icon="instagram" />
                     </a>
                 </div>
             </template>
