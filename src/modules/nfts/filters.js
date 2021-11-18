@@ -5,7 +5,7 @@
 import { isArray, isObject } from 'fantom-vue-components/src/utils';
 import { STATUSES } from '@/common/constants/statuses.js';
 import { SORT_BY_FILTERS } from '@/common/constants/sort-by-filters.js';
-import {bFromTokenValue, toHex} from "@/utils/big-number";
+import { bFromTokenValue, toHex } from '@/utils/big-number';
 
 const statuses = {};
 const sortByFilters = {};

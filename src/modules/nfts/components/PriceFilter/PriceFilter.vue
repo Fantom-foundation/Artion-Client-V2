@@ -1,7 +1,8 @@
 <template>
     <div>
-        <f-input ref="input" type="number" :value="priceRange[0]" @input="onMinChange"/>
-        <f-input ref="input" type="number" :value="priceRange[1]" @input="onMaxChange"/>
+        <f-input type="number" :value="priceRange[0]" @input="onMinChange" :throttle-input-interval="500" />
+        <br />
+        <f-input type="number" :value="priceRange[1]" @input="onMaxChange" :throttle-input-interval="500" />
     </div>
 </template>
 
@@ -37,16 +38,10 @@ export default {
 
     methods: {
         onMinChange(min) {
-            this.$emit(
-                'change',
-                [min, this.priceRange[1]]
-            );
+            this.$emit('change', [min, this.priceRange[1]]);
         },
         onMaxChange(max) {
-            this.$emit(
-                'change',
-                [this.priceRange[0], max]
-            );
+            this.$emit('change', [this.priceRange[0], max]);
         },
     },
 };
