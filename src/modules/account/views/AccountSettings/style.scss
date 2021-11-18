@@ -1,70 +1,74 @@
 @use "fantom-vue-components/src/assets/scss/tools/media";
 .accountsettings {
-	--accountsettings-sidebar-item-color: var(--f-doc-color);
-	--accountsettings-sidebar-background-hover: var(--f-color-primary-2);
-	--accountsettings-sidebar-border-color: var(--f-color-grey-3);
-	display: flex;
-	&_sidebar {
-		padding: 0 var(--f-spacer-2);
-		border-right: 1px solid var(--accountsettings-sidebar-border-color);
-		min-width: 250px;
-		width: 340px;
-	}
+    --accountsettings-sidebar-item-color: var(--f-doc-color);
+    --accountsettings-sidebar-background-hover: var(--f-color-primary-2);
+    --accountsettings-sidebar-border-color: var(--f-color-grey-3);
+    display: flex;
 
-	&_title {
-		margin: var(--f-spacer-2) 0;
-		padding-left: var(--f-spacer-4);
-		text-transform: uppercase;
-		font-weight: 700;
-		color: var(--f-color-grey-6);
-	}
+    &_sidebar {
+        padding: 0 var(--f-spacer-2);
+        border-right: 1px solid var(--accountsettings-sidebar-border-color);
+        min-width: 250px;
+        width: 340px;
+    }
 
-	.fnavigation > ul > li.fnavigationnode {
-		//border-radius: 12px;
-		overflow: hidden;
-		.fnavigationnode_item {
-			&:hover,
-			&:active,
-			&:focus {
-				background: var(--accountsettings-sidebar-background-hover);
-			}
-		}
-	}
+    &_title {
+        margin: var(--f-spacer-2) 0;
+        padding-left: var(--f-spacer-4);
+        text-transform: uppercase;
+        font-weight: 700;
+        color: var(--f-color-grey-6);
+    }
 
-	&_view {
-		max-width: 800px;
-		flex: 1;
-		margin: var(--f-spacer-6) var(--f-spacer-7) 0px;
-	}
+    .fnavigation > ul > li.fnavigationnode {
+        //border-radius: 12px;
+        overflow: hidden;
+        .fnavigationnode_item {
+            &:hover,
+            &:active,
+            &:focus {
+                background: var(--accountsettings-sidebar-background-hover);
+            }
+        }
+    }
+
+    &_view {
+        max-width: 800px;
+        flex: 1;
+        margin: var(--f-spacer-6) var(--f-spacer-7) 0px;
+    }
+
+    h1 {
+        font-size: var(--f-font-size-8);
+    }
 }
 
 @include media.media-max(1297px) {
-	.accountsettings {
-		&_sidebar {
-			width: auto;
-		}
-	}
+    .accountsettings {
+        &_sidebar {
+            width: auto;
+        }
+    }
 }
 
-
 @include media.media-max(998px) {
-	.accountsettings {
-		flex-direction: column;
-		// .fnavigation .fnavigationnode {
-		// 	.fnavigationnode_item {
-		// 		padding-inline-start: 0 !important;
-		// 	}
-		// }
-		&_sidebar {
-			border-bottom: 1px solid var(--f-color-grey-3);
-		}
+    .accountsettings {
+        flex-direction: column;
+        // .fnavigation .fnavigationnode {
+        // 	.fnavigationnode_item {
+        // 		padding-inline-start: 0 !important;
+        // 	}
+        // }
+        &_sidebar {
+            border-bottom: 1px solid var(--f-color-grey-3);
+        }
 
-		&_title {
-			padding-left: 0;
-		}
+        &_title {
+            padding-left: 0;
+        }
 
-		&_view {
-			margin: var(--f-spacer-6) var(--f-spacer-3) 0px;
-		}
-	}
+        &_view {
+            margin: var(--f-spacer-6) var(--f-spacer-3) 0px;
+        }
+    }
 }
