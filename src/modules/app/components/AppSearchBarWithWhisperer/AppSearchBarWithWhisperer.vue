@@ -1,5 +1,5 @@
 <template>
-    <div class="appsearchbarwithwhisperer">
+    <div class="appsearchbarwithwhisperer" :class="classes">
         <a-search-field
             id="appsearchbarwithwhisperer_input"
             field-size="large"
@@ -52,7 +52,16 @@ export default {
             searchText: '',
             searchResults: [],
             loading: false,
+            popoverOn: false,
         };
+    },
+
+    computed: {
+        classes() {
+            return {
+                'appsearchbarwithwhisperer-popoveron': this.popoverOn,
+            };
+        },
     },
 
     watch: {
@@ -127,8 +136,10 @@ export default {
             if (popover) {
                 if (this.searchResults.length > 0) {
                     popover.show();
+                    this.popoverOn = true;
                 } else {
                     popover.hide();
+                    this.popoverOn = false;
                 }
             }
         },
@@ -139,6 +150,7 @@ export default {
             if (popover) {
                 this.searchResults = [];
                 popover.hide();
+                this.popoverOn = false;
             }
         },
 
@@ -176,6 +188,7 @@ export default {
 
         onPopoverHide() {
             this._ignoreFocus = true;
+            this.popoverOn = false;
 
             this.$nextTick(() => {
                 this._ignoreFocus = false;

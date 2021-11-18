@@ -26,6 +26,8 @@
         gap: var(--f-spacer-4);
         padding: var(--f-spacer-2) var(--f-spacer-4);
         line-height: calc(0.8 * var(--f-doc-line-height));
+        color: var(--apptextsearchresults-item-color) !important;
+        font-weight: 600;
 
         &:hover,
         &:focus {
