@@ -32,7 +32,11 @@
                                     params: { address: tokenOwner.address },
                                 }"
                             >
-                                <a-address :owner="tokenOwner" />
+                                <a-address
+                                    :address="tokenOwner.address"
+                                    :name="tokenOwner.username"
+                                    :image="tokenOwner.avatarThumb"
+                                />
                             </router-link>
                         </div>
                         <div class="nftdetail_views">
