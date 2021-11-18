@@ -2,7 +2,7 @@
     .#{$className} {
         --flistbox-item-background-color: none;
 
-        max-height: 260px;
+        max-height: 360px;
         overflow: auto;
 
         &_item {
@@ -12,7 +12,7 @@
         }
 
         .flistbox_list_item {
-            padding: var(--filter-item-padding);
+            padding: var(--f-spacer-1) var(--filter-item-padding);
 
             &:not([aria-selected]) {
                 background: none;
