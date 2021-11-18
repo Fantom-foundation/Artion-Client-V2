@@ -20,13 +20,7 @@
                     v-if="item.token !== null"
                     :to="{ name: 'nft-detail', params: { tokenContract: item.contract, tokenId: item.tokenId } }"
                 >
-                    <a-address
-                        :owner="{
-                            address: item.token.contract,
-                            username: item.token.name,
-                            avatarThumb: item.token.imageThumb,
-                        }"
-                    />
+                    <a-address :address="item.token.contract" :name="item.token.name" :image="item.token.imageThumb" />
                 </router-link>
             </template>
             <template #column-proposedBy="{ value }">
@@ -126,8 +120,6 @@ export default {
 
     methods: {
         async loadPage(pagination = { first: this.perPage }) {
-            const data = await getUserOffers(this.userAddress, pagination);
-            console.log(data);
             return await getUserOffers(this.userAddress, pagination);
         },
 

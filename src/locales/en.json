@@ -62,7 +62,8 @@
         "highest_price": "Highest Price",
         "lowest_price": "Lowest Price",
         "highest_last_sale": "Highest Last Sale",
-        "mostly_viewed": "Mostly Viewed"
+        "mostly_viewed": "Mostly Viewed",
+        "mostly_liked": "Mostly Liked"
     },
 
     "activity_types": {
@@ -141,6 +142,12 @@
         "label": "Search bar",
         "placeholderTmp": "Search items",
         "placeholder": "Search items, collections and accounts"
+    },
+
+    "apptextsearchresults": {
+        "collections": "Collections",
+        "accounts": "Accounts",
+        "items": "Items"
     },
 
     "walletbutton": {
@@ -241,10 +248,11 @@
         "symbol": "Symbol",
         "royalty": "Royalty",
         "recipient": "Recipient",
-        "ipRights": "IP_Rights",
+        "ipRights": "IP Rights",
         "notAvailable": "Not available",
         "collection": "Collection",
         "nftCollection": "Fantom Powered NFT Collection",
+        "tokenId": "Token ID",
         "about": "About",
         "chainInfo": "Chain Info",
         "network": "Network",
@@ -325,7 +333,10 @@
         "enterMedium": "Enter your Medium profile link",
         "enterTelegram": "Enter your Telegram profile link",
         "category": "Category",
-        "submit": "Submit"
+        "submit": "Submit",
+        "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded: ",
+        "success": "The collection registration was requested successfully .",
+        "signInFirst": "You need to sign-in first"
     },
 
     "nftcreate": {
@@ -344,7 +355,7 @@
         "mint": "Mint",
         "fileError": "Pick a file please",
         "signInFirst": "You need to sign-in first",
-        "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded",
+        "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded: ",
         "noNewTokenId": "Sorry, something went wrong. The token was minted, but unable to get new token id.",
         "unlockableNotAttached": "Sorry, something went wrong. The token was minted, but the unlockable content was not attached.",
         "success": "The token was successfully created.",
@@ -448,7 +459,7 @@
         "hidden": "Hidden",
         "activity": "Activity",
         "offers": "Offers",
-        "myOffers": "My offers",
+        "myOffers": "My Offers",
         "filter": "Filter",
         "filters": "Filters"
     },

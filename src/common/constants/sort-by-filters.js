@@ -75,7 +75,18 @@ export function SORT_BY_FILTERS() {
         {
             value: 'viewed',
             label: 'sort_by.mostly_viewed',
-            disabled: true,
+            queryFilter: {
+                sortBy: 'VIEWS',
+                sortDir: 'DESC',
+            },
+        },
+        {
+            value: 'likes',
+            label: 'sort_by.mostly_liked',
+            queryFilter: {
+                sortBy: 'LIKES',
+                sortDir: 'DESC',
+            },
         },
     ];
 }

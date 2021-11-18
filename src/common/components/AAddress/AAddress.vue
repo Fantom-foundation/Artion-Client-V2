@@ -1,8 +1,8 @@
 <template>
     <span class="aaddress">
-        <img v-if="avatarSrc" :src="avatarSrc" aria-hidden="true" class="aaddress_avatar" alt="Avatar" />
-        <span v-if="userName">{{ userName }}</span>
-        <f-ellipsis v-else :text="cAddress" overflow="middle" />
+        <img v-if="imageSrc" :src="imageSrc" aria-hidden="true" class="aaddress_avatar" alt="Avatar" />
+        <span v-if="name">{{ name }}</span>
+        <f-ellipsis v-else :text="address" overflow="middle" />
     </span>
 </template>
 
@@ -16,43 +16,23 @@ export default {
     components: { FEllipsis },
 
     props: {
-        owner: {
-            type: Object,
-            default() {
-                return {
-                    address: '',
-                    username: '',
-                    avatarThumb: '',
-                };
-            },
-        },
         address: {
             type: String,
             default: '',
         },
-        imgSrc: {
+        name: {
+            type: String,
+            default: '',
+        },
+        image: {
             type: String,
             default: '',
         },
     },
 
     computed: {
-        avatarSrc() {
-            const { owner } = this;
-
-            if (owner.avatarThumb) {
-                return getImageThumbUrl(owner.avatarThumb);
-            }
-
-            return this.imgSrc;
-        },
-
-        cAddress() {
-            return this.owner.address || this.address;
-        },
-
-        userName() {
-            return this.owner.username || '';
+        imageSrc() {
+            return this.image ? getImageThumbUrl(this.image) : '';
         },
     },
 };

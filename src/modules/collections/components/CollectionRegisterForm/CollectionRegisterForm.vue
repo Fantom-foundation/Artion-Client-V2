@@ -34,7 +34,6 @@
             type="number"
             name="royalty"
             field-size="large"
-            required
         >
             <template #label>
                 {{ $t('collectionregisterform.royalty') }}
@@ -45,7 +44,7 @@
         </f-form-input>
         <f-form-input
             type="text"
-            name="fees"
+            name="feeRecipient"
             field-size="large"
             :placeholder="$t('collectionregisterform.feeRecipient')"
             required
@@ -66,7 +65,7 @@
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterCollection')"
-                name="collection"
+                name="contract"
                 no-label
             >
                 <template #prefix>
@@ -77,7 +76,7 @@
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterWebsite')"
-                name="web"
+                name="siteUrl"
                 no-label
             >
                 <template #prefix>
@@ -99,7 +98,7 @@
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterTwitter')"
-                name="twitter"
+                name="twitterHandle"
                 no-label
             >
                 <template #prefix>
@@ -110,7 +109,7 @@
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterInstagram')"
-                name="instagram"
+                name="instagramHandle"
                 no-label
             >
                 <template #prefix>
@@ -121,7 +120,7 @@
                 type="text"
                 field-size="large"
                 :placeholder="$t('collectionregisterform.enterMedium')"
-                name="medium"
+                name="mediumHandle"
                 no-label
             >
                 <template #prefix>
@@ -155,7 +154,9 @@
             </template>
         </f-form-input>
         <div class="collectionregisterform_btn">
-            <f-button type="submit" :disabled="isDisabled">{{ $t('collectionregisterform.submit') }}</f-button>
+            <a-button type="submit" :disabled="isDisabled" :loading="isLoading">
+                {{ $t('collectionregisterform.submit') }}
+            </a-button>
         </div>
     </f-form>
 </template>
@@ -163,10 +164,15 @@
 <script>
 import AUploadArea from '@/common/components/AUploadArea/AUploadArea.vue';
 import AddCategory from '@/modules/collections/components/AddCategory/AddCategory.vue';
+import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
+import { uploadCollection } from '@/utils/upload';
+import { checkSignIn } from '@/modules/account/auth';
+import AButton from '@/common/components/AButton/AButton';
+
 export default {
     name: 'CollectionRegisterForm',
 
-    components: { AUploadArea, AddCategory },
+    components: { AUploadArea, AddCategory, AButton },
 
     data() {
         return {
@@ -174,6 +180,7 @@ export default {
                 categories: [],
             },
             imageFile: null,
+            isLoading: false,
         };
     },
 
@@ -182,8 +189,8 @@ export default {
             return (
                 this.values.name === '' ||
                 this.values.description === '' ||
-                this.values.royalty === '' ||
-                this.values.fees === '' ||
+                this.values.contract === '' ||
+                this.values.feeRecipient === '' ||
                 this.values.email === '' ||
                 !this.imageFile
             );
@@ -201,8 +208,62 @@ export default {
             this.imageFile = _files[0] || null;
         },
 
-        onSubmit(_data) {
-            console.log(_data);
+        async onSubmit(_data) {
+            console.log('onSubmit', _data);
+            const vals = _data.values;
+            this.isLoading = true;
+
+            await this.checkWalletConnection();
+            let signed = await checkSignIn();
+            if (!signed) {
+                console.error('not signed');
+                notifications.add({
+                    type: 'error',
+                    text: this.$t('collectionregisterform.signInFirst'),
+                });
+                return;
+            }
+
+            const collectionApplication = {
+                contract: vals.contract,
+                name: vals.name,
+                description: vals.description,
+                royalty: vals.royalty ? vals.royalty : 0,
+                feeRecipient: vals.feeRecipient,
+                categories: vals.categories,
+                discord: vals.discord,
+                email: vals.email,
+                telegram: vals.telegram,
+                siteUrl: vals.siteUrl,
+                mediumHandle: vals.mediumHandle,
+                twitterHandle: vals.twitterHandle,
+                instagramHandle: vals.instagramHandle,
+            };
+            try {
+                await uploadCollection(collectionApplication, this.imageFile);
+            } catch (err) {
+                console.error('uploadCollection failed', err);
+                notifications.add({
+                    type: 'error',
+                    text: this.$t('collectionregisterform.wasntUploaded') + err,
+                });
+                this.isLoading = false;
+                return;
+            }
+
+            notifications.add({
+                type: 'success',
+                text: this.$t('collectionregisterform.success'),
+            });
+            this.isLoading = false;
+        },
+
+        async checkWalletConnection() {
+            if (!this.$wallet.connected) {
+                const payload = {};
+                this._eventBus.emit('show-wallet-picker', payload);
+                await payload.promise;
+            }
         },
     },
 };

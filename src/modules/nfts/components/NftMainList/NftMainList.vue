@@ -1,6 +1,7 @@
 <template>
     <div class="nftmainList">
         <nft-list
+            ref="nftList"
             :tokens="items"
             :loading="loading"
             :total-items="totalItems"
@@ -48,7 +49,12 @@ export default {
 
     watch: {
         filters() {
-            this.loadTokens();
+            this._resetData();
+
+            this.$nextTick(() => {
+                this.$refs.nftList.goToPageNum(1);
+                this.loadTokens();
+            });
         },
 
         loading(value) {
@@ -65,8 +71,6 @@ export default {
             pagination = { first: this.perPage },
             filterSort = filtersToQueryFilters(this.filters, getDefaultFilters())
         ) {
-            console.log('filterSort', JSON.stringify(filterSort), JSON.stringify(this.filters));
-
             const tokens = await getTokens(pagination, filterSort);
 
             this.$emit('tokens-count', this.totalItems);

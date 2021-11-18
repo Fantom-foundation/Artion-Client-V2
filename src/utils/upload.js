@@ -59,3 +59,26 @@ export async function uploadTokenData(_metadata, _imageFile) {
         throw await response.text();
     }
 }
+
+export async function uploadCollection(_data, _imageFile) {
+    let data = new FormData();
+    data.append('data', JSON.stringify(_data));
+    data.append('file', _imageFile);
+    const options = {
+        method: 'POST',
+        headers: {
+            Authorization: 'Bearer ' + getBearerToken(),
+        },
+        body: data,
+    };
+
+    let url = artionFApolloClient.httpProviderOrigin + '/upload-image/collection';
+
+    let response = await fetch(url, options);
+    console.log(response);
+    if (response.status === 200) {
+        return await response.text();
+    } else {
+        throw await response.text();
+    }
+}

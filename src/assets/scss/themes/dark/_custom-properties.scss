@@ -201,6 +201,17 @@
         --notification-border: 1px solid var(--theme-dark-color-5);
     }
 
+    .apptextsearchresults {
+        color: var(--theme-dark-color-4);
+        --apptextsearchresults-item-color: #fff;
+        --apptextsearchresults-item-hover-background-color: var(--theme-dark-color-5);
+        --apptextsearchresults-title-border-color: var(--theme-dark-color-5);
+    }
+
+    .appsearchbarwithwhisperer {
+        --appsearchbarwithwhisperer-popover-border-color: var(--theme-dark-color-5);
+    }
+
     .agrid {
         --agrid-header-background-color: var(--theme-dark-color-7);
         --fdatagrid-cell-hover-background-color: var(--theme-dark-color-5);

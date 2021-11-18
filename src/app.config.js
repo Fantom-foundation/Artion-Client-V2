@@ -115,6 +115,8 @@ let appConfig = {
         // output dir for production build
         outputDir: 'dist',
     },
+    // feature toggles
+    toggles: {},
 };
 
 if (appConfig.module === 'pg') {

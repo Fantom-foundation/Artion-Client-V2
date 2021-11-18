@@ -1,0 +1,46 @@
+@use "custom-properties";
+
+.appsearchbarwithwhisperer {
+    position: relative;
+    width: 100%;
+
+    .asearchfield,
+    .finput,
+    .finput_inputcont {
+        width: 100%;
+        max-width: 768px;
+    }
+
+    &_popover {
+        --fwindow-offset-top: 60px;
+
+        //top: 50px;
+        top: 0;
+        width: 100%;
+        max-width: 768px;
+        padding-top: 49px;
+
+        box-shadow: 0 4px 40px rgb(0 0 0 / 15%);
+        border: 1px solid var(--appsearchbarwithwhisperer-popover-border-color);
+        background-color: #fff;
+
+        &.fdropdownlistbox_fwindow.fpopover {
+            --fwindow-popover-body-padding: 10px;
+        }
+    }
+
+    &-popoveron {
+        .fsearchfield {
+            position: relative;
+            z-index: calc(var(--f-zindex-above) + var(--f-zindex-modal-curr));
+
+            .inp {
+                border-color: var(--appsearchbarwithwhisperer-popover-border-color) !important;
+                border-bottom-color: transparent !important;
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+                box-shadow: none !important;
+            }
+        }
+    }
+}

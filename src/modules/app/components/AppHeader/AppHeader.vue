@@ -8,7 +8,8 @@
         </div>
         <div class="appheader_col">
             <div class="appheader_mobile" :class="{ show: isShowMobileMenu }">
-                <app-search-bar />
+                <app-search-bar-with-whisperer />
+
                 <app-menu />
             </div>
             <wallet-button-wrap />
@@ -19,14 +20,14 @@
 
 <script>
 import AppMenu from '@/modules/app/components/AppMenu/AppMenu.vue';
-import AppSearchBar from '@/modules/app/components/AppSearchBar/AppSearchBar.vue';
 import WalletButtonWrap from '@/modules/wallet/components/WalletButtonWrap/WalletButtonWrap.vue';
 import AppHamburger from '@/modules/app/components/AppHamburger/AppHamburger.vue';
+import AppSearchBarWithWhisperer from '@/modules/app/components/AppSearchBarWithWhisperer/AppSearchBarWithWhisperer.vue';
 
 export default {
     name: 'AppHeader',
 
-    components: { WalletButtonWrap, AppSearchBar, AppMenu, AppHamburger },
+    components: { AppSearchBarWithWhisperer, WalletButtonWrap, AppMenu, AppHamburger },
 
     data() {
         return {

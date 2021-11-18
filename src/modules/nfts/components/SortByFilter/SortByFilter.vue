@@ -6,7 +6,11 @@
         readonly
         :inline-autocomplete="false"
         field-size="large"
-        class="sortbyfilter"
+        attach-position="bottom"
+        hide-on-document-resize
+        hide-on-document-scroll
+        fit-height-to-viewport
+        class="sortbyfilter fcombobox-maxheight100"
     />
 </template>
 
