@@ -23,11 +23,6 @@
                     <a-address :address="item.token.contract" :name="item.token.name" :image="item.token.imageThumb" />
                 </router-link>
             </template>
-            <template #column-proposedBy="{ value }">
-                <router-link :to="{ name: 'account', params: { address: value } }">
-                    <a-address :address="value" />
-                </router-link>
-            </template>
             <template #column-unitPrice="{ item, value }">
                 <a-token-value
                     :token="item.payToken"

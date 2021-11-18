@@ -23,9 +23,9 @@
                     <a-address :address="item.token.contract" :name="item.token.name" :image="item.token.imageThumb" />
                 </router-link>
             </template>
-            <template #column-proposedBy="{ value }">
-                <router-link :to="{ name: 'account', params: { address: value } }">
-                    <a-address :address="value" />
+            <template #column-proposedByUser="{ value }">
+                <router-link :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" />
                 </router-link>
             </template>
             <template #column-unitPrice="{ item, value }">
@@ -79,7 +79,7 @@ export default {
                     label: this.$t('accountoffersgrid.item'),
                 },
                 {
-                    name: 'proposedBy',
+                    name: 'proposedByUser',
                     label: this.$t('accountoffersgrid.from'),
                 },
                 {

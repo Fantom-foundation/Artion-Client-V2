@@ -29,7 +29,17 @@ export async function getUserActivity(address = '', pagination = {}, filterSort 
                                 contract
                                 quantity
                                 from
+                                fromUser {
+                                    address
+                                    username
+                                    avatarThumb
+                                }
                                 to
+                                toUser {
+                                    address
+                                    username
+                                    avatarThumb
+                                }
                                 payToken
                                 tokenId
                                 unitPrice

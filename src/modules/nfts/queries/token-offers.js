@@ -27,6 +27,11 @@ export async function getTokenOffers(contract = '', id = '', pagination = {}) {
                                 contract
                                 tokenId
                                 proposedBy
+                                proposedByUser {
+                                    address
+                                    username
+                                    avatarThumb
+                                }
                                 quantity
                                 payToken
                                 unitPrice

@@ -15,9 +15,9 @@
             :per-page="perPage"
             @change="_onGridPageChange"
         >
-            <template #column-proposedBy="{ value }">
-                <router-link :to="{ name: 'account', params: { address: value } }">
-                    <a-address :address="value" />
+            <template #column-proposedByUser="{ value }">
+                <router-link :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" />
                 </router-link>
             </template>
             <template #column-unitPrice="{ item, value }">
@@ -97,7 +97,7 @@ export default {
         return {
             columns: [
                 {
-                    name: 'proposedBy',
+                    name: 'proposedByUser',
                     label: this.$t('nftDirectOffersGrid.from'),
                     width: '110px',
                 },

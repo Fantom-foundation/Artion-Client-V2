@@ -30,7 +30,17 @@ export async function getTokenActivity(contract = '', id = '', pagination = {}, 
                                 contract
                                 quantity
                                 from
+                                fromUser {
+                                    address
+                                    username
+                                    avatarThumb
+                                }
                                 to
+                                toUser {
+                                    address
+                                    username
+                                    avatarThumb
+                                }
                                 payToken
                                 tokenId
                                 unitPrice

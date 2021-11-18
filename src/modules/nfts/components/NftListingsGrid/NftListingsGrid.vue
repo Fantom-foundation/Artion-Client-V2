@@ -15,9 +15,9 @@
             :per-page="perPage"
             @change="_onGridPageChange"
         >
-            <template #column-owner="{ value }">
-                <router-link :to="{ name: 'account', params: { address: value } }">
-                    <a-address :address="value" />
+            <template #column-ownerUser="{ value }">
+                <router-link :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" />
                 </router-link>
             </template>
             <template #column-unitPrice="{ item, value }">
@@ -85,7 +85,7 @@ export default {
         return {
             columns: [
                 {
-                    name: 'owner',
+                    name: 'ownerUser',
                     label: this.$t('nftlistingsgrid.from'),
                     // width: '110px',
                 },

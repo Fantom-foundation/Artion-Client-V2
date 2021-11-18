@@ -19,14 +19,14 @@
                     no-symbol
                 />
             </template>
-            <template #column-from="{ value }">
-                <router-link :to="{ name: 'account', params: { address: value } }">
-                    <a-address :address="value" />
+            <template #column-fromUser="{ value }">
+                <router-link :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" />
                 </router-link>
             </template>
-            <template #column-to="{ value }">
-                <router-link v-if="value !== null" :to="{ name: 'account', params: { address: value } }">
-                    <a-address :address="value" />
+            <template #column-toUser="{ value }">
+                <router-link v-if="value !== null" :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" />
                 </router-link>
             </template>
             <template #column-time="{ value }">
@@ -59,11 +59,11 @@ export default {
                     label: this.$t('nfthistorygrid.price'),
                 },
                 {
-                    name: 'from',
+                    name: 'fromUser',
                     label: this.$t('nfthistorygrid.from'),
                 },
                 {
-                    name: 'to',
+                    name: 'toUser',
                     label: this.$t('nfthistorygrid.to'),
                 },
                 {

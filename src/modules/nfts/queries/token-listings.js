@@ -27,6 +27,11 @@ export async function getTokenListings(contract = '', id = '', pagination = {}) 
                                 contract
                                 tokenId
                                 owner
+                                ownerUser {
+                                    address
+                                    username
+                                    avatarThumb
+                                }
                                 quantity
                                 payToken
                                 unitPrice

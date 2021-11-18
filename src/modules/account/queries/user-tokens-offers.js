@@ -25,6 +25,11 @@ export async function getUserOffers(address = '', pagination = {}) {
                                     name
                                 }
                                 proposedBy
+                                proposedByUser {
+                                    address
+                                    username
+                                    avatarThumb
+                                }
                                 quantity
                                 payToken
                                 unitPrice
@@ -70,7 +75,6 @@ export async function getUserMyOffers(address = '', pagination = {}) {
                                     imageThumb
                                     name
                                 }
-                                proposedBy
                                 quantity
                                 payToken
                                 unitPrice

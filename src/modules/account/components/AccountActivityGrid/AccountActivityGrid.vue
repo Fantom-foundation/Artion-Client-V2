@@ -37,9 +37,9 @@
             <template #column-quantity="{ value }">
                 {{ transformQty(value) }}
             </template>
-            <template #column-from="{ value }">
-                <router-link :to="{ name: 'account', params: { address: value } }">
-                    <a-address :address="value" />
+            <template #column-fromUser="{ value }">
+                <router-link :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" />
                 </router-link>
             </template>
             <template #column-time="{ value }">
@@ -101,7 +101,7 @@ export default {
                     label: this.$t('accountactivitylist.qty'),
                 },
                 {
-                    name: 'from',
+                    name: 'fromUser',
                     label: this.$t('accountactivitylist.owner'),
                 },
                 {
