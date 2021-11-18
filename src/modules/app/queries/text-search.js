@@ -22,6 +22,11 @@ export async function textSearch(phrase = '', maxLength = 15) {
                         name
                         imageThumb
                     }
+                    user {
+                        address
+                        username
+                        avatarThumb
+                    }
                 }
             }
         `,

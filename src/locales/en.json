@@ -144,6 +144,12 @@
         "placeholder": "Search items, collections and accounts"
     },
 
+    "apptextsearchresults": {
+        "collections": "Collections",
+        "accounts": "Accounts",
+        "items": "Items"
+    },
+
     "walletbutton": {
         "connectWallet": "Connect Wallet"
     },

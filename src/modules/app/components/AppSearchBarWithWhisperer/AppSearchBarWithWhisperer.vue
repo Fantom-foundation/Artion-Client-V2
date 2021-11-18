@@ -20,9 +20,7 @@
             ref="popover"
             fit-height-to-viewport
             stay-in-place
-            _attach-to="#appsearchbarwithwhisperer_input"
             attach-position="bottom"
-            _attach-position="auto-vertical-exact"
             :attach-margin="[0, 0, 0, 0]"
             :correct-pos-on-scroll="false"
             width-as-attach
@@ -41,6 +39,8 @@ import ASearchField from '@/common/components/ASearchField/ASearchField.vue';
 import { textSearch } from '@/modules/app/queries/text-search.js';
 import AppTextSearchResults from '@/modules/app/components/AppTextSearchResults/AppTextSearchResults.vue';
 import FPopover from 'fantom-vue-components/src/components/FPopover/FPopover.vue';
+
+const SEARCH_AFTER_NUM_CHARS = 3;
 
 export default {
     components: { AppTextSearchResults, ASearchField, FPopover },
@@ -100,12 +100,12 @@ export default {
         async search(text) {
             const phrase = text.trim();
 
-            if (phrase && phrase.length >= 2) {
+            if (phrase && phrase.length >= SEARCH_AFTER_NUM_CHARS) {
                 if (!this.loading) {
                     this.loading = true;
 
                     try {
-                        const results = await textSearch(phrase, 20);
+                        const results = await textSearch(phrase, 15);
 
                         this.searchResults = results || [];
 
@@ -167,14 +167,11 @@ export default {
         },
 
         onDeleteText() {
-            console.log('ondeletetext');
             this.hidePopover();
             // this.$router.push({ name: 'explore', query: { ...(this.$route.query || {}), search: undefined } });
         },
 
         onSearchFieldFocus() {
-            console.log('focus', this._ignoreFocus);
-
             if (!this._ignoreFocus) {
                 this.showPopover();
             }

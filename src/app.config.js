@@ -116,9 +116,7 @@ let appConfig = {
         outputDir: 'dist',
     },
     // feature toggles
-    toggles: {
-        searchBarWithWhisperer: false,
-    },
+    toggles: {},
 };
 
 if (appConfig.module === 'pg') {
