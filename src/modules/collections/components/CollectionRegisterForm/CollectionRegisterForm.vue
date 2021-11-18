@@ -154,7 +154,9 @@
             </template>
         </f-form-input>
         <div class="collectionregisterform_btn">
-            <f-button type="submit" :disabled="isDisabled">{{ $t('collectionregisterform.submit') }}</f-button>
+            <a-button type="submit" :disabled="isDisabled" :loading="isLoading">
+                {{ $t('collectionregisterform.submit') }}
+            </a-button>
         </div>
     </f-form>
 </template>
@@ -165,11 +167,12 @@ import AddCategory from '@/modules/collections/components/AddCategory/AddCategor
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { uploadCollection } from '@/utils/upload';
 import { checkSignIn } from '@/modules/account/auth';
+import AButton from '@/common/components/AButton/AButton';
 
 export default {
     name: 'CollectionRegisterForm',
 
-    components: { AUploadArea, AddCategory },
+    components: { AUploadArea, AddCategory, AButton },
 
     data() {
         return {
@@ -177,6 +180,7 @@ export default {
                 categories: [],
             },
             imageFile: null,
+            isLoading: false,
         };
     },
 
@@ -186,7 +190,6 @@ export default {
                 this.values.name === '' ||
                 this.values.description === '' ||
                 this.values.contract === '' ||
-                this.values.royalty === '' ||
                 this.values.feeRecipient === '' ||
                 this.values.email === '' ||
                 !this.imageFile
@@ -208,6 +211,7 @@ export default {
         async onSubmit(_data) {
             console.log('onSubmit', _data);
             const vals = _data.values;
+            this.isLoading = true;
 
             await this.checkWalletConnection();
             let signed = await checkSignIn();
@@ -224,7 +228,7 @@ export default {
                 contract: vals.contract,
                 name: vals.name,
                 description: vals.description,
-                royalty: vals.royalty,
+                royalty: vals.royalty ? vals.royalty : 0,
                 feeRecipient: vals.feeRecipient,
                 categories: vals.categories,
                 discord: vals.discord,
@@ -238,11 +242,12 @@ export default {
             try {
                 await uploadCollection(collectionApplication, this.imageFile);
             } catch (err) {
-                console.error('uploadCollection fail', err);
+                console.error('uploadCollection failed', err);
                 notifications.add({
                     type: 'error',
                     text: this.$t('collectionregisterform.wasntUploaded') + err,
                 });
+                this.isLoading = false;
                 return;
             }
 
@@ -250,6 +255,7 @@ export default {
                 type: 'success',
                 text: this.$t('collectionregisterform.success'),
             });
+            this.isLoading = false;
         },
 
         async checkWalletConnection() {
