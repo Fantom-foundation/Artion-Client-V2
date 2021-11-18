@@ -226,7 +226,7 @@ export default {
                 console.error('uploadTokenData fail', err);
                 notifications.add({
                     type: 'error',
-                    text: this.$t('nftcreate.wasntUploaded'),
+                    text: this.$t('nftcreate.wasntUploaded') + err,
                 });
                 this.isLoading = false;
                 return;
