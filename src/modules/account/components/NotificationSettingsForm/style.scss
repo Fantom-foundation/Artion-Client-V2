@@ -2,9 +2,20 @@
 	--notification-border: 1px solid var(--f-color-primary-3);
 	margin-top: var(--f-spacer-5);
 
+	&_lists {
+		display: flex;
+		gap: var(--f-spacer-5);
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+
 	&_list {
 		display: flex;
 		flex-direction: column;
+	}
+
+	&_wrap {
+		margin-top: var(--f-spacer-4);
 		border: var(--notification-border);
 		border-radius: var(--f-border-radius-3);
 	}
@@ -18,9 +29,14 @@
 		}
 	}
 
+	&_content { 
+		flex: 1; 
+		&:hover { cursor: pointer; }
+	}
+
 	&_checkbox {
 		.cr_check {
-			border-radius: var(--f-border-radius-3);
+			//border-radius: var(--f-border-radius-3);
 		}
 	}
 
