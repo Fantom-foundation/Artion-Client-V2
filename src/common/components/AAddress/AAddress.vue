@@ -1,6 +1,6 @@
 <template>
     <span class="aaddress">
-        <f-image v-if="imageSrc" :src="imageSrc" size="24px" />
+        <f-image v-if="imageSrc" :src="imageSrc" fit="cover" size="24px" />
         <span v-if="name">{{ name }}</span>
         <f-ellipsis v-else :text="address" overflow="middle" />
     </span>
