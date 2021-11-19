@@ -253,6 +253,7 @@
 
     .auploadarea {
         --auploadarea-border-color: var(--f-color-grey-3);
+        --auploadarea-background-color: var(--theme-dark-color-6);
     }
 
     .density {
@@ -301,6 +302,7 @@
 
     .account {
         --account-border: 1px solid var(--theme-dark-color-5);
+        --account-avatar-border-color: var(--f-doc-background-color);
     }
 
     .explore {

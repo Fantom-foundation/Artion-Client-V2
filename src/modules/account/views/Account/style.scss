@@ -1,9 +1,10 @@
 @use "fantom-vue-components/src/assets/scss/tools/media";
 .account {
 	--account-border: 1px solid var(--f-color-grey-3, #dedede);
+	--account-avatar-border-color: #fff;
+
 	&_banner {
 		height: 225px;
-		background-color: rgb(229, 232, 235);
 	}
 	.auploadarea_content { border: none; }
 	.auploadarea_preview { object-fit: cover; }
@@ -22,9 +23,9 @@
 		height: 126px;
 		border-radius: 50%;
 		overflow: hidden;
-		border: 4px solid #fff;
+		border: 4px solid var(--account-avatar-border-color);
 		transform: translateY(-50%);
-		background-color: rgb(255, 153, 0);
+		//background-color: rgb(255, 153, 0);
 	}
 
 	&_title {
