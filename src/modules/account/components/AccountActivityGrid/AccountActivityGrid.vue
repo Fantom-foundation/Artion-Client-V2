@@ -20,6 +20,7 @@
             </template>
             <template #column-token="{ item }">
                 <router-link
+                    v-if="item.token"
                     :to="{ name: 'nft-detail', params: { tokenContract: item.contract, tokenId: item.tokenId } }"
                 >
                     <a-address :address="item.token.contract" :name="item.token.name" :image="item.token.imageThumb" />
