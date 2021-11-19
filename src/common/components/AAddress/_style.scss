@@ -3,12 +3,13 @@
     display: flex;
     gap: var(--f-spacer-1);
 
-    &_avatar {
-        display: inline-block;
-        width: 24px;
-        height: 24px;
+    .fimage {
         border-radius: 50%;
-        margin-bottom: 0;
+        overflow: hidden;
+
+        img {
+            object-fit: fill;
+        }
     }
 
     .f-ellipsis {
