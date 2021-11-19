@@ -2,7 +2,7 @@
     <f-form v-model="values" class="nftcreate_form" @submit="onSubmit">
         <div class="nftcreate_col">
             <div>
-                <a-upload-area @input="setTokenImage">
+                <a-upload-area @input="setTokenImage" class="auploadarea-nobackground">
                     Drop files here or browse <br />
                     JPG, PNG, BMP, GIF Max 15mb.
                 </a-upload-area>

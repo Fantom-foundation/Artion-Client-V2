@@ -6,9 +6,9 @@
         <div class="collectionregisterform__desc">
             {{ $t('collectionregisterform.useOwnerAddressOfCollection') }}
         </div>
-        <AUploadArea @input="setTokenImage">
+        <a-upload-area @input="setTokenImage" class="auploadarea-nobackground">
             {{ $t('collectionregisterform.alsoBeUsedForNavigation') }}
-        </AUploadArea>
+        </a-upload-area>
         <f-form-input
             type="text"
             field-size="large"

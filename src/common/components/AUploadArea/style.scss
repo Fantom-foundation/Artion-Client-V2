@@ -4,7 +4,10 @@
 .auploadarea {
     width: 100%;
     height: 100%;
-    background: var(--auploadarea-background-color);
+
+    &:not(.auploadarea-nobackground) {
+        background: var(--auploadarea-background-color);
+    }
 
     &_content {
         width: 100%;
