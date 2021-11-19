@@ -2,7 +2,7 @@
     <a-window
         ref="window"
         :title="title"
-        class="fwindow-width-5 accountfollowwindow"
+        class="fwindow-width-3 accountfollowwindow"
         v-on="$listeners"
         @window-hide="update()"
     >
@@ -26,11 +26,13 @@
                 <router-link :to="{ name: 'account', params: { address: item.address } }">
                     <div class="accountfollowwindow_item">
                         <div class="accountfollowwindow_item_img">
-                            <img :src="item.img || 'img/tmp/avatar.png'" alt="avatar" />
+                            <f-image :src="item.img" fit="cover" size="40px" alt="avatar" class="placeholder-noimage" />
                         </div>
                         <div class="accountfollowwindow_item_data">
-                            <span>{{ item.name || item.address }}</span>
-                            <span><f-ellipsis :text="item.address" overflow="middle"/></span>
+                            <span class="accountfollowwindow_item_name">{{ item.name || $t('unnamed') }}</span>
+                            <span class="accountfollowwindow_item_address">
+                                <f-ellipsis :text="item.address" overflow="middle" />
+                            </span>
                         </div>
                     </div>
                 </router-link>

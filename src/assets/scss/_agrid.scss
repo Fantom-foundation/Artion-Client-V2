@@ -6,6 +6,7 @@
 
     &.fdatagrid {
         --fdatagrid-cell-background-color: transparent;
+        --fdatagrid-cell-hover-background-color: var(--f-color-grey-2);
 
         thead th {
             background-color: var(--agrid-header-background-color);

@@ -17,6 +17,7 @@
     "redeem": "Redeem",
     "price": "Price",
     "from": "From",
+    "unnamed": "Unnamed",
 
     "navigation": {
         "explore": "@:explore",
@@ -451,7 +452,7 @@
     },
 
     "account": {
-        "unnamed": "Unnamed",
+        "unnamed": "@:unnamed",
         "copy": "Copy",
         "collected": "Collected",
         "created": "Created",
