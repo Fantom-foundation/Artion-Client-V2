@@ -1,3 +1,5 @@
+@use "custom-properties";
+
 .aaddress {
     //display: inline-block;
     display: flex;
@@ -6,6 +8,14 @@
     .fimage {
         border-radius: 50%;
         overflow: hidden;
+
+        &-noimage {
+            background: var(--aadress-noimage-background-color);
+
+            .fimage_placeholder {
+                display: none;
+            }
+        }
     }
 
     .f-ellipsis {
