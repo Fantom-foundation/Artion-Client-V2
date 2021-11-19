@@ -11,15 +11,19 @@
                     <div class="nftdetail_property_item">
                         <span>{{ $t('nftdetail.symbol') }}:</span> {{ info.symbol }}
                     </div>
-                    <!--
-                    <div class="nftdetail_property_item">
-                        <span>{{ $t('nftdetail.royalty') }}:</span> 0.01%
+                    <div v-if="info.royalty" class="nftdetail_property_item">
+                        <span>{{ $t('nftdetail.royalty') }}:</span> {{ info.royalty / 100 }}%
                     </div>
-                    <div class="nftdetail_property_item">
+                    <div v-if="info.feeRecipientUser" class="nftdetail_property_item">
                         <span>{{ $t('nftdetail.recipient') }}:</span>
-                        <a target="_blank" href="#">0xfbB8...0a80</a>
+                        <router-link :to="{ name: 'account', params: { address: info.feeRecipientUser.address } }">
+                            <a-address
+                                :address="info.feeRecipientUser.address"
+                                :name="info.feeRecipientUser.username"
+                                :image="info.feeRecipientUser.avatarThumb"
+                            />
+                        </router-link>
                     </div>
-                    -->
                     <div class="nftdetail_property_item">
                         <span>{{ $t('nftdetail.ipRights') }}:</span>
                         <a v-if="info.ipRights" :href="info.ipRights">{{ info.ipRights }}</a>
@@ -136,6 +140,7 @@ import ADetails from '@/common/components/ADetails/ADetails';
 import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/NftDetailCollection.vue';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 import { toInt } from '@/utils/big-number.js';
+import AAddress from '@/common/components/AAddress/AAddress';
 export default {
     name: 'NftDetailInfo',
 
@@ -151,6 +156,7 @@ export default {
         ADetails,
         NftDetailCollection,
         FEllipsis,
+        AAddress,
     },
 
     methods: {

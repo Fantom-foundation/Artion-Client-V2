@@ -37,6 +37,13 @@ export async function getToken(contract = '', id = '') {
                     imageThumb
                     imageMimetype
                     created
+                    royalty
+                    feeRecipient
+                    feeRecipientUser {
+                        address
+                        username
+                        avatarThumb
+                    }
                     hasListing
                     hasOffer
                     hasAuction
