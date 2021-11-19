@@ -94,13 +94,15 @@
                 />
 
                 <!-- TO DO -->
-                <a-details hidden>
+                <a-details open>
                     <template #label>
                         <div class="nftdetail_details_wrap">
                             <app-iconset icon="graf" /> {{ $t('nftdetail.priceHistory') }}
                         </div>
                     </template>
-                    PriceHistory component
+                    <template>
+                        <nft-price-history :prices="prices" />
+                    </template>
                 </a-details>
 
                 <a-details open class="adetails_p0">
@@ -197,6 +199,8 @@ import { isExpired } from '@/utils/date.js';
 import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/NftDetailCollection.vue';
 import { compareAddresses } from '@/utils/address.js';
 import AVideo from '@/common/components/AVideo/AVideo';
+import { getTokenPriceHistory } from '@/modules/nfts/queries/token-prices.js';
+import NftPriceHistory from '@/modules/nfts/components/NftPriceHistory/NftPriceHistory.vue';
 
 export default {
     name: 'NftDetail',
@@ -224,6 +228,7 @@ export default {
         NftTradeHistoryGrid,
         NftMoreFromCollectionList,
         AVideo,
+        NftPriceHistory,
     },
 
     data() {
@@ -240,6 +245,8 @@ export default {
             tokenOwner: {},
             tx: {},
             likedNftIds: [],
+
+            prices: [],
         };
     },
 
@@ -298,6 +305,11 @@ export default {
 
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+
+            const now = new Date();
+            const yearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+            let price = await getTokenPriceHistory(routeParams.tokenContract, routeParams.tokenId, yearAgo, now);
+            this.prices = price;
 
             if (this.auction.contract) {
                 setTimeout(() => {
