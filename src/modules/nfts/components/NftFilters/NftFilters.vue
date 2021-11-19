@@ -3,7 +3,13 @@
         <a-details :label="$t('status')" :open="statusOpen" strategy="render" id="test_nftfilters_status">
             <status-filter v-model="dFilters.status" />
         </a-details>
-        <a-details :label="$t('price')" :open="priceOpen" strategy="render" id="test_nftfilters_price">
+        <a-details
+            v-if="priceFilterFeature"
+            :label="$t('price')"
+            :open="priceOpen"
+            strategy="render"
+            id="test_nftfilters_price"
+        >
             <price-filter v-model="dFilters.price" />
         </a-details>
         <a-details
@@ -32,11 +38,19 @@ import PriceFilter from '@/modules/nfts/components/PriceFilter/PriceFilter';
 import { getCategories } from '@/modules/nfts/queries/categories.js';
 import { getCollections } from '@/modules/nfts/queries/collections.js';
 import { getCollectionImageUrl } from '@/utils/url.js';
+import appConfig from '@/app.config.js';
 
 export default {
     name: 'NftFilters',
 
-    components: { StatusFilter, PriceFilter, CollectionsFilter, CategoriesFilter, ADetails, ADetailsGroup },
+    components: {
+        StatusFilter,
+        PriceFilter,
+        CollectionsFilter,
+        CategoriesFilter,
+        ADetails,
+        ADetailsGroup,
+    },
 
     model: {
         prop: 'filters',
@@ -61,6 +75,7 @@ export default {
             priceOpen: false,
             collectionsOpen: false,
             categoryOpen: false,
+            priceFilterFeature: appConfig.toggles.priceFilter,
         };
     },
 
