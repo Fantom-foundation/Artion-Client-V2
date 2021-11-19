@@ -116,9 +116,7 @@ let appConfig = {
         outputDir: 'dist',
     },
     // feature toggles
-    toggles: {
-        priceFilter: false,
-    },
+    toggles: {},
 };
 
 if (appConfig.module === 'pg') {

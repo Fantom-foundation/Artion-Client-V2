@@ -7,6 +7,7 @@
                         :aria-label="$t('page.explore.filters')"
                         :data-tooltip="$t('page.explore.filters')"
                         @click="isSideClose = !isSideClose"
+                        class="btn-nostyle"
                     >
                         <span class="explore_sidebar_label">{{ $t('page.explore.filters') }}</span>
                         <span class="explore_sidebar_icon">

@@ -4,8 +4,7 @@
             <status-filter v-model="dFilters.status" />
         </a-details>
         <a-details :label="$t('price')" :open="priceOpen" strategy="render" id="test_nftfilters_price">
-            <price-filter v-if="priceFilterFeature" v-model="dFilters.price" />
-            <price-filter-o v-else v-model="dFilters.price" />
+            <price-filter v-model="dFilters.price" />
         </a-details>
         <a-details
             :label="$t('collections')"
@@ -33,14 +32,11 @@ import PriceFilter from '@/modules/nfts/components/PriceFilter/PriceFilter';
 import { getCategories } from '@/modules/nfts/queries/categories.js';
 import { getCollections } from '@/modules/nfts/queries/collections.js';
 import { getCollectionImageUrl } from '@/utils/url.js';
-import PriceFilterO from '@/modules/nfts/components/PriceFilter/PriceFilterO.vue';
-import appConfig from '@/app.config.js';
 
 export default {
     name: 'NftFilters',
 
     components: {
-        PriceFilterO,
         StatusFilter,
         PriceFilter,
         CollectionsFilter,
@@ -72,7 +68,6 @@ export default {
             priceOpen: false,
             collectionsOpen: false,
             categoryOpen: false,
-            priceFilterFeature: appConfig.toggles.priceFilter,
         };
     },
 

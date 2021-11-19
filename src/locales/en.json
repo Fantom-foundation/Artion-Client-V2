@@ -305,6 +305,16 @@
         "sortbyFilters": "Sort by Filters"
     },
 
+    "pricefilter": {
+        "min": "Min",
+        "max": "Max",
+        "minimalPrice": "Minimum price",
+        "maximalPrice": "Maximum price",
+        "to": "to",
+        "apply": "Apply",
+        "minimumPriceError": "Minimum must be less than maximum"
+    },
+
     "addcategory": {
         "addCategory": "Add Category"
     },

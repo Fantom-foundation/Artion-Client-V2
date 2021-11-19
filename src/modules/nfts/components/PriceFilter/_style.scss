@@ -1,0 +1,20 @@
+.pricefilter {
+    display: grid;
+    gap: var(--f-spacer-3);
+
+    &_inputs {
+        display: flex;
+        gap: var(--f-spacer-2);
+        align-items: center;
+    }
+
+    &_currency {
+        color: var(--f-color-grey-4);
+    }
+
+    .fmessage {
+        width: 100%;
+        font-size: var(--f-font-size-3);
+        margin-bottom: var(--f-spacer-2);
+    }
+}
