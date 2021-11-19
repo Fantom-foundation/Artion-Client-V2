@@ -168,9 +168,12 @@ import { notifications } from 'fantom-vue-components/src/plugins/notifications.j
 import { uploadCollection } from '@/utils/upload';
 import { checkSignIn } from '@/modules/account/auth';
 import AButton from '@/common/components/AButton/AButton';
+import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
 
 export default {
     name: 'CollectionRegisterForm',
+
+    mixins: [eventBusMixin],
 
     components: { AUploadArea, AddCategory, AButton },
 
