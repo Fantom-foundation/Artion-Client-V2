@@ -97,7 +97,8 @@
             <div class="nftcreate_info">
                 <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm') }}</f-message>
             </div>
-            <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
+            <a-sign-transaction :tx="txMint" @transaction-status="onMintTransactionStatus" />
+            <a-sign-transaction :tx="txRoyalty" @transaction-status="onRoyaltyTransactionStatus" />
         </div>
     </f-form>
 </template>
@@ -118,6 +119,7 @@ import { toHex } from '@/utils/big-number';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
 import { estimateMintFeeGas } from '@/modules/nfts/queries/estimate-mint';
 import { getCollectionImageUrl } from '@/utils/url.js';
+import { tokenExists } from '@/modules/nfts/queries/token';
 
 export default {
     name: 'NftCreateForm',
@@ -132,7 +134,9 @@ export default {
             collection: {},
             imageFile: null,
             fileError: '',
-            tx: {},
+            txMint: {},
+            txRoyalty: {},
+            tokenId: null,
             isLoading: false,
         };
     },
@@ -161,7 +165,7 @@ export default {
             const estimation = await estimateMintFeeGas(
                 this.$wallet.account || '0x0000000000000000000000000000000000000001',
                 _collectionId,
-                'dummy'
+                'https://minter.artion.io/default/access/minter/estimation.json'
             );
             console.log('collectionValidator', _collectionId, estimation.error);
             return estimation.error != null;
@@ -208,7 +212,11 @@ export default {
                 return;
             }
 
-            const estimation = await estimateMintFeeGas(this.$wallet.account, val.collectionId, 'dummy');
+            const estimation = await estimateMintFeeGas(
+                this.$wallet.account,
+                val.collectionId,
+                'https://minter.artion.io/default/access/minter/estimation.json'
+            );
             console.log('estimation', estimation);
             if (estimation.error != null) {
                 notifications.add({
@@ -232,8 +240,12 @@ export default {
                 return;
             }
 
+            notifications.add({
+                type: 'info',
+                text: this.$t('nftcreate.signMint'),
+            });
             const web3 = new Web3();
-            this.tx = contracts.createNFT(
+            this.txMint = contracts.createNFT(
                 this.$wallet.account,
                 tokenUri,
                 estimation.platformFee,
@@ -242,17 +254,20 @@ export default {
             );
         },
 
-        async onTransactionStatus(payload) {
-            console.log('onTransactionStatus', payload);
+        async onMintTransactionStatus(payload) {
+            console.log('onMintTransactionStatus', payload);
             if (payload.status === 'error') {
+                notifications.add({
+                    type: 'error',
+                    text: this.$t('nftcreate.mintingError'),
+                });
                 this.isLoading = false;
                 return;
             }
             if (payload.status === 'success') {
                 console.log('txHash', payload.data);
-                let tokenId;
                 try {
-                    tokenId = await this.getMintedTokenId(payload.data);
+                    this.tokenId = await this.getMintedTokenId(payload.data);
                 } catch (e) {
                     console.error('getMintedTokenId', e);
                     notifications.add({
@@ -265,7 +280,11 @@ export default {
 
                 if (this.values.unlockContentToogle) {
                     try {
-                        let res = await setUnlockableContent(this.collection.value, tokenId, this.values.unlockContent);
+                        let res = await setUnlockableContent(
+                            this.collection.value,
+                            this.tokenId,
+                            this.values.unlockContent
+                        );
                         console.log('setUnlockableContent', res);
                     } catch (e) {
                         console.error('setUnlockableContent', e);
@@ -278,14 +297,64 @@ export default {
                     }
                 }
 
+                const royalty = Number(this.values.royalty);
+                if (royalty) {
+                    notifications.add({
+                        type: 'info',
+                        text: this.$t('nftcreate.signRoyalty'),
+                    });
+                    const royaltyDec = Math.round(royalty * 100);
+                    const web3 = this.$wallet.wallet._web3;
+                    console.log('registerTokenRoyalty', this.collection.value, this.tokenId, royaltyDec);
+                    this.txRoyalty = contracts.registerTokenRoyalty(
+                        this.collection.value,
+                        this.tokenId,
+                        royaltyDec,
+                        web3
+                    );
+                } else {
+                    await this.mintingSucceed();
+                }
+            }
+        },
+
+        async onRoyaltyTransactionStatus(payload) {
+            console.log('onRoyaltyTransactionStatus', payload);
+            if (payload.status === 'error') {
                 notifications.add({
-                    type: 'success',
-                    text: this.$t('nftcreate.success'),
+                    type: 'error',
+                    text: this.$t('nftcreate.royaltyError'),
                 });
-                this.$router.push({
+                this.isLoading = false;
+                return;
+            }
+            if (payload.status === 'success') {
+                await this.mintingSucceed();
+            }
+        },
+
+        async mintingSucceed() {
+            notifications.add({
+                type: 'success',
+                text: this.$t('nftcreate.success'),
+            });
+            await this.redirectOrWait();
+        },
+
+        async redirectOrWait() {
+            console.log('redirectOrWait');
+            let exists = await tokenExists(this.collection.value, this.tokenId);
+            if (exists) {
+                await this.$router.push({
                     name: 'nft-detail',
-                    params: { tokenContract: this.collection.value, tokenId: tokenId },
+                    params: { tokenContract: this.collection.value, tokenId: this.tokenId },
                 });
+            } else {
+                notifications.add({
+                    type: 'info',
+                    text: this.$t('nftcreate.scanWaiting'),
+                });
+                setTimeout(() => this.redirectOrWait(), 1000);
             }
         },
 

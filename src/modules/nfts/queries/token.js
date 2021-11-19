@@ -1,6 +1,27 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 
+export async function tokenExists(contract = '', id = '') {
+    const query = {
+        query: gql`
+            query GetToken($contract: Address!, $tokenId: BigInt!) {
+                token(contract: $contract, tokenId: $tokenId) {
+                    contract
+                    tokenId
+                    name
+                }
+            }
+        `,
+        variables: {
+            contract,
+            tokenId: id,
+        },
+        fetchPolicy: 'network-only',
+    };
+    const token = await gqlQuery(query, 'token');
+    return token && token.name;
+}
+
 export async function getToken(contract = '', id = '') {
     const query = {
         query: gql`
