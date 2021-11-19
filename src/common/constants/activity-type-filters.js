@@ -1,10 +1,10 @@
 export function ACTIVITY_TYPES() {
     return [
-        {
+        /*{
             label: 'Filter by',
             filter: '',
             disabled: true,
-        },
+        },*/
         {
             label: '---',
             filter: '',

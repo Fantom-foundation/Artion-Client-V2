@@ -6,6 +6,9 @@
         readonly
         :inline-autocomplete="false"
         field-size="large"
+        attach-position="bottom"
+        hide-on-document-scroll
+        fit-height-to-viewport
         class="accountactivityfilter"
     />
 </template>
