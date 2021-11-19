@@ -67,6 +67,9 @@
     --main-lr-padding: var(--f-spacer-3);
     --filter-item-padding: var(--f-spacer-2);
     --fimage-noimage-background-color: var(--f-color-grey-2);
+    --scrollbar-background-color: #f1f1f1;
+    --scrollbar-thumb-color: #888;
+    --scrollbar-thumb-hover-color: #555;
 }
 
 @include media.media-min(breakpoints.$breakpoint-md) {

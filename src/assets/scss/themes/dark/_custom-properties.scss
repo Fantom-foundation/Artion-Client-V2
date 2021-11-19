@@ -31,6 +31,10 @@
     //--f-outline-shadow: 0 0 0 2px rgba(87,92,128, 0.9);
     --color-light: var(--theme-dark-color-4);
 
+    --scrollbar-background-color: var(--f-color-grey-9);
+    --scrollbar-thumb-color: var(--theme-dark-color-5);
+    --scrollbar-thumb-hover-color: var(--theme-dark-color-4);
+
     .appcategorycard {
         --f-label-background: var(--theme-dark-color-9);
     }
