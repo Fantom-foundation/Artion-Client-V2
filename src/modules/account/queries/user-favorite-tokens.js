@@ -47,6 +47,10 @@ export async function getUserFavoriteTokens(address = '', pagination = {}) {
                                         amount
                                         payToken
                                     }
+                                    lastTradePrice {
+                                        amount
+                                        payToken
+                                    }
                                     auction {
                                         endTime
                                     }

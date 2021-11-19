@@ -175,6 +175,26 @@
         }
     }
 
+    &_lastprice {
+        display: flex;
+        column-gap: var(--f-spacer-1);
+        justify-content: flex-end;
+        font-size: var(--f-font-size-2);
+
+        &_label {
+            color: var(--f-color-grey-5);
+            white-space: nowrap;
+        }
+
+        .atokenvalue {
+            font-size: var(--f-font-size-2);
+
+            img {
+                max-width: 12px;
+            }
+        }
+    }
+
     &_timeleft {
         font-size: var(--f-font-size-2);
         color: var(--f-color-grey-5);

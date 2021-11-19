@@ -50,7 +50,7 @@
                             {{ auctionEndTime }} {{ $t('nftcard.left') }}
                         </div>
                     </div>
-                    <div v-else-if="nftData.listingPrice || nftData.offeredPrice" class="nftcard_price">
+                    <div v-else-if="nftData.listingPrice || nftData.offeredPrice || nftData.lastTradePrice" class="nftcard_price">
                         <div class="nftcard_label">{{ $t('nftcard.price') }}</div>
                         <div v-if="nftData.listingPrice">
                             <a-token-value
@@ -64,6 +64,14 @@
                             <a-token-value
                                 :token="nftData.offeredPrice.payToken"
                                 :value="nftData.offeredPrice.amount"
+                                no-symbol
+                            />
+                        </div>
+                        <div v-if="nftData.lastTradePrice" class="nftcard_lastprice">
+                            <span class="nftcard_lastprice_label">{{ $t('nftcard.lastPrice') }}</span>
+                            <a-token-value
+                                :token="nftData.lastTradePrice.payToken"
+                                :value="nftData.lastTradePrice.amount"
                                 no-symbol
                             />
                         </div>

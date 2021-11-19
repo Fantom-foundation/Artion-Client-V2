@@ -54,6 +54,10 @@ export async function getUserOwnershipTokens(address = '', pagination = {}, coll
                                         amount
                                         payToken
                                     }
+                                    lastTradePrice {
+                                        amount
+                                        payToken
+                                    }
                                     auction {
                                         endTime
                                     }

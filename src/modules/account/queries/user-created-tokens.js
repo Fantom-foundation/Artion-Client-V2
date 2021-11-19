@@ -45,6 +45,10 @@ export async function getUserCreatedTokens(address = '', pagination = {}) {
                                     amount
                                     payToken
                                 }
+                                lastTradePrice {
+                                    amount
+                                    payToken
+                                }
                                 auction {
                                     endTime
                                 }

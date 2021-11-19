@@ -60,6 +60,10 @@ export async function getTokens(pagination = {}, filterSort = {}) {
                                 amount
                                 payToken
                             }
+                            lastTradePrice {
+                                amount
+                                payToken
+                            }
                             auction {
                                 endTime
                             }
