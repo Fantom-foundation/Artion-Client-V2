@@ -1,0 +1,11 @@
+:root {
+    .fimage {
+        &-noimage.placeholder-noimage {
+            background: var(--fimage-noimage-background-color);
+
+            .fimage_placeholder {
+                display: none;
+            }
+        }
+    }
+}

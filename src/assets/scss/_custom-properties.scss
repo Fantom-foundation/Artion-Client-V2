@@ -66,6 +66,7 @@
     --homepage-gradient: linear-gradient(180deg, #f9f9ff, rgba(234, 234, 241, 0));
     --main-lr-padding: var(--f-spacer-3);
     --filter-item-padding: var(--f-spacer-2);
+    --fimage-noimage-background-color: var(--f-color-grey-2);
 }
 
 @include media.media-min(breakpoints.$breakpoint-md) {

@@ -5,6 +5,7 @@
 :root.theme-dark {
     --card-shadow: 0 20.5814px 82.3256px #2c2c2f;
     --homepage-gradient: none;
+    --fimage-noimage-background-color: var(--theme-dark-color-5);
 
     --theme-dark-color-9: #222431;
     --theme-dark-color-8: #252736;
@@ -101,6 +102,10 @@
             --fwindow-popover-background: var(--theme-dark-color-6);
             --fwindow-body-background: var(--theme-dark-color-6);
         }
+
+        .fwindow_header {
+            border-color: var(--theme-dark-color-5);
+        }
     }
 
     .fnotifications {
@@ -191,8 +196,8 @@
         }
     }
 
-    .aaddress {
-        --aadress-noimage-background-color: var(--theme-dark-color-5);
+    .accountnavigation_counter {
+        background: var(--theme-dark-color-6);
     }
 
     .tradehistoryswitcher {
