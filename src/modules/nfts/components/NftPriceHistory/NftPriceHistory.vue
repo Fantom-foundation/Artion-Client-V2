@@ -1,25 +1,26 @@
 <template>
     <div class="nftpricehistory">
-        <apex-charts width="100%" type="line" :options="options" :series="series" ref="chart"></apex-charts>
+        <apex-charts
+            width="100%"
+            height="250px"
+            type="line"
+            :options="options"
+            :series="series"
+            ref="chart"
+        ></apex-charts>
     </div>
 </template>
 
 <script>
 import ApexCharts from 'vue-apexcharts';
-import { toInt } from '@/utils/big-number.js';
+import { getTokenPriceHistory } from '@/modules/nfts/queries/token-prices.js';
+import { bFromTokenValue } from '@/utils/big-number.js';
 import { clone } from 'fantom-vue-components/src/utils';
 import { mapState } from 'vuex';
 export default {
     name: 'NftPriceHistory',
 
     components: { ApexCharts },
-
-    props: {
-        prices: {
-            type: Array,
-            required: true,
-        },
-    },
 
     data() {
         return {
@@ -45,7 +46,12 @@ export default {
                 },
             },
             series: [],
+            prices: [],
         };
+    },
+
+    created() {
+        this.load();
     },
 
     computed: {
@@ -67,7 +73,7 @@ export default {
                 return [year, (mm > 9 ? '' : '0') + mm, (dd > 9 ? '' : '0') + dd].join('-');
             });
 
-            yCoordinates = priceData.map(item => toInt(item.price));
+            yCoordinates = priceData.map(item => bFromTokenValue(item.price, 6).toNumber());
 
             return { x: xCoordinates, y: yCoordinates };
         },
@@ -100,6 +106,15 @@ export default {
                     },
                 ]);
             }
+        },
+    },
+
+    methods: {
+        async load() {
+            const routeParams = this.$route.params;
+            const now = new Date();
+            const yearAgo = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+            this.prices = await getTokenPriceHistory(routeParams.tokenContract, routeParams.tokenId, yearAgo, now);
         },
     },
 };
