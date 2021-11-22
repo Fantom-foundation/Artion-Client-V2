@@ -147,7 +147,7 @@
     }
 }
 
-@include media.media-max(600px) {
+@include media.media-max(breakpoints.$breakpoint-md) {
     .explore {
         &_filterButton {
             display: flex;

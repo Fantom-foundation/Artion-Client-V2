@@ -13,7 +13,7 @@
             no-header
             max-height="400px"
             sticky-head
-            class="agrid accountfollowwindow"
+            class="agrid accountfollowwindow agrid-mobileview-nolabel"
             infinite-scroll-root=".accountfollowwindow .fdatagrid_table"
             :items="items"
             :columns="columns"
