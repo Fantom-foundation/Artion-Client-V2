@@ -25,11 +25,9 @@
 </template>
 
 <script>
-import { PAY_TOKENS } from '@/common/constants/pay-tokens.js';
 import { formatTokenValue } from '@/utils/formatters.js';
 import { toBigNumber } from '@/utils/big-number.js';
-
-const payTokens = PAY_TOKENS();
+import { getPayToken } from '@/utils/pay-tokens.js';
 
 export default {
     name: 'ATokenValue',
@@ -117,16 +115,16 @@ export default {
             const { dToken } = this;
             const value$ = value ? toBigNumber(value).multipliedBy(dToken.price) : null;
 
-            return value$ ? formatTokenValue(value$, dToken.priceDecimals, 2, true) : '';
+            return value$ ? formatTokenValue(value$, dToken.decimals, 2, true) : '';
         },
     },
 
     watch: {
         token: {
-            handler(value) {
+            async handler(value) {
                 if (value) {
                     if (typeof value === 'string') {
-                        this.dToken = this.getPayTokenByAddress(value) || {};
+                        this.dToken = (await this.getPayTokenByAddress(value)) || {};
                     } else {
                         this.dToken = value;
                     }
@@ -137,8 +135,8 @@ export default {
     },
 
     methods: {
-        getPayTokenByAddress(address) {
-            let payToken = payTokens.find(token => token.address === address);
+        async getPayTokenByAddress(address) {
+            let payToken = await getPayToken(address);
             if (!payToken) {
                 console.error('unable to display unknown payToken', address);
             }

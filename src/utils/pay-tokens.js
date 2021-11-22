@@ -1,16 +1,16 @@
 import { PAY_TOKENS, PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import { compareAddresses } from '@/utils/address.js';
 
-const _PAY_TOKENS = PAY_TOKENS();
+// const _PAY_TOKENS = PAY_TOKENS();
 
 /**
  * @param {string} address
  * @param {PayToken[]} [payTokens]
  * @return {Promise<{img: string, address: string, price: number, _update: boolean, label: string, value: string}|null>}
  */
-export async function getPayToken(address, payTokens = _PAY_TOKENS) {
+export async function getPayToken(address, payTokens) {
     /** @type {PayToken} */
-    const payToken = payTokens.find(token => compareAddresses(token.address, address));
+    const payToken = (payTokens || (await PAY_TOKENS())).find(token => compareAddresses(token.address, address));
 
     return payToken ? { ...payToken } : null;
 }
