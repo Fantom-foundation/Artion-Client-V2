@@ -22,6 +22,7 @@
         <a-tx-window ref="makeOfferWindow" :title="$t('nftdetailprice.offer')" v-slot="{ onTxStatus }">
             <nft-make-offer-form
                 :token="token"
+                :listing="listing"
                 @transaction-status="
                     onTxStatus($event);
                     onMakeOfferTransactionStatus($event);

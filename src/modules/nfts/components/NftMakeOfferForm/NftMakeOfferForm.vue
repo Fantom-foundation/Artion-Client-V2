@@ -4,6 +4,7 @@
             ref="priceField"
             type="a-price-field"
             :currencies="payTokens"
+            :selected="listing.payToken"
             name="price"
             :label="$t('nftMakeOfferForm.price')"
             :validator="priceValidator"
@@ -41,6 +42,7 @@ import dayjs from 'dayjs';
 import { datetimeInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { getUserAllowanceTx } from '@/plugins/wallet/utils.js';
+import { getPayToken } from '@/utils/pay-tokens.js';
 
 export default {
     name: 'NftMakeOfferForm',
@@ -49,6 +51,12 @@ export default {
 
     props: {
         token: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
+        listing: {
             type: Object,
             default() {
                 return {};
@@ -103,7 +111,12 @@ export default {
     methods: {
         async init() {
             this.payTokens = await PAY_TOKENS_WITH_PRICES();
-            this.selectedPayToken = this.payTokens[0];
+
+            if (this.listing.payToken) {
+                this.selectedPayToken = await getPayToken(this.listing.payToken, this.payTokens);
+            } else {
+                this.selectedPayToken = this.payTokens[0];
+            }
         },
 
         /**
