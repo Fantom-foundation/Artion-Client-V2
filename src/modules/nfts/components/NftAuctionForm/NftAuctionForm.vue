@@ -350,7 +350,7 @@ export default {
             const ts = dateOutFormatterTimestamp(value || this.values.endTime);
             const tsStartTime = dateOutFormatterTimestamp(this.values.startTime);
             const tsNow = dayjs()
-                .add(5, 'minutes')
+                .add(7, 'minutes')
                 .valueOf();
             let msg = '';
 
