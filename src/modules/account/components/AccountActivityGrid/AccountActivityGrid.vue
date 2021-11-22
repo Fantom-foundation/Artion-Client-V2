@@ -168,15 +168,17 @@ export default {
 
         chooseActivityType(value) {
             const types = ACTIVITY_TYPES();
+
             let type = types.find(item => item.filter === value);
-            return this.$t(type.label);
+
+            return type ? this.$t(type.label) : '---';
         },
 
         async _onGridPageChange(pagination) {
             this.loading = true;
 
-            console.log('_onGridPageChange', JSON.stringify(pagination));
-            console.log('this.pageInfo', JSON.stringify(this.pageInfo));
+            // console.log('_onGridPageChange', JSON.stringify(pagination));
+            // console.log('this.pageInfo', JSON.stringify(this.pageInfo));
 
             const data = await this._loadPage({
                 pagination: this._getPaginationVariables(pagination),

@@ -68,7 +68,10 @@
     },
 
     "activity_types": {
-        "unknown": "UNKNOWN",
+        "unknown": "Unknown",
+        "mint": "Mint",
+        "burn": "Burn",
+        "transfer": "Transfer",
         "listing_created": "Listing Created",
         "listing_updated": "Listing Updated",
         "listing_cancelled": "Listing Cancelled",

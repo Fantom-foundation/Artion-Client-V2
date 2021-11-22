@@ -61,5 +61,21 @@ export function ACTIVITY_TYPES() {
             label: 'activity_types.auction_updated',
             filter: 'AUCTION_UPDATED',
         },
+        {
+            label: 'activity_types.mint',
+            filter: 'MINT',
+        },
+        {
+            label: 'activity_types.burn',
+            filter: 'BURN',
+        },
+        {
+            label: 'activity_types.transfer',
+            filter: 'TRANSFER',
+        },
+        {
+            label: 'activity_types.unknown',
+            filter: 'UNKNOWN',
+        },
     ];
 }
