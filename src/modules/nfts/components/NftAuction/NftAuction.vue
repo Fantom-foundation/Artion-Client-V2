@@ -93,11 +93,17 @@ import NftResultAuctionButton from '@/modules/nfts/components/NftResultAuctionBu
 import NftWithdrawBidButton from '@/modules/nfts/components/NftWithdrawBidButton/NftWithdrawBidButton.vue';
 import { mapState } from 'vuex';
 import FCountdown from 'fantom-vue-components/src/components/FCountdown/FCountdown.vue';
+import { pollingMixin } from '@/common/mixins/polling.js';
+import { getAuction } from '@/modules/nfts/queries/auction.js';
+
+const UPDATE_LAST_BID = 'update-last-bid';
 
 export default {
     name: 'NftAuction',
 
     components: { NftWithdrawBidButton, NftResultAuctionButton, NftBidButton, ATokenValue, ADetails, FCountdown },
+
+    mixins: [pollingMixin],
 
     props: {
         /** @type {Auction} */
@@ -191,6 +197,10 @@ export default {
             handler(value) {
                 if (value.contract) {
                     this.setPayToken(value);
+
+                    if (this.auctionHasStarted) {
+                        this.startUpdateLastBidPolling();
+                    }
                 }
             },
             immediate: true,
@@ -200,6 +210,24 @@ export default {
     methods: {
         async setPayToken(auction = this.auction) {
             this.payToken = (await getPayToken(auction.payToken)) || {};
+        },
+
+        async updateLastBid() {
+            const auction = (await getAuction(this.token.contract, this.token.tokenId)) || {};
+
+            this.auction.lastBid = auction.lastBid;
+        },
+
+        startUpdateLastBidPolling() {
+            if (this._polling) {
+                this._polling.start(
+                    UPDATE_LAST_BID,
+                    () => {
+                        this.updateLastBid();
+                    },
+                    3000
+                );
+            }
         },
 
         getCountdownShow(date) {
