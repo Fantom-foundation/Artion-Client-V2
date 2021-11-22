@@ -17,7 +17,10 @@ import { clone } from 'fantom-vue-components/src/utils';
  */
 
 const PAY_TOKEN_IMAGES = {
-    wftm: '/img/WFTM.png',
+    wftm: '/img/pay-tokens/WFTM.png',
+    fusdt: '/img/pay-tokens/fUSDT.png',
+    usdc: '/img/pay-tokens/USDC.png',
+    dai: '/img/pay-tokens/DAI.png',
 };
 
 let PT = [];
