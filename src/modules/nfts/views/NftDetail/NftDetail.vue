@@ -253,7 +253,7 @@ export default {
         }),
 
         tokenHasListing() {
-            return !!this.listing.unitPrice && !this.listing.closed;
+            return !!this.listing.unitPrice && !this.listing.closed && this.listing.isActive;
         },
 
         tokenHasAuction() {
@@ -401,7 +401,7 @@ export default {
             this.listing = {};
 
             for (let i = 0, len = listings.length; i < len; i++) {
-                if (!listings[i].closed) {
+                if (!listings[i].closed && listings[i].isActive) {
                     this.listing = listings[i];
                     break;
                 }

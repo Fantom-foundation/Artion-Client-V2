@@ -29,6 +29,7 @@ export async function getAuction(contract = '', tokenId = '') {
                         lastBidder
                         winner
                         resolved
+                        isActive
                     }
                 }
             }

@@ -38,6 +38,7 @@ export async function getTokenListings(contract = '', id = '', pagination = {}) 
                                 unitPrice
                                 startTime
                                 closed
+                                isActive
                             }
                         }
                     }
