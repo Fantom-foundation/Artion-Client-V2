@@ -5,7 +5,6 @@
                 <div class="h3 explore_sidebar_wrap">
                     <button
                         :aria-label="$t('page.explore.filters')"
-                        :data-tooltip="$t('page.explore.filters')"
                         @click="isSideClose = !isSideClose"
                         class="btn-nostyle"
                     >
