@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
+import { toHex } from '@/utils/big-number.js';
 
 export async function tokenExists(contract = '', id = '') {
     const query = {
@@ -14,7 +15,7 @@ export async function tokenExists(contract = '', id = '') {
         `,
         variables: {
             contract,
-            tokenId: id,
+            tokenId: toHex(id),
         },
         fetchPolicy: 'network-only',
     };
@@ -71,7 +72,7 @@ export async function getToken(contract = '', id = '') {
         `,
         variables: {
             contract,
-            tokenId: id,
+            tokenId: toHex(id),
         },
         fetchPolicy: 'network-only',
     };
@@ -114,7 +115,7 @@ export async function getTokenWithOwnerships(contract = '', id = '') {
         `,
         variables: {
             contract,
-            tokenId: id,
+            tokenId: toHex(id),
         },
         fetchPolicy: 'network-only',
     };

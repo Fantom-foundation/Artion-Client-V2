@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { gqlMutation } from '@/utils/gql.js';
+import { toHex } from '@/utils/big-number.js';
 
 /**
  * @param {string} contract
@@ -12,7 +13,7 @@ export async function likeToken({ contract = '', tokenId = '' }) {
                 likeToken(contract: $contract, tokenId: $tokenId)
             }
         `,
-        variables: { contract, tokenId },
+        variables: { contract, tokenId: toHex(tokenId) },
     };
 
     return gqlMutation(mutation, 'likeToken');
@@ -29,7 +30,7 @@ export async function unlikeToken({ contract = '', tokenId = '' }) {
                 unlikeToken(contract: $contract, tokenId: $tokenId)
             }
         `,
-        variables: { contract, tokenId },
+        variables: { contract, tokenId: toHex(tokenId) },
     };
 
     return gqlMutation(mutation, 'likeToken');

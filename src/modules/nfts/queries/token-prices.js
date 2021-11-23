@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
+import { toHex } from '@/utils/big-number.js';
 
 export async function getTokenPriceHistory(contract = '', id = '', from, to) {
     const query = {
@@ -15,7 +16,7 @@ export async function getTokenPriceHistory(contract = '', id = '', from, to) {
         `,
         variables: {
             contract,
-            tokenId: id,
+            tokenId: toHex(id),
             from,
             to,
         },

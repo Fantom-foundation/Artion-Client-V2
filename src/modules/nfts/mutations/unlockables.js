@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { gqlMutation } from '@/utils/gql.js';
+import { toHex } from '@/utils/big-number.js';
 
 /**
  * @param {string} contract
@@ -13,7 +14,7 @@ export async function setUnlockableContent(contract, tokenId, content) {
                 setUnlockableContent(contract: $contract, tokenId: $tokenId, content: $content)
             }
         `,
-        variables: { contract, tokenId, content },
+        variables: { contract, tokenId: toHex(tokenId), content },
     };
 
     return gqlMutation(mutation, 'setUnlockableContent');

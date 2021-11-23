@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
+import { toHex } from '@/utils/big-number.js';
 
 export async function getTokenListings(contract = '', id = '', pagination = {}) {
     const query = {
@@ -45,7 +46,7 @@ export async function getTokenListings(contract = '', id = '', pagination = {}) 
         `,
         variables: {
             contract,
-            tokenId: id,
+            tokenId: toHex(id),
             ...pagination,
         },
         fetchPolicy: 'network-only',

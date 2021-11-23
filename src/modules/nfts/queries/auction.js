@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
+import { toHex } from '@/utils/big-number.js';
 
 /**
  * @param {string} contract
@@ -34,7 +35,7 @@ export async function getAuction(contract = '', tokenId = '') {
         `,
         variables: {
             contract,
-            tokenId,
+            tokenId: toHex(tokenId),
         },
         fetchPolicy: 'network-only',
     };
