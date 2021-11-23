@@ -37,9 +37,9 @@
                 <span v-if="filterNumber" class="account_filterButton_counter">{{ filterNumber }}</span>
             </f-button>
         </div>-->
-        <div class="account_content" :class="{ no_aside__: isSideClose }">
-            <!--            <aside class="account_sidebar" :class="{ close: isSideClose }">
-                <header class="account_sidebar_header">
+        <div class="account_content" :class="{ no_aside: isSideClose }">
+            <aside class="account_sidebar" :class="{ close: isSideClose }">
+                <!--                <header class="account_sidebar_header">
                     <div class="account_sidebar_wrap">
                         <button
                             :aria-label="$t('account.filters')"
@@ -53,8 +53,8 @@
                         </button>
                     </div>
                 </header>
-                <nft-filters v-model="filters" class="account_sidebar_filters" />
-            </aside>-->
+                <nft-filters v-model="filters" class="account_sidebar_filters" />-->
+            </aside>
             <div class="account_view">
                 <div class="account_view_filters">
                     <div class="account_view_filters_search">
