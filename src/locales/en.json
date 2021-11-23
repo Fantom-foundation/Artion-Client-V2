@@ -467,7 +467,8 @@
         "from": "@:from",
         "price": "@:price",
         "status": "@:status",
-        "buy": "Buy"
+        "buy": "Buy",
+        "saleStarts": "The sale starts"
     },
 
     "itemstatuses": {

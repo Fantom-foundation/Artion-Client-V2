@@ -30,13 +30,16 @@
                 />
             </template>
             <template #column-actions="{ item }">
-                <template v-if="!item.closed">
+                <template v-if="!item.closed && item.isActive">
                     <a-button
-                        v-if="!userOwnsToken"
+                        v-if="!userOwnsToken && listingStarted(item)"
                         :loading="txStatus === 'pending'"
                         :label="$t('nftlistingsgrid.buy')"
                         @click.native="onBuytButtonClick(item)"
                     />
+                    <template v-else-if="!listingStarted(item)">
+                        {{ listingStartedIn(item) }}
+                    </template>
                 </template>
             </template>
         </f-data-grid>
@@ -60,6 +63,7 @@ import { i18n } from '@/plugins/vue-i18n.js';
 import { objectEquals } from 'fantom-vue-components/src/utils';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import { compareAddresses } from '@/utils/address.js';
+import dayjs from 'dayjs';
 
 export default {
     name: 'NftListingsGrid',
@@ -117,6 +121,10 @@ export default {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
+
+        auctionStartsIn() {
+            return dayjs(this.auction.startTime).fromNow();
+        },
     },
 
     watch: {
@@ -210,6 +218,15 @@ export default {
                 this.$refs.grid.goToPageNum(1);
             });
             // this.loadListings();
+        },
+
+        listingStarted(listing) {
+            console.log(dayjs(listing.startTime).diff(dayjs(), 'seconds'));
+            return dayjs(listing.startTime).diff(dayjs(), 'seconds') < 0;
+        },
+
+        listingStartedIn(listing) {
+            return `${this.$t('nftlistingsgrid.saleStarts')} ${dayjs(listing.startTime).fromNow()}`;
         },
 
         onBuytButtonClick(listing) {
