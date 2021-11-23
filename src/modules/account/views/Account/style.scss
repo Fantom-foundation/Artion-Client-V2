@@ -104,11 +104,11 @@
 	}
 
 	&_content {
-		display: grid;
+		/*display: grid;
 		grid-template-columns: 339px 1fr;
 		&.no_aside {
 			grid-template-columns: auto 1fr;
-		}
+		}*/
 	}
 	&_sidebar {
 		&_header + .adetailsgroup.nftfilters {
@@ -155,7 +155,8 @@
 
 	&_view {
 		border-top: var(--account-border);
-		padding: 0 var(--f-spacer-6);
+		padding: 0 var(--f-spacer-4);
+
 		&_filters {
 			margin-top: var(--f-spacer-4);
 			display: flex;
