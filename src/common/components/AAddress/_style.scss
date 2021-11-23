@@ -6,9 +6,11 @@
     .fimage {
         border-radius: 50%;
         overflow: hidden;
+        min-width: 24px;
     }
 
     .f-ellipsis {
         width: 100%;
+        overflow: hidden;
     }
 }
