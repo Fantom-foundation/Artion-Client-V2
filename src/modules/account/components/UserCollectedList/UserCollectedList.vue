@@ -17,6 +17,7 @@ import NftList from '@/modules/nfts/components/NftList/NftList.vue';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import { filtersToQueryFilters, getDefaultFilters } from '@/modules/nfts/filters.js';
 import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
+import { mapState } from 'vuex';
 
 export default {
     name: 'UserCollectedList',
@@ -37,16 +38,18 @@ export default {
                 return {};
             },
         },
-        density: {
-            type: [Number, String],
-            default: 280,
-        },
     },
 
     data() {
         return {
             perPage: 20,
         };
+    },
+
+    computed: {
+        ...mapState('app', {
+            density: 'nftsDensity',
+        }),
     },
 
     watch: {

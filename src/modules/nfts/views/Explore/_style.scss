@@ -26,6 +26,10 @@
         }
     }
 
+    &_results {
+        color: var(--f-color-grey-5);
+    }
+
     .nftfilterchips {
         padding: 0 var(--f-spacer-4) var(--f-spacer-4) var(--f-spacer-4);
     }
@@ -151,6 +155,10 @@
     .explore {
         &_filterButton {
             display: flex;
+        }
+
+        &_results {
+            display: none;
         }
 
         &_sidebar {

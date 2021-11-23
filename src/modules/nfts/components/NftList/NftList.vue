@@ -9,7 +9,7 @@
         :root-margin="rootMargin"
         v-on="$listeners"
     >
-        <div class="nftlist" :style="gridStyle">
+        <div class="nftlist" :class="[`nftlist-density-${cDensity}`]">
             <nft-card
                 v-for="nft in tokens"
                 :nftData="nft"
@@ -41,7 +41,7 @@ export default {
         },
         density: {
             type: [Number, String],
-            default: 280,
+            default: 'large',
         },
         loading: {
             type: Boolean,
@@ -67,10 +67,15 @@ export default {
             address: 'account',
         }),
 
-        gridStyle() {
-            return {
-                gridTemplateColumns: `repeat(auto-fill, minmax(${this.density}px, 1fr))`,
-            };
+        cDensity() {
+            const { density } = this;
+            const densityNum = parseInt(density);
+
+            if (!isNaN(densityNum)) {
+                return densityNum === 200 ? 'small' : 'large';
+            }
+
+            return density;
         },
     },
 
@@ -109,6 +114,7 @@ export default {
     },
 };
 </script>
+
 <style lang="scss">
 @use 'style';
 </style>

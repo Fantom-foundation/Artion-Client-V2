@@ -20,7 +20,7 @@
         </div>
         <div>
             <div class="explore_nftlist_header">
-                <div class="co-grey-5">
+                <div class="explore_results">
                     <a-placeholder block :content-loaded="results > -1" replacement-text="1000 results">
                         {{ results }} {{ $t('results') }}
                     </a-placeholder>
@@ -31,12 +31,7 @@
                 </div>
             </div>
             <nft-filter-chips v-model="filters" />
-            <nft-main-list
-                :filters="filters"
-                :density="density"
-                @tokens-count="onTokensCount"
-                @loading="onNftMainListLoading"
-            />
+            <nft-main-list :filters="filters" @tokens-count="onTokensCount" @loading="onNftMainListLoading" />
         </div>
         <div class="explore_filterButton">
             <f-button @click.native="isSideClose = !isSideClose">
@@ -55,7 +50,6 @@ import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilt
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 import NftMainList from '@/modules/nfts/components/NftMainList/NftMainList.vue';
 import { isArray } from 'fantom-vue-components/src/utils';
-import { mapState } from 'vuex';
 
 export default {
     name: 'Explore',
@@ -78,10 +72,6 @@ export default {
     },
 
     computed: {
-        ...mapState('app', {
-            density: 'nftsDensity',
-        }),
-
         filterNumber() {
             let counter = 0;
             let values = Object.values(this.filters);

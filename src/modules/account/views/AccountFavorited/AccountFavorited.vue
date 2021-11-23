@@ -1,12 +1,12 @@
 <template>
     <div class="accountfavorited">
-        <user-favorited-nft-list :user-address="userAddress" :density="density" v-on="$listeners" />
+        <user-favorited-nft-list :user-address="userAddress" v-on="$listeners" />
     </div>
 </template>
 
 <script>
 import UserFavoritedNftList from '@/modules/account/components/UserFavoritedNftList/UserFavoritedNftList.vue';
-import { mapState } from 'vuex';
+
 export default {
     name: 'AccountFavorited',
 
@@ -18,12 +18,6 @@ export default {
             default: '',
             required: true,
         },
-    },
-
-    computed: {
-        ...mapState('app', {
-            density: 'nftsDensity',
-        }),
     },
 };
 </script>

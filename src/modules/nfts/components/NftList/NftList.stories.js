@@ -20,7 +20,7 @@ export const Density = () => ({
     //language=HTML
     template: `
         <div>
-            <nft-list :density="200" />
+            <nft-list density="small" />
         </div>
     `,
 });

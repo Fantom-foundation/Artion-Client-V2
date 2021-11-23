@@ -1,6 +1,3 @@
-@use "fantom-vue-components/src/assets/scss/tools/media";
-@use "fantom-vue-components/src/assets/scss/settings/breakpoints";
-
 .density {
 	display: flex;
 	--density-border-color: #eaeaf1;
@@ -44,10 +41,4 @@
 			//fill: rgb(4, 17, 29);
 		}
 	}
-}
-
-@include media.media-max(breakpoints.$breakpoint-md) {
-    .density {
-        display: none;
-    }
 }

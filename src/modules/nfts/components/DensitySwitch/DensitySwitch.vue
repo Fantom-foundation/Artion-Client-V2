@@ -3,8 +3,7 @@
         <f-button
             :aria-label="$t('densityswitch.largeDisplay')"
             :data-tooltip="$t('densityswitch.largeDisplay')"
-            ref="bigGridButton"
-            density="280"
+            data-density="large"
             @click.native="onDensitySwitchClick"
         >
             <app-iconset icon="solid2" size="24px" />
@@ -12,7 +11,7 @@
         <f-button
             :aria-label="$t('densityswitch.smallDisplay')"
             :data-tooltip="$t('densityswitch.smallDisplay')"
-            density="200"
+            data-density="small"
             @click.native="onDensitySwitchClick"
         >
             <app-iconset icon="solid1" size="24px" />
@@ -30,7 +29,7 @@ export default {
 
     methods: {
         onDensitySwitchClick(e) {
-            const density = parseInt(e.currentTarget.getAttribute('density'));
+            const density = e.currentTarget.getAttribute('data-density');
 
             this.$store.commit(`app/${SET_NFTS_DENSITY}`, density);
             this.$emit('density-switch', density);
