@@ -115,7 +115,7 @@ export default {
             const { translations } = this;
             let chips = flattenFilters(filters);
             chips = chips.filter(chip => {
-                if (chip.filterName !== 'collections') {
+                if (chip.filterName !== 'collections' && chip.filterName !== 'price') {
                     const transl = translations[chip.filterName];
 
                     if (transl) {
@@ -127,7 +127,80 @@ export default {
                 return true;
             });
 
+            chips = this.transormPriceChip(chips);
+
             return chips;
+        },
+
+        transormPriceChip(filters) {
+            let priceFilters = filters.filter(chip => chip.filterName === 'price');
+            if (priceFilters.length) {
+                let min = priceFilters[0].value;
+                let max = priceFilters[1].value;
+                let index = filters.findIndex(item => item.filterName === 'price');
+                let label;
+
+                if (min && max) {
+                    label = `${min}$ - ${max}$`;
+                } else if (min && max === null) {
+                    label = `> ${min}$`;
+                } else {
+                    label = `< ${max}$`;
+                }
+
+                let priceChip = { label, filterName: priceFilters[0].filterName };
+
+                filters.splice(index, 2, priceChip);
+            }
+
+            return filters;
+        },
+
+        transformPriceDataFromChips(data) {
+            let index = data.findIndex(item => item.filterName === 'price');
+            if (index !== -1) {
+                let symbolIndex;
+                let possibleSymbols = ['>', '<', '-'];
+                let label = data[index].label;
+                let filterName = data[index].filterName;
+                possibleSymbols.forEach(elem => {
+                    if (label.includes(elem)) symbolIndex = label.indexOf(elem);
+                });
+                let symbol = label[symbolIndex];
+                let re = /\d+/;
+
+                switch (symbol) {
+                    case '>':
+                        {
+                            let minValue = data[index].label.match(re)[0];
+                            let minPriceObj = { value: minValue, filterName };
+                            let maxPriceObj = { value: null, filterName };
+                            data.splice(index, 1, minPriceObj);
+                            data.splice(index + 1, 0, maxPriceObj);
+                        }
+                        break;
+                    case '<':
+                        {
+                            let maxValue = data[index].label.match(re)[0];
+                            let minPriceObj = { value: null, filterName };
+                            let maxPriceObj = { value: maxValue, filterName };
+                            data.splice(index, 1, minPriceObj);
+                            data.splice(index + 1, 0, maxPriceObj);
+                        }
+                        break;
+                    case '-': {
+                        let subStrings = data[index].label.split('-');
+                        let minValue = subStrings[0].match(re)[0];
+                        let maxValue = subStrings[1].match(re)[0];
+                        let minPriceObj = { value: minValue, filterName };
+                        let maxPriceObj = { value: maxValue, filterName };
+                        data.splice(index, 1, minPriceObj);
+                        data.splice(index + 1, 0, maxPriceObj);
+                    }
+                }
+            }
+
+            return data;
         },
 
         /**
@@ -141,6 +214,7 @@ export default {
             if (data.length === 0) {
                 return {};
             } else {
+                data = this.transformPriceDataFromChips(data);
                 data.forEach(chip => {
                     let chipValue = chip.filterName === 'collections' ? chip : chip.value;
                     if (chip.filterName in filters) {
