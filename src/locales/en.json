@@ -230,7 +230,9 @@
         "startSuccess": "You have successfully started the auction",
         "updatePriceSuccess": "You have successfully updated reserve price",
         "updateStartTimeSuccess": "You have successfully updated start time",
-        "updateEndTimeSuccess": "You have successfully updated auction expiration"
+        "updateEndTimeSuccess": "You have successfully updated auction expiration",
+        "needApproval": "Please confirm assigning permission to your tokens for Auction contract...",
+        "approvalSuccess": "You have successfully made the token accessible for Auction contract"
     },
 
     "densityswitch": {

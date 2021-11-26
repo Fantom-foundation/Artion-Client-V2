@@ -78,6 +78,7 @@ import AButton from '@/common/components/AButton/AButton.vue';
 import { dateOutFormatterTimestamp, datetimeInFormatterTimestamp } from '@/utils/date.js';
 import { objectEquals } from 'fantom-vue-components/src/utils';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
+import { wallet } from '@/plugins/wallet/Wallet';
 
 export default {
     name: 'NftAuctionForm',
@@ -177,6 +178,7 @@ export default {
         async createAuction(values) {
             const web3 = new Web3();
             const { token } = this;
+            const { transactions } = this;
 
             const reservePrice = values.reservePrice
                 ? toHex(bToTokenValue(values.reservePrice, this.selectedPayToken.decimals))
@@ -186,7 +188,7 @@ export default {
 
             // console.log('token.tokenId', token.tokenId, this.selectedPayToken.address, values.minBid);
 
-            const tx = contracts.createAuction(
+            const createTx = contracts.createAuction(
                 token.contract,
                 token.tokenId,
                 this.selectedPayToken.address,
@@ -196,10 +198,14 @@ export default {
                 values.minBid,
                 web3
             );
+            createTx._code = 'start_auction';
+            transactions.push(createTx);
 
-            tx._code = 'start_auction';
+            if (!(await this.isApproved())) {
+                transactions.push(this.getSetApprovalTx());
+            }
 
-            this.tx = tx;
+            this.tx = transactions.pop();
         },
 
         /**
@@ -303,6 +309,38 @@ export default {
             const tx = contracts.updateAuctionEndTime(token.contract, token.tokenId, parseInt(endTime / 1000), web3);
 
             tx._code = 'update_auction_end_time';
+
+            return tx;
+        },
+
+        /**
+         * Check if the Auction contract is allowed to manipulate with the token
+         * @returns {Promise<boolean>}
+         */
+        async isApproved() {
+            return await contracts.isApprovedForAll(
+                this.token.contract,
+                wallet.getUser(),
+                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+                this.$wallet.wallet._web3
+            );
+        },
+
+        /**
+         * Get transaction for setting ApprovalForAll for the Auction contract
+         * @returns {{data: *|string, from: *, to: *}}
+         */
+        getSetApprovalTx() {
+            const web3 = new Web3();
+
+            const tx = contracts.setApprovalForAll(
+                this.token.contract,
+                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+                true,
+                web3
+            );
+
+            tx._code = 'approval';
 
             return tx;
         },
@@ -417,6 +455,8 @@ export default {
                     msg = this.$t('nftstartauctionform.updateStartTimeSuccess');
                 } else if (txCode === 'update_auction_end_time') {
                     msg = this.$t('nftstartauctionform.updateEndTimeSuccess');
+                } else if (txCode === 'approval') {
+                    msg = this.$t('nftstartauctionform.approvalSuccess');
                 }
 
                 if (msg) {
@@ -428,6 +468,11 @@ export default {
             }
 
             this.$emit('transaction-status', { ...payload, transactionsLeft: transactions.length });
+
+            // if setting approval does not success (including 'pending' state), don't start next tx
+            if (txCode === 'approval' && this.txStatus !== 'success') {
+                return;
+            }
 
             if (transactions.length > 0) {
                 this.$nextTick(() => {
