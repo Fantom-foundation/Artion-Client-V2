@@ -25,7 +25,17 @@
                         :to="{ name: 'account', params: { address: user.address } }"
                         class="apptextsearchresults_item"
                     >
-                        <f-image size="40px" :src="getImageThumbUrl(user.avatarThumb)" :alt="user.username" />
+                        <f-image
+                            v-if="user.avatarThumb"
+                            size="40px"
+                            :src="getImageThumbUrl(user.avatarThumb)"
+                            :alt="user.username"
+                        />
+                        <div
+                            v-else
+                            v-html="getJazzicon(user.address, 40)"
+                            class="apptextsearchresults_item_jazzicon"
+                        ></div>
                         {{ user.username }}
                     </router-link>
                 </li>
@@ -53,6 +63,7 @@
 <script>
 import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
 import { getCollectionImageUrl, getImageThumbUrl } from '@/utils/url.js';
+import { getJazzicon } from '@/utils/jazzicon.js';
 
 export default {
     name: 'AppTextSearchResults',
@@ -109,6 +120,7 @@ export default {
 
         getCollectionImageUrl,
         getImageThumbUrl,
+        getJazzicon,
     },
 };
 </script>

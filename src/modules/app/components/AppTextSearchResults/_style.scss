@@ -33,5 +33,10 @@
         &:focus {
             background: var(--apptextsearchresults-item-hover-background-color);
         }
+
+        .fimage, &_jazzicon > div:first-child {
+            border-radius: 50%;
+            overflow: hidden;
+        }
     }
 }
