@@ -21,6 +21,7 @@
                                 :address="info.feeRecipientUser.address"
                                 :name="info.feeRecipientUser.username"
                                 :image="info.feeRecipientUser.avatarThumb"
+                                is-account
                             />
                         </router-link>
                     </div>

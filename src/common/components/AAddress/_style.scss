@@ -9,6 +9,11 @@
         min-width: 24px;
     }
 
+    &_jazzicon > div:first-child {
+        border-radius: 50%;
+        display: block !important;
+    }
+
     .f-ellipsis {
         width: 100%;
         overflow: hidden;

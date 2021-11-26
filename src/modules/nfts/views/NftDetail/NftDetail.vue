@@ -36,6 +36,7 @@
                                     :address="tokenOwner.address"
                                     :name="tokenOwner.username"
                                     :image="tokenOwner.avatarThumb"
+                                    is-account
                                 />
                             </router-link>
                         </div>

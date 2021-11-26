@@ -17,7 +17,7 @@
         >
             <template #column-proposedByUser="{ value }">
                 <router-link :to="{ name: 'account', params: { address: value.address } }">
-                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" />
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" is-account />
                 </router-link>
             </template>
             <template #column-unitPrice="{ item, value }">
