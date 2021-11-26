@@ -52,6 +52,8 @@ import dayjs from 'dayjs';
 import { datetimeInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { wallet } from '@/plugins/wallet/Wallet.js';
+import { isApprovedForAll } from '@/modules/nfts/queries/is-approved';
+import Web3 from 'web3';
 
 export default {
     name: 'NftSellForm',
@@ -109,7 +111,7 @@ export default {
         },
 
         async sellItem(values) {
-            const web3 = this.$wallet.wallet._web3;
+            const web3 = new Web3();
             const { token } = this;
             const price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
             const startingTime = parseInt(values.startingTime / 1000);
@@ -125,13 +127,12 @@ export default {
                 web3
             );
 
-            let isApproved = await contracts.isApprovedForAll(
-                this.token.contract,
+            const isApproved = await isApprovedForAll(
+                token.contract,
                 wallet.getUser(),
-                process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
-                web3
+                process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS
             );
-            console.log('isApproved', isApproved);
+            console.log('isApprovedForAll', isApproved);
 
             if (isApproved) {
                 this.tx = this.listTx;

@@ -1,8 +1,6 @@
 // ZERO_AMOUNT represents zero amount transferred on some calls.
 const ZERO_AMOUNT = '0x0';
 
-const HEX_FALSE = '0x0000000000000000000000000000000000000000000000000000000000000000';
-
 /**
  * createNFTCollection Creates a new ERC721 collection contract thru factory
  *
@@ -1036,50 +1034,6 @@ function setApprovalForAll(nftAddress, operator, approved, web3Client) {
 }
 
 /**
- * isApprovedForAll is used to check that the given operator has rights on the given owner's tokens
- *
- * @param {string} nftAddress Address of the NFT token, ERC721 address
- * @param {string} owner Address of the NFT owner
- * @param {string} operator Address of the operator (Marketplace or Auction contract)
- * @param {Web3} web3Client Instance of an initialized Web3 client.
- */
-async function isApprovedForAll(nftAddress, owner, operator, web3Client) {
-
-    const abi = {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_owner",
-                "type": "address"
-            },
-            {
-                "internalType": "address",
-                "name": "_operator",
-                "type": "address"
-            }
-        ],
-        "name": "isApprovedForAll",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "isOperator",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    }
-
-    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[owner, operator])
-    const isApproved = await web3Client.eth.call({
-        from: undefined,
-        to: nftAddress,
-        data: encodedAbi,
-    })
-    return isApproved !== HEX_FALSE;
-}
-
-/**
  * decodeMintedNftTokenId decodes tokenId of minted token from the transaction receipt.
  *
  * @param {TransactionReceipt} receipt The minting transaction receipt.
@@ -1147,7 +1101,6 @@ export default {
     artionERC721Burn,
     decodeMintedNftTokenId,
     setApprovalForAll,
-    isApprovedForAll,
 }
 
 const createNFTContractAbi = {

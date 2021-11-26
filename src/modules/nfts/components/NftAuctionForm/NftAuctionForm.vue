@@ -79,6 +79,7 @@ import { dateOutFormatterTimestamp, datetimeInFormatterTimestamp } from '@/utils
 import { objectEquals } from 'fantom-vue-components/src/utils';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { wallet } from '@/plugins/wallet/Wallet';
+import { isApprovedForAll } from '@/modules/nfts/queries/is-approved';
 
 export default {
     name: 'NftAuctionForm',
@@ -318,12 +319,13 @@ export default {
          * @returns {Promise<boolean>}
          */
         async isApproved() {
-            return await contracts.isApprovedForAll(
+            const isApproved = await isApprovedForAll(
                 this.token.contract,
                 wallet.getUser(),
-                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
-                this.$wallet.wallet._web3
+                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS
             );
+            console.log('isApprovedForAll', isApproved);
+            return isApproved;
         },
 
         /**
