@@ -1,39 +1,42 @@
 .fwindow-width-5 {
 }
 .accountfollowwindow {
-	a:not(.btn) {
-		color: inherit;
-	}
-		&_list {
-		}
+    a:not(.btn) {
+        color: inherit;
+    }
+    &_list {
+    }
 
-		&_item {
-			display: flex;
-			column-gap: var(--f-spacer-3);
-			align-items: center;
+    &_item {
+        display: flex;
+        column-gap: var(--f-spacer-3);
+        align-items: center;
 
-			.fimage {
-				border-radius: 50%;
-                overflow: hidden;
-			}
+        .fimage,
+        &_jazzicon > div:first-child {
+            border-radius: 50%;
+            overflow: hidden;
+        }
 
-            .f-ellipsis {
-                max-width: 100%;
-            }
+        .f-ellipsis {
+            max-width: 100%;
+        }
 
-			&_data {
-                overflow: hidden;
-			}
+        &_data {
+            overflow: hidden;
+        }
 
-            &_name {
-                font-size: var(--f-font-size-4);
-                font-weight: 600;
-            }
+        &_name {
+            font-size: var(--f-font-size-4);
+            font-weight: 600;
+        }
 
-            &_address {
-                width: 100%;
-                color: var(--f-color-grey-5);
-            }
-		}
-		thead.fdatagrid_thead { display: none !important; }
+        &_address {
+            width: 100%;
+            color: var(--f-color-grey-5);
+        }
+    }
+    thead.fdatagrid_thead {
+        display: none !important;
+    }
 }

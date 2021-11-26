@@ -26,7 +26,19 @@
                 <router-link :to="{ name: 'account', params: { address: item.address } }">
                     <div class="accountfollowwindow_item">
                         <div class="accountfollowwindow_item_img">
-                            <f-image :src="item.img" fit="cover" size="40px" alt="avatar" class="placeholder-noimage" />
+                            <f-image
+                                v-if="item.img"
+                                :src="item.img"
+                                fit="cover"
+                                size="40px"
+                                alt="avatar"
+                                class="placeholder-noimage"
+                            />
+                            <div
+                                v-else
+                                v-html="getJazzicon(item.address, 40)"
+                                class="accountfollowwindow_item_jazzicon"
+                            ></div>
                         </div>
                         <div class="accountfollowwindow_item_data">
                             <span class="accountfollowwindow_item_name">{{ item.name || $t('unnamed') }}</span>
@@ -49,6 +61,7 @@ import { getUserFollowers, getUserFollowing } from '@/modules/account/queries/su
 import { copyMethods } from 'fantom-vue-components/src/utils/vue-helpers.js';
 import { getImageThumbUrl } from '@/utils/url.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
+import { getJazzicon } from '@/utils/jazzicon.js';
 export default {
     name: 'AccountFollowWindow',
 
@@ -139,6 +152,8 @@ export default {
                 };
             });
         },
+
+        getJazzicon,
     },
 };
 </script>
