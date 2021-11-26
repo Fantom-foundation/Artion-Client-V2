@@ -26,6 +26,20 @@
 		border: 4px solid var(--account-avatar-border-color);
 		transform: translateY(-50%);
 		//background-color: rgb(255, 153, 0);
+
+        &-noavatar {
+            position: relative;
+
+            .auploadarea {
+                position: absolute;
+                z-index: 2;
+            }
+        }
+
+        &_jazzicon {
+            position: absolute;
+            z-index: 1;
+        }
 	}
 
 	&_title {

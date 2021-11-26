@@ -8,12 +8,14 @@
             />
         </div>
         <div class="account_header">
-            <div class="account_avatar">
+            <div class="account_avatar" :class="{ 'account_avatar-noavatar': !avatar }">
                 <AUploadArea
                     :initial-preview="avatar"
                     @input="uploadUserAvatar"
                     :disabled="userAddress !== walletAddress"
+                    class="auploadarea-nobackground"
                 />
+                <div v-if="!avatar" v-html="getJazzicon(userAddress, 118)" class="account_avatar_jazzicon"></div>
             </div>
             <div class="account_title">{{ user.username || $t('account.unnamed') }}</div>
             <div class="account_subtitle">
@@ -100,6 +102,7 @@ import { signIn, getBearerToken } from '@/modules/account/auth.js';
 import { uploadUserFile } from '@/utils/upload.js';
 import { getImageThumbUrl, getIPFSUrl } from '@/utils/url.js';
 import { toInt } from '@/utils/big-number.js';
+import { getJazzicon } from '@/utils/jazzicon.js';
 
 export default {
     name: 'Account',
@@ -360,6 +363,8 @@ export default {
         onChipsChange(chips) {
             this.filterNumber = chips.length;
         },
+
+        getJazzicon,
     },
 };
 </script>
