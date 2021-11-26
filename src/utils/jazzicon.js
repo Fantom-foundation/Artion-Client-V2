@@ -18,8 +18,7 @@ export function getJazzicon(address, diameter = 24) {
     }
 
     if (!(key in jazziconsCache)) {
-        console.log('generate', key);
-        jazziconsCache[key] = Jazzicon(24, parseInt(address.slice(2, 10), 16)).outerHTML;
+        jazziconsCache[key] = Jazzicon(diameter, parseInt(address.slice(2, 10), 16)).outerHTML;
     }
 
     return jazziconsCache[key];
