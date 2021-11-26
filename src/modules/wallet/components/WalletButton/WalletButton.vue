@@ -1,10 +1,13 @@
 <template>
     <span class="walletbutton" :class="classes">
         <f-button secondary size="large" class="btn-grey" @click.native="onClick">
-            <span v-if="wallet.avatar" class="walletbutton_avatar">
-                <a-placeholder :content-loaded="!!wallet.avatar">
+            <span class="walletbutton_avatar">
+                <a-placeholder v-if="wallet.avatar" :content-loaded="!!wallet.avatar">
                     <img :src="wallet.avatar" alt="avatar" />
                 </a-placeholder>
+                <template v-else>
+                    <div class="walletbutton_jazzicon" v-html="getJazzicon(wallet.address, 30)"></div>
+                </template>
             </span>
             <span class="walletbutton_cont">
                 <template v-if="loading">
@@ -40,6 +43,7 @@
 import FButton from 'fantom-vue-components/src/components/FButton/FButton.vue';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 import APlaceholder from '@/common/components/APlaceholder/APlaceholder.vue';
+import { getJazzicon } from '@/utils/jazzicon.js';
 
 export default {
     components: { FButton, FEllipsis, APlaceholder },
@@ -78,6 +82,8 @@ export default {
                 this.$emit('click');
             }
         },
+
+        getJazzicon,
     },
 };
 </script>

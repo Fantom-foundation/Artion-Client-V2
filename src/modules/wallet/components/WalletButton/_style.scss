@@ -55,6 +55,15 @@
         }
     }
 
+    &_jazzicon {
+        height: 30px;
+
+        > div:first-child {
+            display: block;
+            border-radius: 50%;
+        }
+    }
+
     &-notconnected {
         .walletbutton_cont {
             font-size: var(--f-font-size-5);
