@@ -1,6 +1,8 @@
 // ZERO_AMOUNT represents zero amount transferred on some calls.
 const ZERO_AMOUNT = '0x0';
 
+const HEX_FALSE = '0x0000000000000000000000000000000000000000000000000000000000000000';
+
 /**
  * createNFTCollection Creates a new ERC721 collection contract thru factory
  *
@@ -482,52 +484,6 @@ const ZERO_AMOUNT = '0x0';
       }
 
     const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, payToken, newPricePerItem])
-
-    // return tx object
-    return {
-        from: undefined,
-        to: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
-        value: ZERO_AMOUNT,
-        data: encodedAbi,
-    };
-}
-
-/**
- * buyListedItem Method for buying listed NFT
- *
- * @param {string} nftAddress Address of the NFT token
- * @param {int} tokenID NFT token ID
- * @param {string} ownerAddress Payable address of the owner
- * @param {Web3} web3Client Instance of an initialized Web3 client.
- * @return {{to: address, data: string, value string}}
- */
- function buyListedItem(nftAddress, tokenID, ownerAddress, web3Client) {
-
-    const abi = {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_nftAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_tokenId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "address payable",
-                "name": "_owner",
-                "type": "address"
-            }
-        ],
-        "name": "buyItem",
-        "outputs": [],
-        "stateMutability": "payable",
-        "type": "function"
-    }
-
-    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID, ownerAddress])
 
     // return tx object
     return {
@@ -1040,6 +996,90 @@ function artionERC721Burn(nftContract, tokenID, web3Client) {
 }
 
 /**
+ * setApprovalForAll Sets or unsets the approval of a given operator
+ * An operator is allowed to transfer all tokens of the sender on their behalf.
+ *
+ * @param {string} nftAddress Address of the NFT token, ERC721 address
+ * @param {string} operator Address of the operator (Marketplace or Auction contract)
+ * @param {boolean} approved Whether to allow or disallow
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ */
+function setApprovalForAll(nftAddress, operator, approved, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_operator",
+                "type": "address"
+            },
+            {
+                "internalType": "bool",
+                "name": "_approved",
+                "type": "bool"
+            }
+        ],
+        "name": "setApprovalForAll",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[operator, approved])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: nftAddress,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * isApprovedForAll is used to check that the given operator has rights on the given owner's tokens
+ *
+ * @param {string} nftAddress Address of the NFT token, ERC721 address
+ * @param {string} owner Address of the NFT owner
+ * @param {string} operator Address of the operator (Marketplace or Auction contract)
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ */
+async function isApprovedForAll(nftAddress, owner, operator, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_owner",
+                "type": "address"
+            },
+            {
+                "internalType": "address",
+                "name": "_operator",
+                "type": "address"
+            }
+        ],
+        "name": "isApprovedForAll",
+        "outputs": [
+            {
+                "internalType": "bool",
+                "name": "isOperator",
+                "type": "bool"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[owner, operator])
+    const isApproved = await web3Client.eth.call({
+        from: undefined,
+        to: nftAddress,
+        data: encodedAbi,
+    })
+    return isApproved !== HEX_FALSE;
+}
+
+/**
  * decodeMintedNftTokenId decodes tokenId of minted token from the transaction receipt.
  *
  * @param {TransactionReceipt} receipt The minting transaction receipt.
@@ -1091,7 +1131,6 @@ export default {
     listItem,
     cancelListing,
     updateListing,
-    buyListedItem,
     buyListedItemWithPayToken,
     createOffer,
     cancelOffer,
@@ -1107,6 +1146,8 @@ export default {
     randomPurchase,
     artionERC721Burn,
     decodeMintedNftTokenId,
+    setApprovalForAll,
+    isApprovedForAll,
 }
 
 const createNFTContractAbi = {

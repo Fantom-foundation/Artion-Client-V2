@@ -44,7 +44,6 @@
     </f-form>
 </template>
 <script>
-import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
 import { bToTokenValue, toHex } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
@@ -52,6 +51,7 @@ import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
 import { datetimeInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils/date.js';
 import AButton from '@/common/components/AButton/AButton.vue';
+import { wallet } from '@/plugins/wallet/Wallet.js';
 
 export default {
     name: 'NftSellForm',
@@ -83,6 +83,8 @@ export default {
             selectedPayToken: null,
             tx: {},
             txStatus: '',
+            listTx: {},
+            isSettingApproval: false,
         };
     },
 
@@ -107,13 +109,13 @@ export default {
         },
 
         async sellItem(values) {
-            const web3 = new Web3();
+            const web3 = this.$wallet.wallet._web3;
             const { token } = this;
             const price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
             const startingTime = parseInt(values.startingTime / 1000);
             const quantity = this.useQuantity ? parseInt(values.quantity) : 1;
 
-            this.tx = contracts.listItem(
+            this.listTx = contracts.listItem(
                 token.contract,
                 token.tokenId,
                 quantity,
@@ -122,6 +124,30 @@ export default {
                 startingTime,
                 web3
             );
+
+            let isApproved = await contracts.isApprovedForAll(
+                this.token.contract,
+                wallet.getUser(),
+                process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+                web3
+            );
+            console.log('isApproved', isApproved);
+
+            if (isApproved) {
+                this.tx = this.listTx;
+            } else {
+                this.$notifications.add({
+                    type: 'info',
+                    text: this.$t('nftsellform.needApproval'),
+                });
+                this.isSettingApproval = true;
+                this.tx = contracts.setApprovalForAll(
+                    this.token.contract,
+                    process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+                    true,
+                    web3
+                );
+            }
         },
 
         priceValidator(value) {
@@ -164,10 +190,15 @@ export default {
             this.txStatus = payload.status;
 
             if (this.txStatus === 'success') {
-                this.$notifications.add({
-                    type: 'success',
-                    text: this.$t('nftsellform.sellSuccess'),
-                });
+                if (this.isSettingApproval) {
+                    // setting approval succeed, start listing tx
+                    this.tx = this.listTx;
+                } else {
+                    this.$notifications.add({
+                        type: 'success',
+                        text: this.$t('nftsellform.sellSuccess'),
+                    });
+                }
             }
 
             this.$emit('transaction-status', payload);

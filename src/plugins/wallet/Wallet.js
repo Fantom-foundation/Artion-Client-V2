@@ -244,6 +244,10 @@ export class Wallet {
         }
     }
 
+    getUser() {
+        return this.account;
+    }
+
     /**
      * @param {string} address
      * @param {boolean} [inHexFormat]

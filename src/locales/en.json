@@ -201,6 +201,7 @@
         "nonZeroPrice": "@:nonZeroPrice",
         "nonZeroQuantity": "Quantity must be non zero value",
         "badDate": "Bad date",
+        "needApproval": "Please confirm assigning permission to your tokens for Marketplace contract...",
         "sellSuccess": "You have successfully listed this NFT"
     },
 
