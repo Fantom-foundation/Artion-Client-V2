@@ -114,8 +114,6 @@ export class Coinbase {
     }
 
     async disconnect() {
-        alert('wer?');
-
         await this._walletLink.disconnect();
 
         this._web3.eth.defaultAccount = null;

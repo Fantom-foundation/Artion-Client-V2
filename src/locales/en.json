@@ -18,6 +18,7 @@
     "price": "Price",
     "from": "From",
     "unnamed": "Unnamed",
+    "balance": "Balance",
 
     "navigation": {
         "explore": "@:explore",
@@ -307,6 +308,10 @@
         "successCopied": "Copied!"
     },
 
+    "abpricefield": {
+        "balance": "@:balance"
+    },
+
     "nftlistfilters": {
         "groupFilters": "Group Filters",
         "sortbyFilters": "Sort by Filters"
@@ -407,7 +412,7 @@
     "pgBidForm": {
         "currentBid": "Current bid",
         "minNextBid": "Min bid",
-        "balance": "Balance",
+        "balance": "@:balance",
         "termsAndConditionsAgreement": "By checking this box, I agree to Artion's",
         "termsAndConditionsLink": "Terms of Service",
         "placeBid": "Place bid",

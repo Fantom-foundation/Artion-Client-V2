@@ -1,0 +1,46 @@
+.abpricefield {
+    input {
+        text-align: end;
+    }
+
+    &-invalid {
+        input {
+            color: red;
+        }
+    }
+
+    &_balance {
+        white-space: nowrap;
+        font-size: var(--f-font-size-4);
+        color: var(--f-color-grey-5);
+        gap: var(--f-spacer-3);
+    }
+
+    .inp {
+        align-items: stretch;
+    }
+
+    &_center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &_price {
+        border-inline-start: 1px solid var(--f-color-grey-3);
+        padding-inline-start: var(--f-spacer-3);
+        font-weight: 500;
+        font-size: var(--f-font-size-4);
+        color: var(--f-color-grey-5);
+    }
+
+    &_top {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: var(--f-spacer-1);
+    }
+
+    &_label {
+        color: var(--f-color-grey-5);
+    }
+}
