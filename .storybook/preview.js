@@ -7,6 +7,7 @@ import StoryRouter from 'storybook-vue-router';
 import FTooltip from 'fantom-vue-components/src/components/FTooltip/FTooltip.vue';
 import FNotifications from 'fantom-vue-components/src/components/FNotifications/FNotifications.vue';
 import '@/plugins/notifications.js';
+import { apolloProvider } from '@/plugins/apollo/apollo-provider.js';
 
 // global components
 import '../src/global-components.js';
@@ -16,6 +17,7 @@ const decor = (story, context) => {
 
     return Vue.extend({
         i18n,
+        apolloProvider,
         components: { wrapped, FTooltip, FNotifications },
         template: `
             <div>
