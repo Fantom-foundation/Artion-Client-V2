@@ -44,6 +44,7 @@
         </f-input>
     </div>
 </template>
+
 <script>
 import { bFromTokenValue, bToTokenValue, toBigNumber } from '@/utils/big-number.js';
 import { formatTokenValue } from '@/utils/formatters.js';
@@ -113,12 +114,20 @@ export default {
                 if (val !== parseFloat(this.dValue)) {
                     this.dValue = val;
 
-                    this.$nextTick(() => {
-                        this.$refs.input.validate();
-                    });
+                    if (this.validate) {
+                        this.$nextTick(() => {
+                            this.$refs.input.validate();
+                        });
+                    }
                 }
             },
             immediate: true,
+        },
+
+        token() {
+            if (this.validate) {
+                this.$refs.input.validate();
+            }
         },
     },
 
