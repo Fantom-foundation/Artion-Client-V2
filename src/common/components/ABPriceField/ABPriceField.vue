@@ -86,10 +86,6 @@ export default {
             type: String,
             default: '',
         },
-        showMaxButton: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     data() {
