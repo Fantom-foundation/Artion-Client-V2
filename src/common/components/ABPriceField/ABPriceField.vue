@@ -86,6 +86,10 @@ export default {
             type: String,
             default: '',
         },
+        validate: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -125,6 +129,10 @@ export default {
          */
         validator(value) {
             let errorMessage = '';
+
+            if (!this.validate) {
+                return '';
+            }
 
             if (
                 !isNaN(value) &&

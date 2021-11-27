@@ -55,12 +55,32 @@ export const Balance = () => ({
     },
 });
 
+export const Validate = () => ({
+    components: { ABPriceField },
+    //language=HTML
+    template: `
+        <div style="max-width: 600px">
+            <a-b-price-field validate balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
+        </div>
+    `,
+    data() {
+        return {
+            token: {
+                decimals: 18,
+                price: '0x20e9a8',
+                priceDecimals: 6,
+                label: 'wFTM',
+            },
+        };
+    },
+});
+
 export const MaxBalance = () => ({
     components: { ABPriceField },
     //language=HTML
     template: `
         <div style="max-width: 600px">
-            <a-b-price-field max-balance="0x2D88EFAB1C654F3F" balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
+            <a-b-price-field max-balance="0x2D88EFAB1C654F3F" validate balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
         </div>
     `,
     data() {
@@ -80,7 +100,7 @@ export const Value = () => ({
     //language=HTML
     template: `
         <div style="max-width: 600px">
-            <a-b-price-field :value="5" max-balance="0x2D88EFAB1C654F3F" balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
+            <a-b-price-field :value="5" validate max-balance="0x2D88EFAB1C654F3F" balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
         </div>
     `,
     data() {
@@ -100,7 +120,7 @@ export const Label = () => ({
     //language=HTML
     template: `
         <div style="max-width: 600px">
-            <a-b-price-field label="From" max-balance="0x2D88EFAB1C654F3F" balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
+            <a-b-price-field label="From" validate max-balance="0x2D88EFAB1C654F3F" balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
         </div>
     `,
     data() {
@@ -120,7 +140,7 @@ export const OnInput = () => ({
     //language=HTML
     template: `
         <div style="max-width: 600px">
-            <a-b-price-field @input="onInput" max-balance="0x2D88EFAB1C654F3F" balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
+            <a-b-price-field @input="onInput" validate max-balance="0x2D88EFAB1C654F3F" balance="0x2dbcce4a821dcf3f" :token="token" field-size="large" />
             <br />
             <pre class="fos-3">{{ data }}</pre>
         </div>
