@@ -63,7 +63,7 @@
                         </template>
                         <template v-else>
                             <nft-cancel-auction-button :token="token" @tx-success="update" />
-                            <nft-update-auction-button v-if="!auctionHasFinished" :token="token" @tx-success="update" />
+                            <!--                            <nft-update-auction-button v-if="!auctionHasFinished" :token="token" @tx-success="update" />-->
                         </template>
 
                         <template v-if="tokenHasListing">
@@ -194,7 +194,6 @@ import { getTokenOwnerships } from '@/modules/nfts/queries/token-ownerships.js';
 import NftUpdateListingButton from '@/modules/nfts/components/NftUpdateListingButton/NftUpdateListingButton.vue';
 import NftStartAuctionButton from '@/modules/nfts/components/NftStartAuctionButton/NftStartAuctionButton.vue';
 import NftCancelAuctionButton from '@/modules/nfts/components/NftCancelAuctionButton/NftCancelAuctionButton.vue';
-import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionButton/NftUpdateAuctionButton.vue';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { isExpired } from '@/utils/date.js';
 import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/NftDetailCollection.vue';
@@ -210,7 +209,6 @@ export default {
     components: {
         NftDetailInfo,
         NftDetailCollection,
-        NftUpdateAuctionButton,
         NftCancelAuctionButton,
         NftStartAuctionButton,
         NftUpdateListingButton,
