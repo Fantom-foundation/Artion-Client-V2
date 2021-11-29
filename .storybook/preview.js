@@ -8,6 +8,7 @@ import FTooltip from 'fantom-vue-components/src/components/FTooltip/FTooltip.vue
 import FNotifications from 'fantom-vue-components/src/components/FNotifications/FNotifications.vue';
 import '@/plugins/notifications.js';
 import { apolloProvider } from '@/plugins/apollo/apollo-provider.js';
+import store from '@/store';
 
 // global components
 import '../src/global-components.js';
@@ -17,6 +18,7 @@ const decor = (story, context) => {
 
     return Vue.extend({
         i18n,
+        store,
         apolloProvider,
         components: { wrapped, FTooltip, FNotifications },
         template: `
