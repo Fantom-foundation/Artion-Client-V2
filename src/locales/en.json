@@ -19,6 +19,7 @@
     "from": "From",
     "unnamed": "Unnamed",
     "balance": "Balance",
+    "wrapStation": "FTM / WFTM Station",
 
     "navigation": {
         "explore": "@:explore",
@@ -309,7 +310,16 @@
     },
 
     "abpricefield": {
-        "balance": "@:balance"
+        "balance": "@:balance",
+        "maxAmountReached": "Maximum amount reached"
+    },
+
+    "wrapstationform": {
+        "swapTokens": "Swap tokens",
+        "wrap": "Wrap",
+        "unwrap": "Unwrap",
+        "wrapSuccess": "You have successfully wrap FTM",
+        "unwrapSuccess": "You have successfully unwrap wFTM"
     },
 
     "nftlistfilters": {

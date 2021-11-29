@@ -116,7 +116,7 @@ export default {
 
                     if (this.validate) {
                         this.$nextTick(() => {
-                            this.$refs.input.validate();
+                            this.validateInput();
                         });
                     }
                 }
@@ -126,8 +126,12 @@ export default {
 
         token() {
             if (this.validate) {
-                this.$refs.input.validate();
+                this.validateInput();
             }
+        },
+
+        maxBalance(value) {
+            this.dValueMax = value ? this.fromTokenValue(value) : 0;
         },
     },
 
@@ -147,7 +151,10 @@ export default {
                 !isNaN(value) &&
                 bToTokenValue(value, this.token.decimals).isGreaterThan(this.maxBalance || this.balance)
             ) {
-                errorMessage = this.$t('insufficientBalance');
+                errorMessage =
+                    this.maxBalance !== this.balance
+                        ? this.$t('abpricefield.maxAmountReached')
+                        : this.$t('insufficientBalance');
             }
 
             return errorMessage;
@@ -157,7 +164,7 @@ export default {
          * @param {string|number} value
          * @return {boolean}
          */
-        isValid(value) {
+        isValid(value = this.dValue) {
             return !this.validator(value);
         },
 
@@ -178,6 +185,10 @@ export default {
             const value$ = value ? toBigNumber(value).multipliedBy(token.price) : null;
 
             return formatTokenValue(value$ || 0, token.priceDecimals, 2, true);
+        },
+
+        validateInput() {
+            this.$refs.input.validate();
         },
 
         /**

@@ -23,6 +23,8 @@ const PAY_TOKEN_IMAGES = {
     dai: '/img/pay-tokens/DAI.png',
 };
 
+export const WFTMContract = '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83';
+
 let PT = [];
 
 /**
@@ -42,6 +44,7 @@ async function fetchPayTokens() {
             decimals: t.decimals,
             price: bFromTokenValue(t.price, 6).toNumber(),
             priceDecimals: 6,
+            origPrice: t.price,
             value: symbolLC,
         };
 

@@ -8,6 +8,7 @@
             attach-to="#wb"
             @wallet-menu="onWalletMenu"
         />
+        <wrap-station-window ref="wrapStationWindow" />
     </div>
 </template>
 
@@ -18,13 +19,14 @@ import { CHAINS } from '@/common/constants/chains.js';
 import WalletMenuPopover from '@/modules/wallet/components/WalletMenuPopover/WalletMenuPopover.vue';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { getImageThumbUrl } from '@/utils/url.js';
+import WrapStationWindow from '@/modules/wallet/components/WrapStationWindow/WrapStationWindow.vue';
 
 export default {
     name: 'WalletButtonWrap',
 
     mixins: [eventBusMixin],
 
-    components: { WalletMenuPopover, WalletButton },
+    components: { WrapStationWindow, WalletMenuPopover, WalletButton },
 
     props: {
         walletMenu: {
@@ -42,6 +44,10 @@ export default {
                     {
                         label: this.$t('walletMenu.collection'),
                         route: 'collection-register',
+                    },
+                    {
+                        label: this.$t('wrapStation'),
+                        action: 'show-wrap-station',
                     },
                     {
                         label: this.$t('walletMenu.logout'),
@@ -126,8 +132,12 @@ export default {
         },
 
         async onWalletMenu(item) {
-            if (item.action === 'logout') {
+            const { action } = item;
+
+            if (action === 'logout') {
                 this.$wallet.logout();
+            } else if (action === 'show-wrap-station') {
+                this.$refs.wrapStationWindow.show();
             }
 
             this.$refs.menu.hide();
