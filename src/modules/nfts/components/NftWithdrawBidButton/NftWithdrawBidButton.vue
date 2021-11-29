@@ -29,6 +29,13 @@ export default {
                 return {};
             },
         },
+        /** @type {Auction} */
+        auction: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
         disabled: {
             type: Boolean,
             default: false,
@@ -51,7 +58,7 @@ export default {
                 return;
             }
 
-            this.tx = contracts.withdrawAuctionBid(token.contract, token.tokenId, web3);
+            this.tx = contracts.withdrawAuctionBid(token.contract, token.tokenId, web3, this.auction.auctionHall);
         },
 
         onButtonClick() {

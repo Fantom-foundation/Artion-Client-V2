@@ -117,7 +117,7 @@ export default {
             const allowanceTx = await getUserAllowanceTx({
                 value: toHex(priceB),
                 tokenAddress: this.auction.payToken,
-                contract: process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
+                contract: this.auction.auctionHall,
             });
 
             if (allowanceTx) {
@@ -138,7 +138,13 @@ export default {
             const web3 = new Web3();
             const { token } = this;
 
-            const tx = contracts.placeAuctionBid(token.contract, token.tokenId, toHex(priceB), web3);
+            const tx = contracts.placeAuctionBid(
+                token.contract,
+                token.tokenId,
+                toHex(priceB),
+                web3,
+                this.auction.auctionHall
+            );
 
             tx._code = 'place_bid';
 

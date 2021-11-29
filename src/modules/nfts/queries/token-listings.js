@@ -27,6 +27,7 @@ export async function getTokenListings(contract = '', id = '', pagination = {}) 
                             node {
                                 contract
                                 tokenId
+                                marketplace
                                 owner
                                 ownerUser {
                                     address

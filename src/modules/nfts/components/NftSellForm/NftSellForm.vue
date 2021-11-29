@@ -54,6 +54,7 @@ import AButton from '@/common/components/AButton/AButton.vue';
 import { wallet } from '@/plugins/wallet/Wallet.js';
 import { isApprovedForAll } from '@/modules/nfts/queries/is-approved';
 import Web3 from 'web3';
+import { getContractAddress } from '@/utils/artion-contract-addresses.js';
 
 export default {
     name: 'NftSellForm',
@@ -116,6 +117,7 @@ export default {
             const price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
             const startingTime = parseInt(values.startingTime / 1000);
             const quantity = this.useQuantity ? parseInt(values.quantity) : 1;
+            const contract = await getContractAddress('marketplace');
 
             this.listTx = contracts.listItem(
                 token.contract,
@@ -124,14 +126,11 @@ export default {
                 this.selectedPayToken.address,
                 price,
                 startingTime,
-                web3
+                web3,
+                contract
             );
 
-            const isApproved = await isApprovedForAll(
-                token.contract,
-                wallet.getUser(),
-                process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS
-            );
+            const isApproved = await isApprovedForAll(token.contract, wallet.getUser(), contract);
             console.log('isApprovedForAll', isApproved);
 
             if (isApproved) {
@@ -142,12 +141,7 @@ export default {
                     text: this.$t('nftsellform.needApproval'),
                 });
                 this.isSettingApproval = true;
-                this.tx = contracts.setApprovalForAll(
-                    this.token.contract,
-                    process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
-                    true,
-                    web3
-                );
+                this.tx = contracts.setApprovalForAll(this.token.contract, contract, true, web3);
             }
         },
 

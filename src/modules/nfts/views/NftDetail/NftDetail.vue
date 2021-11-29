@@ -62,12 +62,12 @@
                             <nft-sell-button v-if="!tokenHasListing" :token="token" @tx-success="update" />
                         </template>
                         <template v-else>
-                            <nft-cancel-auction-button :token="token" @tx-success="update" />
+                            <nft-cancel-auction-button :token="token" :auction="auction" @tx-success="update" />
                             <!--                            <nft-update-auction-button v-if="!auctionHasFinished" :token="token" @tx-success="update" />-->
                         </template>
 
                         <template v-if="tokenHasListing">
-                            <nft-cancel-listing-button :token="token" @tx-success="update" />
+                            <nft-cancel-listing-button :token="token" :listing="listing" @tx-success="update" />
                             <nft-update-listing-button :token="token" :listing="listing" @tx-success="update" />
                         </template>
                     </div>

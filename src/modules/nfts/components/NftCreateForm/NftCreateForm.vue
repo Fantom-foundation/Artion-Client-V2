@@ -120,6 +120,7 @@ import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
 import { estimateMintFeeGas } from '@/modules/nfts/queries/estimate-mint';
 import { getCollectionImageUrl } from '@/utils/url.js';
 import { tokenExists } from '@/modules/nfts/queries/token';
+import { getContractAddress } from '@/utils/artion-contract-addresses.js';
 
 export default {
     name: 'NftCreateForm',
@@ -305,12 +306,15 @@ export default {
                     });
                     const royaltyDec = Math.round(royalty * 100);
                     const web3 = this.$wallet.wallet._web3;
+                    const contract = await getContractAddress('marketplace');
+
                     console.log('registerTokenRoyalty', this.collection.value, this.tokenId, royaltyDec);
                     this.txRoyalty = contracts.registerTokenRoyalty(
                         this.collection.value,
                         this.tokenId,
                         royaltyDec,
-                        web3
+                        web3,
+                        contract
                     );
                 } else {
                     await this.mintingSucceed();

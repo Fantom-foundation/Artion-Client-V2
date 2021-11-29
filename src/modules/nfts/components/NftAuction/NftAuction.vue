@@ -56,6 +56,7 @@
                     <nft-result-auction-button
                         v-if="userOwnsToken && auctionHasFinished && auction.lastBidder"
                         :token="token"
+                        :auction="auction"
                         @tx-success="onTxSuccess"
                     />
                     <nft-bid-button
@@ -68,6 +69,7 @@
                         <nft-withdraw-bid-button
                             :disabled="withdrawBidButtonDisabled"
                             :token="token"
+                            :auction="auction"
                             @tx-success="onTxSuccess"
                         />
 

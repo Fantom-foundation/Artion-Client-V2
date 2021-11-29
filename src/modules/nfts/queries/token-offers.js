@@ -27,6 +27,7 @@ export async function getTokenOffers(contract = '', id = '', pagination = {}) {
                             node {
                                 contract
                                 tokenId
+                                marketplace
                                 proposedBy
                                 proposedByUser {
                                     address

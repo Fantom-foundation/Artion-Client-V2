@@ -28,6 +28,12 @@ export default {
                 return {};
             },
         },
+        listing: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
     },
 
     data() {
@@ -38,7 +44,7 @@ export default {
     },
 
     methods: {
-        cancelListing() {
+        async cancelListing() {
             const web3 = new Web3();
             const { token } = this;
 
@@ -46,7 +52,7 @@ export default {
                 return;
             }
 
-            this.tx = contracts.cancelListing(token.contract, token.tokenId, web3);
+            this.tx = contracts.cancelListing(token.contract, token.tokenId, web3, this.listing.marketplace);
         },
 
         onButtonClick() {

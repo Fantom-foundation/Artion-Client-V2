@@ -28,6 +28,13 @@ export default {
                 return {};
             },
         },
+        /** @type {Auction} */
+        auction: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
     },
 
     data() {
@@ -46,7 +53,7 @@ export default {
                 return;
             }
 
-            this.tx = contracts.cancelAuction(token.contract, token.tokenId, web3);
+            this.tx = contracts.cancelAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
         },
 
         onButtonClick() {

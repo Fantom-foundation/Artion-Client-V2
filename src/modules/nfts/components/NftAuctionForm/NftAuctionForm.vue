@@ -80,6 +80,7 @@ import { objectEquals } from 'fantom-vue-components/src/utils';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { wallet } from '@/plugins/wallet/Wallet';
 import { isApprovedForAll } from '@/modules/nfts/queries/is-approved';
+import { getContractAddress } from '@/utils/artion-contract-addresses.js';
 
 export default {
     name: 'NftAuctionForm',
@@ -189,6 +190,8 @@ export default {
 
             // console.log('token.tokenId', token.tokenId, this.selectedPayToken.address, values.minBid);
 
+            const contract = await getContractAddress('auctionHall');
+
             const createTx = contracts.createAuction(
                 token.contract,
                 token.tokenId,
@@ -197,13 +200,14 @@ export default {
                 startTime,
                 endTime,
                 values.minBid,
-                web3
+                web3,
+                contract
             );
             createTx._code = 'start_auction';
             transactions.push(createTx);
 
-            if (!(await this.isApproved())) {
-                transactions.push(this.getSetApprovalTx());
+            if (!(await this.isApproved(contract))) {
+                transactions.push(this.getSetApprovalTx(contract));
             }
 
             this.tx = transactions.pop();
@@ -271,7 +275,8 @@ export default {
                 token.contract,
                 token.tokenId,
                 reservePrice ? toHex(bToTokenValue(reservePrice, this.selectedPayToken.decimals)) : '0x0',
-                web3
+                web3,
+                this.auction.auctionHall
             );
 
             tx._code = 'update_auction_reserve_price';
@@ -291,7 +296,8 @@ export default {
                 token.contract,
                 token.tokenId,
                 parseInt(startTime / 1000),
-                web3
+                web3,
+                this.auction.auctionHall
             );
 
             tx._code = 'update_auction_start_time';
@@ -307,7 +313,13 @@ export default {
             const web3 = new Web3();
             const { token } = this;
 
-            const tx = contracts.updateAuctionEndTime(token.contract, token.tokenId, parseInt(endTime / 1000), web3);
+            const tx = contracts.updateAuctionEndTime(
+                token.contract,
+                token.tokenId,
+                parseInt(endTime / 1000),
+                web3,
+                this.auction.auctionHall
+            );
 
             tx._code = 'update_auction_end_time';
 
@@ -316,31 +328,26 @@ export default {
 
         /**
          * Check if the Auction contract is allowed to manipulate with the token
+         *
+         * @param {string} contract
          * @returns {Promise<boolean>}
          */
-        async isApproved() {
-            const isApproved = await isApprovedForAll(
-                this.token.contract,
-                wallet.getUser(),
-                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS
-            );
+        async isApproved(contract) {
+            const isApproved = await isApprovedForAll(this.token.contract, wallet.getUser(), contract);
             console.log('isApprovedForAll', isApproved);
             return isApproved;
         },
 
         /**
          * Get transaction for setting ApprovalForAll for the Auction contract
+         *
+         * @param {string} contract
          * @returns {{data: *|string, from: *, to: *}}
          */
-        getSetApprovalTx() {
+        getSetApprovalTx(contract) {
             const web3 = new Web3();
 
-            const tx = contracts.setApprovalForAll(
-                this.token.contract,
-                process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS,
-                true,
-                web3
-            );
+            const tx = contracts.setApprovalForAll(this.token.contract, contract, true, web3);
 
             tx._code = 'approval';
 

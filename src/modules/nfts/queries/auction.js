@@ -16,6 +16,7 @@ export async function getAuction(contract = '', tokenId = '') {
                         contract
                         tokenId
                         owner
+                        auctionHall
                         quantity
                         payToken
                         reservePrice

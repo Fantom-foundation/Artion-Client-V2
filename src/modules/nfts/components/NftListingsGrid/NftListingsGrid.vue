@@ -172,7 +172,7 @@ export default {
                 const allowanceTx = await getUserAllowanceTx({
                     value: listing.unitPrice,
                     tokenAddress: listing.payToken,
-                    contract: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+                    contract: listing.marketplace,
                 });
 
                 console.log('allowanceTx', allowanceTx);
@@ -202,7 +202,8 @@ export default {
                 token.tokenId,
                 listing.owner,
                 listing.payToken,
-                web3
+                web3,
+                listing.marketplace
             );
 
             console.log(tx);

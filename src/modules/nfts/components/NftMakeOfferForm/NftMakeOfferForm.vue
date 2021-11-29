@@ -43,6 +43,7 @@ import { datetimeInFormatterTimestamp, dateOutFormatterTimestamp } from '@/utils
 import AButton from '@/common/components/AButton/AButton.vue';
 import { getUserAllowanceTx } from '@/plugins/wallet/utils.js';
 import { getPayToken } from '@/utils/pay-tokens.js';
+import { getContractAddress } from '@/utils/artion-contract-addresses.js';
 
 export default {
     name: 'NftMakeOfferForm',
@@ -105,6 +106,8 @@ export default {
     },
 
     created() {
+        this._contract = '';
+
         this.init();
     },
 
@@ -124,6 +127,7 @@ export default {
          */
         async placeOffer(values) {
             const { storedValues } = this;
+            this._contract = await getContractAddress('marketplace');
 
             storedValues.price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
             storedValues.deadline = parseInt(values.deadline / 1000);
@@ -131,7 +135,7 @@ export default {
             const allowanceTx = await getUserAllowanceTx({
                 value: storedValues.price,
                 tokenAddress: this.selectedPayToken.address,
-                contract: process.env.VUE_APP_FANTOM_MARKETPLACE_CONTRACT_ADDRESS,
+                contract: this._contract,
             });
 
             if (allowanceTx) {
@@ -158,7 +162,8 @@ export default {
                 1,
                 price,
                 deadline,
-                web3
+                web3,
+                this._contract
             );
 
             tx._code = 'create_offer';

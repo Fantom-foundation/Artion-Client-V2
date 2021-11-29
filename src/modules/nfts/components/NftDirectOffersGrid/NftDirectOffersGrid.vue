@@ -177,7 +177,7 @@ export default {
         acceptOffer(offer) {
             const { token } = this;
             const web3 = new Web3();
-            const tx = contracts.acceptOffer(token.contract, token.tokenId, offer.proposedBy, web3);
+            const tx = contracts.acceptOffer(token.contract, token.tokenId, offer.proposedBy, web3, offer.marketplace);
 
             tx._code = 'accept';
 
@@ -190,7 +190,7 @@ export default {
         withdrawOffer(offer) {
             const { token } = this;
             const web3 = new Web3();
-            const tx = contracts.cancelOffer(token.contract, token.tokenId, web3);
+            const tx = contracts.cancelOffer(token.contract, token.tokenId, web3, offer.marketplace);
 
             tx._code = 'withdraw';
 
