@@ -2,6 +2,7 @@
     .faccordionnavigation {
         .fnavigationnode {
             &_item {
+                color: inherit;
                 opacity: 0.8;
 
                 &:hover, &:focus {

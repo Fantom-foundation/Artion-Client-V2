@@ -2,9 +2,14 @@ import { notifications } from 'fantom-vue-components/src/plugins/notifications.j
 import { artionFApolloClient } from '@/plugins/apollo/apollo-provider.js';
 import { getBearerToken } from '@/modules/account/auth.js';
 
+/**
+ * @param {File[]} _files
+ * @param {string} _type
+ * @return {Promise<boolean>}
+ */
 export async function uploadUserFile(_files, _type = 'avatar') {
     if (!_files[0]) {
-        return;
+        return false;
     }
 
     const options = {
@@ -28,12 +33,18 @@ export async function uploadUserFile(_files, _type = 'avatar') {
                 type: 'success',
                 text: `You successfully upload your ${_type}`,
             });
+
+            return true;
         }
+
+        return false;
     } catch (err) {
         notifications.add({
             type: 'error',
             text: `Sorry, something went wrong. Your ${_type} wasn't uploaded`,
         });
+
+        return false;
     }
 }
 

@@ -253,7 +253,11 @@ export default {
         async uploadUserAvatar(files) {
             let isSignIn = await this.checkUserSingIn();
             if (isSignIn) {
-                uploadUserFile(files, 'avatar');
+                const uploadOk = await uploadUserFile(files, 'avatar');
+
+                if (uploadOk) {
+                    window.location.reload();
+                }
             }
         },
 

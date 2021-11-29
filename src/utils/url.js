@@ -29,5 +29,9 @@ export function getCollectionImageUrl(contract) {
  * @return {string}
  */
 export function getIPFSUrl(hash) {
+    if (!hash) {
+        return '';
+    }
+
     return `https://cloudflare-ipfs.com/ipfs/${hash}`;
 }
