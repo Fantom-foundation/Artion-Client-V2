@@ -138,7 +138,7 @@ export default {
             this.wftmToken.balance = data[1];
 
             this.ftmToken.maxBalance = toHex(
-                toBigNumber(this.ftmToken.balance).minus(bToTokenValue(0.5, this.ftmToken.decimals))
+                toBigNumber(this.ftmToken.balance).minus(bToTokenValue(1, this.ftmToken.decimals))
             );
             this.wftmToken.maxBalance = this.wftmToken.balance;
         },
