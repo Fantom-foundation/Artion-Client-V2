@@ -34,6 +34,7 @@ export async function getTokenOwnerships(contract = '', id = '', pagination = {}
                                     avatarThumb
                                 }
                                 qty
+                                inEscrow
                                 updated
                             }
                         }

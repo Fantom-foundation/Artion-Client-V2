@@ -25,6 +25,7 @@ export async function getUserOwnershipTokens(address = '', pagination = {}, coll
                             node {
                                 contract
                                 tokenId
+                                inEscrow
                                 token {
                                     contract
                                     tokenId

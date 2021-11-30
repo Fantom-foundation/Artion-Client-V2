@@ -87,7 +87,7 @@ export default {
 
     computed: {
         showMakeOfferButton() {
-            return !this.userOwnsToken && !this.userMadeOffer;
+            return !this.userOwnsToken && !this.userMadeOffer && !this.tokenHasAuction;
         },
     },
 
