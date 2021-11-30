@@ -723,7 +723,7 @@ const ZERO_AMOUNT = '0x0';
 /**
  * resultAuction Closes a finished auction and rewards the highest bidder
  *
- * Only item owner
+ * Only the item owner or the auction winner
  * Auction can only be resulted if there has been a bidder and reserve met.
  * If there have been no bids, the auction needs to be cancelled instead using `cancelAuction()`
  *
@@ -748,6 +748,52 @@ const ZERO_AMOUNT = '0x0';
             }
         ],
         "name": "resultAuction",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[nftAddress, tokenID])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: contract,
+        value: ZERO_AMOUNT,
+        data: encodedAbi,
+    };
+}
+
+/**
+ * resultFailedAuction Results an auction that failed to meet the auction.reservePrice
+ *
+ * Only item owner
+ * Auction can only be fail-resulted if the auction has expired and the auction.reservePrice has not been met.
+ * If there have been no bids, the auction needs to be cancelled instead using `cancelAuction()`
+ *
+ * @since Artion-Contracts v2.0.0-rc.1
+ *
+ * @param {string} nftAddress Address of the NFT token, ERC721 address
+ * @param {int} tokenID NFT Token ID of the item being auctioned
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @param {string} [contract] Contract address
+ */
+function resultFailedAuction(nftAddress, tokenID, web3Client, contract = process.env.VUE_APP_FANTOM_AUCTION_CONTRACT_ADDRESS) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_nftAddress",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_tokenId",
+                "type": "uint256"
+            }
+        ],
+        "name": "resultFailedAuction",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -1111,6 +1157,7 @@ export default {
     placeAuctionBid,
     withdrawAuctionBid,
     resultAuction,
+    resultFailedAuction,
     cancelAuction,
     updateAuctionReservePrice,
     updateAuctionStartTime,
