@@ -29,7 +29,7 @@
             </template>
         </f-form-input>
         <f-form-input
-            v-show="!updateInEscrow"
+            v-if="!updateInEscrow"
             type="datetime"
             name="startTime"
             :validator="startTimeValidator"
@@ -42,7 +42,7 @@
             class="md:col-6"
         />
         <f-form-input
-            v-show="!updateInEscrow"
+            v-if="!updateInEscrow"
             type="datetime"
             name="endTime"
             :validator="endTimeValidator"
@@ -54,7 +54,7 @@
             class="md:col-6"
         />
         <f-form-input
-            v-show="!updateInEscrow"
+            v-if="!updateInEscrow"
             type="checkbox"
             :label="$t('nftstartauctionform.minBid')"
             name="minBid"
@@ -133,6 +133,10 @@ export default {
     computed: {
         isFormValid() {
             const { values } = this;
+
+            if (this.updateInEscrow) {
+                return !this.reservePriceValidator(values.reservePrice);
+            }
 
             return (
                 !this.reservePriceValidator(values.reservePrice) &&
