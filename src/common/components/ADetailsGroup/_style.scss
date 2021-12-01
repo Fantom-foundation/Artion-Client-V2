@@ -6,6 +6,10 @@
     .adetails {
         margin: -1px 0 0 0;
         border-radius: 0;
+
+        &.fdetails .fdetails_content {
+            border-radius: 0;
+        }
     }
 
     &-rounded {
