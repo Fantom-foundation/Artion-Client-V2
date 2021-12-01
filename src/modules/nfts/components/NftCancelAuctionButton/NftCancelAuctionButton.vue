@@ -53,6 +53,8 @@ export default {
                 return;
             }
 
+            console.log('cancel', this.auction.auctionHall, token._inEscrow);
+
             this.tx = contracts.cancelAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
         },
 

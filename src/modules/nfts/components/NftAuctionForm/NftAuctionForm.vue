@@ -29,6 +29,7 @@
             </template>
         </f-form-input>
         <f-form-input
+            v-show="!updateInEscrow"
             type="datetime"
             name="startTime"
             :validator="startTimeValidator"
@@ -41,6 +42,7 @@
             class="md:col-6"
         />
         <f-form-input
+            v-show="!updateInEscrow"
             type="datetime"
             name="endTime"
             :validator="endTimeValidator"
@@ -52,6 +54,7 @@
             class="md:col-6"
         />
         <f-form-input
+            v-show="!updateInEscrow"
             type="checkbox"
             :label="$t('nftstartauctionform.minBid')"
             name="minBid"
@@ -70,7 +73,7 @@
 <script>
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
-import { bFromTokenValue, bToTokenValue, toHex } from '@/utils/big-number.js';
+import { bFromTokenValue, bToTokenValue, toBigNumber, toHex } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import dayjs from 'dayjs';
@@ -144,6 +147,10 @@ export default {
 
         minBidDisabled() {
             return this.update;
+        },
+
+        updateInEscrow() {
+            return this.update && this.token._inEscrow;
         },
     },
 
@@ -363,6 +370,11 @@ export default {
 
             if (isNaN(val) || val <= 0) {
                 return this.$t('nftstartauctionform.nonZeroPrice');
+            } else if (
+                this.updateInEscrow &&
+                toBigNumber(bToTokenValue(val, this.selectedPayToken.decimals)).isGreaterThan(this.auction.reservePrice)
+            ) {
+                return this.$t('nftstartauctionform.reservePriceDecreased');
             }
 
             return '';

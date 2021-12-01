@@ -63,7 +63,7 @@
                         </template>
                         <template v-else>
                             <nft-cancel-auction-button :token="token" :auction="auction" @tx-success="update" />
-                            <!--                            <nft-update-auction-button v-if="!auctionHasFinished" :token="token" @tx-success="update" />-->
+                            <nft-update-auction-button v-if="!auctionHasFinished" :token="token" @tx-success="update" />
                         </template>
 
                         <template v-if="tokenHasListing">
@@ -200,6 +200,7 @@ import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/N
 import { compareAddresses } from '@/utils/address.js';
 import AVideo from '@/common/components/AVideo/AVideo';
 import NftPriceHistory from '@/modules/nfts/components/NftPriceHistory/NftPriceHistory.vue';
+import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionButton/NftUpdateAuctionButton.vue';
 
 export default {
     name: 'NftDetail',
@@ -207,6 +208,7 @@ export default {
     mixins: [eventBusMixin],
 
     components: {
+        NftUpdateAuctionButton,
         NftDetailInfo,
         NftDetailCollection,
         NftCancelAuctionButton,
@@ -237,6 +239,7 @@ export default {
             // token is created by user
             userCreatedToken: false,
             userOwnsToken: false,
+            inEscrow: false,
             listing: {},
             /** @type {Auction} */
             auction: {},
@@ -301,6 +304,7 @@ export default {
 
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+            this.token._inEscrow = this.inEscrow;
 
             if (this.auction.contract) {
                 setTimeout(() => {
@@ -379,7 +383,15 @@ export default {
         async getTokenOwner(tokenContract, tokenId) {
             const data = await getTokenOwnerships(tokenContract, tokenId, { first: 200 });
 
-            return data.edges.length > 0 ? data.edges[0].node.ownerUser : {};
+            console.log(data.edges[0].node);
+
+            if (data.edges.length > 0) {
+                this.inEscrow = data.edges[0].node.inEscrow;
+
+                return data.edges[0].node.ownerUser;
+            }
+
+            return {};
         },
 
         async checkWalletConnection() {
