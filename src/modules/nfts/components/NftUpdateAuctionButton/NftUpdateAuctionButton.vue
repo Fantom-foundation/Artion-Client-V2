@@ -10,7 +10,7 @@
             ref="window"
             :title="$t('nftupdateauctionwindow.title')"
             v-slot="{ onTxStatus }"
-            class="fwindow-width-5"
+            :class="!token._inEscrow ? `fwindow-width-5` : `fwindow-width-3`"
         >
             <nft-auction-form
                 update

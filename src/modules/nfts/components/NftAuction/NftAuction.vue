@@ -45,12 +45,18 @@
             <div class="grid">
                 <div class="flex gap-3 ali-center">
                     <span>{{ $t('nftauction.reservePrice') }}:</span>
-                    <a-token-value :value="auction.reservePrice" :token="payToken" no-symbol />
+                    <a-token-value :value="auction.reservePrice" :token="payToken" no-symbol :fraction-digits="1" />
                 </div>
                 <template v-if="auctionHasStarted">
                     <div class="flex gap-3 ali-center">
                         <span>{{ $t('nftauction.highestBid') }}:</span>
-                        <a-token-value v-if="auction.lastBid" :value="auction.lastBid" :token="payToken" no-symbol />
+                        <a-token-value
+                            v-if="auction.lastBid"
+                            :value="auction.lastBid"
+                            :token="payToken"
+                            no-symbol
+                            :fraction-digits="1"
+                        />
                         <span v-else>-</span>
                     </div>
                     <nft-result-auction-button

@@ -656,7 +656,8 @@
 
     "nftcancelauction": {
         "cancelAuction": "Cancel Auction",
-        "cancelSuccessful": "You have successfully canceled the auction"
+        "cancelSuccessful": "You have successfully canceled the auction",
+        "highestBidAboveReservePrice": "Highest bid is currently above reserve price"
     },
 
     "nftwithdrawbid": {
