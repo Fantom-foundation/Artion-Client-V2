@@ -7,7 +7,7 @@
         <wallet-picker />
         <f-app-theme :themes="['theme-default', 'theme-dark', 'theme-pg']" />
         <app-dark-theme />
-        <f-tooltip with-arrow />
+        <f-tooltip with-arrow hide-on-document-scroll />
         <f-notifications
             strategy="newest-first"
             with-icon

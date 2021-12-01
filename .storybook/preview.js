@@ -24,7 +24,7 @@ const decor = (story, context) => {
         template: `
             <div>
                 <wrapped />
-                <f-tooltip with-arrow />
+                <f-tooltip with-arrow hide-on-document-scroll />
             </div>
         `,
     });
