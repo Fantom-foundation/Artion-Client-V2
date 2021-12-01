@@ -381,7 +381,7 @@ export default {
          * @return {Promise<Object>}
          */
         async getTokenOwner(tokenContract, tokenId) {
-            const data = await getTokenOwnerships(tokenContract, tokenId, { first: 200 });
+            const data = await getTokenOwnerships(tokenContract, tokenId, { first: 500 }, true);
 
             console.log(data.edges[0].node);
 

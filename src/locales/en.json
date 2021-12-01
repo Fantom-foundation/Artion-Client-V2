@@ -651,7 +651,8 @@
 
     "nftresultauction": {
         "acceptBid": "Accept Highest Bid",
-        "acceptBidSuccessful": "You have successfully accepted the highest bid"
+        "acceptBidSuccessful": "You have successfully accepted the highest bid",
+        "resultAuction": "Result Auction"
     },
 
     "nftcancelauction": {

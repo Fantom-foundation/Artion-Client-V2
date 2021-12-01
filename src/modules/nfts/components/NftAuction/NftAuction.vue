@@ -60,9 +60,11 @@
                         <span v-else>-</span>
                     </div>
                     <nft-result-auction-button
-                        v-if="userOwnsToken && auctionHasFinished && auction.lastBidder"
+                        v-if="canResultAuction && !inEscrowAuctionIsFailed"
                         :token="token"
                         :auction="auction"
+                        :in-escrow-auction-is-failed="inEscrowAuctionIsFailed"
+                        :user-is-auction-winner="userIsAuctionWinner"
                         @tx-success="onTxSuccess"
                     />
                     <nft-bid-button
@@ -103,6 +105,8 @@ import { mapState } from 'vuex';
 import FCountdown from 'fantom-vue-components/src/components/FCountdown/FCountdown.vue';
 import { pollingMixin } from '@/common/mixins/polling.js';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
+import { compareAddresses } from '@/utils/address.js';
+import { toBigNumber } from '@/utils/big-number.js';
 
 const UPDATE_LAST_BID = 'update-last-bid';
 
@@ -175,8 +179,24 @@ export default {
             return isExpired(this.auction.endTime);
         },
 
+        canResultAuction() {
+            return (
+                this.auctionHasFinished &&
+                this.auction.lastBidder &&
+                (this.userOwnsToken || (this.userIsAuctionWinner && !this.inEscrowAuctionIsFailed))
+            );
+        },
+
         showWithdrawBidButton() {
-            return this.auctionHasFinished && this.auction.lastBidder === this.walletAddress;
+            return this.auctionHasFinished && this.userIsAuctionWinner;
+        },
+
+        userIsAuctionWinner() {
+            return compareAddresses(this.auction.lastBidder, this.walletAddress);
+        },
+
+        inEscrowAuctionIsFailed() {
+            return this.token._inEscrow && this.auctionHasFinished && this.lastBidIsBelowReservePrice;
         },
 
         withdrawBidButtonDisabled() {
@@ -197,6 +217,16 @@ export default {
 
         showEndCountdown() {
             return this.auctionHasStarted && dayjs(this.auction.endTime).diff(dayjs(), 'days') < 3;
+        },
+
+        lastBidIsBelowReservePrice() {
+            const { lastBid } = this.auction;
+
+            if (lastBid) {
+                return toBigNumber(lastBid).isLessThan(this.auction.reservePrice);
+            }
+
+            return true;
         },
     },
 

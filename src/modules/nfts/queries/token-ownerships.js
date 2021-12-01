@@ -1,8 +1,9 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 import { toHex } from '@/utils/big-number.js';
+import dayjs from 'dayjs';
 
-export async function getTokenOwnerships(contract = '', id = '', pagination = {}) {
+export async function getTokenOwnerships(contract = '', id = '', pagination = {}, sortByUpdated = false) {
     const query = {
         query: gql`
             query GetTokenOwnerships(
@@ -50,5 +51,15 @@ export async function getTokenOwnerships(contract = '', id = '', pagination = {}
         fetchPolicy: 'network-only',
     };
 
-    return gqlQuery(query, 'token.ownerships');
+    const data = await gqlQuery(query, 'token.ownerships');
+
+    if (sortByUpdated && data.edges && data.edges.length > 1) {
+        data.edges.sort(sortByUpdatedProp);
+    }
+
+    return data;
+}
+
+function sortByUpdatedProp(a, b) {
+    return dayjs(b.node.updated).valueOf() - dayjs(a.node.updated).valueOf();
 }

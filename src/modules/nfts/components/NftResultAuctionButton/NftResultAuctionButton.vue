@@ -1,7 +1,11 @@
 <template>
     <div class="nftresultauctionbutton">
         <a-button
-            :label="$t('nftresultauction.acceptBid')"
+            :label="
+                inEscrowAuctionIsFailed || userIsAuctionWinner
+                    ? $t('nftresultauction.resultAuction')
+                    : $t('nftresultauction.acceptBid')
+            "
             :loading="txStatus === 'pending'"
             @click.native="onButtonClick"
         />
@@ -35,6 +39,14 @@ export default {
                 return {};
             },
         },
+        inEscrowAuctionIsFailed: {
+            type: Boolean,
+            default: false,
+        },
+        userIsAuctionWinner: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     data() {
@@ -53,7 +65,11 @@ export default {
                 return;
             }
 
-            this.tx = contracts.resultAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+            if (this.inEscrowAuctionIsFailed) {
+                this.tx = contracts.resultFailedAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+            } else {
+                this.tx = contracts.resultAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+            }
         },
 
         onButtonClick() {
