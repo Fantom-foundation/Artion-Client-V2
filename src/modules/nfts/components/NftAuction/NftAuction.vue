@@ -60,7 +60,7 @@
                         <span v-else>-</span>
                     </div>
                     <nft-result-auction-button
-                        v-if="canResultAuction && !inEscrowAuctionIsFailed"
+                        v-if="canResultAuction"
                         :token="token"
                         :auction="auction"
                         :in-escrow-auction-is-failed="inEscrowAuctionIsFailed"
@@ -182,9 +182,10 @@ export default {
 
         canResultAuction() {
             return (
-                this.auctionHasFinished &&
-                this.dAuction.lastBidder &&
-                (this.userOwnsToken || (this.userIsAuctionWinner && !this.inEscrowAuctionIsFailed))
+                this.auctionHasFinished && this.dAuction.lastBidder && this.userOwnsToken && !this.auctionIsFailed
+                /*((this.userOwnsToken && !this.auctionIsFailed) ||
+                    (this.userIsAuctionWinner && this.inEscrowAuctionIsFailed))*/
+                // (this.userOwnsToken || (this.userIsAuctionWinner && !this.inEscrowAuctionIsFailed))
             );
         },
 
@@ -196,8 +197,12 @@ export default {
             return compareAddresses(this.dAuction.lastBidder, this.walletAddress);
         },
 
+        auctionIsFailed() {
+            return this.auctionHasFinished && this.lastBidIsBelowReservePrice;
+        },
+
         inEscrowAuctionIsFailed() {
-            return this.token._inEscrow && this.auctionHasFinished && this.lastBidIsBelowReservePrice;
+            return this.token._inEscrow && this.auctionIsFailed;
         },
 
         withdrawBidButtonDisabled() {
