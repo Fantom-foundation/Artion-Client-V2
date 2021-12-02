@@ -52,11 +52,19 @@ export default {
     components: { FDataGrid, AAddress, ATokenValue },
 
     data() {
+        const _this = this;
         return {
             itemsColumns: [
                 {
                     name: 'unitPrice',
                     label: this.$t('nfthistorygrid.price'),
+                },
+                {
+                    name: 'type',
+                    label: this.$t('nfthistorygrid.type'),
+                    formatter(value) {
+                        return _this.$t('nfthistorygrid.types.' + value);
+                    },
                 },
                 {
                     name: 'fromUser',

@@ -180,9 +180,15 @@
 
     "nfthistorygrid": {
         "price": "Price",
+        "type": "Type",
         "from": "From",
         "to": "To",
-        "date": "Date"
+        "date": "Date",
+        "types": {
+            "LISTING_SOLD": "Sold in listing",
+            "OFFER_SOLD": "Sold in offer",
+            "AUCTION_RESOLVED": "Sold in auction"
+        }
     },
 
     "nftMakeOfferForm": {
