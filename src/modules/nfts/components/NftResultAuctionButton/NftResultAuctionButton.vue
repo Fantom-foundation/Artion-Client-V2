@@ -65,11 +65,11 @@ export default {
                 return;
             }
 
-            if (this.inEscrowAuctionIsFailed) {
+            /*if (this.inEscrowAuctionIsFailed) {
                 this.tx = contracts.resultFailedAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
-            } else {
-                this.tx = contracts.resultAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
-            }
+            } else {*/
+            this.tx = contracts.resultAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+            // }
         },
 
         onButtonClick() {
