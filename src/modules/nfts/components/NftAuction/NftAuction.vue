@@ -14,12 +14,12 @@
                                 <template v-else>{{ auctionEndTime }}</template>
                             </div>
                             <f-countdown
-                                v-if="showEndCountdown && auction.endTime"
-                                :date="auction.endTime"
+                                v-if="showEndCountdown && dAuction.endTime"
+                                :date="dAuction.endTime"
                                 :css-classes="countdownCssClasses"
                                 with-labels
                                 use-two-digit-numbers
-                                :show="getCountdownShow(auction.endTime)"
+                                :show="getCountdownShow(dAuction.endTime)"
                                 @time-up="onAuctionEndTimeUp"
                             />
                         </template>
@@ -31,11 +31,11 @@
                             <template v-else>{{ auctionStartTime }}</template>
                         </div>
                         <f-countdown
-                            v-if="showStartCountdown && auction.startTime"
-                            :date="auction.startTime"
+                            v-if="showStartCountdown && dAuction.startTime"
+                            :date="dAuction.startTime"
                             with-labels
                             use-two-digit-numbers
-                            :show="getCountdownShow(auction.startTime)"
+                            :show="getCountdownShow(dAuction.startTime)"
                             @time-up="onAuctionStartTimeUp"
                         />
                     </template>
@@ -45,14 +45,14 @@
             <div class="grid">
                 <div class="flex gap-3 ali-center">
                     <span>{{ $t('nftauction.reservePrice') }}:</span>
-                    <a-token-value :value="auction.reservePrice" :token="payToken" no-symbol :fraction-digits="1" />
+                    <a-token-value :value="dAuction.reservePrice" :token="payToken" no-symbol :fraction-digits="1" />
                 </div>
                 <template v-if="auctionHasStarted">
                     <div class="flex gap-3 ali-center">
                         <span>{{ $t('nftauction.highestBid') }}:</span>
                         <a-token-value
-                            v-if="auction.lastBid"
-                            :value="auction.lastBid"
+                            v-if="dAuction.lastBid"
+                            :value="dAuction.lastBid"
                             :token="payToken"
                             no-symbol
                             :fraction-digits="1"
@@ -108,7 +108,7 @@ import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { compareAddresses } from '@/utils/address.js';
 import { toBigNumber } from '@/utils/big-number.js';
 
-const UPDATE_LAST_BID = 'update-last-bid';
+const UPDATE_AUCTION = 'update-auction';
 
 export default {
     name: 'NftAuction',
@@ -140,6 +140,7 @@ export default {
     data() {
         return {
             payToken: {},
+            dAuction: {},
             countdownCssClasses: [
                 {
                     // an hour
@@ -156,33 +157,33 @@ export default {
         }),
 
         auctionHasStarted() {
-            return dayjs(this.auction.startTime).diff(dayjs()) <= 0;
+            return dayjs(this.dAuction.startTime).diff(dayjs()) <= 0;
         },
 
         auctionStartTime() {
-            return datetimeFormatter(this.auction.startTime);
+            return datetimeFormatter(this.dAuction.startTime);
         },
 
         auctionStartsIn() {
-            return dayjs(this.auction.startTime).fromNow();
+            return dayjs(this.dAuction.startTime).fromNow();
         },
 
         auctionEndTime() {
-            return datetimeFormatter(this.auction.endTime);
+            return datetimeFormatter(this.dAuction.endTime);
         },
 
         auctionEndsIn() {
-            return dayjs(this.auction.endTime).fromNow();
+            return dayjs(this.dAuction.endTime).fromNow();
         },
 
         auctionHasFinished() {
-            return isExpired(this.auction.endTime);
+            return isExpired(this.dAuction.endTime);
         },
 
         canResultAuction() {
             return (
                 this.auctionHasFinished &&
-                this.auction.lastBidder &&
+                this.dAuction.lastBidder &&
                 (this.userOwnsToken || (this.userIsAuctionWinner && !this.inEscrowAuctionIsFailed))
             );
         },
@@ -192,7 +193,7 @@ export default {
         },
 
         userIsAuctionWinner() {
-            return compareAddresses(this.auction.lastBidder, this.walletAddress);
+            return compareAddresses(this.dAuction.lastBidder, this.walletAddress);
         },
 
         inEscrowAuctionIsFailed() {
@@ -200,30 +201,30 @@ export default {
         },
 
         withdrawBidButtonDisabled() {
-            return dayjs().diff(this.auction.endTime, 'hours') < 12;
+            return dayjs().diff(this.dAuction.endTime, 'hours') < 12;
         },
 
         withdrawBidTime() {
             return datetimeFormatter(
-                dayjs(this.auction.endTime)
+                dayjs(this.dAuction.endTime)
                     .add(12, 'hours')
                     .valueOf()
             );
         },
 
         showStartCountdown() {
-            return !this.auctionHasStarted && dayjs(this.auction.startTime).diff(dayjs(), 'days') < 3;
+            return !this.auctionHasStarted && dayjs(this.dAuction.startTime).diff(dayjs(), 'days') < 3;
         },
 
         showEndCountdown() {
-            return this.auctionHasStarted && dayjs(this.auction.endTime).diff(dayjs(), 'days') < 3;
+            return this.auctionHasStarted && dayjs(this.dAuction.endTime).diff(dayjs(), 'days') < 3;
         },
 
         lastBidIsBelowReservePrice() {
             const { lastBid } = this.auction;
 
             if (lastBid) {
-                return toBigNumber(lastBid).isLessThan(this.auction.reservePrice);
+                return toBigNumber(lastBid).isLessThan(this.dAuction.reservePrice);
             }
 
             return true;
@@ -234,10 +235,11 @@ export default {
         auction: {
             handler(value) {
                 if (value.contract) {
+                    this.dAuction = value;
                     this.setPayToken(value);
 
                     if (this.auctionHasStarted) {
-                        this.startUpdateLastBidPolling();
+                        this.startUpdateAuctionPolling();
                     }
                 }
             },
@@ -246,25 +248,38 @@ export default {
     },
 
     methods: {
-        async setPayToken(auction = this.auction) {
+        async setPayToken(auction = this.dAuction) {
             this.payToken = (await getPayToken(auction.payToken)) || {};
         },
 
-        async updateLastBid() {
+        async updateAuction() {
             const auction = (await getAuction(this.token.contract, this.token.tokenId)) || {};
 
-            this.auction.lastBid = auction.lastBid;
+            if (isExpired(auction.closed)) {
+                this.dAuction = auction;
+
+                this.stopUpdateAuctionPolling();
+                this.$emit('tx-success');
+            } else {
+                this.dAuction.lastBid = auction.lastBid;
+            }
         },
 
-        startUpdateLastBidPolling() {
+        startUpdateAuctionPolling() {
             if (this._polling) {
                 this._polling.start(
-                    UPDATE_LAST_BID,
+                    UPDATE_AUCTION,
                     () => {
-                        this.updateLastBid();
+                        this.updateAuction();
                     },
                     3000
                 );
+            }
+        },
+
+        stopUpdateAuctionPolling() {
+            if (this._polling) {
+                this._polling.stop(UPDATE_AUCTION);
             }
         },
 
