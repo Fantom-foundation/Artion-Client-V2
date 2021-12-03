@@ -64,9 +64,10 @@ import { compareAddresses } from '@/utils/address.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
+import erc721utils from '@/utils/erc721-utils.js';
 import { isExpired } from '@/utils/date.js';
 import { i18n } from '@/plugins/vue-i18n.js';
-import { objectEquals } from 'fantom-vue-components/src/utils';
+import { clone, objectEquals } from 'fantom-vue-components/src/utils';
 import { datetimeFormatter } from '@/utils/formatters.js';
 import { pollingMixin } from '@/common/mixins/polling.js';
 
@@ -136,6 +137,7 @@ export default {
             tx: {},
             txStatus: '',
             pickedAddress: '',
+            pickedOffer: null,
             // tokens owned by user
             ownedTokens: [],
         };
@@ -172,6 +174,13 @@ export default {
             immediate: true,
         },
 
+        gridItemsSet(value) {
+            if (value) {
+                // force nft detail to update
+                this.$emit('tx-success');
+            }
+        },
+
         /*walletAddress(value) {
             this.loadOwnedTokens(value);
         },*/
@@ -196,16 +205,35 @@ export default {
          * @param {Object} offer
          */
         acceptOffer(offer) {
+            this.pickedAddress = offer.proposedBy;
+            this.pickedOffer = clone(offer);
+
+            this.setApproveTx(offer);
+        },
+
+        /**
+         * @param {Object} offer
+         */
+        setApproveTx(offer) {
+            const { token } = this;
+            const tx = erc721utils.erc721Approve(token.contract, offer.marketplace, token.tokenId);
+
+            tx._code = 'approve';
+
+            this.tx = tx;
+        },
+
+        /**
+         * @param {Object} offer
+         */
+        setAcceptOfferTx(offer) {
             const { token } = this;
             const web3 = new Web3();
             const tx = contracts.acceptOffer(token.contract, token.tokenId, offer.proposedBy, web3, offer.marketplace);
 
             tx._code = 'accept';
 
-            this.pickedAddress = offer.proposedBy;
-
             this.tx = tx;
-            // alert('Not implemented yew');
         },
 
         /**
@@ -219,6 +247,7 @@ export default {
             tx._code = 'withdraw';
 
             this.pickedAddress = offer.proposedBy;
+            this.pickedOffer = clone(offer);
 
             this.tx = tx;
         },
@@ -356,6 +385,21 @@ export default {
          * @param {string} txCode
          */
         onTxSuccess(txCode) {
+            if (txCode === 'approve') {
+                this.$notifications.add({
+                    type: 'success',
+                    text: this.$t('aproveSuccess'),
+                });
+
+                this.setAcceptOfferTx(this.pickedOffer);
+
+                this.txStatus = 'pending';
+
+                return;
+            }
+
+            this.pickedOffer = null;
+
             this.$notifications.add({
                 type: 'success',
                 text:

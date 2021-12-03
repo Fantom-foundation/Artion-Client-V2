@@ -7,6 +7,7 @@ export const dataPageMixin = {
             perPage: 20,
             totalItems: 0,
             loading: false,
+            gridItemsSet: false,
             pageInfo: {},
         };
     },
@@ -127,6 +128,12 @@ export const dataPageMixin = {
 
                 if (!objectEquals(this.items, this._getItemsFromData(data))) {
                     this.items = items;
+
+                    if (this.items.length > 0) {
+                        this.gridItemsSet = true;
+                    }
+                } else {
+                    this.gridItemsSet = false;
                 }
 
                 defer(() => {

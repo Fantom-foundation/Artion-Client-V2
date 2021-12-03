@@ -21,6 +21,7 @@
     "balance": "Balance",
     "wrapStation": "FTM / WFTM Station",
     "notice": "Notice",
+    "aproveSuccess": "Successfully approved",
 
     "navigation": {
         "explore": "@:explore",

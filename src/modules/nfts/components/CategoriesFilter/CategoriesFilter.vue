@@ -10,7 +10,7 @@
         <template v-slot="{ item }">
             <div class="categoriesfilter_item tes-4">
                 <div v-html="item.icon"></div>
-                {{ `${item.name}` }}
+                {{ item.name }}
             </div>
         </template>
     </f-listbox>
