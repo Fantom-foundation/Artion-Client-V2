@@ -30,9 +30,9 @@
                 />
             </template>
             <template #column-actions="{ item }">
-                <template v-if="!isExpired(item)">
+                <template v-if="actionExists(item)">
                     <a-button
-                        v-if="userOwnsToken"
+                        v-if="canAccept()"
                         :loading="txStatus === 'pending' && pickedAddress === item.proposedBy"
                         :label="$t('nftDirectOffersGrid.accept')"
                         :disabled="tokenHasAuction"
@@ -40,7 +40,7 @@
                         @click.native="onAcceptButtonClick(item)"
                     />
                     <a-button
-                        v-else-if="compareAddresses(item.proposedBy, walletAddress)"
+                        v-else-if="canWithdraw(item)"
                         :loading="txStatus === 'pending' && pickedAddress === item.proposedBy"
                         :label="$t('nftDirectOffersGrid.withdraw')"
                         @click.native="onWithdrawButtonClick(item)"
@@ -68,13 +68,16 @@ import { isExpired } from '@/utils/date.js';
 import { i18n } from '@/plugins/vue-i18n.js';
 import { objectEquals } from 'fantom-vue-components/src/utils';
 import { datetimeFormatter } from '@/utils/formatters.js';
+import { pollingMixin } from '@/common/mixins/polling.js';
+
+const UPDATE_OFFERS_GRID = 'update-offers-grid';
 
 export default {
     name: 'NftDirectOffersGrid',
 
     components: { ASignTransaction, AButton, AAddress, ATokenValue, FDataGrid },
 
-    mixins: [dataPageMixin],
+    mixins: [dataPageMixin, pollingMixin],
 
     props: {
         token: {
@@ -158,9 +161,24 @@ export default {
             immediate: true,
         },
 
+        userOwnsToken: {
+            handler() {
+                if (this.canAccept()) {
+                    this.startPolling();
+                } else {
+                    this.stopPolling();
+                }
+            },
+            immediate: true,
+        },
+
         /*walletAddress(value) {
             this.loadOwnedTokens(value);
         },*/
+    },
+
+    created() {
+        this._notExpiredOfferDeadlines = [];
     },
 
     methods: {
@@ -174,6 +192,9 @@ export default {
             await this._loadPage();
         },
 
+        /**
+         * @param {Object} offer
+         */
         acceptOffer(offer) {
             const { token } = this;
             const web3 = new Web3();
@@ -187,6 +208,9 @@ export default {
             // alert('Not implemented yew');
         },
 
+        /**
+         * @param {Object} offer
+         */
         withdrawOffer(offer) {
             const { token } = this;
             const web3 = new Web3();
@@ -208,6 +232,47 @@ export default {
             // this.loadOffers();
         },
 
+        /**
+         * @return {Boolean}
+         */
+        canAccept() {
+            return this.userOwnsToken;
+        },
+
+        /**
+         * @param {Object} offer
+         * @return {boolean}
+         */
+        canWithdraw(offer) {
+            const canWithdraw = this.compareAddresses(offer.proposedBy, this.walletAddress);
+
+            if (canWithdraw) {
+                this.startPolling();
+            }
+
+            return canWithdraw;
+        },
+
+        /**
+         * @param {Object} offer
+         * @return {boolean}
+         */
+        actionExists(offer) {
+            const notExpired = !this.isExpired(offer);
+
+            if (notExpired) {
+                if (!this._notExpiredOfferDeadlines.includes(offer.deadline)) {
+                    this._notExpiredOfferDeadlines.push(offer.deadline);
+                }
+            }
+
+            return notExpired;
+        },
+
+        /**
+         * @param {Object} offer
+         * @return {boolean}
+         */
         isExpired(offer) {
             if (!offer.closed) {
                 return isExpired(offer.deadline);
@@ -216,14 +281,80 @@ export default {
             return true;
         },
 
+        startPolling() {
+            if (this._polling) {
+                this._polling.start(
+                    UPDATE_OFFERS_GRID,
+                    () => {
+                        this.onUpdate();
+                    },
+                    3000
+                );
+            }
+        },
+
+        stopPolling() {
+            if (this._polling) {
+                this._polling.stop(UPDATE_OFFERS_GRID);
+            }
+        },
+
+        /**
+         * @return {boolean}
+         */
+        someOffersExpired() {
+            return this.removeExpiredOffersFromDeadlines();
+        },
+
+        /**
+         * @return {boolean}
+         */
+        removeExpiredOffersFromDeadlines() {
+            const deadlines = this._notExpiredOfferDeadlines;
+            let removed = false;
+
+            for (let i = deadlines.length - 1; i >= 0; i--) {
+                if (isExpired(deadlines[i])) {
+                    deadlines.splice(i, 1);
+                    removed = true;
+                }
+            }
+
+            // console.log('deadlines', deadlines);
+
+            return removed;
+        },
+
+        onUpdate() {
+            const { grid } = this.$refs;
+
+            if (grid) {
+                grid.reload();
+
+                if (this.someOffersExpired()) {
+                    // re-render grid
+                    this.items = [...this.items];
+                }
+            }
+        },
+
+        /**
+         * @param {Object} offer
+         */
         onAcceptButtonClick(offer) {
             this.acceptOffer(offer);
         },
 
+        /**
+         * @param {Object} offer
+         */
         onWithdrawButtonClick(offer) {
             this.withdrawOffer(offer);
         },
 
+        /**
+         * @param {string} txCode
+         */
         onTxSuccess(txCode) {
             this.$notifications.add({
                 type: 'success',
