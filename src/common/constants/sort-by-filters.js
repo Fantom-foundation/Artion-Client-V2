@@ -2,7 +2,7 @@ export function SORT_BY_FILTERS() {
     return [
         {
             value: '',
-            label: 'Sort by',
+            label: 'sort_by.sort_by',
             disabled: true,
         },
         {

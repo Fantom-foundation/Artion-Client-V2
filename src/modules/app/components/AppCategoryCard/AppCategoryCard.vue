@@ -27,7 +27,7 @@
                 </svg>
             </div>
             <div v-else class="appcategorycard_label appcategorycard_label-all">
-                <h3>{{ $t(noCategoryData.label) }}</h3>
+                <h3>{{ noCategoryData.label }}</h3>
                 <svg
                     width="48"
                     height="48"

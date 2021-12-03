@@ -6,7 +6,7 @@ export function ACTIVITY_TYPES() {
             disabled: true,
         },*/
         {
-            label: '---',
+            label: 'activity_types.all',
             filter: '',
         },
         {

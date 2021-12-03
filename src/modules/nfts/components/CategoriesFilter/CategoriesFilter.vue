@@ -10,7 +10,7 @@
         <template v-slot="{ item }">
             <div class="categoriesfilter_item tes-4">
                 <div v-html="item.icon"></div>
-                {{ $t(item.name) }}
+                {{ `${item.name}` }}
             </div>
         </template>
     </f-listbox>
@@ -47,14 +47,10 @@ export default {
 
     computed: {
         cCategories() {
-            const tmp = this.categories.map((category, idx) => {
+            return this.categories.map((category, idx) => {
                 // return { ...category, value: category.id, label: this.$t(category.label), id: undefined };
                 return { ...category, value: category.id, id: undefined, _idx: idx };
             });
-
-            console.log(tmp);
-
-            return tmp;
         },
     },
 
