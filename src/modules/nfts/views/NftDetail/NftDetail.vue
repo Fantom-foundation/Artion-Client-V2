@@ -94,7 +94,6 @@
                     @auction-time-up="update"
                 />
 
-                <!-- TO DO -->
                 <a-details strategy="create">
                     <template #label>
                         <div class="nftdetail_details_wrap">
@@ -137,13 +136,11 @@
                 </a-details>
             </div>
 
-            <!-- TO DO -->
             <nft-detail-info :info="token" />
         </div>
 
-        <!-- TO DO -->
         <div class="nftdetail_filter">
-            <nft-trade-history-grid />
+            <nft-trade-history-grid :token="token" />
         </div>
 
         <div class="nftdetail_collection">

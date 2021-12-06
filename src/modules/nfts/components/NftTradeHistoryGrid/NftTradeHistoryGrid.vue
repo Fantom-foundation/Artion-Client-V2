@@ -10,7 +10,7 @@
         </div>
         <div class="nfttradehistorygrid_histories">
             <!-- <component :is="currentComponent" /> -->
-            <nft-history-grid />
+            <nft-history-grid :token="token" />
         </div>
     </div>
 </template>
@@ -18,13 +18,25 @@
 //import TradeHistorySwitcher from '@/modules/nfts/components/TradeHistorySwitcher/TradeHistorySwitcher';
 //import NftTradeGrid from '@/modules/nfts/components/NftTradeGrid/NftTradeGrid';
 import NftHistoryGrid from '@/modules/nfts/components/NftHistoryGrid/NftHistoryGrid';
+
 export default {
     name: 'NftTradeHistoryGrid',
+
     components: {
         // TradeHistorySwitcher,
         // NftTradeGrid,
         NftHistoryGrid,
     },
+
+    props: {
+        token: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
+    },
+
     data() {
         return {
             currentComponent: 'NftHistoryGrid',

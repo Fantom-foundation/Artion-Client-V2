@@ -1,14 +1,19 @@
 <template>
     <div class="nfthistorygrid">
         <f-data-grid
+            ref="grid"
+            infinite-scroll
+            infinite-scroll-root=".nfttmpgrid .fdatagrid_table"
+            strategy="remote"
             no-header
             max-height="400px"
             sticky-head
             class="agrid"
             :items="items"
             :columns="itemsColumns"
-            :use-pagination="false"
-            :total-items="items.length"
+            :total-items="totalItems"
+            :per-page="perPage"
+            @change="_onGridPageChange"
         >
             <template #column-unitPrice="{ item, value }">
                 <a-token-value
@@ -43,6 +48,8 @@ import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import AAddress from '@/common/components/AAddress/AAddress.vue';
 import { getTokenActivity } from '@/modules/nfts/queries/token-activity.js';
 import { datetimeFormatter } from '@/utils/formatters.js';
+import { dataPageMixin } from '@/common/mixins/data-page.js';
+import { objectEquals } from 'fantom-vue-components/src/utils';
 
 const filter = ['LISTING_SOLD', 'OFFER_SOLD', 'AUCTION_RESOLVED'];
 
@@ -50,6 +57,17 @@ export default {
     name: 'NftHistoryGrid',
 
     components: { FDataGrid, AAddress, ATokenValue },
+
+    mixins: [dataPageMixin],
+
+    props: {
+        token: {
+            type: Object,
+            default() {
+                return {};
+            },
+        },
+    },
 
     data() {
         const _this = this;
@@ -82,27 +100,34 @@ export default {
                     },
                 },
             ],
-            items: [],
+            perPage: 40,
         };
     },
 
-    created() {
-        this.init();
+    watch: {
+        token: {
+            async handler(value, oldValue) {
+                if (value.contract && !objectEquals(value, oldValue)) {
+                    if (this.items.length > 0) {
+                        this.update();
+                    } else {
+                        await this.loadActivities();
+                    }
+                }
+            },
+            immediate: true,
+        },
     },
 
     methods: {
-        async init() {
-            const routeParams = this.$route.params;
-            let values = await getTokenActivity(
-                routeParams.tokenContract,
-                routeParams.tokenId,
-                this.filterToQuery(filter)
-            );
-            this.items = this.transformData(values);
+        async loadPage(pagination = { first: this.perPage }) {
+            const { token } = this;
+
+            return await getTokenActivity(token.contract, token.tokenId, pagination, this.filterToQuery(filter));
         },
 
-        transformData(values) {
-            return values.edges.map(item => item.node);
+        async loadActivities() {
+            await this._loadPage();
         },
 
         filterToQuery(value) {
@@ -110,6 +135,13 @@ export default {
                 return { filter: { types: value } };
             }
             return {};
+        },
+
+        update() {
+            setTimeout(() => {
+                this._resetData();
+                this.$refs.grid.reload();
+            }, 500);
         },
     },
 };
