@@ -69,7 +69,7 @@ export default {
     data() {
         return {
             factor: null,
-            dValue: parseFloat(this.value),
+            dValue: this.value ? parseFloat(this.value) : '',
         };
     },
 
