@@ -15,6 +15,8 @@
                 :nftData="nft"
                 :isFavorite="searchFavoriteNft(nft.tokenId)"
                 :key="`${nft.contract}_${nft.tokenId}`"
+                :data-page="nft._page || null"
+                @mousedown.native="onNftMousedown"
             />
         </div>
     </f-infinite-scroll>
@@ -109,6 +111,15 @@ export default {
 
             if (infScroll) {
                 infScroll.goToPage(pageNum, true);
+            }
+        },
+
+        onNftMousedown(event) {
+            const nftElem = event.target.closest('[data-page]');
+            const page = nftElem ? parseInt(nftElem.getAttribute('data-page')) : -1;
+
+            if (page > -1) {
+                this.$emit('nft-list-page', page);
             }
         },
     },
