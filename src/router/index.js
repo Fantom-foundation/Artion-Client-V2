@@ -9,12 +9,14 @@ export function setupRouter({ routes = [], middlewares = [], vueInstance = Vue }
         routes,
         mode: appConfig.routerHashMode ? 'hash' : 'history',
 
-        scrollBehavior: function(to) {
+        scrollBehavior: function(to, from, savedPosition) {
             if (to.hash) {
                 return {
                     selector: to.hash,
                     behavior: 'smooth',
                 };
+            } else if (savedPosition) {
+                return savedPosition;
             }
 
             return { x: 0, y: 0 };

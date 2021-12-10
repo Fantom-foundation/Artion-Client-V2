@@ -12,6 +12,12 @@ import { signIn } from '@/modules/account/auth.js';
 const APP_TITLE = appConfig.title;
 let prevTheme = '';
 
+let popStateDetected = false;
+
+window.addEventListener('popstate', () => {
+    popStateDetected = true;
+});
+
 /**
  * @param {Object} to
  * @param {Object} from
@@ -64,6 +70,20 @@ export async function authRoute(to, from, next) {
     } else {
         next();
     }
+}
+
+/**
+ * @param {Object} to
+ * @param {Object} from
+ * @param {function} next
+ */
+export async function setBackButton(to, from, next) {
+    to.meta.backButton = popStateDetected;
+    to.meta.prevRoute = { name: from.name };
+
+    console.log('tady', popStateDetected, to.name);
+    next();
+    popStateDetected = false;
 }
 
 /*export function checkComponentsChange(_next) {
