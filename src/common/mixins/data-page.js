@@ -1,4 +1,4 @@
-import { clone, defer, objectEquals } from 'fantom-vue-components/src/utils';
+import { clone, defer, isObjectEmpty, objectEquals } from 'fantom-vue-components/src/utils';
 
 export const dataPageMixin = {
     data() {
@@ -9,7 +9,12 @@ export const dataPageMixin = {
             loading: false,
             gridItemsSet: false,
             pageInfo: {},
+            pageInfoPrev: {},
         };
+    },
+
+    created() {
+        this._usePageInfoPrev = false;
     },
 
     methods: {
@@ -23,8 +28,16 @@ export const dataPageMixin = {
          * @private
          */
         _getPaginationVariables(pagination) {
-            const { pageInfo } = this;
+            let pageInfo = {};
             let paginationVars = {};
+
+            this._usePageInfoPrev = pagination.prevPage > pagination.currPage;
+
+            if (this._usePageInfoPrev && !isObjectEmpty(this.pageInfoPrev)) {
+                pageInfo = this.pageInfoPrev;
+            } else {
+                pageInfo = this.pageInfo;
+            }
 
             if (pagination.type === 'reload' && !pagination.isFirstPage && !pagination.isLastPage) {
                 paginationVars = pageInfo.lastVariables;
@@ -67,11 +80,19 @@ export const dataPageMixin = {
                     this.items = this._getItemsFromData(data);
                 }
 
-                this.pageInfo = data.pageInfo;
-                this.pageInfo.lastVariables = clone({
-                    ...pagination,
-                    filterSort: filterSort,
-                });
+                if (!this._usePageInfoPrev) {
+                    this.pageInfo = clone(data.pageInfo);
+                    this.pageInfo.lastVariables = clone({
+                        ...pagination,
+                        filterSort: filterSort,
+                    });
+                } else {
+                    this.pageInfoPrev = clone(data.pageInfo);
+                    this.pageInfoPrev.lastVariables = clone({
+                        ...pagination,
+                        filterSort: filterSort,
+                    });
+                }
             }
 
             if (!dontSetItems) {
