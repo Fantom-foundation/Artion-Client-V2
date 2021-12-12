@@ -80,8 +80,8 @@ export default {
         priceRange: {
             handler(value) {
                 this.values = {
-                    price1: value[0],
-                    price2: value[1],
+                    price1: value[0] || null,
+                    price2: value[1] || null,
                 };
             },
             immediate: true,
