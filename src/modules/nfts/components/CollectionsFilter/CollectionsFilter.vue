@@ -3,7 +3,7 @@
         :data="items"
         :per-page="perPage"
         :total-items="totalItems"
-        :value="typeof selected === 'string' ? [selected] : selected"
+        :value="cSelected"
         :aria-label="$t('collections')"
         searchable
         strategy="remote"
@@ -56,6 +56,15 @@ export default {
             default() {
                 return [];
             },
+        },
+    },
+
+    computed: {
+        cSelected() {
+            const { selected } = this;
+
+            // return typeof selected === 'string' ? [selected] : selected;
+            return typeof selected === 'string' ? [selected] : selected.map(item => item.value);
         },
     },
 

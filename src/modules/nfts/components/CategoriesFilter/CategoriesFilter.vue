@@ -54,10 +54,6 @@ export default {
         },
     },
 
-    created() {
-        console.log(this.selected);
-    },
-
     methods: {
         onListboxItemSelected(item) {
             this.$emit('change', this.categories[item._idx].id);
