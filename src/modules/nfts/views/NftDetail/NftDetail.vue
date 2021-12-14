@@ -34,7 +34,11 @@
                             >
                                 <a-address
                                     :address="tokenOwner.address"
-                                    :name="tokenOwner.username"
+                                    :name="
+                                        compareAddresses(tokenOwner.address, walletAddress)
+                                            ? this.$t('me')
+                                            : tokenOwner.username
+                                    "
                                     :image="tokenOwner.avatarThumb"
                                     is-account
                                 />
@@ -463,6 +467,7 @@ export default {
 
         toInt,
         getImageThumbUrl,
+        compareAddresses,
     },
 };
 </script>
