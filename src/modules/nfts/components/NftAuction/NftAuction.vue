@@ -182,9 +182,9 @@ export default {
 
         canResultAuction() {
             return (
-                this.auctionHasFinished && this.dAuction.lastBidder && this.userOwnsToken && !this.auctionIsFailed
-                /*((this.userOwnsToken && !this.auctionIsFailed) ||
-                    (this.userIsAuctionWinner && this.inEscrowAuctionIsFailed))*/
+                (this.auctionHasFinished && this.dAuction.lastBidder && this.userOwnsToken && !this.auctionIsFailed) ||
+                // (this.userOwnsToken && !this.auctionIsFailed) ||
+                (this.userIsAuctionWinner && this.inEscrowAuctionIsFailed)
                 // (this.userOwnsToken || (this.userIsAuctionWinner && !this.inEscrowAuctionIsFailed))
             );
         },
