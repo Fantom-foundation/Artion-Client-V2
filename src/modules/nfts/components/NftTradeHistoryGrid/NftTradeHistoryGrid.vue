@@ -1,13 +1,13 @@
 <template>
     <div class="nfttradehistorygrid">
-        <div class="nfttradehistorygrid_header">
+        <!-- <div class="nfttradehistorygrid_header">
             <div class="nfttradehistorygrid_title">
                 {{ $t('nfttradehistorygrid.tradeHistory') }}
             </div>
             <div class="nfttradehistorygrid_filter">
-                <!-- <trade-history-switcher @filter-switch="currentComponent = $event" /> -->
+                <trade-history-switcher @filter-switch="currentComponent = $event" />
             </div>
-        </div>
+        </div> -->
         <div class="nfttradehistorygrid_histories">
             <!-- <component :is="currentComponent" /> -->
             <nft-history-grid :token="token" />

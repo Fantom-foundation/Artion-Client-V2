@@ -66,6 +66,7 @@ export const Default = () => ({
                 'copy',
                 'nft',
                 'medium',
+                'recycle',
             ],
         };
     },

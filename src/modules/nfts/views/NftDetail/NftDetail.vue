@@ -143,9 +143,21 @@
             <nft-detail-info :info="token" />
         </div>
 
-        <div class="nftdetail_filter">
+        <!-- <div class="nftdetail_filter">
             <nft-trade-history-grid :token="token" />
-        </div>
+        </div> -->
+
+        <a-details strategy="create">
+            <template #label>
+                <div class="nftdetail_details_wrap">
+                    <app-iconset icon="recycle" /> {{ $t('nftdetail.itemActivity') }}
+                </div>
+            </template>
+            <template>
+                <!-- <nft-trade-history-grid :token="token" /> -->
+                <nft-item-activity :token="token" />
+            </template>
+        </a-details>
 
         <div class="nftdetail_collection">
             <a-details strategy="create">
@@ -171,7 +183,7 @@ import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftDetailInfo from '@/modules/nfts/components/NftDetailInfo/NftDetailInfo.vue';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
 import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
-import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
+//import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
@@ -203,6 +215,8 @@ import AVideo from '@/common/components/AVideo/AVideo';
 import NftPriceHistory from '@/modules/nfts/components/NftPriceHistory/NftPriceHistory.vue';
 import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionButton/NftUpdateAuctionButton.vue';
 
+import NftItemActivity from '@/modules/nfts/components/NftItemActivity/NftItemActivity';
+
 export default {
     name: 'NftDetail',
 
@@ -226,10 +240,11 @@ export default {
         AShareButton,
         NftListingsGrid,
         NftDirectOffersGrid,
-        NftTradeHistoryGrid,
+        //NftTradeHistoryGrid,
         NftMoreFromCollectionList,
         AVideo,
         NftPriceHistory,
+        NftItemActivity
     },
 
     data() {

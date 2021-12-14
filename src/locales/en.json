@@ -185,15 +185,35 @@
 
     "nfthistorygrid": {
         "price": "Price",
-        "type": "Type",
+        "event": "Event",
         "from": "From",
         "to": "To",
         "date": "Date",
         "types": {
             "LISTING_SOLD": "Sold in listing",
+            "LISTING_CREATED": "Listing created",
+            "LISTING_UPDATED": "Listing updated",
+            "LISTING_CANCELLED": "Listing cancelled",
+            "OFFER_CREATED": "Offer created",
+            "OFFER_CANCELLED": "Offer cancelled",
             "OFFER_SOLD": "Sold in offer",
-            "AUCTION_RESOLVED": "Sold in auction"
+            "AUCTION_CREATED": "Auction created",
+            "AUCTION_BID": "Auction bid",
+            "AUCTION_BID_WITHDRAW": "Auction bid withdraw",
+            "AUCTION_CANCELLED": "Auction cancelled",
+            "AUCTION_UPDATED": "Auction updated",
+            "AUCTION_RESOLVED": "Sold in auction",
+            "TRANSFER": "Transfer",
+            "MINT": "Minted",
+            "BURN": "Burned"
         }
+    },
+
+    "nftitemactivityfilter": {
+        "auction": "Auction",
+        "listing": "Listing",
+        "offer": "Offer",
+        "transfer": "Transfer"
     },
 
     "nftMakeOfferForm": {
@@ -280,7 +300,8 @@
         "network": "Network",
         "fantomOpera": "Fantom Opera",
         "chainId": "Chain ID",
-        "fromCollection": "More from this collection"
+        "fromCollection": "More from this collection",
+        "itemActivity": "Iitem Activity"
     },
 
     "nftdetailprice": {
