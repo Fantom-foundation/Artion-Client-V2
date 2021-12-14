@@ -1,5 +1,7 @@
 <template>
-    <div class="nfthistorygrid">
+    <div class="nftitemactivity">
+        <NftItemActivityFilter v-model="filters" />
+        <NftItemActivityFilterChips v-model="filters" />
         <f-data-grid
             ref="grid"
             infinite-scroll
@@ -51,12 +53,13 @@ import { datetimeFormatter } from '@/utils/formatters.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import { objectEquals } from 'fantom-vue-components/src/utils';
 
-const filter = ['LISTING_SOLD', 'OFFER_SOLD', 'AUCTION_RESOLVED'];
+import NftItemActivityFilter from '@/modules/nfts/components/NftItemActivityFilter/NftItemActivityFilter.vue';
+import NftItemActivityFilterChips from '@/modules/nfts/components/NftItemActivityFilterChips/NftItemActivityFilterChips.vue';
 
 export default {
-    name: 'NftHistoryGrid',
+    name: 'NftItemActivity',
 
-    components: { FDataGrid, AAddress, ATokenValue },
+    components: { FDataGrid, AAddress, ATokenValue, NftItemActivityFilter, NftItemActivityFilterChips },
 
     mixins: [dataPageMixin],
 
@@ -72,17 +75,18 @@ export default {
     data() {
         const _this = this;
         return {
+            filters: {},
             itemsColumns: [
                 {
-                    name: 'unitPrice',
-                    label: this.$t('nfthistorygrid.price'),
-                },
-                {
                     name: 'type',
-                    label: this.$t('nfthistorygrid.type'),
+                    label: this.$t('nfthistorygrid.event'),
                     formatter(value) {
                         return _this.$t('nfthistorygrid.types.' + value);
                     },
+                },
+                {
+                    name: 'unitPrice',
+                    label: this.$t('nfthistorygrid.price'),
                 },
                 {
                     name: 'fromUser',
@@ -104,6 +108,14 @@ export default {
         };
     },
 
+    computed: {
+        dFilters() {
+            return Object.values(this.filters)
+                .flat()
+                .map(item => item.filter);
+        },
+    },
+
     watch: {
         token: {
             async handler(value, oldValue) {
@@ -117,13 +129,16 @@ export default {
             },
             immediate: true,
         },
+        dFilters() {
+            this.update();
+        },
     },
 
     methods: {
         async loadPage(pagination = { first: this.perPage }) {
             const { token } = this;
 
-            return await getTokenActivity(token.contract, token.tokenId, pagination, this.filterToQuery(filter));
+            return await getTokenActivity(token.contract, token.tokenId, pagination, this.filterToQuery(this.dFilters));
         },
 
         async loadActivities() {
