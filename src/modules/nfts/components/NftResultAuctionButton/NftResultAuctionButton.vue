@@ -60,16 +60,21 @@ export default {
         resultAuction() {
             const web3 = new Web3();
             const { token } = this;
+            let tx = null;
 
             if (!token || !token.contract) {
                 return;
             }
 
             if (this.inEscrowAuctionIsFailed) {
-                this.tx = contracts.resultFailedAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+                tx = contracts.resultFailedAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+                tx._code = 'result_failed_auction';
             } else {
-                this.tx = contracts.resultAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+                tx = contracts.resultAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+                tx._code = 'result_auction';
             }
+
+            this.tx = tx;
         },
 
         onButtonClick() {
@@ -77,11 +82,16 @@ export default {
         },
 
         onTransactionStatus(payload) {
+            const txCode = payload.code;
+
             this.txStatus = payload.status;
 
             if (this.txStatus === 'success') {
                 this.$notifications.add({
-                    text: this.$t('nftresultauction.acceptBidSuccessful'),
+                    text:
+                        txCode === 'result_auction'
+                            ? this.$t('nftresultauction.acceptBidSuccessful')
+                            : this.$t('nftresultauction.resultSuccessful'),
                     type: 'success',
                 });
 

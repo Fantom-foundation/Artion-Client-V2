@@ -8,7 +8,7 @@ import { getCollectionsRoutes } from '@/modules/collections/routes.js';
 import { getPGRoutes } from '@/modules/pg/routes.js';
 
 export function getRoutes() {
-    return getAppRoutes([...getNftsRoutes(), ...getAccountRoutes(), ...getCollectionsRoutes()], getPGRoutes());
+    return getAppRoutes([...getNftsRoutes(), ...getAccountRoutes(), ...getCollectionsRoutes()]);
 }
 
 export function getMaintenanceRoutes() {
