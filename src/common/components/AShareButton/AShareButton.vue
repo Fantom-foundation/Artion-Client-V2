@@ -25,7 +25,7 @@
                 <template v-slot="{ item }">
                     <div class="asharebutton_listitem" tabindex="0">
                         <app-iconset size="32px" :icon="item.icon" original />
-                        {{ $t(item.label) }}
+                        {{ item.label }}
                     </div>
                 </template>
             </f-listbox>
