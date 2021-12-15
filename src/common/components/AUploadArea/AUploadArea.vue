@@ -39,7 +39,9 @@
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 export default {
     name: 'AUploadArea',
+
     components: { AppIconset },
+
     props: {
         accept: {
             type: String,
@@ -73,15 +75,15 @@ export default {
 
     methods: {
         updatePreview(e) {
-            if (this.disabled) {
+            if (this.actionsDisabled()) {
                 return;
             }
 
             let files;
             e.type === 'drop' ? (files = e.dataTransfer.files) : (files = e.target.files);
-            console.log(files);
+            // console.log(files);
             if (files.length === 0) {
-                console.log('empty');
+                // console.log('empty');
                 return;
             }
             this.imagePreview = URL.createObjectURL(files[0]);
@@ -89,7 +91,7 @@ export default {
         },
 
         deleteImage() {
-            if (this.disabled) {
+            if (this.actionsDisabled()) {
                 return;
             }
 
@@ -99,9 +101,17 @@ export default {
         },
 
         showFilePicker() {
-            if (!this.disabled) {
+            if (!this.actionsDisabled()) {
                 this.$refs.file.click();
             }
+        },
+
+        isFocused() {
+            return document.activeElement.closest('.auploadarea') !== null;
+        },
+
+        actionsDisabled() {
+            return this.disabled || !this.isFocused();
         },
 
         onClick() {
