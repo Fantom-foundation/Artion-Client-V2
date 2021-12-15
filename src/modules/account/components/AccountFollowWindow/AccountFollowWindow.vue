@@ -99,28 +99,13 @@ export default {
         };
     },
 
-    watch: {
-        isFollowers: {
-            async handler(value, oldValue) {
-                if (value !== oldValue) {
-                    if (this.items.length > 0) {
-                        this.update();
-                    } else {
-                        await this.loadData();
-                    }
-                }
-            },
-            immediate: true,
-        },
-    },
-
     methods: {
-        ...copyMethods(AWindow, ['show', 'hide', 'toggle'], 'window'),
+        ...copyMethods(AWindow, ['hide', 'toggle'], 'window'),
 
         async loadPage(pagination = { first: this.perPage }) {
             const { userAddress } = this;
 
-            if (!userAddress) {
+            if (!userAddress || !this.$refs.window) {
                 return;
             }
 
@@ -136,11 +121,16 @@ export default {
         },
 
         update() {
-            this.pageInfo = {};
-            this.items = [];
-            // this.$nextTick(() => {
-            //     this.$refs.grid.goToPageNum(1);
-            // });
+            this._resetData();
+            this.$refs.grid.goToPageNum(1);
+        },
+
+        show() {
+            this.$refs.window.show();
+
+            this.$nextTick(() => {
+                this.loadData();
+            });
         },
 
         onRowClick() {
