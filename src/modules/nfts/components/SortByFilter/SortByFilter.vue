@@ -46,7 +46,9 @@ export default {
 
     watch: {
         group(value) {
-            this.$emit('change', value);
+            if (value) {
+                this.$emit('change', value);
+            }
         },
 
         selected(value) {
@@ -55,5 +57,3 @@ export default {
     },
 };
 </script>
-
-<style scoped></style>
