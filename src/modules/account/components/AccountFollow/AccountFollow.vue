@@ -100,6 +100,10 @@ export default {
 
     methods: {
         async init() {
+            if (!this.userAddress) {
+                return;
+            }
+
             let followers = await getUserFollowers(this.userAddress, { first: 20 });
             let following = await getUserFollowing(this.userAddress, { first: 1 });
             this.followersCounter = toInt(followers.totalCount);

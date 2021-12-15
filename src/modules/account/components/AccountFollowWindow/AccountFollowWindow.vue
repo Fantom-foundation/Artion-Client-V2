@@ -119,6 +119,11 @@ export default {
 
         async loadPage(pagination = { first: this.perPage }) {
             const { userAddress } = this;
+
+            if (!userAddress) {
+                return;
+            }
+
             if (this.isFollowers) {
                 return await getUserFollowers(userAddress, pagination);
             } else {
