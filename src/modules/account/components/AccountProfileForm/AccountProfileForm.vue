@@ -75,7 +75,7 @@
                     </template>
                 </f-form-input>
 
-                <h5 class="h5">{{ $t('accountprofileform.address') }}</h5>
+                <h5 class="h5 mat-6">{{ $t('accountprofileform.address') }}</h5>
                 <div class="accountprofileform_address">
                     <f-form-input
                         type="text"
@@ -151,7 +151,7 @@
             </div>
         </div>
         <div class="accountprofileform_btn">
-            <f-button type="submit" :disabled="isDisable">{{ $t('accountprofileform.save') }}</f-button>
+            <f-button type="submit">{{ $t('accountprofileform.save') }}</f-button>
         </div>
     </f-form>
 </template>

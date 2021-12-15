@@ -35,7 +35,7 @@
         </div>
 
         <div class="fform_buttons">
-            <a-button type="submit" size="large" :disabled="!isFormValid" :loading="txStatus === 'pending'">
+            <a-button type="submit" size="large" :loading="txStatus === 'pending'">
                 {{ $t('nftsellform.listItem') }}
             </a-button>
         </div>
