@@ -218,6 +218,7 @@ export default {
         },
 
         onTransactionStatus(payload) {
+            console.log('transaction status', payload);
             const txCode = payload.code;
             this.txStatus = payload.status;
 
