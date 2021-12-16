@@ -65,6 +65,7 @@ export async function getUserBalance(tokenAddress = '', userAddress = '') {
  * @return {Promise<null|BigNumber>} null or balance
  */
 export async function checkUserBalance(value, tokenAddress, tokenSymbol) {
+    console.log('checking user balance...', value, tokenSymbol);
     const balance = await getUserBalance(tokenAddress);
 
     if (toBigNumber(value).isGreaterThan(balance)) {
@@ -78,6 +79,7 @@ export async function checkUserBalance(value, tokenAddress, tokenSymbol) {
         return null;
     }
 
+    console.log('user balance is sufficient - it is ', balance, tokenSymbol);
     return balance;
 }
 
@@ -114,6 +116,7 @@ export async function getUserAllowance(tokenAddress = '', contract = '', userAdd
  */
 export async function getUserAllowanceTx({ value = '', tokenAddress = '', contract = '', txCode = 'allowance' }) {
     const bValue = toBigNumber(value);
+    console.log('increasing payToken allowence by ', value, ' = ', bValue);
     const tx = erc20Utils.erc20IncreaseAllowanceTx(tokenAddress, contract, toHex(bValue.plus(10)));
 
     tx._code = txCode;

@@ -145,6 +145,7 @@ export default {
         },
 
         setBuyTx() {
+            console.log('setting buyTx...');
             const { token } = this;
             const { listing } = this;
             const web3 = new Web3();
