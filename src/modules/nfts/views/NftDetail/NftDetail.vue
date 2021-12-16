@@ -244,7 +244,7 @@ export default {
         NftMoreFromCollectionList,
         AVideo,
         NftPriceHistory,
-        NftItemActivity
+        NftItemActivity,
     },
 
     data() {
