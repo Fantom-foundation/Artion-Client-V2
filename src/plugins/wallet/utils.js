@@ -115,20 +115,13 @@ export async function getUserAllowance(tokenAddress = '', contract = '', userAdd
  * @return {Promise<null|{data: string, chainId: string, to: string, value: string}>}
  */
 export async function getUserAllowanceTx({ value = '', tokenAddress = '', contract = '', txCode = 'allowance' }) {
-    const bValue = toBigNumber(value);
-    console.log('increasing payToken allowence by ', value, ' = ', bValue);
-    const tx = erc20Utils.erc20IncreaseAllowanceTx(tokenAddress, contract, toHex(bValue.plus(10)));
-
-    tx._code = txCode;
-
-    return tx;
-}
-
-/*export async function getUserAllowanceTx({ value = '', tokenAddress = '', contract = '', txCode = 'allowance' }) {
     const allowance = await getUserAllowance(tokenAddress, contract);
+    const bAllowance = allowance ? toBigNumber(allowance) : null;
     const bValue = toBigNumber(value);
 
-    if (bValue.isGreaterThan(allowance)) {
+    console.log('increasing payToken allowence by ', value, ' = ', bValue);
+
+    if (!bAllowance || !bAllowance.isGreaterThan(bValue.multipliedBy(1000000))) {
         const tx = erc20Utils.erc20IncreaseAllowanceTx(tokenAddress, contract, toHex(bValue.plus(10)));
 
         tx._code = txCode;
@@ -137,4 +130,14 @@ export async function getUserAllowanceTx({ value = '', tokenAddress = '', contra
     }
 
     return null;
+}
+
+/*
+export async function getUserAllowanceTx({ value = '', tokenAddress = '', contract = '', txCode = 'allowance' }) {
+    const bValue = toBigNumber(value);
+    const tx = erc20Utils.erc20IncreaseAllowanceTx(tokenAddress, contract, toHex(bValue.plus(10)));
+
+    tx._code = txCode;
+
+    return tx;
 }*/
