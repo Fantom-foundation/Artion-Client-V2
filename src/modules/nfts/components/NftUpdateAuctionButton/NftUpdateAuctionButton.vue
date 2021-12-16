@@ -63,6 +63,7 @@ export default {
         },
 
         onTransactionStatus(payload) {
+            console.log('transaction status', payload);
             this.txStatus = payload.status;
 
             if (this.txStatus === 'success' && payload.transactionsLeft === 0) {
