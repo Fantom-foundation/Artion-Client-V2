@@ -117,15 +117,11 @@ export default {
         nftData: {
             type: Object,
         },
-        isFavorite: {
-            type: Boolean,
-            default: false,
-        },
     },
     data() {
         return {
             likesCount: this.nftData.likes,
-            liked: null,
+            liked: false,
             showLikes: false,
         };
     },
@@ -139,11 +135,12 @@ export default {
     },
 
     watch: {
-        isFavorite: {
+        nftData: {
             async handler(_value) {
-                this.liked = _value;
+                this.liked = _value.isLiked;
             },
             immediate: true,
+            deep: true,
         },
     },
 

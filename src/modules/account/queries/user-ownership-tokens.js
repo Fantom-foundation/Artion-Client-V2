@@ -34,6 +34,7 @@ export async function getUserOwnershipTokens(address = '', pagination = {}, coll
                                     image
                                     imageThumb
                                     likes
+                                    isLiked
                                     hasBids
                                     collection {
                                         contract

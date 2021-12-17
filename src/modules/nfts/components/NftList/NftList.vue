@@ -13,7 +13,6 @@
             <nft-card
                 v-for="nft in tokens"
                 :nftData="nft"
-                :isFavorite="searchFavoriteNft(nft.tokenId)"
                 :key="`${nft.contract}_${nft.tokenId}`"
                 :data-page="nft._page || null"
                 @mousedown.native="onNftMousedown"
@@ -26,8 +25,6 @@ import NftCard from '@/modules/nfts/components/NftCard/NftCard.vue';
 import FInfiniteScroll from 'fantom-vue-components/src/components/FInfiniteScroll/FInfiniteScroll.vue';
 import FPagination from 'fantom-vue-components/src/components/FPagination/FPagination.vue';
 import FIntersectionObserver from 'fantom-vue-components/src/components/FIntersectionObserver/FIntersectionObserver.vue';
-import { getUserFavoriteTokens } from '@/modules/account/queries/user-favorite-tokens.js';
-import { mapState } from 'vuex';
 
 export default {
     name: 'NftList',
@@ -65,10 +62,6 @@ export default {
     },
 
     computed: {
-        ...mapState('wallet', {
-            address: 'account',
-        }),
-
         cDensity() {
             const { density } = this;
             const densityNum = parseInt(density);
@@ -81,28 +74,7 @@ export default {
         },
     },
 
-    watch: {
-        address: {
-            async handler(value) {
-                if (value) {
-                    let pagination = { first: this.perPage };
-                    let userData = await getUserFavoriteTokens(this.address, pagination);
-                    if (userData.edges.length) {
-                        this.likedNftIds = userData.edges.map(edge => {
-                            return edge.node.tokenId;
-                        });
-                    }
-                }
-            },
-            immediate: true,
-        },
-    },
-
     methods: {
-        searchFavoriteNft(id) {
-            return this.likedNftIds.includes(id);
-        },
-
         /**
          * @param {number} pageNum
          */

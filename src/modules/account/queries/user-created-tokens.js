@@ -24,6 +24,7 @@ export async function getUserCreatedTokens(address = '', pagination = {}) {
                                 image
                                 imageThumb
                                 likes
+                                isLiked
                                 hasBids
                                 collection {
                                     contract
