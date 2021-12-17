@@ -146,7 +146,7 @@ const ZERO_AMOUNT = '0x0';
  * registerTokenRoyalty Method for setting royalty of NFT token
  *
  * @param {string} nftAddress Address of the NFT token
- * @param {int} tokenID NFT token ID
+ * @param {string} tokenID NFT token ID (hex)
  * @param {int} royalty Royalty which is paid to minter of NFT token
  * @param {Web3} web3Client Instance of an initialized Web3 client.
  * @param {string} [contract] Contract address

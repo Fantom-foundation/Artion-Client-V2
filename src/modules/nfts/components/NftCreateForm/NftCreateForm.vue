@@ -220,6 +220,7 @@ export default {
             );
             console.log('estimation', estimation);
             if (estimation.error != null) {
+                console.error('estimateMintFeeGas (server estimation) fail', estimation);
                 notifications.add({
                     type: 'error',
                     text: this.$t('nftcreate.collectionErr') + ' ' + estimation.error,
@@ -258,6 +259,7 @@ export default {
         async onMintTransactionStatus(payload) {
             console.log('onMintTransactionStatus', payload);
             if (payload.status === 'error') {
+                console.error('mintTransaction failed', payload);
                 notifications.add({
                     type: 'error',
                     text: this.$t('nftcreate.mintingError'),
@@ -270,7 +272,7 @@ export default {
                 try {
                     this.tokenId = await this.getMintedTokenId(payload.data);
                 } catch (e) {
-                    console.error('getMintedTokenId', e);
+                    console.error('getMintedTokenId failed', e);
                     notifications.add({
                         type: 'error',
                         text: this.$t('nftcreate.noNewTokenId'),
@@ -288,13 +290,11 @@ export default {
                         );
                         console.log('setUnlockableContent', res);
                     } catch (e) {
-                        console.error('setUnlockableContent', e);
+                        console.error('setUnlockableContent failed', e);
                         notifications.add({
                             type: 'error',
                             text: this.$t('nftcreate.unlockableNotAttached'),
                         });
-                        this.isLoading = false;
-                        return;
                     }
                 }
 
@@ -317,7 +317,7 @@ export default {
                         contract
                     );
                 } else {
-                    await this.mintingSucceed();
+                    await this.mintingFinished();
                 }
             }
         },
@@ -325,19 +325,19 @@ export default {
         async onRoyaltyTransactionStatus(payload) {
             console.log('onRoyaltyTransactionStatus', payload);
             if (payload.status === 'error') {
+                console.error('registerTokenRoyalty failed', payload);
                 notifications.add({
                     type: 'error',
                     text: this.$t('nftcreate.royaltyError'),
                 });
-                this.isLoading = false;
-                return;
+                await this.mintingFinished();
             }
             if (payload.status === 'success') {
-                await this.mintingSucceed();
+                await this.mintingFinished();
             }
         },
 
-        async mintingSucceed() {
+        async mintingFinished() {
             notifications.add({
                 type: 'success',
                 text: this.$t('nftcreate.success'),

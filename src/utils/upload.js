@@ -63,7 +63,7 @@ export async function uploadTokenData(_metadata, _imageFile) {
     let url = artionFApolloClient.httpProviderOrigin + '/upload-image/token';
 
     let response = await fetch(url, options);
-    console.log(response);
+    console.log('uploadTokenData', response);
     if (response.status === 200) {
         return await response.text();
     } else {
