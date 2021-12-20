@@ -253,7 +253,7 @@
         "nonZeroPrice": "@:nonZeroPrice",
         "startAuction": "@:startAuction",
         "updateAuction": "@:updateAuction",
-        "minBid": "Minimum bid should be equal or greater than reserve price",
+        "minBid": "Minimum bid should be equal to or greater than reserve price",
         "badDate": "Bad date",
         "fillDate": "Fill the date please",
         "startDateLower": "Start date must be lower than end date",
