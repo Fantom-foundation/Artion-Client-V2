@@ -139,6 +139,7 @@ export default {
             txRoyalty: {},
             tokenId: null,
             isLoading: false,
+            waitingMsgId: '',
         };
     },
 
@@ -349,15 +350,23 @@ export default {
             console.log('redirectOrWait');
             let exists = await tokenExists(this.collection.value, this.tokenId);
             if (exists) {
+                if (this.waitingMsgId) {
+                    notifications.hide(this.waitingMsgId);
+                }
+
                 await this.$router.push({
                     name: 'nft-detail',
                     params: { tokenContract: this.collection.value, tokenId: this.tokenId },
                 });
             } else {
-                notifications.add({
-                    type: 'info',
-                    text: this.$t('nftcreate.scanWaiting'),
-                });
+                if (!this.waitingMsgId) {
+                    this.waitingMsgId = notifications.add({
+                        type: 'info',
+                        text: this.$t('nftcreate.scanWaiting'),
+                        hideAfter: 10000000,
+                    });
+                }
+
                 setTimeout(() => this.redirectOrWait(), 1000);
             }
         },
