@@ -60,9 +60,56 @@ function erc20IncreaseAllowanceTx(erc20Address, delegatedToAddress, addAmount) {
     };
 }
 
+/**
+ * @param {string} tokenAddress
+ * @param {string} delegatedToAddress
+ * @param {string|{BN}} addAmount
+ * @return {{data: string, chainId: string, to, value: string}}
+ */
+function erc20ApproveTx(tokenAddress, delegatedToAddress, addAmount) {
+    // create web3.js instance
+    const web3 = new Web3();
+
+    // make the transaction
+    return {
+        to: tokenAddress,
+        value: ZERO_AMOUNT,
+        data: web3.eth.abi.encodeFunctionCall(
+            {
+                inputs: [
+                    {
+                        internalType: 'address',
+                        name: 'spender',
+                        type: 'address',
+                    },
+                    {
+                        internalType: 'uint256',
+                        name: 'value',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'approve',
+                outputs: [
+                    {
+                        internalType: 'bool',
+                        name: '',
+                        type: 'bool',
+                    },
+                ],
+                stateMutability: 'nonpayable',
+                payable: false,
+                type: 'function',
+            },
+            [delegatedToAddress, addAmount]
+        ),
+        chainId: OPERA_CHAIN_ID,
+    };
+}
+
 // what we export here
 export default {
     erc20IncreaseAllowanceTx,
+    erc20ApproveTx,
     OPERA_CHAIN_ID,
     TESTNET_CHAIN_ID,
 };
