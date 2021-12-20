@@ -6,7 +6,7 @@
             @keyup.enter.space="onActionKey"
             @click="onClick"
             @dragover.prevent
-            @drop.prevent="updatePreview"
+            @drop.prevent="onDrop"
         >
             <input
                 :accept="accept"
@@ -74,8 +74,8 @@ export default {
     },
 
     methods: {
-        updatePreview(e) {
-            if (this.actionsDisabled()) {
+        updatePreview(e, forceUpdate = false) {
+            if (this.actionsDisabled() && !forceUpdate) {
                 return;
             }
 
@@ -120,6 +120,10 @@ export default {
 
         onActionKey() {
             this.showFilePicker();
+        },
+
+        onDrop(event) {
+            this.updatePreview(event, true);
         },
     },
 };
