@@ -24,7 +24,7 @@
                     :label="$t('accountprofileform.email')"
                     required
                 />
-                <div class="accountprofileform_group">
+                <!--                <div class="accountprofileform_group">
                     <f-form-input
                         type="text"
                         field-size="large"
@@ -58,7 +58,7 @@
                             <app-iconset icon="web" size="24px" />
                         </template>
                     </f-form-input>
-                </div>
+                </div>-->
                 <f-form-input
                     type="text"
                     field-size="large"
