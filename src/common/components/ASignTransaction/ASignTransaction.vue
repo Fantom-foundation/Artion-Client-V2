@@ -130,7 +130,12 @@ export default {
             }
 
             this.$store.commit(`app/${SET_TX_STATUS}`, { status, data, code: this.code });
-            this.$emit('transaction-status', { status, data, code: this.code });
+            this.$emit('transaction-status', {
+                status,
+                data,
+                code: this.code,
+                error: status === 'error' ? data.message : '',
+            });
         },
     },
 };
