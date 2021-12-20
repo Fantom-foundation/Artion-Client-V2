@@ -307,7 +307,7 @@ export class Wallet {
      * @param {string} data
      * @return {Promise<string>}
      */
-    async estimateGas({ from = undefined, to = undefined, value = undefined, data = undefined }) {
+    async estimateGas({ from = undefined, to = undefined, value = undefined, data = undefined }, silent = false) {
         const estimateGas = await gqlQuery(
             {
                 query: gql`
@@ -319,7 +319,8 @@ export class Wallet {
                 fetchPolicy: 'network-only',
             },
             'estimateGas',
-            fantomApolloClient
+            fantomApolloClient,
+            silent
         );
 
         return estimateGas;

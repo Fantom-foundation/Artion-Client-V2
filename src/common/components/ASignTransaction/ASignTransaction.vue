@@ -48,6 +48,8 @@ export default {
             status: '',
             // transaction code - just for transaction identification in emitted events
             code: '',
+            // don't display errors
+            silent: false,
         };
     },
 
@@ -69,6 +71,7 @@ export default {
             }
 
             this.code = tx._code || '';
+            this.silent = tx._silent || false;
 
             if (!$wallet.connected) {
                 this._eventBus.emit('show-wallet-picker');
@@ -95,7 +98,7 @@ export default {
                     tx.chainId = $wallet.chainId;
                     tx.nonce = await $wallet.getNonce($wallet.account, true);
                     // tx.from = $wallet.account;
-                    tx.gasLimit = await $wallet.estimateGas(tx);
+                    tx.gasLimit = await $wallet.estimateGas(tx, this.silent);
                     tx.gasPrice = await $wallet.getGasPrice(true);
 
                     tx.gasLimit = toHex(toBigNumber(tx.gasLimit).plus(2000));
@@ -119,7 +122,7 @@ export default {
         setStatus(status, data) {
             this.status = status;
 
-            if (status === 'error') {
+            if (status === 'error' && !this.silent) {
                 this.$notifications.add({
                     type: 'error',
                     text: data.message,

@@ -3,7 +3,7 @@ import { artionApolloClient } from '@/plugins/apollo/apollo-provider.js';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { getNestedProp } from 'fantom-vue-components/src/utils/index.js';
 
-export async function gqlQuery(query, fieldName = '', client = artionApolloClient) {
+export async function gqlQuery(query, fieldName = '', client = artionApolloClient, silent = false) {
     try {
         const response = await client.query(query);
         let data = null;
@@ -14,16 +14,18 @@ export async function gqlQuery(query, fieldName = '', client = artionApolloClien
 
         return null;
     } catch (error) {
-        notifications.add({
-            type: 'error',
-            text: error,
-        });
+        if (!silent) {
+            notifications.add({
+                type: 'error',
+                text: error,
+            });
+        }
         // console.error(error);
         throw error;
     }
 }
 
-export async function gqlMutation(mutation, fieldName = '', client = artionApolloClient) {
+export async function gqlMutation(mutation, fieldName = '', client = artionApolloClient, silent = false) {
     try {
         const response = await client.mutate(mutation);
         let data = null;
@@ -34,10 +36,12 @@ export async function gqlMutation(mutation, fieldName = '', client = artionApoll
 
         return null;
     } catch (error) {
-        notifications.add({
-            type: 'error',
-            text: error,
-        });
+        if (!silent) {
+            notifications.add({
+                type: 'error',
+                text: error,
+            });
+        }
         // console.error(error);
         throw error;
     }
