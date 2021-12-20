@@ -161,7 +161,11 @@ export default {
             await this._loadPage();
         },
 
-        async buyItem(listing) {
+        /**
+         * @param {Object} listing
+         * @param {boolean} [approve] If true, use erc20ApproveTx function
+         */
+        async buyItem(listing, approve = false) {
             if (
                 (await checkUserBalance(
                     listing.unitPrice,
@@ -173,12 +177,14 @@ export default {
                     value: listing.unitPrice,
                     tokenAddress: listing.payToken,
                     contract: listing.marketplace,
+                    approve,
                 });
 
                 console.log('allowanceTx', allowanceTx);
 
                 if (allowanceTx) {
                     allowanceTx._code = 'buy_allowance';
+                    allowanceTx._silent = true;
 
                     this.tx = allowanceTx;
                     this.pickedListing = listing;
@@ -254,6 +260,10 @@ export default {
                     this.setBuyTx(this.pickedListing);
                 } else if (txCode === 'buy') {
                     this.onTxSuccess();
+                }
+            } else if (this.txStatus === 'error') {
+                if (txCode === 'buy_allowance' && payload.error.indexOf('execution reverted') > -1) {
+                    this.buyItem(this.pickedListing, true);
                 }
             }
         },

@@ -105,10 +105,11 @@ export default {
 
         /**
          * @param {Object} values
+         * @param {boolean} [approve] If true, use erc20ApproveTx function
          * @return {Promise<void>}
          */
-        async placeBid(values) {
-            let priceB = bToTokenValue(values.price, this.payToken.decimals);
+        async placeBid(values, approve = false) {
+            let priceB = !approve ? bToTokenValue(values.price, this.payToken.decimals) : this.priceB;
 
             if (priceB.isLessThan(this.minBidAmountB)) {
                 priceB = this.minBidAmountB;
@@ -118,10 +119,12 @@ export default {
                 value: toHex(priceB),
                 tokenAddress: this.auction.payToken,
                 contract: this.auction.auctionHall,
+                approve,
             });
 
             if (allowanceTx) {
                 allowanceTx._code = 'place_bid_allowance';
+                allowanceTx._silent = true;
 
                 this.tx = allowanceTx;
 
@@ -223,6 +226,10 @@ export default {
                     this.setPlaceBidTx(this.priceB);
                 } else if (txCode === 'place_bid') {
                     this.onTxSuccess();
+                }
+            } else if (this.txStatus === 'error') {
+                if (txCode === 'place_bid_allowance' && payload.error.indexOf('execution reverted') > -1) {
+                    this.placeBid({}, true);
                 }
             }
 

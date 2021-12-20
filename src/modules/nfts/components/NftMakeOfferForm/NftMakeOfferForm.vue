@@ -124,22 +124,27 @@ export default {
 
         /**
          * @param {Object} values
+         * @param {boolean} [approve] If true, use erc20ApproveTx function
          */
-        async placeOffer(values) {
+        async placeOffer(values, approve = false) {
             const { storedValues } = this;
             this._contract = await getContractAddress('marketplace');
 
-            storedValues.price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
-            storedValues.deadline = parseInt(values.deadline / 1000);
+            if (!approve) {
+                storedValues.price = toHex(bToTokenValue(values.price, this.selectedPayToken.decimals));
+                storedValues.deadline = parseInt(values.deadline / 1000);
+            }
 
             const allowanceTx = await getUserAllowanceTx({
                 value: storedValues.price,
                 tokenAddress: this.selectedPayToken.address,
                 contract: this._contract,
+                approve,
             });
 
             if (allowanceTx) {
                 allowanceTx._code = 'create_offer_allowance';
+                allowanceTx._silent = true;
 
                 this.tx = allowanceTx;
             } else {
@@ -232,6 +237,10 @@ export default {
                         type: 'success',
                         text: this.$t('nftMakeOfferForm.makeOfferSuccess'),
                     });
+                }
+            } else if (this.txStatus === 'error') {
+                if (txCode === 'create_offer_allowance' && payload.error.indexOf('execution reverted') > -1) {
+                    this.placeOffer({}, true);
                 }
             }
 

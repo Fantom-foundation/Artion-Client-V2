@@ -112,17 +112,26 @@ export async function getUserAllowance(tokenAddress = '', contract = '', userAdd
  * @param {string} tokenAddress
  * @param {string} contract
  * @param {string} [txCode]
+ * @param {boolean} [approve] If true, use erc20ApproveTx function
  * @return {Promise<null|{data: string, chainId: string, to: string, value: string}>}
  */
-export async function getUserAllowanceTx({ value = '', tokenAddress = '', contract = '', txCode = 'allowance' }) {
-    const allowance = await getUserAllowance(tokenAddress, contract);
-    const bAllowance = allowance ? toBigNumber(allowance) : null;
+export async function getUserAllowanceTx({
+    value = '',
+    tokenAddress = '',
+    contract = '',
+    txCode = 'allowance',
+    approve = false,
+}) {
+    const bAllowance = await getUserAllowance(tokenAddress, contract);
+    // const bAllowance = allowance ? toBigNumber(allowance) : null;
     const bValue = toBigNumber(value);
 
     console.log('increasing payToken allowence by ', value, ' = ', bValue);
 
     if (!bAllowance || !bAllowance.isGreaterThan(bValue.multipliedBy(1000000))) {
-        const tx = erc20Utils.erc20IncreaseAllowanceTx(tokenAddress, contract, toHex(bValue.plus(10)));
+        const tx = !approve
+            ? erc20Utils.erc20IncreaseAllowanceTx(tokenAddress, contract, toHex(bValue.plus(10)))
+            : erc20Utils.erc20ApproveTx(tokenAddress, contract, toHex(bValue.plus(10)));
 
         tx._code = txCode;
 

@@ -120,7 +120,7 @@ export default {
             });
         },
 
-        async buyItem() {
+        async buyItem(approve = false) {
             const { listing } = this;
 
             if ((await checkUserBalance(listing.unitPrice, this.payToken.address, this.payToken.label)) !== null) {
@@ -128,12 +128,14 @@ export default {
                     value: listing.unitPrice,
                     tokenAddress: this.payToken.address,
                     contract: listing.marketplace,
+                    approve,
                 });
 
                 console.log('allowanceTx', allowanceTx);
 
                 if (allowanceTx) {
                     allowanceTx._code = 'buy_allowance';
+                    allowanceTx._silent = true;
 
                     this.tx = allowanceTx;
                 } else {
@@ -232,6 +234,10 @@ export default {
                     });
 
                     this.$emit('tx-success', 'buy');
+                }
+            } else if (this.txStatus === 'error') {
+                if (txCode === 'buy_allowance' && payload.error.indexOf('execution reverted') > -1) {
+                    this.buyItem(true);
                 }
             }
         },
