@@ -55,6 +55,7 @@ import { objectEquals } from 'fantom-vue-components/src/utils';
 
 import NftItemActivityFilter from '@/modules/nfts/components/NftItemActivityFilter/NftItemActivityFilter.vue';
 import NftItemActivityFilterChips from '@/modules/nfts/components/NftItemActivityFilterChips/NftItemActivityFilterChips.vue';
+import { ACTIVITY_TYPES } from '@/common/constants/activity-type-filters.js';
 
 export default {
     name: 'NftItemActivity',
@@ -137,8 +138,19 @@ export default {
     methods: {
         async loadPage(pagination = { first: this.perPage }) {
             const { token } = this;
+            let filters = this.dFilters;
 
-            return await getTokenActivity(token.contract, token.tokenId, pagination, this.filterToQuery(this.dFilters));
+            // if no filter is picked
+            if (filters.length === 0) {
+                // filter by everything except TRANSFER
+                const except = ['', 'TRANSFER', 'UNKNOWN'];
+
+                filters = ACTIVITY_TYPES()
+                    .map(activity => activity.filter)
+                    .filter(activity => !except.includes(activity));
+            }
+
+            return await getTokenActivity(token.contract, token.tokenId, pagination, this.filterToQuery(filters));
         },
 
         async loadActivities() {
@@ -156,7 +168,7 @@ export default {
             setTimeout(() => {
                 this._resetData();
                 this.$refs.grid.reload();
-            }, 500);
+            }, 50);
         },
     },
 };
