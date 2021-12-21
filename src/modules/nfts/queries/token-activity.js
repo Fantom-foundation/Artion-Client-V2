@@ -50,6 +50,8 @@ export async function getTokenActivity(contract = '', id = '', pagination = {}, 
                                     imageThumb
                                     name
                                 }
+                                marketplace
+                                auctionHall
                             }
                         }
                     }

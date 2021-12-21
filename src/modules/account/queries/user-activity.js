@@ -48,6 +48,8 @@ export async function getUserActivity(address = '', pagination = {}, filterSort 
                                     imageThumb
                                     name
                                 }
+                                marketplace
+                                auctionHall
                             }
                         }
                     }
