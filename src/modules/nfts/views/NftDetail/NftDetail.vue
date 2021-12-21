@@ -147,7 +147,7 @@
             <nft-trade-history-grid :token="token" />
         </div> -->
 
-        <a-details strategy="create">
+        <a-details strategy="create" open>
             <template #label>
                 <div class="nftdetail_details_wrap">
                     <app-iconset icon="recycle" /> {{ $t('nftdetail.itemActivity') }}
