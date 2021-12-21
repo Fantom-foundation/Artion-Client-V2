@@ -1,4 +1,6 @@
 .abpricefield {
+    --abpricefield-border-color: var(--f-color-grey-3);
+
     input {
         text-align: end;
     }
@@ -27,7 +29,7 @@
     }
 
     &_price {
-        border-inline-start: 1px solid var(--f-color-grey-3);
+        border-inline-start: 1px solid var(--abpricefield-border-color);
         padding-inline-start: var(--f-spacer-3);
         font-weight: 500;
         font-size: var(--f-font-size-4);

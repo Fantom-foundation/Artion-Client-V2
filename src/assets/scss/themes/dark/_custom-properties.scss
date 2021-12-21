@@ -228,12 +228,16 @@
     }
 
     .agrid {
-        --agrid-header-background-color: var(--theme-dark-color-7);
-        --fdatagrid-cell-hover-background-color: var(--theme-dark-color-5);
+        --agrid-header-background-color: var(--theme-dark-color-6);
+        --fdatagrid-cell-hover-background-color: var(--theme-dark-color-6);
     }
 
     .apricefield {
         --apricefield-border-color: var(--theme-dark-color-5);
+    }
+
+    .abpricefield {
+        --abpricefield-border-color: var(--theme-dark-color-5);
     }
 
     .asharebutton {

@@ -81,7 +81,6 @@ export async function setBackButton(to, from, next) {
     to.meta.backButton = popStateDetected;
     to.meta.prevRoute = { name: from.name };
 
-    console.log('tady', popStateDetected, to.name);
     next();
     popStateDetected = false;
 }
