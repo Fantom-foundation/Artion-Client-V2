@@ -135,7 +135,7 @@ export default {
             likesCount: this.nftData.likes,
             liked: false,
             showLikes: false,
-            showBanButton: this.$wallet.user.isModerator,
+            showBanButton: this.$wallet.user ? this.$wallet.user.isModerator : false,
             dBanned: this.banned,
         };
     },
