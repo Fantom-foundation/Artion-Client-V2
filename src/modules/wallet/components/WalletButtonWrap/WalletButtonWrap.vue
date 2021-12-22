@@ -20,6 +20,8 @@ import WalletMenuPopover from '@/modules/wallet/components/WalletMenuPopover/Wal
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { getImageThumbUrl } from '@/utils/url.js';
 import WrapStationWindow from '@/modules/wallet/components/WrapStationWindow/WrapStationWindow.vue';
+import { getBearerToken, signIn } from '@/modules/account/auth.js';
+import appConfig from '@/app.config.js';
 
 export default {
     name: 'WalletButtonWrap',
@@ -48,6 +50,11 @@ export default {
                     {
                         label: this.$t('wrapStation'),
                         action: 'show-wrap-station',
+                    },
+                    {
+                        label: this.$t('walletMenu.login'),
+                        action: 'login',
+                        dontRender: true,
                     },
                     {
                         label: this.$t('walletMenu.logout'),
@@ -84,6 +91,8 @@ export default {
                     ...this.wallet,
                     address: value || '',
                 };
+
+                this.setLoginItemVisibility();
             },
             immediate: true,
         },
@@ -116,8 +125,26 @@ export default {
     },
 
     methods: {
+        /**
+         * Set visibility of navigation item with action 'login'
+         * @param {boolean} [visible]
+         */
+        setLoginItemVisibility(visible = !getBearerToken()) {
+            if (!appConfig.flags.moderatorFunctions) {
+                return;
+            }
+
+            const { walletMenu } = this;
+            const index = walletMenu.findIndex(item => item.action === 'login');
+
+            if (index > -1) {
+                this.$set(walletMenu[index], 'dontRender', !visible);
+            }
+        },
+
         async onWalletButtonClick() {
             if (this.$wallet.connected) {
+                this.setLoginItemVisibility();
                 this.$refs.menu.show();
             } else {
                 const payload = {};
@@ -138,6 +165,10 @@ export default {
                 this.$wallet.logout();
             } else if (action === 'show-wrap-station') {
                 this.$refs.wrapStationWindow.show();
+            } else if (action === 'login') {
+                if (await signIn()) {
+                    this.setLoginItemVisibility(false);
+                }
             }
 
             this.$refs.menu.hide();

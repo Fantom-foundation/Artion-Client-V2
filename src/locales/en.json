@@ -98,7 +98,8 @@
         "profile": "@:profile",
         "settings": "Settings",
         "collection": "Register Existing Collection",
-        "logout": "Logout"
+        "login": "Sign In",
+        "logout": "Sign Out"
     },
 
     "page": {
