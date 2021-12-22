@@ -3,8 +3,9 @@ import { wallet } from '@/plugins/wallet/Wallet.js';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { login } from '@/modules/account/mutations/login.js';
 // import { getLoggedUser } from '@/modules/account/queries/logged-user.js';
-import { getUser } from '@/modules/account/queries/user.js';
+import { getUser, isLoggedUserModerator } from '@/modules/account/queries/user.js';
 import { router } from '@/main.js';
+import appConfig from '@/app.config.js';
 
 function isBearerTokenValid(token) {
     try {
@@ -71,6 +72,11 @@ export async function setUser(account, logged) {
 
     if (logged) {
         user.logged = true;
+        user.isModerator = await isLoggedUserModerator();
+
+        if (!appConfig.flags.moderatorFunctions) {
+            user.isModerator = false;
+        }
     }
 
     wallet.setUser(user);

@@ -4,6 +4,9 @@
             :to="{ name: 'nft-detail', params: { tokenContract: nftData.contract, tokenId: nftData.tokenId } }"
         >
             <div class="nftcard_header">
+                <button v-if="showBanButton" :data-tooltip="$t('nftcard.banUnban')" @click.prevent="onBanClick">
+                    <app-iconset icon="ban" size="16px" :color="dBanned ? '#f00' : ''" />
+                </button>
                 <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
                     <app-iconset
                         :icon="liked ? 'liked' : 'like'"
@@ -107,22 +110,33 @@ import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { toInt } from '@/utils/big-number.js';
 import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import dayjs from 'dayjs';
+import { banToken, unbanToken } from '@/modules/nfts/mutations/ban.js';
 
 export default {
     // components: { AppIconset },
     name: 'NftCard',
+
     components: { ATokenValue },
+
     mixins: [eventBusMixin],
+
     props: {
         nftData: {
             type: Object,
         },
+        banned: {
+            type: Boolean,
+            default: false,
+        },
     },
+
     data() {
         return {
             likesCount: this.nftData.likes,
             liked: false,
             showLikes: false,
+            showBanButton: this.$wallet.user.isModerator,
+            dBanned: this.banned,
         };
     },
 
@@ -189,6 +203,26 @@ export default {
                 this.$notifications.add({
                     type: 'error',
                     text: 'Some problems',
+                });
+            }
+        },
+
+        async onBanClick() {
+            this.dBanned = !this.dBanned;
+
+            if (this.dBanned) {
+                await banToken(this.nftData);
+
+                this.$notifications.add({
+                    type: 'success',
+                    text: this.$t('nftBanned'),
+                });
+            } else {
+                await unbanToken(this.nftData);
+
+                this.$notifications.add({
+                    type: 'success',
+                    text: this.$t('nftUnbanned'),
                 });
             }
         },

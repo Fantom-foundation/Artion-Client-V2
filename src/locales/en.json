@@ -23,6 +23,8 @@
     "notice": "Notice",
     "aproveSuccess": "Successfully approved",
     "me": "Me",
+    "nftBanned": "NFT banned",
+    "nftUnbanned": "NFT unbanned",
 
     "navigation": {
         "explore": "@:explore",
@@ -177,7 +179,8 @@
         "lastPrice": "Last Price",
         "minBid": "Min Bid",
         "topBid": "Top Bid",
-        "left": "left"
+        "left": "left",
+        "banUnban": "Ban/Unban"
     },
 
     "nfttradehistorygrid": {

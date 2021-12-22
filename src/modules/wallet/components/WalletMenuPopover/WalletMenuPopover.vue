@@ -14,10 +14,7 @@
     >
         <f-accordion-navigation :navigation="navigation" @node-selected="onNavigationNodeSelected" />
         <div class="walletmenupopover_darkthemeswitch">
-            <f-dark-theme-switch
-                v-model="darkTheme"
-                :label="$t('appearancesettings.darkMode')"
-            />
+            <f-dark-theme-switch v-model="darkTheme" :label="$t('appearancesettings.darkMode')" />
         </div>
     </f-popover>
 </template>

@@ -24,3 +24,23 @@ export async function getUser(address = '') {
 
     return gqlQuery(query, 'user');
 }
+
+// TMP
+export async function isLoggedUserModerator() {
+    return true;
+}
+
+/*
+export async function isLoggedUserModerator() {
+    const query = {
+        query: gql`
+            query IsLoggedUserModerator {
+                isLoggedModerator
+            }
+        `,
+        fetchPolicy: 'network-only',
+    };
+
+    return gqlQuery(query, 'isLoggedModerator');
+}
+*/
