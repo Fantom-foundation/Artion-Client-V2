@@ -8,7 +8,7 @@ export async function gqlQuery(query, fieldName = '', client = artionApolloClien
         const response = await client.query(query);
         let data = null;
 
-        if (response && response.data && (data = getNestedProp(response.data, fieldName))) {
+        if (response && response.data && (data = getNestedProp(response.data, fieldName)) !== null) {
             return clone(data);
         }
 
@@ -30,7 +30,7 @@ export async function gqlMutation(mutation, fieldName = '', client = artionApoll
         const response = await client.mutate(mutation);
         let data = null;
 
-        if (response && response.data && (data = getNestedProp(response.data, fieldName))) {
+        if (response && response.data && (data = getNestedProp(response.data, fieldName)) !== null) {
             return clone(data);
         }
 
