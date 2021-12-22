@@ -87,6 +87,14 @@
         color: var(--theme-dark-color-4);
     }
 
+    .walletmenupopover {
+        &_darkthemeswitch {
+            .togglebtn_label {
+                color: var(--theme-dark-color-4);
+            }
+        }
+    }
+
     .fnavigationnode {
         --fnavigationnode-item-color: var(--theme-dark-color-4);
         --fnavigationnode-active-item-color: #fff;

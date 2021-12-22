@@ -13,14 +13,25 @@
         @window-hide="$emit('window-hide', $event)"
     >
         <f-accordion-navigation :navigation="navigation" @node-selected="onNavigationNodeSelected" />
+        <div class="walletmenupopover_darkthemeswitch">
+            <f-dark-theme-switch
+                v-model="darkTheme"
+                :label="$t('appearancesettings.darkMode')"
+            />
+        </div>
     </f-popover>
 </template>
 
 <script>
 import FAccordionNavigation from 'fantom-vue-components/src/components/FAccordionNavigation/FAccordionNavigation.vue';
 import FPopover from 'fantom-vue-components/src/components/FPopover/FPopover.vue';
+import FDarkThemeSwitch from 'fantom-vue-components/src/components/FDarkThemeSwitch/FDarkThemeSwitch.vue';
 import { popoverAnimationMixin } from 'fantom-vue-components/src/mixins/popover-animation.js';
 import { clone } from 'fantom-vue-components/src/utils';
+import { SET_THEME } from '@/modules/app/store/mutations.js';
+import { mapState } from 'vuex';
+
+const THEME_DARK = 'theme-dark';
 
 export default {
     name: 'WalletMenuPopover',
@@ -29,7 +40,7 @@ export default {
 
     mixins: [popoverAnimationMixin],
 
-    components: { FAccordionNavigation, FPopover },
+    components: { FAccordionNavigation, FPopover, FDarkThemeSwitch },
 
     props: {
         navigation: {
@@ -38,6 +49,28 @@ export default {
                 return [];
             },
         },
+    },
+
+    data() {
+        return {
+            darkTheme: false,
+        };
+    },
+
+    computed: {
+        ...mapState('app', {
+            theme: 'theme',
+        }),
+    },
+
+    watch: {
+        darkTheme(value) {
+            this.$store.commit(`app/${SET_THEME}`, value ? THEME_DARK : 'theme-default');
+        },
+    },
+
+    created() {
+        this.darkTheme = this.theme === THEME_DARK;
     },
 
     methods: {
@@ -59,3 +92,7 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+@use "style";
+</style>

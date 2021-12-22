@@ -1,0 +1,11 @@
+.walletmenupopover {
+    &_darkthemeswitch {
+        font-weight: 600;
+        padding: var(--f-spacer-3) var(--f-spacer-5);
+
+        .togglebtn_label {
+            color: inherit;
+            opacity: 0.8;
+        }
+    }
+}
