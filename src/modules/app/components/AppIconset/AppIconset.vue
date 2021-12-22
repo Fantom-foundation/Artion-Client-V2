@@ -61,6 +61,7 @@ import IconWalletconnect from '@/assets/vue-icons/IconWalletconnect.vue';
 import IconFilterArrow from '@/assets/vue-icons/IconFilterArrow.vue';
 import IconSwap from '@/assets/vue-icons/IconSwap.vue';
 import IconRecycle from '@/assets/vue-icons/IconRecycle.vue';
+import IconBan from '@/assets/vue-icons/IconBan.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -125,6 +126,7 @@ export default {
         IconFilterArrow,
         IconSwap,
         IconRecycle,
+        IconBan,
     },
 
     props: {
