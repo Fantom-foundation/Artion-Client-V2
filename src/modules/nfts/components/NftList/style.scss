@@ -2,9 +2,10 @@
 @use "fantom-vue-components/src/assets/scss/settings/breakpoints";
 
 .nftlist {
-    padding: 0 var(--f-spacer-4) var(--f-spacer-4) var(--f-spacer-4);
+    padding: var(--main-lr-padding);
+    padding-top: 0;
     display: grid;
-    gap: var(--f-spacer-4);
+    gap: var(--main-lr-padding);
 
     &-density {
         &-large {

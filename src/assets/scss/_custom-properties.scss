@@ -74,6 +74,6 @@
 
 @include media.media-min(breakpoints.$breakpoint-md) {
     :root {
-        --main-lr-padding: var(--f-spacer-5);
+        --main-lr-padding: var(--f-spacer-4);
     }
 }

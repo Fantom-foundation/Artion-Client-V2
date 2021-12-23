@@ -17,7 +17,7 @@
         justify-content: space-between;
         gap: var(--f-spacer-2);
         min-height: 77px;
-        padding: var(--f-spacer-2) var(--f-spacer-4);
+        padding: var(--f-spacer-2) var(--main-lr-padding);
 
         &_endcol {
             display: flex;
@@ -31,7 +31,8 @@
     }
 
     .nftfilterchips {
-        padding: 0 var(--f-spacer-4) var(--f-spacer-4) var(--f-spacer-4);
+        padding: var(--main-lr-padding);
+        padding-top: 0;
     }
 
     &_sidebar {

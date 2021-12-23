@@ -169,10 +169,10 @@
 
 	&_view {
 		border-top: var(--account-border);
-		padding: 0 var(--f-spacer-4);
+		padding: 0 var(--main-lr-padding);
 
 		&_filters {
-			margin-top: var(--f-spacer-4);
+			margin-top: var(--main-lr-padding);
 			display: flex;
 			flex-flow: row wrap;
 			gap: var(--f-spacer-2);
