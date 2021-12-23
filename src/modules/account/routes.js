@@ -12,6 +12,7 @@ import AccountSettings from '@/modules/account/views/AccountSettings/AccountSett
 import AccountSettingsProfile from '@/modules/account/views/AccountSettingsProfile/AccountSettingsProfile.vue';
 import NotificationSettings from '@/modules/account/views/NotificationSettings/NotificationSettings.vue';
 import AppearanceSettings from '@/modules/account/views/AppearanceSettings/AppearanceSettings.vue';
+import AccountBannedTokens from '@/modules/account/views/AccountBannedTokens/AccountBannedTokens.vue';
 
 export function getAccountRoutes() {
     return [
@@ -58,6 +59,11 @@ export function getAccountRoutes() {
                     path: '/account/:address?/myoffers',
                     name: 'account-my-offers',
                     component: AccountMyOffers,
+                },
+                {
+                    path: '/account/:address?/banned-tokens',
+                    name: 'account-banned-tokens',
+                    component: AccountBannedTokens,
                 },
             ],
         },

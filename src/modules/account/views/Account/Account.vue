@@ -97,12 +97,21 @@ import { getUserTokenCounters } from '@/modules/account/queries/user-token-count
 import { getUserFavoriteTokensCount } from '@/modules/account/queries/user-favorite-tokens.js';
 import { getUserActivityCount } from '@/modules/account/queries/user-activity.js';
 import { getUserMyOffersCount, getUserOffersCount } from '@/modules/account/queries/user-tokens-offers.js';
-import { getUserOwnershipTokens } from '@/modules/account/queries/user-ownership-tokens.js';
+import { getUserOwnershipTokensCount } from '@/modules/account/queries/user-ownership-tokens.js';
 import { signIn, getBearerToken } from '@/modules/account/auth.js';
 import { uploadUserFile } from '@/utils/upload.js';
 import { getImageThumbUrl, getIPFSUrl } from '@/utils/url.js';
 import { toInt } from '@/utils/big-number.js';
 import { getJazzicon } from '@/utils/jazzicon.js';
+// import { compareAddresses } from '@/utils/address.js';
+import { getBannedTokensCount } from '@/modules/account/queries/banned-tokens.js';
+
+const onlyModeratorRoutes = [
+    {
+        name: 'account-banned-tokens',
+        label: 'account.bannedTokens',
+    },
+];
 
 export default {
     name: 'Account',
@@ -183,6 +192,7 @@ export default {
     computed: {
         ...mapState('wallet', {
             walletAddress: 'account',
+            userIsModerator: 'userIsModerator',
         }),
 
         isActivityPage() {
@@ -225,6 +235,13 @@ export default {
             },
             immediate: true,
         },
+
+        userIsModerator: {
+            handler() {
+                this.updateModeratorTabs();
+            },
+            immediate: true,
+        },
     },
 
     methods: {
@@ -238,7 +255,39 @@ export default {
                 this.updateMyOffersCounters();
                 this.updateActivityCounters();
                 this.updateOwnershipCounters();
+
+                if (this.userIsModerator) {
+                    this.updateBannedTokensCounters();
+                }
             }, 200);
+        },
+
+        updateModeratorTabs() {
+            const { navigation } = this;
+            const { userIsModerator } = this;
+
+            onlyModeratorRoutes.forEach(route => {
+                const routeName = route.name;
+                const navItemIdx = navigation.findIndex(item => item.routeName === routeName);
+
+                if (userIsModerator) {
+                    if (navItemIdx === -1) {
+                        navigation.push({
+                            routeName,
+                            label: this.$t(route.label),
+                            counter: 0,
+                        });
+                    }
+                } else {
+                    if (navItemIdx > -1) {
+                        navigation.splice(navItemIdx, 1);
+                    }
+                }
+            });
+
+            if (userIsModerator) {
+                this.updateBannedTokensCounters();
+            }
         },
 
         async checkUserSingIn() {
@@ -353,12 +402,26 @@ export default {
          */
         async updateOwnershipCounters() {
             const { accountNavigation } = this.$refs;
-            const favoriteCounters = await getUserOwnershipTokens(this.userAddress);
+            const favoriteCounters = await getUserOwnershipTokensCount(this.userAddress);
             if (!favoriteCounters) {
                 return;
             }
 
             accountNavigation.updateCounter('account-single-items', toInt(favoriteCounters.totalCount));
+        },
+
+        /**
+         * @return {Promise<void>}
+         */
+        async updateBannedTokensCounters() {
+            const { accountNavigation } = this.$refs;
+            const bannedTokenCounters = await getBannedTokensCount(this.userAddress);
+
+            if (!bannedTokenCounters) {
+                return;
+            }
+
+            accountNavigation.updateCounter('account-banned-tokens', toInt(bannedTokenCounters.totalCount));
         },
 
         /**

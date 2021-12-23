@@ -3,6 +3,7 @@ export const SET_ACCOUNT = 'setAccount';
 export const SET_WALLET = 'setWallet';
 export const SET_USER_NAME = 'setUserName';
 export const SET_USER_AVATAR = 'setUserAvatar';
+export const SET_USER_IS_MODERATOR = 'setUserIsModerator';
 export const SET_BT = 'setBT';
 export const DELETE_BT = 'deleteBT';
 
@@ -48,6 +49,13 @@ export const mutations = {
      */
     [SET_USER_AVATAR](state, userAvatar) {
         state.userAvatar = userAvatar;
+    },
+    /**
+     * @param {Object} state
+     * @param {boolean} userIsModerator
+     */
+    [SET_USER_IS_MODERATOR](state, userIsModerator) {
+        state.userIsModerator = userIsModerator;
     },
     /**
      * @param {Object} state

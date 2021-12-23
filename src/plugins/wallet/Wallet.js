@@ -7,6 +7,7 @@ import {
     DELETE_BT,
     SET_USER_NAME,
     SET_USER_AVATAR,
+    SET_USER_IS_MODERATOR,
 } from '@/plugins/wallet/store/mutations.js';
 import appConfig from '@/app.config.js';
 import { implementsWalletInterface } from '@/plugins/wallet/interface.js';
@@ -241,6 +242,7 @@ export class Wallet {
 
             this._setUserName(user.username || '');
             this._setUserAvatar(user.avatarThumb || '');
+            this._setUserIsModerator(user.isModerator || false);
         }
     }
 
@@ -416,6 +418,14 @@ export class Wallet {
      */
     _setUserAvatar(userAvatar) {
         store.commit(`wallet/${SET_USER_AVATAR}`, userAvatar);
+    }
+
+    /**
+     * @param {boolean} userIsModerator
+     * @private
+     */
+    _setUserIsModerator(userIsModerator) {
+        store.commit(`wallet/${SET_USER_IS_MODERATOR}`, userIsModerator);
     }
 
     /**

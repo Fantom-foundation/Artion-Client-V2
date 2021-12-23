@@ -70,7 +70,7 @@ export async function getUserActivity(address = '', pagination = {}, filterSort 
 export async function getUserActivityCount(address = '', pagination = {}, filterSort = {}) {
     const query = {
         query: gql`
-            query GetUserActivity(
+            query GetUserActivityCount(
                 $address: Address!
                 $filter: ActivityFilter
                 $first: Int
