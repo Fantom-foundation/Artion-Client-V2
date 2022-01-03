@@ -543,7 +543,8 @@
         "myOffers": "My Offers",
         "filter": "Filter",
         "filters": "Filters",
-        "bannedTokens": "Banned Tokens"
+        "bannedTokens": "Banned Tokens",
+        "collections": "Ban/Unban Collections"
     },
 
     "accountsettings": {

@@ -112,6 +112,10 @@ const onlyModeratorRoutes = [
         name: 'account-banned-tokens',
         label: 'account.bannedTokens',
     },
+    {
+        name: 'account-collections',
+        label: 'account.collections',
+    },
 ];
 
 export default {
@@ -277,11 +281,16 @@ export default {
 
                 if (accountUserIsModerator) {
                     if (navItemIdx === -1) {
-                        navigation.push({
+                        const navItem = {
                             routeName,
                             label: this.$t(route.label),
-                            counter: 0,
-                        });
+                        };
+
+                        if (routeName !== 'account-collections') {
+                            navItem.counter = 0;
+                        }
+
+                        navigation.push(navItem);
                     }
                 } else {
                     if (navItemIdx > -1) {
