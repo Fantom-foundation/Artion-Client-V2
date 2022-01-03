@@ -105,6 +105,7 @@ import { toInt } from '@/utils/big-number.js';
 import { getJazzicon } from '@/utils/jazzicon.js';
 // import { compareAddresses } from '@/utils/address.js';
 import { getBannedTokensCount } from '@/modules/account/queries/banned-tokens.js';
+import { compareAddresses } from '@/utils/address.js';
 
 const onlyModeratorRoutes = [
     {
@@ -200,6 +201,10 @@ export default {
                 ({ name }) => name === 'account-activity' || name === 'account-offers' || name === 'account-my-offers'
             );
         },
+
+        accountUserIsModerator() {
+            return this.userIsModerator && compareAddresses(this.userAddress, this.walletAddress);
+        },
     },
 
     watch: {
@@ -256,7 +261,7 @@ export default {
                 this.updateActivityCounters();
                 this.updateOwnershipCounters();
 
-                if (this.userIsModerator) {
+                if (this.accountUserIsModerator) {
                     this.updateBannedTokensCounters();
                 }
             }, 200);
@@ -264,13 +269,13 @@ export default {
 
         updateModeratorTabs() {
             const { navigation } = this;
-            const { userIsModerator } = this;
+            const { accountUserIsModerator } = this;
 
             onlyModeratorRoutes.forEach(route => {
                 const routeName = route.name;
                 const navItemIdx = navigation.findIndex(item => item.routeName === routeName);
 
-                if (userIsModerator) {
+                if (accountUserIsModerator) {
                     if (navItemIdx === -1) {
                         navigation.push({
                             routeName,
@@ -285,7 +290,7 @@ export default {
                 }
             });
 
-            if (userIsModerator) {
+            if (accountUserIsModerator) {
                 this.updateBannedTokensCounters();
             }
         },
