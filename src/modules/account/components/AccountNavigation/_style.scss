@@ -65,12 +65,14 @@
     }
 }
 
-@include media.media-max(1147px) {
+@include media.media-max(1647px) {
     .accountnavigation {
+        overflow-x: scroll;
+        overflow-y: hidden;
+
         &_list {
             justify-content: flex-start;
             padding-left: var(--f-spacer-2);
-            overflow-x: scroll;
             &::-webkit-scrollbar {
                 width: 0;
                 height: 0;
