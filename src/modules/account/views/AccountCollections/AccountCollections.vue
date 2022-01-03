@@ -1,12 +1,16 @@
 <template>
     <div class="AccountCollections">
-        collections grid
+        <account-collections-grid :user-address="userAddress" />
     </div>
 </template>
 
 <script>
+import AccountCollectionsGrid from '@/modules/account/components/AccountCollectionsGrid/AccountCollectionsGrid.vue';
+
 export default {
     name: 'AccountCollections',
+
+    components: { AccountCollectionsGrid },
 
     props: {
         userAddress: {

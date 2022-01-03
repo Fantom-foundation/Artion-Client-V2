@@ -64,7 +64,7 @@
                     </div>
                     <div class="account_view_filters_list">
                         <!--                        <NftListFilters v-model="filters" />-->
-                        <DensitySwitch v-if="!isActivityPage" />
+                        <DensitySwitch v-if="!isPageWithNoFilters" />
                     </div>
                 </div>
                 <div class="account_view_chips">
@@ -200,9 +200,13 @@ export default {
             userIsModerator: 'userIsModerator',
         }),
 
-        isActivityPage() {
+        isPageWithNoFilters() {
             return this.$route.matched.some(
-                ({ name }) => name === 'account-activity' || name === 'account-offers' || name === 'account-my-offers'
+                ({ name }) =>
+                    name === 'account-activity' ||
+                    name === 'account-offers' ||
+                    name === 'account-my-offers' ||
+                    name === 'account-collections'
             );
         },
 
