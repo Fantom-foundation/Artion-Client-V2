@@ -319,6 +319,12 @@ export default {
 
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+
+            if (!this.token) {
+                this.$router.push({ name: '404' });
+                return;
+            }
+
             this.liked = this.token.isLiked;
             this.token._inEscrow = this.inEscrow;
 
@@ -381,9 +387,7 @@ export default {
         async getTokenOwner(tokenContract, tokenId) {
             const data = await getTokenOwnerships(tokenContract, tokenId, { first: 500 }, true);
 
-            console.log(data.edges[0].node);
-
-            if (data.edges.length > 0) {
+            if (data && data.edges.length > 0) {
                 this.inEscrow = data.edges[0].node.inEscrow;
 
                 return data.edges[0].node.ownerUser;
