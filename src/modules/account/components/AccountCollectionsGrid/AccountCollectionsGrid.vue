@@ -37,9 +37,12 @@
             </template>
 
             <template #column-name="{ item }">
-                <div class="accountcollectionsgrid_item">
+                <router-link
+                    :to="{ name: 'explore', query: { collections: item.contract } }"
+                    class="accountcollectionsgrid_item"
+                >
                     <f-image size="32px" :src="getCollectionImageUrl(item.contract)" :alt="item.name" /> {{ item.name }}
-                </div>
+                </router-link>
             </template>
 
             <template #column-actions="{ item }">
@@ -85,8 +88,11 @@ import FDataGrid from 'fantom-vue-components/src/components/FDataGrid/FDataGrid.
 import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
 import FSearchField from 'fantom-vue-components/src/components/FSearchField/FSearchField.vue';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
-// import { getBannedCollections, getCollections, getCollectionsInReview } from '@/modules/nfts/queries/collections.js';
-import { getCollections } from '@/modules/collections/queries/collections.js';
+import {
+    getBannedCollections,
+    getCollections,
+    getCollectionsInReview,
+} from '@/modules/collections/queries/collections.js';
 import { getCollectionImageUrl } from '@/utils/url.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { banCollection, unbanCollection } from '@/modules/collections/mutations/ban-unban.js';
@@ -170,11 +176,9 @@ export default {
             let query = null;
 
             if (filter === 'inReview') {
-                query = getCollections(pagination, 'fantom');
-                // query = getCollectionsInReview(pagination, searchText);
+                query = getCollectionsInReview(pagination, searchText);
             } else if (filter === 'banned') {
-                query = getCollections(pagination, 'ape');
-                // query = getBannedCollections(pagination, searchText);
+                query = getBannedCollections(pagination, searchText);
             } else {
                 query = getCollections(pagination, searchText);
             }
