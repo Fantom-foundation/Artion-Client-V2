@@ -41,6 +41,41 @@
                     <f-image size="32px" :src="getCollectionImageUrl(item.contract)" :alt="item.name" /> {{ item.name }}
                 </div>
             </template>
+
+            <template #column-actions="{ item }">
+                <a-button
+                    v-if="filter === '__NULL__'"
+                    :loading="item._loading"
+                    :disabled="item._disabled"
+                    @click.native="onBanButtonClick(item)"
+                >
+                    <app-iconset icon="ban" size="16px" /> {{ $t('accountcollectionsgrid.ban') }}
+                </a-button>
+                <a-button
+                    v-if="filter === 'banned'"
+                    :loading="item._loading"
+                    :disabled="item._disabled"
+                    @click.native="onUnbanButtonClick(item)"
+                >
+                    <app-iconset icon="thumb-up" size="16px" /> {{ $t('accountcollectionsgrid.unban') }}
+                </a-button>
+                <template v-else-if="filter === 'inReview'">
+                    <a-button
+                        :loading="item._loading"
+                        :disabled="item._disabled"
+                        @click.native="onApproveButtonClick(item)"
+                    >
+                        <app-iconset icon="thumb-up" size="16px" /> {{ $t('accountcollectionsgrid.approve') }}
+                    </a-button>
+                    <a-button
+                        :loading="item._loading"
+                        :disabled="item._disabled"
+                        @click.native="onDeclineButtonClick(item)"
+                    >
+                        <app-iconset icon="thumb-down" size="16px" /> {{ $t('accountcollectionsgrid.decline') }}
+                    </a-button>
+                </template>
+            </template>
         </f-data-grid>
     </div>
 </template>
@@ -50,13 +85,17 @@ import FDataGrid from 'fantom-vue-components/src/components/FDataGrid/FDataGrid.
 import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
 import FSearchField from 'fantom-vue-components/src/components/FSearchField/FSearchField.vue';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
-import { getBannedCollections, getCollections, getCollectionsInReview } from '@/modules/nfts/queries/collections.js';
+// import { getBannedCollections, getCollections, getCollectionsInReview } from '@/modules/nfts/queries/collections.js';
+import { getCollections } from '@/modules/collections/queries/collections.js';
 import { getCollectionImageUrl } from '@/utils/url.js';
+import AButton from '@/common/components/AButton/AButton.vue';
+import { banCollection, unbanCollection } from '@/modules/collections/mutations/ban-unban.js';
+import { approveCollection, declineCollection } from '@/modules/collections/mutations/approve-decline.js';
 
 export default {
     name: 'AccountCollectionsGrid',
 
-    components: { FDataGrid, FImage, FSearchField },
+    components: { AButton, FDataGrid, FImage, FSearchField },
 
     mixins: [dataPageMixin],
 
@@ -74,14 +113,19 @@ export default {
                 {
                     name: 'name',
                     label: this.$t('accountcollectionsgrid.name'),
+                    width: '360px',
+                },
+                {
+                    name: 'actions',
+                    label: this.$t('accountcollectionsgrid.actions'),
                 },
             ],
             searchText: '',
             filter: '__NULL__',
             filterData: [
                 { value: '__NULL__', label: this.$t('accountcollectionsgrid.filterAll') },
-                { value: 'inReview', label: this.$t('accountcollectionsgrid.filterInReview') },
                 { value: 'banned', label: this.$t('accountcollectionsgrid.filterBanned') },
+                { value: 'inReview', label: this.$t('accountcollectionsgrid.filterInReview') },
             ],
         };
     },
@@ -126,9 +170,11 @@ export default {
             let query = null;
 
             if (filter === 'inReview') {
-                query = getCollectionsInReview(pagination, searchText);
+                query = getCollections(pagination, 'fantom');
+                // query = getCollectionsInReview(pagination, searchText);
             } else if (filter === 'banned') {
-                query = getBannedCollections(pagination, searchText);
+                query = getCollections(pagination, 'ape');
+                // query = getBannedCollections(pagination, searchText);
             } else {
                 query = getCollections(pagination, searchText);
             }
@@ -143,6 +189,47 @@ export default {
             this.$nextTick(() => {
                 this.loadCollections();
             });
+        },
+
+        updateGridRow(collection) {
+            this.$refs.grid.updateRowBy(collection, collection.contract, 'contract');
+        },
+
+        async action(mutation, collection, successMessage) {
+            this.updateGridRow({ ...collection, _loading: true });
+
+            try {
+                const ok = await mutation(collection.contract);
+
+                this.updateGridRow({ ...collection, _loading: false });
+
+                if (ok) {
+                    this.$notifications.add({
+                        type: 'success',
+                        text: successMessage,
+                    });
+                    this.updateGridRow({ ...collection, _disabled: true });
+                }
+            } catch (error) {
+                this.updateGridRow({ ...collection, _loading: false });
+                console.error(error);
+            }
+        },
+
+        onBanButtonClick(collection) {
+            this.action(banCollection, collection, this.$t('accountcollectionsgrid.banSuccess'));
+        },
+
+        onUnbanButtonClick(collection) {
+            this.action(unbanCollection, collection, this.$t('accountcollectionsgrid.unbanSuccess'));
+        },
+
+        onApproveButtonClick(collection) {
+            this.action(approveCollection, collection, this.$t('accountcollectionsgrid.approveSuccess'));
+        },
+
+        onDeclineButtonClick(collection) {
+            this.action(declineCollection, collection, this.$t('accountcollectionsgrid.declineSuccess'));
         },
 
         getCollectionImageUrl,

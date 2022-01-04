@@ -25,6 +25,7 @@
     "me": "Me",
     "nftBanned": "NFT banned",
     "nftUnbanned": "NFT unbanned",
+    "name": "Name",
 
     "navigation": {
         "explore": "@:explore",
@@ -383,7 +384,7 @@
         "useOwnerAddressOfCollection": "Please submit using the owner address of the collection. If you cannot use the owner address, please email us on contact@fantom.foundation with the information below (and proof of collection ownership, such as from the collection's official email address).",
         "logoImage": "Logo Image",
         "alsoBeUsedForNavigation": "This image will also be used for navigation. 300x300 recommended.",
-        "name": "Name",
+        "name": "@:name",
         "collectionName": "Collection Name",
         "description": "Description",
         "provideYourDescription": "Provide your description for your collection",
@@ -412,7 +413,7 @@
     "nftcreate": {
         "collection": "Collection",
         "collectionErr": "Chosen collection does not allow to mint new tokens from your address.",
-        "name": "Name",
+        "name": "@:name",
         "symbol": "Symbol",
         "description": "Description",
         "royalty": "Royalty (%)",
@@ -688,11 +689,20 @@
     },
 
     "accountcollectionsgrid": {
-        "name": "Name",
-        "filterAll": "All Collections",
+        "name": "@:name",
+        "actions": "Actions",
+        "filterAll": "---",
         "filterInReview": "Collection in Review",
         "filterBanned": "Banned Collections",
-        "search": "Search Collections"
+        "search": "Search Collections",
+        "ban": "Ban",
+        "unban": "Unban",
+        "approve": "Approve",
+        "decline": "Decline",
+        "banSuccess": "Collection banned",
+        "unbanSuccess": "Collection unbanned",
+        "approveSuccess": "Collection approved",
+        "declineSuccess": "Collection declined"
     },
 
     "nftresultauction": {
