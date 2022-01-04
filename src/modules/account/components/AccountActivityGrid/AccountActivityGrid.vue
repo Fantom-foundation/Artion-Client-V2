@@ -187,7 +187,7 @@ export default {
             });
 
             // if (this.pageInfo.hasNextPage && data.edges && data.edges.length > 0) {
-            if (data.edges && data.edges.length > 0) {
+            if (data && data.edges && data.edges.length > 0) {
                 const items = this._getItemsFromData(data);
 
                 if (!objectEquals(this.items, this._getItemsFromData(data))) {

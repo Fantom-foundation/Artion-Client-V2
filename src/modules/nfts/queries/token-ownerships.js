@@ -53,7 +53,7 @@ export async function getTokenOwnerships(contract = '', id = '', pagination = {}
 
     const data = await gqlQuery(query, 'token.ownerships');
 
-    if (sortByUpdated && data.edges && data.edges.length > 1) {
+    if (sortByUpdated && data && data.edges && data.edges.length > 1) {
         data.edges.sort(sortByUpdatedProp);
     }
 
