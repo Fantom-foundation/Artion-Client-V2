@@ -545,7 +545,7 @@
         "filter": "Filter",
         "filters": "Filters",
         "bannedTokens": "Banned Tokens",
-        "collections": "Ban/Unban Collections"
+        "collections": "Collections"
     },
 
     "accountsettings": {
@@ -692,7 +692,7 @@
         "name": "@:name",
         "actions": "Actions",
         "filterAll": "---",
-        "filterInReview": "Collection in Review",
+        "filterInReview": "Collections in Review",
         "filterBanned": "Banned Collections",
         "search": "Search Collections",
         "ban": "Ban",

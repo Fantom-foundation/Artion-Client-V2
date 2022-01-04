@@ -435,7 +435,7 @@ export default {
             const { accountNavigation } = this.$refs;
             const bannedTokenCounters = await getBannedTokensCount(this.userAddress);
 
-            if (!bannedTokenCounters) {
+            if (!bannedTokenCounters || !accountNavigation) {
                 return;
             }
 
