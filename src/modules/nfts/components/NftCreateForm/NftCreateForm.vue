@@ -107,7 +107,7 @@ import ASignTransaction from '@/common/components/ASignTransaction/ASignTransact
 import FMessage from 'fantom-vue-components/src/components/FMessage/FMessage.vue';
 import AppIconset from '@/modules/app/components/AppIconset/AppIconset';
 import AUploadArea from '@/common/components/AUploadArea/AUploadArea.vue';
-import { getCollections } from '@/modules/nfts/queries/collections';
+import { getCollections } from '@/modules/collections/queries/collections.js';
 import { uploadTokenData } from '@/utils/upload';
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils';

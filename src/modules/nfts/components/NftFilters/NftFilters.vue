@@ -30,7 +30,7 @@ import StatusFilter from '@/modules/nfts/components/StatusFilter/StatusFilter.vu
 import PriceFilter from '@/modules/nfts/components/PriceFilter/PriceFilter';
 
 import { getCategories } from '@/modules/nfts/queries/categories.js';
-import { getCollections } from '@/modules/nfts/queries/collections.js';
+import { getCollections } from '@/modules/collections/queries/collections.js';
 import { getCollectionImageUrl } from '@/utils/url.js';
 
 export default {
