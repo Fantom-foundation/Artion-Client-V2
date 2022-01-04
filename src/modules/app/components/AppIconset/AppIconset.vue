@@ -62,6 +62,8 @@ import IconFilterArrow from '@/assets/vue-icons/IconFilterArrow.vue';
 import IconSwap from '@/assets/vue-icons/IconSwap.vue';
 import IconRecycle from '@/assets/vue-icons/IconRecycle.vue';
 import IconBan from '@/assets/vue-icons/IconBan.vue';
+import IconThumbUp from '@/assets/vue-icons/IconThumbUp.vue';
+import IconThumbDown from '@/assets/vue-icons/IconThumbDown.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -127,6 +129,8 @@ export default {
         IconSwap,
         IconRecycle,
         IconBan,
+        IconThumbUp,
+        IconThumbDown,
     },
 
     props: {
