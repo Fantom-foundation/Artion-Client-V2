@@ -212,7 +212,7 @@ export default {
                 ok = await banToken(this.nftData);
 
                 if (ok) {
-                    this.$emit('token-banned');
+                    this.$emit('token-ban-unban', { token: this.nftData, ban: true });
 
                     this.$notifications.add({
                         type: 'success',
@@ -223,7 +223,7 @@ export default {
                 ok = await unbanToken(this.nftData);
 
                 if (ok) {
-                    this.$emit('token-unbanned');
+                    this.$emit('token-ban-unban', { token: this.nftData, unban: true });
                     this.$notifications.add({
                         type: 'success',
                         text: this.$t('nftUnbanned'),
