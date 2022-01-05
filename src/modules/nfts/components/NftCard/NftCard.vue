@@ -204,31 +204,25 @@ export default {
         },
 
         async onBanClick() {
-            let ok = false;
-
             this.dBanned = !this.dBanned;
 
             if (this.dBanned) {
-                ok = await banToken(this.nftData);
+                await banToken(this.nftData);
 
-                if (ok) {
-                    this.$emit('token-ban-unban', { token: this.nftData, ban: true });
+                this.$emit('token-ban-unban', { token: this.nftData, ban: true });
 
-                    this.$notifications.add({
-                        type: 'success',
-                        text: this.$t('nftBanned'),
-                    });
-                }
+                this.$notifications.add({
+                    type: 'success',
+                    text: this.$t('nftBanned'),
+                });
             } else {
-                ok = await unbanToken(this.nftData);
+                await unbanToken(this.nftData);
 
-                if (ok) {
-                    this.$emit('token-ban-unban', { token: this.nftData, unban: true });
-                    this.$notifications.add({
-                        type: 'success',
-                        text: this.$t('nftUnbanned'),
-                    });
-                }
+                this.$emit('token-ban-unban', { token: this.nftData, unban: true });
+                this.$notifications.add({
+                    type: 'success',
+                    text: this.$t('nftUnbanned'),
+                });
             }
         },
 
