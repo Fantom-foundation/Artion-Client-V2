@@ -354,8 +354,10 @@ export default {
                 this.userOwnsToken = false;
             }
 
-            await this.$refs.nftDetailPrice.update();
-            await this.setListing();
+            if (!this._isDestroyed) {
+                await this.$refs.nftDetailPrice.update();
+                await this.setListing();
+            }
         },
 
         /**
