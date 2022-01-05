@@ -16,6 +16,7 @@
                 :key="`${nft.contract}_${nft.tokenId}`"
                 :data-page="nft._page || null"
                 @mousedown.native="onNftMousedown"
+                @token-ban-unban="onTokenBanUnban"
             />
         </div>
     </f-infinite-scroll>
@@ -86,12 +87,31 @@ export default {
             }
         },
 
+        /**
+         * @param {{contract: string, tokenId: string}} token
+         * @return {*}
+         */
+        findTokenIndex(token) {
+            return this.tokens.findIndex(item => item.contract === token.contract && item.tokenId === token.tokenId);
+        },
+
         onNftMousedown(event) {
             const nftElem = event.target.closest('[data-page]');
             const page = nftElem ? parseInt(nftElem.getAttribute('data-page')) : -1;
 
             if (page > -1) {
                 this.$emit('nft-list-page', page);
+            }
+        },
+
+        /**
+         * @param {{token: Object, ban?: boolean, unban?: boolean}} payload
+         */
+        onTokenBanUnban(payload) {
+            const idx = this.findTokenIndex(payload.token);
+
+            if (idx > -1) {
+                this.tokens.splice(idx, 1);
             }
         },
     },
