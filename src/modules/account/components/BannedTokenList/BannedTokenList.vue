@@ -64,7 +64,7 @@ export default {
                 tokens.edges = tokens.edges
                     .filter(item => item.node.token) // skip non-existing favorites
                     .map(item => {
-                        item.node = { ...item.node.token };
+                        item.node = { ...item.node.token, _banned: true };
                         return item;
                     });
                 return tokens;
