@@ -195,10 +195,26 @@ export default {
             });
         },
 
+        /**
+         * @param {Collection} collection
+         */
         updateGridRow(collection) {
             this.$refs.grid.updateRowBy(collection, collection.contract, 'contract');
         },
 
+        /**
+         * @param {string} contract
+         */
+        removeGridRow(contract) {
+            this.$refs.grid.removeRowBy(contract, 'contract');
+        },
+
+        /**
+         * @param {function} mutation Has to return promise
+         * @param {Collection} collection
+         * @param {string} successMessage
+         * @return {Promise<void>}
+         */
         async action(mutation, collection, successMessage) {
             this.updateGridRow({ ...collection, _loading: true });
 
@@ -212,7 +228,7 @@ export default {
                         type: 'success',
                         text: successMessage,
                     });
-                    this.updateGridRow({ ...collection, _disabled: true });
+                    this.removeGridRow(collection.contract);
                 }
             } catch (error) {
                 this.updateGridRow({ ...collection, _loading: false });
@@ -220,18 +236,30 @@ export default {
             }
         },
 
+        /**
+         * @param {Collection} collection
+         */
         onBanButtonClick(collection) {
             this.action(banCollection, collection, this.$t('accountcollectionsgrid.banSuccess'));
         },
 
+        /**
+         * @param {Collection} collection
+         */
         onUnbanButtonClick(collection) {
             this.action(unbanCollection, collection, this.$t('accountcollectionsgrid.unbanSuccess'));
         },
 
+        /**
+         * @param {Collection} collection
+         */
         onApproveButtonClick(collection) {
             this.action(approveCollection, collection, this.$t('accountcollectionsgrid.approveSuccess'));
         },
 
+        /**
+         * @param {Collection} collection
+         */
         onDeclineButtonClick(collection) {
             this.action(declineCollection, collection, this.$t('accountcollectionsgrid.declineSuccess'));
         },

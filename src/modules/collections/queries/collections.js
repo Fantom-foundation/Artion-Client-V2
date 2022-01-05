@@ -43,7 +43,7 @@ export async function getCollections(pagination = { first: 5000 }, search = null
             mintableBy,
             ...pagination,
         },
-        // fetchPolicy: 'network-only',
+        fetchPolicy: 'network-only',
     };
 
     return gqlQuery(query, 'collections');
