@@ -6,9 +6,12 @@
 
 <script>
 import AccountCollectionsGrid from '@/modules/account/components/AccountCollectionsGrid/AccountCollectionsGrid.vue';
+import { moderatorPageMixin } from '@/common/mixins/moderator-page.js';
 
 export default {
     name: 'AccountCollections',
+
+    mixins: [moderatorPageMixin],
 
     components: { AccountCollectionsGrid },
 

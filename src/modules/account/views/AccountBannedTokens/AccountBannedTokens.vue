@@ -6,9 +6,12 @@
 
 <script>
 import BannedTokenList from '@/modules/account/components/BannedTokenList/BannedTokenList.vue';
+import { moderatorPageMixin } from '@/common/mixins/moderator-page.js';
 
 export default {
     name: 'AccountBannedTokens',
+
+    mixins: [moderatorPageMixin],
 
     components: { BannedTokenList },
 

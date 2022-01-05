@@ -117,7 +117,7 @@ let appConfig = {
     },
     // feature flags
     flags: {
-        moderatorFunctions: false,
+        moderatorFunctions: true,
     },
 };
 

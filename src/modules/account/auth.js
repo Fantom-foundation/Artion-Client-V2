@@ -86,17 +86,29 @@ export async function setUser(account, logged) {
  * Checks if user is logged, if not, try to log him
  *
  * @param {boolean} [redirectToHomepage]
+ * @param {boolean} [checkModerator]
  * @return {Promise<boolean>}
  */
-export async function checkSignIn(redirectToHomepage = false) {
+export async function checkSignIn(redirectToHomepage = false, checkModerator = false) {
+    let redirect = false;
     let ok = true;
 
     if (!getBearerToken()) {
         ok = await signIn();
 
-        if (!ok && redirectToHomepage) {
-            router.push('/');
+        if (ok && checkModerator) {
+            ok = await isLoggedUserModerator();
         }
+
+        if (!ok) {
+            redirect = true;
+        }
+    } else if (checkModerator && !(await isLoggedUserModerator())) {
+        redirect = true;
+    }
+
+    if (redirect && redirectToHomepage) {
+        router.push('/');
     }
 
     return ok;
