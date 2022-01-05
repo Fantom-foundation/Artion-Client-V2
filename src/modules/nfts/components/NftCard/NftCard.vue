@@ -124,10 +124,6 @@ export default {
         nftData: {
             type: Object,
         },
-        banned: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     data() {
@@ -136,7 +132,7 @@ export default {
             liked: false,
             showLikes: false,
             showBanButton: this.$wallet.user ? this.$wallet.user.isModerator : false,
-            dBanned: this.banned,
+            dBanned: this.nftData._banned || false,
         };
     },
 
@@ -208,22 +204,31 @@ export default {
         },
 
         async onBanClick() {
+            let ok = false;
+
             this.dBanned = !this.dBanned;
 
             if (this.dBanned) {
-                await banToken(this.nftData);
+                ok = await banToken(this.nftData);
 
-                this.$notifications.add({
-                    type: 'success',
-                    text: this.$t('nftBanned'),
-                });
+                if (ok) {
+                    this.$emit('token-banned');
+
+                    this.$notifications.add({
+                        type: 'success',
+                        text: this.$t('nftBanned'),
+                    });
+                }
             } else {
-                await unbanToken(this.nftData);
+                ok = await unbanToken(this.nftData);
 
-                this.$notifications.add({
-                    type: 'success',
-                    text: this.$t('nftUnbanned'),
-                });
+                if (ok) {
+                    this.$emit('token-unbanned');
+                    this.$notifications.add({
+                        type: 'success',
+                        text: this.$t('nftUnbanned'),
+                    });
+                }
             }
         },
 
