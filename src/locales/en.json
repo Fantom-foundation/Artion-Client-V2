@@ -414,7 +414,7 @@
 
     "nftcreate": {
         "collection": "Collection",
-        "collectionErr": "Chosen collection does not allow to mint new tokens from your address.",
+        "collectionErr": "Chosen collection does not allow to mint new tokens from your address or your balance is insufficient to cover the collection minting fee.",
         "name": "@:name",
         "symbol": "Symbol",
         "description": "Description",
