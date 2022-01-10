@@ -1,7 +1,7 @@
 <template>
     <div class="explore" :class="{ no_aside: isSideClose }">
         <div class="explore_sidebar" :class="{ close: isSideClose }">
-            <div class="explore_sidebar_cont">
+            <aside class="explore_sidebar_cont" :aria-label="$t('page.explore.filters')">
                 <div class="h3 explore_sidebar_wrap">
                     <button
                         :aria-label="$t('page.explore.filters')"
@@ -15,7 +15,7 @@
                     </button>
                 </div>
                 <nft-filters v-model="filters" />
-            </div>
+            </aside>
         </div>
         <div>
             <div class="explore_nftlist_header">

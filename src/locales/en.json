@@ -27,6 +27,8 @@
     "nftUnbanned": "NFT unbanned",
     "name": "Name",
     "skipToContent": "Skip to content",
+    "mainNav": "Main navigation",
+    "accountNav": "Account navigation",
 
     "navigation": {
         "explore": "@:explore",
@@ -155,8 +157,7 @@
     },
 
     "appsearchbar": {
-        "label": "Search bar",
-        "placeholderTmp": "Search items",
+        "label": "Search items, collections and accounts",
         "placeholder": "Search items, collections and accounts"
     },
 

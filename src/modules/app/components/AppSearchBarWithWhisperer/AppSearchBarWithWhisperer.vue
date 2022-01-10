@@ -4,7 +4,7 @@
             id="appsearchbarwithwhisperer_input"
             field-size="large"
             :aria-label="$t('appsearchbar.label')"
-            :placeholder="$t('appsearchbar.placeholderTmp')"
+            :placeholder="$t('appsearchbar.placeholder')"
             no-label
             v-model="searchText"
             :throttle-input-interval="250"

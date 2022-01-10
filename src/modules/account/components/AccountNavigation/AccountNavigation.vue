@@ -1,5 +1,5 @@
 <template>
-    <nav class="accountnavigation">
+    <nav class="accountnavigation" :aria-label="$t('accountNav')">
         <ul class="accountnavigation_list">
             <li v-for="item in dNavigation" :key="`accnav_${item.routeName}`" class="accountnavigation_item">
                 <router-link :to="{ name: item.routeName, params: item.routeParams || {}, query: { ...filters } }">

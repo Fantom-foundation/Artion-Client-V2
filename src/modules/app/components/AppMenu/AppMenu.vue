@@ -1,5 +1,5 @@
 <template>
-    <nav class="appmenu flex gap-5">
+    <nav class="appmenu flex gap-5" :aria-label="$t('mainNav')">
         <router-link v-for="(item, index) in navigation" :key="`am_${index}`" :to="{ name: item.route }">
             {{ item.label }}
         </router-link>
