@@ -98,7 +98,6 @@
                 <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm') }}</f-message>
             </div>
             <a-sign-transaction :tx="txMint" @transaction-status="onMintTransactionStatus" />
-            <a-sign-transaction :tx="txRoyalty" @transaction-status="onRoyaltyTransactionStatus" />
         </div>
     </f-form>
 </template>
@@ -120,7 +119,6 @@ import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
 import { estimateMintFeeGas } from '@/modules/nfts/queries/estimate-mint';
 import { getCollectionImageUrl } from '@/utils/url.js';
 import { tokenExists } from '@/modules/nfts/queries/token';
-import { getContractAddress } from '@/utils/artion-contract-addresses.js';
 
 export default {
     name: 'NftCreateForm',
@@ -129,14 +127,13 @@ export default {
     data() {
         return {
             values: {
-                collectionId: '0x61af4d29f672e27a097291f72fc571304bc93521', // Default Artion Collection
+                collectionId: '0xf9b895fcdcc1f997df838d5c5b88dafe4d6c1539', // Default Artion Collection
             },
             collections: [],
             collection: {},
             imageFile: null,
             fileError: '',
             txMint: {},
-            txRoyalty: {},
             tokenId: null,
             isLoading: false,
             waitingMsgId: '',
@@ -167,9 +164,10 @@ export default {
             const estimation = await estimateMintFeeGas(
                 this.$wallet.account || '0x0000000000000000000000000000000000000001',
                 _collectionId,
-                'https://minter.artion.io/default/access/minter/estimation.json'
+                'https://minter.artion.io/default/access/minter/estimation.json',
+                0
             );
-            console.log('collectionValidator', _collectionId, estimation.error);
+            console.log('collectionValidator', _collectionId, 'estimation error:', estimation.error);
             return estimation.error != null;
         },
 
@@ -214,10 +212,13 @@ export default {
                 return;
             }
 
+            const royalty = Math.round(Number(this.values.royalty) * 100);
+
             const estimation = await estimateMintFeeGas(
                 this.$wallet.account,
                 val.collectionId,
-                'https://minter.artion.io/default/access/minter/estimation.json'
+                'https://minter.artion.io/default/access/minter/estimation.json',
+                royalty
             );
             console.log('estimation', estimation);
             if (estimation.error != null) {
@@ -248,11 +249,13 @@ export default {
                 text: this.$t('nftcreate.signMint'),
             });
             const web3 = new Web3();
-            this.txMint = contracts.createNFT(
-                this.$wallet.account,
+            this.txMint = contracts.createNFTWithRoyalty(
+                this.$wallet.account, // owner of the created token
                 tokenUri,
                 estimation.platformFee,
                 val.collectionId,
+                this.$wallet.account, // royalty recipient
+                royalty,
                 web3
             );
         },
@@ -299,51 +302,12 @@ export default {
                     }
                 }
 
-                const royalty = Number(this.values.royalty);
-                if (royalty) {
-                    notifications.add({
-                        type: 'info',
-                        text: this.$t('nftcreate.signRoyalty'),
-                    });
-                    const royaltyDec = Math.round(royalty * 100);
-                    const web3 = this.$wallet.wallet._web3;
-                    const contract = await getContractAddress('marketplace');
-
-                    console.log('registerTokenRoyalty', this.collection.value, this.tokenId, royaltyDec);
-                    this.txRoyalty = contracts.registerTokenRoyalty(
-                        this.collection.value,
-                        this.tokenId,
-                        royaltyDec,
-                        web3,
-                        contract
-                    );
-                } else {
-                    await this.mintingFinished();
-                }
-            }
-        },
-
-        async onRoyaltyTransactionStatus(payload) {
-            console.log('onRoyaltyTransactionStatus', payload);
-            if (payload.status === 'error') {
-                console.error('registerTokenRoyalty failed', payload);
                 notifications.add({
-                    type: 'error',
-                    text: this.$t('nftcreate.royaltyError'),
+                    type: 'success',
+                    text: this.$t('nftcreate.success'),
                 });
-                await this.mintingFinished();
+                await this.redirectOrWait();
             }
-            if (payload.status === 'success') {
-                await this.mintingFinished();
-            }
-        },
-
-        async mintingFinished() {
-            notifications.add({
-                type: 'success',
-                text: this.$t('nftcreate.success'),
-            });
-            await this.redirectOrWait();
         },
 
         async redirectOrWait() {

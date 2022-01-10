@@ -67,6 +67,66 @@ const ZERO_AMOUNT = '0x0';
     };
 }
 
+/**
+ * createNFTWithRoyalty Mints a new token on Artion NFT collection contract
+ *
+ * @param {string} toAddress Address of the owner of newly created NFT
+ * @param {string} tokenUri URI address of the NFT json object
+ * @param {number|BN|string} amount Amount of FTM tokens in WEI units as platform fee.
+ * @param {string} collectionAddress Address of the collection for new NFT.
+ * @param {string} royaltyRecipient Address of the royalty recipient
+ * @param {number} royaltyValue Royalty value percentage (using 2 decimals - 5000 = 50%)
+ * @param {Web3} web3Client Instance of an initialized Web3 client.
+ * @return {{to: address, data: string, value string}}
+ */
+function createNFTWithRoyalty(toAddress, tokenUri, amount, collectionAddress, royaltyRecipient, royaltyValue, web3Client) {
+
+    const abi = {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "_beneficiary",
+                "type": "address"
+            },
+            {
+                "internalType": "string",
+                "name": "_tokenUri",
+                "type": "string"
+            },
+            {
+                "internalType": "address",
+                "name": "_royaltyRecipient",
+                "type": "address"
+            },
+            {
+                "internalType": "uint256",
+                "name": "_royaltyValue",
+                "type": "uint256"
+            }
+        ],
+        "name": "mint",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "payable",
+        "type": "function"
+    }
+
+    const encodedAbi = web3Client.eth.abi.encodeFunctionCall(abi,[toAddress, tokenUri, royaltyRecipient, royaltyValue])
+
+    // return tx object
+    return {
+        from: undefined,
+        to: collectionAddress,
+        value: web3Client.utils.numberToHex(amount),
+        data: encodedAbi,
+    };
+}
+
 
 /**
  * createArtCollection Creates a new ERC1155 collection contract thru factory
@@ -1143,6 +1203,7 @@ function decodeMintedNftTokenId(receipt, web3Client) {
 export default {
     createNFTCollection,
     createNFT,
+    createNFTWithRoyalty,
     createArtCollection,
     createArt,
     registerTokenRoyalty,

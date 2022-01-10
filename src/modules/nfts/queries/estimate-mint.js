@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 
-export async function estimateMintFeeGas(user, contract, tokenUri) {
+export async function estimateMintFeeGas(user, contract, tokenUri, royalty) {
     const query = {
         query: gql`
-            query EstimateMintFeeGas($user: Address!, $contract: Address!, $tokenUri: String!) {
-                estimateMintFeeGas(user: $user, contract: $contract, tokenUri: $tokenUri) {
+            query EstimateMintFeeGas($user: Address!, $contract: Address!, $tokenUri: String!, $royalty: Int!) {
+                estimateMintFeeGas(user: $user, contract: $contract, tokenUri: $tokenUri, royalty: $royalty) {
                     error
                     platformFee
                     gas
@@ -16,6 +16,7 @@ export async function estimateMintFeeGas(user, contract, tokenUri) {
             user,
             contract,
             tokenUri,
+            royalty,
         },
         fetchPolicy: 'network-only',
     };
