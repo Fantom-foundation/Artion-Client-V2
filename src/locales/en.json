@@ -26,6 +26,7 @@
     "nftBanned": "NFT banned",
     "nftUnbanned": "NFT unbanned",
     "name": "Name",
+    "skipToContent": "Skip to content",
 
     "navigation": {
         "explore": "@:explore",
