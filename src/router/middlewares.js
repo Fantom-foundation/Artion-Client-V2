@@ -1,9 +1,9 @@
 import { defer } from 'fantom-vue-components/src/utils';
 import FAppTheme from 'fantom-vue-components/src/components/FAppTheme/FAppTheme.vue';
-import { setMetaInfo } from '@/modules/app/document-meta.js';
 import appConfig from '@/app.config.js';
 import { wallet } from '@/plugins/wallet/Wallet.js';
 import { signIn } from '@/modules/account/auth.js';
+import { documentMeta } from '@/modules/app/DocumentMeta.js';
 
 // import { vueApp } from '@/main.js';
 // import { isAnyComponentChanged } from 'fantom-vue-components/src/utils/vue-helpers.js';
@@ -26,7 +26,7 @@ window.addEventListener('popstate', () => {
 export function setRouteMetaInfo(to, from, next) {
     next();
 
-    setMetaInfo({
+    documentMeta.setMetaInfo({
         title: to?.meta?.title || APP_TITLE,
         description: to?.meta?.description || APP_TITLE,
     });
