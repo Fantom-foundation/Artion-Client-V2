@@ -147,17 +147,19 @@
             <nft-trade-history-grid :token="token" />
         </div> -->
 
-        <a-details strategy="create" open>
-            <template #label>
-                <div class="nftdetail_details_wrap">
-                    <app-iconset icon="recycle" /> {{ $t('nftdetail.itemActivity') }}
-                </div>
-            </template>
-            <template>
-                <!-- <nft-trade-history-grid :token="token" /> -->
-                <nft-item-activity :token="token" />
-            </template>
-        </a-details>
+        <div class="nftdetail_collection">
+            <a-details strategy="create" open>
+                <template #label>
+                    <div class="nftdetail_details_wrap">
+                        <app-iconset icon="recycle" /> {{ $t('nftdetail.itemActivity') }}
+                    </div>
+                </template>
+                <template>
+                    <!-- <nft-trade-history-grid :token="token" /> -->
+                    <nft-item-activity :token="token" />
+                </template>
+            </a-details>
+        </div>
 
         <div class="nftdetail_collection">
             <a-details strategy="create">
