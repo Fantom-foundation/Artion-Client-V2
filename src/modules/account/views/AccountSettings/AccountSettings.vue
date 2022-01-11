@@ -13,6 +13,9 @@
 <script>
 import FAccordionNavigation from 'fantom-vue-components/src/components/FAccordionNavigation/FAccordionNavigation.vue';
 import { authPageMixin } from '@/common/mixins/auth-page.js';
+import { documentMeta } from '@/modules/app/DocumentMeta.js';
+import { mapState } from 'vuex';
+import { getUser } from '@/modules/account/queries/user.js';
 
 export default {
     name: 'AccountSettings',
@@ -37,7 +40,37 @@ export default {
                     // icon: 'tag',
                 },
             ],
+            user: {},
         };
+    },
+
+    computed: {
+        ...mapState('wallet', {
+            walletAddress: 'account',
+        }),
+    },
+
+    watch: {
+        $route() {
+            this.setMetaInfo();
+        },
+    },
+
+    async created() {
+        this.user = await getUser(this.walletAddress);
+
+        this.setMetaInfo();
+    },
+
+    methods: {
+        setMetaInfo() {
+            const sTitle = documentMeta.getSplittedTitle();
+            const { user } = this;
+
+            documentMeta.setMetaInfo({
+                title: `${sTitle[0]} | Account ${user.username || user.address}`,
+            });
+        },
     },
 };
 </script>

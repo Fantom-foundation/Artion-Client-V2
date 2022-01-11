@@ -29,6 +29,7 @@
     "skipToContent": "Skip to content",
     "mainNav": "Main navigation",
     "accountNav": "Account navigation",
+    "registerCollection": "Register Collection",
 
     "navigation": {
         "explore": "@:explore",
@@ -109,12 +110,48 @@
     },
 
     "page": {
+        "404": {
+            "title": "Page not found"
+        },
         "explore": {
             "title": "Browse NFT's",
             "filters": "Filters"
         },
-        "account": {
-            "title": "Your profile"
+        "collectionCreate": {
+            "title": "Create Collection"
+        },
+        "collectionRegister": {
+            "title": "@:registerCollection"
+        },
+        "nftCreate": {
+            "title": "Create NFT"
+        },
+        "accountSingleItems": {
+            "title": "Collected NFTs"
+        },
+        "accountCreated": {
+            "title": "Created NFTs"
+        },
+        "accountFavorited": {
+            "title": "Favorited NFTs"
+        },
+        "accountActivity": {
+            "title": "Activity"
+        },
+        "accountHidden": {
+            "title": "Hidden"
+        },
+        "accountOffers": {
+            "title": "Offers"
+        },
+        "accountMyOffers": {
+            "title": "My Offers"
+        },
+        "accountBannedTokens": {
+            "title": "Banned Tokens"
+        },
+        "accountCollections": {
+            "title": "Collections"
         },
         "pg": {
             "title": "PG"
@@ -382,7 +419,7 @@
     },
 
     "collectionregisterform": {
-        "registerCollection": "Register Collection",
+        "registerCollection": "@:registerCollection",
         "useOwnerAddressOfCollection": "Please submit using the owner address of the collection. If you cannot use the owner address, please email us on contact@fantom.foundation with the information below (and proof of collection ownership, such as from the collection's official email address).",
         "logoImage": "Logo Image",
         "alsoBeUsedForNavigation": "This image will also be used for navigation. 300x300 recommended.",

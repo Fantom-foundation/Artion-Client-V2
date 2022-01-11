@@ -45,6 +45,13 @@ class DocumentMeta {
         this.setTitle(title, title !== this.APP_TITLE);
         this.setDescription(description);
     }
+
+    /**
+     * @return {string[]}
+     */
+    getSplittedTitle() {
+        return this.title ? this.title.split('|').map(title => title.trim()) : [];
+    }
 }
 
 export const documentMeta = new DocumentMeta();

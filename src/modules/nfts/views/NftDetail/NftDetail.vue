@@ -217,6 +217,7 @@ import NftPriceHistory from '@/modules/nfts/components/NftPriceHistory/NftPriceH
 import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionButton/NftUpdateAuctionButton.vue';
 
 import NftItemActivity from '@/modules/nfts/components/NftItemActivity/NftItemActivity';
+import { documentMeta } from '@/modules/app/DocumentMeta.js';
 
 export default {
     name: 'NftDetail',
@@ -321,6 +322,11 @@ export default {
 
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
+
+            documentMeta.setMetaInfo({
+                title: this.token.name,
+                description: this.token.description || this.token.name,
+            });
 
             if (!this.token) {
                 this.$router.push({ name: '404' });

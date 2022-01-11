@@ -18,14 +18,14 @@ export function getNftsRoutes() {
             path: '/explore/:tokenContract/:tokenId',
             name: 'nft-detail',
             component: NftDetail,
-            meta: {
-                title: i18n.t('page.explore.title'),
-            },
         },
         {
             path: '/create',
             name: 'nft-create',
             component: NftCreate,
+            meta: {
+                title: i18n.t('page.nftCreate.title'),
+            },
         },
     ];
 }

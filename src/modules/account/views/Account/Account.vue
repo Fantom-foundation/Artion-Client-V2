@@ -106,6 +106,7 @@ import { getJazzicon } from '@/utils/jazzicon.js';
 // import { compareAddresses } from '@/utils/address.js';
 import { getBannedTokensCount } from '@/modules/account/queries/banned-tokens.js';
 import { compareAddresses } from '@/utils/address.js';
+import { documentMeta } from '@/modules/app/DocumentMeta.js';
 
 const onlyModeratorRoutes = [
     {
@@ -344,7 +345,20 @@ export default {
                 this.user = await getUser(userAddress);
                 this.avatar = this.user.avatarThumb ? getImageThumbUrl(this.user.avatarThumb) : '';
                 this.banner = this.user.banner ? getIPFSUrl(this.user.banner) : '';
+
+                this.setMetaInfo();
             }
+        },
+
+        /**
+         * @param {Object} [user]
+         */
+        setMetaInfo(user = this.user) {
+            const sTitle = documentMeta.getSplittedTitle();
+
+            documentMeta.setMetaInfo({
+                title: `${sTitle[0]} | Account ${user.username || user.address}`,
+            });
         },
 
         /**
