@@ -7,13 +7,8 @@
                 <button v-if="showBanButton" :data-tooltip="$t('nftcard.banUnban')" @click.prevent="onBanClick">
                     <app-iconset icon="ban" size="16px" :color="dBanned ? '#f00' : ''" />
                 </button>
-                <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
-                    <app-iconset
-                        :icon="liked ? 'liked' : 'like'"
-                        :class="{ 'icon-liked': liked }"
-                        size="20px"
-                        @click.native.prevent="onLikeClick"
-                    />
+                <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')" @click.prevent="onLikeClick">
+                    <app-iconset :icon="liked ? 'liked' : 'like'" :class="{ 'icon-liked': liked }" size="20px" />
                 </button>
                 <span class="nftcard_counter">{{ tansformLikeCounter(likesCount) }}</span>
             </div>

@@ -49,12 +49,12 @@
                             {{ toInt(token.views) }} {{ $t('nftdetail.views') }}
                         </div>
                         <div class="nftdetail_favorites" :class="{ 'color-clicked': liked }">
-                            <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')">
-                                <app-iconset
-                                    :icon="liked ? 'liked' : 'like'"
-                                    size="20px"
-                                    @click.native.prevent="onLikeClick"
-                                />
+                            <button
+                                aria-label="Like"
+                                :data-tooltip="$t('nftcard.favorite')"
+                                @click.prevent="onLikeClick"
+                            >
+                                <app-iconset :icon="liked ? 'liked' : 'like'" size="20px" />
                             </button>
                             {{ $t('nftdetail.favorites') }}
                         </div>
