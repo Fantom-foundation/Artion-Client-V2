@@ -13,6 +13,7 @@
 <script>
 import FComboBox from 'fantom-vue-components/src/components/FComboBox/FComboBox.vue';
 import { GROUP_FILTERS } from '@/common/constants/group-filter.js';
+import { isArray } from 'fantom-vue-components/src/utils/array.js';
 
 export default {
     name: 'GroupFilter',
@@ -26,7 +27,7 @@ export default {
 
     props: {
         selected: {
-            type: String,
+            type: [String, Array],
             default: 'all',
         },
     },
@@ -46,7 +47,11 @@ export default {
         },
 
         selected(value) {
-            this.group = value;
+            if (isArray(value)) {
+                this.group = value[0];
+            } else {
+                this.group = value;
+            }
         },
     },
 };
