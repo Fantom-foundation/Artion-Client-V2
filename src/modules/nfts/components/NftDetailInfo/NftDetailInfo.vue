@@ -3,7 +3,7 @@
         <a-details>
             <template #label>
                 <div class="nftdetail_details_wrap">
-                    <app-iconset icon="property" /> {{ $t('nftdetail.properties') }}
+                    <h2><app-iconset icon="property" /> {{ $t('nftdetail.properties') }}</h2>
                 </div>
             </template>
             <template>
@@ -40,7 +40,7 @@
         <a-details class="title_wrap" v-if="info.collection">
             <template #label>
                 <div class="nftdetail_details_wrap">
-                    <app-iconset icon="about" /> {{ $t('nftdetail.about') }} {{ info.collection.name }}
+                    <h2><app-iconset icon="about" /> {{ $t('nftdetail.about') }} {{ info.collection.name }}</h2>
                 </div>
             </template>
             <template>
@@ -101,7 +101,9 @@
         </a-details>
         <a-details>
             <template #label>
-                <div class="nftdetail_details_wrap"><app-iconset icon="chain" />{{ $t('nftdetail.chainInfo') }}</div>
+                <div class="nftdetail_details_wrap">
+                    <h2><app-iconset icon="chain" /> {{ $t('nftdetail.chainInfo') }}</h2>
+                </div>
             </template>
             <template>
                 <div class="nftdetail_chainBlock">

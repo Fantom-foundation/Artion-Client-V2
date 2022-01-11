@@ -101,7 +101,7 @@
                 <a-details strategy="create">
                     <template #label>
                         <div class="nftdetail_details_wrap">
-                            <app-iconset icon="graf" /> {{ $t('nftdetail.priceHistory') }}
+                            <h2><app-iconset icon="graf" /> {{ $t('nftdetail.priceHistory') }}</h2>
                         </div>
                     </template>
                     <template>
@@ -112,7 +112,7 @@
                 <a-details open class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
-                            <app-iconset icon="tag" /> {{ $t('nftdetail.listings') }}
+                            <h2><app-iconset icon="tag" /> {{ $t('nftdetail.listings') }}</h2>
                         </div>
                     </template>
                     <template>
@@ -127,7 +127,7 @@
                 <a-details open class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
-                            <app-iconset icon="list" /> {{ $t('nftdetail.directOffers') }}
+                            <h2><app-iconset icon="list" /> {{ $t('nftdetail.directOffers') }}</h2>
                         </div>
                     </template>
                     <nft-direct-offers-grid
@@ -151,7 +151,7 @@
             <a-details strategy="create" open>
                 <template #label>
                     <div class="nftdetail_details_wrap">
-                        <app-iconset icon="recycle" /> {{ $t('nftdetail.itemActivity') }}
+                        <h2><app-iconset icon="recycle" /> {{ $t('nftdetail.itemActivity') }}</h2>
                     </div>
                 </template>
                 <template>
@@ -165,7 +165,7 @@
             <a-details strategy="create">
                 <template #label>
                     <div class="nftdetail_details_wrap">
-                        <app-iconset icon="collection" /> {{ $t('nftdetail.fromCollection') }}
+                        <h2><app-iconset icon="collection" /> {{ $t('nftdetail.fromCollection') }}</h2>
                     </div>
                 </template>
                 <template>
