@@ -9,6 +9,7 @@
             :attach-to="`#${buttonId}`"
             attach-position="auto-vertical-exact"
             :attach-margin="[0, 0, 0, 0]"
+            :prevent-focus="false"
             animation-in="scale-center-enter-active"
             animation-out="scale-center-leave-active"
             hide-on-document-mousedown
