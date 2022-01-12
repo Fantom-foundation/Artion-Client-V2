@@ -6,13 +6,12 @@
         :attach-margin="[0, 0, 0, 0]"
         :animation-in="animationIn"
         :animation-out="animationOut"
-        :prevent-focus="false"
         width-as-attach
         hide-on-document-mousedown
         class="fdropdownlistbox_fwindow"
         @window-hide="$emit('window-hide', $event)"
     >
-        <f-accordion-navigation :navigation="navigation" @node-selected="onNavigationNodeSelected" />
+        <f-accordion-navigation ref="navigation" :navigation="navigation" @node-selected="onNavigationNodeSelected" />
         <div class="walletmenupopover_darkthemeswitch">
             <f-dark-theme-switch v-model="darkTheme" :label="$t('appearancesettings.darkMode')" />
         </div>
@@ -24,9 +23,10 @@ import FAccordionNavigation from 'fantom-vue-components/src/components/FAccordio
 import FPopover from 'fantom-vue-components/src/components/FPopover/FPopover.vue';
 import FDarkThemeSwitch from 'fantom-vue-components/src/components/FDarkThemeSwitch/FDarkThemeSwitch.vue';
 import { popoverAnimationMixin } from 'fantom-vue-components/src/mixins/popover-animation.js';
-import { clone } from 'fantom-vue-components/src/utils';
+import { clone, defer } from 'fantom-vue-components/src/utils';
 import { SET_THEME } from '@/modules/app/store/mutations.js';
 import { mapState } from 'vuex';
+import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 const THEME_DARK = 'theme-dark';
 
@@ -75,6 +75,10 @@ export default {
             const { $refs } = this;
 
             $refs.popover.show();
+
+            defer(() => {
+                focusElem(this.$refs.navigation.$refs.nav.$el, 'a');
+            });
         },
 
         hide() {
