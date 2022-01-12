@@ -31,14 +31,11 @@
                                     name: 'account',
                                     params: { address: tokenOwner.address },
                                 }"
+                                :aria-label="`${$t('nftdetail.owned')} ${tokenOwnerName || tokenOwner.address}`"
                             >
                                 <a-address
                                     :address="tokenOwner.address"
-                                    :name="
-                                        compareAddresses(tokenOwner.address, walletAddress)
-                                            ? this.$t('me')
-                                            : tokenOwner.username
-                                    "
+                                    :name="tokenOwnerName"
                                     :image="tokenOwner.avatarThumb"
                                     is-account
                                 />
@@ -285,6 +282,18 @@ export default {
 
         auctionHasFinished() {
             return isExpired(this.auction.endTime);
+        },
+
+        tokenOwnerName() {
+            const { tokenOwner } = this;
+
+            console.log(tokenOwner.username);
+
+            return tokenOwner
+                ? compareAddresses(tokenOwner.address, this.walletAddress)
+                    ? this.$t('me')
+                    : tokenOwner.username
+                : '';
         },
     },
 
