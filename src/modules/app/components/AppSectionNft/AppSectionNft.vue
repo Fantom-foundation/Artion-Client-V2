@@ -4,8 +4,14 @@
             <h1 data-focus>{{ $t('appsectionnft.title') }}</h1>
             <p class="appsectionnft_text">{{ $t('appsectionnft.text') }}</p>
             <div class="appsectionnft_links">
-                <router-link :to="{ name: 'explore' }" class="btn btn-lg">{{ $t('explore') }}</router-link>
-                <router-link :to="{ name: 'nft-create' }" class="btn btn-lg btn-secondary">
+                <router-link :to="{ name: 'explore' }" class="btn btn-lg" :aria-label="$t('page.explore.title')">
+                    {{ $t('explore') }}
+                </router-link>
+                <router-link
+                    :to="{ name: 'nft-create' }"
+                    class="btn btn-lg btn-secondary"
+                    :aria-label="$t('page.nftCreate.title')"
+                >
                     {{ $t('create') }}
                 </router-link>
             </div>
