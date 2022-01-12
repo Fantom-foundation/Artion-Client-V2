@@ -1,0 +1,5 @@
+h1[data-focus]:focus,
+[data-focus-not-visible]:focus {
+    outline: none;
+    box-shadow: none;
+}
