@@ -30,6 +30,7 @@
     "mainNav": "Main navigation",
     "accountNav": "Account navigation",
     "registerCollection": "Register Collection",
+    "items": "Items",
 
     "navigation": {
         "explore": "@:explore",
@@ -201,7 +202,7 @@
     "apptextsearchresults": {
         "collections": "Collections",
         "accounts": "Accounts",
-        "items": "Items"
+        "items": "@:items"
     },
 
     "walletbutton": {

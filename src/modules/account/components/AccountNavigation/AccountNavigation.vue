@@ -5,7 +5,7 @@
                 <router-link :to="{ name: item.routeName, params: item.routeParams || {}, query: { ...filters } }">
                     <app-iconset v-if="item.icon" :icon="item.icon" size="24px" />{{ item.label }}
                     <span v-if="'counter' in item">
-                        <span class="accountnavigation_counter">{{ item.counter }}</span>
+                        <span class="accountnavigation_counter" :aria-label="`${item.counter} ${$t('items')}`">{{ item.counter }}</span>
                     </span>
                 </router-link>
             </li>
