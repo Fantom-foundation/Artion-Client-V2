@@ -1,5 +1,7 @@
 <template>
     <div class="AccountCollections">
+        <h1 class="not-visible" data-focus>{{ $t('page.accountCollections.title') }}</h1>
+
         <account-collections-grid :user-address="userAddress" />
     </div>
 </template>
@@ -7,6 +9,7 @@
 <script>
 import AccountCollectionsGrid from '@/modules/account/components/AccountCollectionsGrid/AccountCollectionsGrid.vue';
 import { moderatorPageMixin } from '@/common/mixins/moderator-page.js';
+import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 export default {
     name: 'AccountCollections',
@@ -21,6 +24,10 @@ export default {
             default: '',
             required: true,
         },
+    },
+
+    mounted() {
+        focusElem(this.$el);
     },
 };
 </script>

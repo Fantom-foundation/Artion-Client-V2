@@ -571,6 +571,7 @@
     },
 
     "account": {
+        "account": "Account",
         "unnamed": "@:unnamed",
         "copy": "Copy",
         "collected": "Collected",

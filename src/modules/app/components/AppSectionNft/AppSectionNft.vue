@@ -1,7 +1,7 @@
 <template>
     <section class="appsectionnft container">
         <div class="appsectionnft_col">
-            <h1>{{ $t('appsectionnft.title') }}</h1>
+            <h1 data-focus>{{ $t('appsectionnft.title') }}</h1>
             <p class="appsectionnft_text">{{ $t('appsectionnft.text') }}</p>
             <div class="appsectionnft_links">
                 <router-link :to="{ name: 'explore' }" class="btn btn-lg">{{ $t('explore') }}</router-link>
@@ -18,6 +18,8 @@
 
 <script>
 import AppSectionNftCard from '@/modules/app/components/AppSectionNftCard/AppSectionNftCard.vue';
+import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
+
 export default {
     name: 'AppSectionNft',
 
@@ -34,6 +36,10 @@ export default {
                 };
             },
         },
+    },
+
+    mounted() {
+        focusElem(this.$el);
     },
 };
 </script>

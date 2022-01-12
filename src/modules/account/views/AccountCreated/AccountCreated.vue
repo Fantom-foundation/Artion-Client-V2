@@ -1,11 +1,14 @@
 <template>
     <div class="accountcreated">
+        <h1 class="not-visible" data-focus>{{ $t('page.accountCreated.title') }}</h1>
+
         <user-created-nft-list :user-address="userAddress" v-on="$listeners" />
     </div>
 </template>
 
 <script>
 import UserCreatedNftList from '@/modules/account/components/UserCreatedNftList/UserCreatedNftList.vue';
+import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 export default {
     name: 'AccountCreated',
@@ -18,6 +21,10 @@ export default {
             default: '',
             required: true,
         },
+    },
+
+    mounted() {
+        focusElem(this.$el);
     },
 };
 </script>

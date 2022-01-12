@@ -14,7 +14,7 @@
                     <nft-detail-collection :collection="token.collection" />
 
                     <div class="nftdetail_name">
-                        <h1>
+                        <h1 data-focus>
                             <a-placeholder block :content-loaded="!!token.tokenId" replacement-text="token name">
                                 {{ token.name }} <small class="nftdetail_tokenid">#{{ toInt(token.tokenId) }}</small>
                             </a-placeholder>
@@ -218,6 +218,7 @@ import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionBu
 
 import NftItemActivity from '@/modules/nfts/components/NftItemActivity/NftItemActivity';
 import { documentMeta } from '@/modules/app/DocumentMeta.js';
+import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 export default {
     name: 'NftDetail',
@@ -323,15 +324,17 @@ export default {
             this.tokenOwner = await this.getTokenOwner(routeParams.tokenContract, routeParams.tokenId);
             this.token = await getToken(routeParams.tokenContract, toHex(routeParams.tokenId));
 
+            if (!this.token) {
+                this.$router.push({ name: '404' });
+                return;
+            }
+
             documentMeta.setMetaInfo({
                 title: this.token.name,
                 description: this.token.description || this.token.name,
             });
 
-            if (!this.token) {
-                this.$router.push({ name: '404' });
-                return;
-            }
+            focusElem(this.$el);
 
             this.liked = this.token.isLiked;
             this.token._inEscrow = this.inEscrow;

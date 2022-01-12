@@ -1,7 +1,7 @@
 <template>
     <f-form class="collectionregisterform" v-model="values" @submit="onSubmit">
         <div class="collectionregisterform_title">
-            <h1>{{ $t('collectionregisterform.registerCollection') }}</h1>
+            <h1 data-focus>{{ $t('collectionregisterform.registerCollection') }}</h1>
         </div>
         <div class="collectionregisterform__desc">
             {{ $t('collectionregisterform.useOwnerAddressOfCollection') }}
@@ -169,6 +169,7 @@ import { uploadCollection } from '@/utils/upload';
 import { checkSignIn } from '@/modules/account/auth';
 import AButton from '@/common/components/AButton/AButton';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
+import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 export default {
     name: 'CollectionRegisterForm',
@@ -198,6 +199,10 @@ export default {
                 !this.imageFile
             );
         },
+    },
+
+    mounted() {
+        focusElem(this.$el);
     },
 
     methods: {

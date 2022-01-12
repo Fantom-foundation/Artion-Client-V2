@@ -1,5 +1,7 @@
 <template>
     <div class="explore" :class="{ no_aside: isSideClose }">
+        <h1 class="not-visible" data-focus>{{ $t('page.explore.title') }}</h1>
+
         <div class="explore_sidebar" :class="{ close: isSideClose }">
             <aside class="explore_sidebar_cont" :aria-label="$t('page.explore.filters')">
                 <div class="h3 explore_sidebar_wrap">
@@ -49,6 +51,7 @@ import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilt
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 import NftMainList from '@/modules/nfts/components/NftMainList/NftMainList.vue';
 import { isArray } from 'fantom-vue-components/src/utils';
+import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 export default {
     name: 'Explore',
@@ -66,10 +69,6 @@ export default {
         };
     },
 
-    created() {
-        if (document.body.clientWidth <= 600) this.isSideClose = true;
-    },
-
     computed: {
         filterNumber() {
             let counter = 0;
@@ -81,6 +80,14 @@ export default {
 
             return counter;
         },
+    },
+
+    created() {
+        if (document.body.clientWidth <= 600) this.isSideClose = true;
+    },
+
+    mounted() {
+        focusElem(this.$el);
     },
 
     methods: {

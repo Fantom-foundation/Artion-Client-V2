@@ -1,5 +1,7 @@
 <template>
     <div class="account">
+        <h1 class="not-visible" data-focus>{{ $t('account.account') }}</h1>
+
         <div class="account_banner">
             <AUploadArea
                 :initial-preview="banner"
@@ -70,7 +72,9 @@
                 <div class="account_view_chips">
                     <NftFilterChips v-model="filters" @chips-change="onChipsChange" />
                 </div>
-                <router-view :user-address="userAddress" />
+                <section>
+                    <router-view :user-address="userAddress" />
+                </section>
             </div>
         </div>
     </div>
@@ -107,6 +111,7 @@ import { getJazzicon } from '@/utils/jazzicon.js';
 import { getBannedTokensCount } from '@/modules/account/queries/banned-tokens.js';
 import { compareAddresses } from '@/utils/address.js';
 import { documentMeta } from '@/modules/app/DocumentMeta.js';
+import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 const onlyModeratorRoutes = [
     {
@@ -258,6 +263,10 @@ export default {
         },
     },
 
+    mounted() {
+        focusElem(this.$el);
+    },
+
     methods: {
         update() {
             this.loadUser(this.userAddress);
@@ -357,7 +366,7 @@ export default {
             const sTitle = documentMeta.getSplittedTitle();
 
             documentMeta.setMetaInfo({
-                title: `${sTitle[0]} | Account ${user.username || user.address}`,
+                title: `${sTitle[0]} | ${this.$t('account.account')} ${user.username || user.address}`,
             });
         },
 
