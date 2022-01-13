@@ -66,32 +66,3 @@ export async function getUserActivity(address = '', pagination = {}, filterSort 
 
     return gqlQuery(query, 'user.activities');
 }
-
-export async function getUserActivityCount(address = '', pagination = {}, filterSort = {}) {
-    const query = {
-        query: gql`
-            query GetUserActivityCount(
-                $address: Address!
-                $filter: ActivityFilter
-                $first: Int
-                $after: Cursor
-                $last: Int
-                $before: Cursor
-            ) {
-                user(address: $address) {
-                    activities(filter: $filter, first: $first, after: $after, last: $last, before: $before) {
-                        totalCount
-                    }
-                }
-            }
-        `,
-        variables: {
-            address,
-            ...pagination,
-            ...filterSort,
-        },
-        fetchPolicy: 'network-only',
-    };
-
-    return gqlQuery(query, 'user.activities');
-}

@@ -71,30 +71,3 @@ export async function getUserFavoriteTokens(address = '', pagination = {}) {
 
     return gqlQuery(query, 'user.tokenLikes');
 }
-
-export async function getUserFavoriteTokensCount(address = '', pagination = {}) {
-    const query = {
-        query: gql`
-            query GetUserFavoriteTokensCount(
-                $address: Address!
-                $first: Int
-                $after: Cursor
-                $last: Int
-                $before: Cursor
-            ) {
-                user(address: $address) {
-                    tokenLikes(first: $first, after: $after, last: $last, before: $before) {
-                        totalCount
-                    }
-                }
-            }
-        `,
-        variables: {
-            address,
-            ...pagination,
-        },
-        fetchPolicy: 'network-only',
-    };
-
-    return gqlQuery(query, 'user.tokenLikes');
-}

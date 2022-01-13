@@ -98,16 +98,11 @@ import { getUser } from '@/modules/account/queries/user.js';
 import AccountNavigation from '@/modules/account/components/AccountNavigation/AccountNavigation.vue';
 import { defer } from 'fantom-vue-components/src/utils';
 import { getUserTokenCounters } from '@/modules/account/queries/user-token-counters.js';
-import { getUserFavoriteTokensCount } from '@/modules/account/queries/user-favorite-tokens.js';
-import { getUserActivityCount } from '@/modules/account/queries/user-activity.js';
-import { getUserMyOffersCount, getUserOffersCount } from '@/modules/account/queries/user-tokens-offers.js';
-import { getUserOwnershipTokensCount } from '@/modules/account/queries/user-ownership-tokens.js';
 import { signIn, getBearerToken } from '@/modules/account/auth.js';
 import { uploadUserFile } from '@/utils/upload.js';
 import { getImageThumbUrl, getIPFSUrl } from '@/utils/url.js';
 import { toInt } from '@/utils/big-number.js';
 import { getJazzicon } from '@/utils/jazzicon.js';
-// import { compareAddresses } from '@/utils/address.js';
 import { getBannedTokensCount } from '@/modules/account/queries/banned-tokens.js';
 import { compareAddresses } from '@/utils/address.js';
 import { documentMeta } from '@/modules/app/DocumentMeta.js';
@@ -272,15 +267,10 @@ export default {
             this.loadUser(this.userAddress);
 
             defer(() => {
-                this.updateTokenCounters();
-                this.updateFavoriteCounters();
-                this.updateOffersCounters();
-                this.updateMyOffersCounters();
-                this.updateActivityCounters();
-                this.updateOwnershipCounters();
+                this.updateTabsCounters();
 
                 if (this.accountUserIsModerator) {
-                    this.updateBannedTokensCounters();
+                    this.updateBannedTokensCounter();
                 }
             }, 200);
         },
@@ -314,7 +304,7 @@ export default {
             });
 
             if (accountUserIsModerator) {
-                this.updateBannedTokensCounters();
+                this.updateBannedTokensCounter();
             }
         },
 
@@ -373,7 +363,7 @@ export default {
         /**
          * @return {Promise<void>}
          */
-        async updateTokenCounters() {
+        async updateTabsCounters() {
             const { accountNavigation } = this.$refs;
             const tokenCounters = await getUserTokenCounters(this.userAddress);
 
@@ -384,77 +374,27 @@ export default {
             if (tokenCounters.createdTokens) {
                 accountNavigation.updateCounter('account-created', toInt(tokenCounters.createdTokens.totalCount));
             }
-        },
-
-        /**
-         * @return {Promise<void>}
-         */
-        async updateFavoriteCounters() {
-            const { accountNavigation } = this.$refs;
-            const favoriteCounters = await getUserFavoriteTokensCount(this.userAddress);
-            if (!favoriteCounters) {
-                return;
+            if (tokenCounters.tokenLikes) {
+                accountNavigation.updateCounter('account-favorited', toInt(tokenCounters.tokenLikes.totalCount));
             }
-
-            accountNavigation.updateCounter('account-favorited', toInt(favoriteCounters.totalCount));
-        },
-
-        /**
-         * @return {Promise<void>}
-         */
-        async updateActivityCounters() {
-            const { accountNavigation } = this.$refs;
-            const activityCounters = await getUserActivityCount(this.userAddress);
-            if (!activityCounters) {
-                return;
+            if (tokenCounters.ownerships) {
+                accountNavigation.updateCounter('account-single-items', toInt(tokenCounters.ownerships.totalCount));
             }
-
-            accountNavigation.updateCounter('account-activity', toInt(activityCounters.totalCount));
-        },
-
-        /**
-         * @return {Promise<void>}
-         */
-        async updateOffersCounters() {
-            const { accountNavigation } = this.$refs;
-            const offerCounters = await getUserOffersCount(this.userAddress);
-            if (!offerCounters) {
-                return;
+            if (tokenCounters.activities) {
+                accountNavigation.updateCounter('account-activity', toInt(tokenCounters.activities.totalCount));
             }
-
-            accountNavigation.updateCounter('account-offers', toInt(offerCounters.totalCount));
-        },
-
-        /**
-         * @return {Promise<void>}
-         */
-        async updateMyOffersCounters() {
-            const { accountNavigation } = this.$refs;
-            const offerCounters = await getUserMyOffersCount(this.userAddress);
-            if (!offerCounters) {
-                return;
+            if (tokenCounters.offers) {
+                accountNavigation.updateCounter('account-offers', toInt(tokenCounters.offers.totalCount));
             }
-
-            accountNavigation.updateCounter('account-my-offers', toInt(offerCounters.totalCount));
-        },
-
-        /**
-         * @return {Promise<void>}
-         */
-        async updateOwnershipCounters() {
-            const { accountNavigation } = this.$refs;
-            const favoriteCounters = await getUserOwnershipTokensCount(this.userAddress);
-            if (!favoriteCounters) {
-                return;
+            if (tokenCounters.myOffers) {
+                accountNavigation.updateCounter('account-my-offers', toInt(tokenCounters.myOffers.totalCount));
             }
-
-            accountNavigation.updateCounter('account-single-items', toInt(favoriteCounters.totalCount));
         },
 
         /**
          * @return {Promise<void>}
          */
-        async updateBannedTokensCounters() {
+        async updateBannedTokensCounter() {
             const { accountNavigation } = this.$refs;
             const bannedTokenCounters = await getBannedTokensCount(this.userAddress);
 
