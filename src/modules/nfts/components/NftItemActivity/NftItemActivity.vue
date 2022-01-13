@@ -142,12 +142,11 @@ export default {
 
             // if no filter is picked
             if (filters.length === 0) {
-                // filter by everything except TRANSFER
-                const except = ['', 'TRANSFER', 'UNKNOWN'];
-
+                // show Sales and Transfers by default
+                const defaultFilter = /SOLD|RESOLVED|TRANSFER|MINT|BURN/;
                 filters = ACTIVITY_TYPES()
                     .map(activity => activity.filter)
-                    .filter(activity => !except.includes(activity));
+                    .filter(activity => defaultFilter.test(activity));
             }
 
             return await getTokenActivity(token.contract, token.tokenId, pagination, this.filterToQuery(filters));

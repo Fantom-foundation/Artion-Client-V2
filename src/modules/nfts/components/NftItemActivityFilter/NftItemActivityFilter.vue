@@ -1,6 +1,6 @@
 <template>
     <div class="nftitemactivityfilter">
-        <f-input type="text" :id="inputId" disabled placeholder="Filter" @click.native="onInputClick" />
+        <f-button secondary :id="inputId" :label="$t('nftitemactivityfilter.filter')" @click.native="onInputClick" />
         <f-popover
             v-if="showModal"
             ref="popover"
@@ -15,7 +15,7 @@
             @window-hide="$emit('window-hide', $event)"
         >
             <f-listbox
-                :data="search"
+                :data="options"
                 multiselect
                 v-model="selectedItems"
                 ref="listbox"
@@ -63,22 +63,26 @@ export default {
             showModal: true,
             selectedItems: [],
             data: ACTIVITY_TYPES(),
-            search: [
+            options: [
                 {
-                    value: this.$t('nftitemactivityfilter.auction'),
-                    pattern: /AUCTION/i,
+                    value: this.$t('nftitemactivityfilter.sales'),
+                    pattern: /SOLD|RESOLVED/,
                 },
                 {
-                    value: this.$t('nftitemactivityfilter.listing'),
-                    pattern: /LISTING/i,
+                    value: this.$t('nftitemactivityfilter.transfers'),
+                    pattern: /TRANSFER|MINT|BURN/,
                 },
                 {
-                    value: this.$t('nftitemactivityfilter.offer'),
-                    pattern: /OFFER/i,
+                    value: this.$t('nftitemactivityfilter.listings'),
+                    pattern: /LISTING/,
                 },
                 {
-                    value: this.$t('nftitemactivityfilter.transfer'),
-                    pattern: /TRANSFER|MINT/i,
+                    value: this.$t('nftitemactivityfilter.offers'),
+                    pattern: /OFFER/,
+                },
+                {
+                    value: this.$t('nftitemactivityfilter.auctions'),
+                    pattern: /AUCTION/,
                 },
             ],
         };
@@ -103,8 +107,8 @@ export default {
         onListboxItemSelected(items) {
             let filters = {};
             items.forEach(item => {
-                let index = this.search.findIndex(filter => filter.value === item.value);
-                let types = ACTIVITY_TYPES().filter(type => this.search[index].pattern.test(type.filter));
+                let index = this.options.findIndex(filter => filter.value === item.value);
+                let types = ACTIVITY_TYPES().filter(type => this.options[index].pattern.test(type.filter));
                 filters[item.value] = types;
             });
 

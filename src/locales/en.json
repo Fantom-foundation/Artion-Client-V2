@@ -256,10 +256,12 @@
     },
 
     "nftitemactivityfilter": {
-        "auction": "Auction",
-        "listing": "Listing",
-        "offer": "Offer",
-        "transfer": "Transfer"
+        "filter": "Filter activities by type",
+        "sales": "Sales",
+        "transfers": "Transfers",
+        "listings": "Listings",
+        "offers": "Offers",
+        "auctions": "Auctions"
     },
 
     "nftMakeOfferForm": {
