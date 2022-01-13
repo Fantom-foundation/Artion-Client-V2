@@ -1,6 +1,12 @@
 <template>
     <div class="asharebutton">
-        <f-button secondary :id="buttonId" @click.native="onButtinClick">
+        <f-button
+            secondary
+            :id="buttonId"
+            @click.native="onButtinClick"
+            :data-tooltip="$t('ashareButton.share')"
+            :aria-label="$t('ashareButton.share')"
+        >
             <app-iconset icon="share" />
         </f-button>
         <f-popover
@@ -40,14 +46,17 @@ import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue
 import FPopover from 'fantom-vue-components/src/components/FPopover/FPopover.vue';
 //import FNotifications from 'fantom-vue-components/src/components/FNotifications/FNotifications.vue';
 import { getUniqueId, defer } from 'fantom-vue-components/src/utils';
+
 export default {
     name: 'AShareButton',
+
     components: {
         AppIconset,
         FListbox,
         FPopover,
         //    FNotifications,
     },
+
     data() {
         return {
             buttonId: getUniqueId(),
@@ -93,6 +102,7 @@ export default {
                 });
             });
         },
+
         onListboxItemSelected(item) {
             const currentLink = window.location.href;
             if (item.link === false) {

@@ -385,7 +385,8 @@
         "copy": "Copy Link",
         "shareFacebook": "Share on Facebook",
         "shareTwitter": "Share to Twitter",
-        "successCopied": "Copied!"
+        "successCopied": "Copied!",
+        "share": "Share"
     },
 
     "abpricefield": {
