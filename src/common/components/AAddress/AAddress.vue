@@ -1,7 +1,15 @@
 <template>
     <span class="aaddress">
-        <f-image v-if="!isAccount || imageSrc" :src="imageSrc" fit="cover" size="24px" class="placeholder-noimage" />
-        <template v-else><div class="aaddress_jazzicon" v-html="jazzicon"></div></template>
+        <f-image
+            v-if="!isAccount || imageSrc"
+            :src="imageSrc"
+            fit="cover"
+            size="24px"
+            class="placeholder-noimage"
+            :alt="name || address"
+            aria-hidden="true"
+        />
+        <template v-else><div class="aaddress_jazzicon" v-html="jazzicon" aria-hidden="true"></div></template>
         <span v-if="name">{{ name }}</span>
         <f-ellipsis v-else :text="address" overflow="middle" />
     </span>

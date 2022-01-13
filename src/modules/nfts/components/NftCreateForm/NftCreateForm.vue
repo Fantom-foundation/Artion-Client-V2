@@ -23,13 +23,25 @@
                     >
                         <template #button-label="{ item }">
                             <div class="flex ali-center gap-2">
-                                <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
+                                <f-image
+                                    v-if="item.img"
+                                    size="24px"
+                                    :src="item.img"
+                                    :alt="item.label"
+                                    aria-hidden="true"
+                                />
                                 <span>{{ item.label }}</span>
                             </div>
                         </template>
                         <template #item="{ item }">
                             <div class="flex ali-center gap-2">
-                                <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
+                                <f-image
+                                    v-if="item.img"
+                                    size="24px"
+                                    :src="item.img"
+                                    :alt="item.label"
+                                    aria-hidden="true"
+                                />
                                 <span>{{ item.label }}</span>
                             </div>
                         </template>

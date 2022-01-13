@@ -17,7 +17,7 @@
     >
         <template v-slot="{ item }">
             <div class="collectionsfilter_item tes-4">
-                <f-image size="32px" :src="item.img" :alt="item.label" /> {{ item.label }}
+                <f-image size="32px" :src="item.img" :alt="item.label" aria-hidden="true" /> {{ item.label }}
             </div>
         </template>
     </f-listbox>

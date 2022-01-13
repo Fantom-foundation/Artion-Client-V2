@@ -45,7 +45,13 @@
                     :to="{ name: 'explore', query: { collections: item.contract } }"
                     class="accountcollectionsgrid_item"
                 >
-                    <f-image size="32px" :src="getCollectionImageUrl(item.contract)" :alt="item.name" /> {{ item.name }}
+                    <f-image
+                        size="32px"
+                        :src="getCollectionImageUrl(item.contract)"
+                        :alt="item.name"
+                        aria-hidden="true"
+                    />
+                    {{ item.name }}
                 </router-link>
             </template>
 

@@ -31,8 +31,9 @@
                                 :src="item.img"
                                 fit="cover"
                                 size="40px"
-                                alt="avatar"
+                                :alt="item.name || item.address"
                                 class="placeholder-noimage"
+                                aria-hidden="true"
                             />
                             <div
                                 v-else
@@ -42,7 +43,7 @@
                         </div>
                         <div class="accountfollowwindow_item_data">
                             <span class="accountfollowwindow_item_name">{{ item.name || $t('unnamed') }}</span>
-                            <span class="accountfollowwindow_item_address">
+                            <span class="accountfollowwindow_item_address" aria-hidden="true">
                                 <f-ellipsis :text="item.address" overflow="middle" />
                             </span>
                         </div>

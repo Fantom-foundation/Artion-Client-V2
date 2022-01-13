@@ -9,7 +9,12 @@
                         :to="{ name: 'explore', query: { collections: collection.contract } }"
                         class="apptextsearchresults_item"
                     >
-                        <f-image size="40px" :src="getCollectionImageUrl(collection.contract)" :alt="collection.name" />
+                        <f-image
+                            size="40px"
+                            :src="getCollectionImageUrl(collection.contract)"
+                            :alt="collection.name"
+                            aria-hidden="true"
+                        />
                         {{ collection.name }}
                     </router-link>
                 </li>
@@ -30,6 +35,7 @@
                             size="40px"
                             :src="getImageThumbUrl(user.avatarThumb)"
                             :alt="user.username"
+                            aria-hidden="true"
                         />
                         <div
                             v-else
@@ -51,7 +57,12 @@
                         :to="{ name: 'nft-detail', params: { tokenContract: token.contract, tokenId: token.tokenId } }"
                         class="apptextsearchresults_item"
                     >
-                        <f-image size="40px" :src="getImageThumbUrl(token.imageThumb)" :alt="token.name" />
+                        <f-image
+                            size="40px"
+                            :src="getImageThumbUrl(token.imageThumb)"
+                            :alt="token.name"
+                            aria-hidden="true"
+                        />
                         {{ token.name }}
                     </router-link>
                 </li>
