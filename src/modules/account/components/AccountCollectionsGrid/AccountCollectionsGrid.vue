@@ -26,12 +26,16 @@
                         hide-on-document-scroll
                         fit-height-to-viewport
                         class="accountactivityfilter"
+                        no-label
+                        :aria-label="$t('accountcollectionsgrid.filter')"
                     />
                     <f-search-field
                         v-model="searchText"
                         :throttle-input-interval="400"
                         field-size="large"
                         :placeholder="$t('accountcollectionsgrid.search')"
+                        no-label
+                        :aria-label="$t('accountcollectionsgrid.search')"
                     />
                 </div>
             </template>

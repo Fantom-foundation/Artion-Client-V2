@@ -9,6 +9,8 @@
         attach-position="bottom"
         hide-on-document-scroll
         fit-height-to-viewport
+        no-label
+        :aria-label="$t('accountactivitylist.filter')"
         class="accountactivityfilter"
     />
 </template>

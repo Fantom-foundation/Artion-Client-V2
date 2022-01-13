@@ -654,7 +654,8 @@
         "price": "Price",
         "qty": "Quantity",
         "owner": "Owner",
-        "date": "Date"
+        "date": "Date",
+        "filter": "Activity filter"
     },
 
     "accountoffersgrid": {
@@ -745,7 +746,8 @@
         "banSuccess": "Collection banned",
         "unbanSuccess": "Collection unbanned",
         "approveSuccess": "Collection approved",
-        "declineSuccess": "Collection declined"
+        "declineSuccess": "Collection declined",
+        "filter": "Collections filter"
     },
 
     "nftresultauction": {
