@@ -10,24 +10,22 @@
                 size="small"
             />
         </div>
-        <div
-            class="accountfollow_followers"
-            tabindex="0"
+        <button
+            class="accountfollow_followers btn-nostyle"
             @keyup.enter.space="showFollowersList"
             @click="showFollowersList"
         >
             <b>{{ followersCounter }}</b>
             {{ $t('accountfollow.followers') }}
-        </div>
-        <div
-            class="accountfollow_following"
-            tabindex="0"
+        </button>
+        <button
+            class="accountfollow_following btn-nostyle"
             @keyup.enter.space="showFollowingList"
             @click="showFollowingList"
         >
             <b>{{ followingCounter }}</b>
             {{ $t('accountfollow.following') }}
-        </div>
+        </button>
 
         <account-follow-window
             ref="accountFollowWindow"
