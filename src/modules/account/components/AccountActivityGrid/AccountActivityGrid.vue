@@ -15,9 +15,6 @@
             :per-page="perPage"
             @change="_onGridPageChange"
         >
-            <template #column-type="{ value }">
-                {{ chooseActivityType(value) }}
-            </template>
             <template #column-token="{ item }">
                 <router-link
                     v-if="item.token"
@@ -43,6 +40,11 @@
                     <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" is-account />
                 </router-link>
             </template>
+            <template #column-toUser="{ value }">
+                <router-link v-if="value !== null" :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" is-account />
+                </router-link>
+            </template>
             <template #column-time="{ value }">
                 {{ value }}
             </template>
@@ -57,7 +59,6 @@ import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import { getUserActivity } from '@/modules/account/queries/user-activity.js';
 import { toInt } from '@/utils/big-number.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
-import { ACTIVITY_TYPES } from '@/common/constants/activity-type-filters.js';
 import { datetimeFormatter } from '@/utils/formatters.js';
 import { defer, objectEquals } from 'fantom-vue-components/src/utils';
 
@@ -75,7 +76,7 @@ export default {
             required: true,
         },
         filter: {
-            type: String,
+            type: Object,
             default() {
                 return {};
             },
@@ -83,11 +84,15 @@ export default {
     },
 
     data() {
+        let _this = this;
         return {
             columns: [
                 {
                     name: 'type',
                     label: this.$t('accountactivitylist.event'),
+                    formatter(value) {
+                        return _this.$t('nfthistorygrid.types.' + value);
+                    },
                 },
                 {
                     name: 'token',
@@ -103,7 +108,11 @@ export default {
                 },
                 {
                     name: 'fromUser',
-                    label: this.$t('accountactivitylist.owner'),
+                    label: this.$t('accountactivitylist.from'),
+                },
+                {
+                    name: 'toUser',
+                    label: this.$t('accountactivitylist.to'),
                 },
                 {
                     name: 'time',
@@ -149,11 +158,16 @@ export default {
             });
         },
 
-        filterToQuery(value) {
-            if (value) {
-                return { filter: { types: [value] } };
+        filterToQuery(filter) {
+            if (filter && Object.keys(filter).length > 0) {
+                let filteredTypes = Object.values(filter)
+                    .flat()
+                    .map(item => item.filter);
+                return { filter: { types: filteredTypes } };
+            } else {
+                // show all by default
+                return { filter: {} };
             }
-            return {};
         },
 
         transformQty(value) {
@@ -166,19 +180,8 @@ export default {
             this.$refs.grid.goToPageNum(1);
         },
 
-        chooseActivityType(value) {
-            const types = ACTIVITY_TYPES();
-
-            let type = types.find(item => item.filter === value);
-
-            return type ? this.$t(type.label) : '---';
-        },
-
         async _onGridPageChange(pagination) {
             this.loading = true;
-
-            // console.log('_onGridPageChange', JSON.stringify(pagination));
-            // console.log('this.pageInfo', JSON.stringify(this.pageInfo));
 
             const data = await this._loadPage({
                 pagination: this._getPaginationVariables(pagination),

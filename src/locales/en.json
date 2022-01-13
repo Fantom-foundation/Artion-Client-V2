@@ -656,7 +656,8 @@
         "item": "Item",
         "price": "Price",
         "qty": "Quantity",
-        "owner": "Owner",
+        "from": "Initiator",
+        "to": "Recipient",
         "date": "Date",
         "filter": "Activity filter"
     },
