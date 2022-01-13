@@ -20,21 +20,25 @@
             </aside>
         </div>
         <div>
-            <div class="explore_nftlist_header">
-                <div class="explore_results">
-                    <a-placeholder block :content-loaded="results > -1" replacement-text="1000 results">
-                        {{ results }} {{ $t('results') }}
-                    </a-placeholder>
+            <section :aria-label="$t('page.explore.filters')">
+                <div class="explore_nftlist_header">
+                    <div class="explore_results">
+                        <a-placeholder block :content-loaded="results > -1" replacement-text="1000 results">
+                            {{ results }} {{ $t('results') }}
+                        </a-placeholder>
+                    </div>
+                    <div class="explore_nftlist_header_endcol">
+                        <nft-list-filters v-model="filters" />
+                        <density-switch />
+                    </div>
                 </div>
-                <div class="explore_nftlist_header_endcol">
-                    <nft-list-filters v-model="filters" />
-                    <density-switch />
-                </div>
-            </div>
-            <nft-filter-chips v-model="filters" />
-            <nft-main-list :filters="filters" @tokens-count="onTokensCount" @loading="onNftMainListLoading" />
+                <nft-filter-chips v-model="filters" />
+            </section>
+            <section :aria-label="$t('page.explore.nftList')">
+                <nft-main-list :filters="filters" @tokens-count="onTokensCount" @loading="onNftMainListLoading" />
+            </section>
         </div>
-        <div class="explore_filterButton">
+        <div class="explore_filterButton" aria-hidden="true">
             <f-button @click.native="isSideClose = !isSideClose">
                 {{ $t('page.explore.filters') }}
                 <span v-if="filterNumber" class="explore_filterButton_counter">{{ filterNumber }}</span>

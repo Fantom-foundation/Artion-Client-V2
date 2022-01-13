@@ -42,7 +42,7 @@
             </f-button>
         </div>-->
         <div class="account_content" :class="{ no_aside: isSideClose }">
-            <aside class="account_sidebar" :class="{ close: isSideClose }">
+            <div class="account_sidebar" :class="{ close: isSideClose }">
                 <!--                <header class="account_sidebar_header">
                     <div class="account_sidebar_wrap">
                         <button
@@ -58,7 +58,7 @@
                     </div>
                 </header>
                 <nft-filters v-model="filters" class="account_sidebar_filters" />-->
-            </aside>
+            </div>
             <div class="account_view">
                 <div class="account_view_filters">
                     <div class="account_view_filters_search">
@@ -72,7 +72,7 @@
                 <div class="account_view_chips">
                     <NftFilterChips v-model="filters" @chips-change="onChipsChange" />
                 </div>
-                <section>
+                <section :aria-label="$t('account.accountContent')">
                     <router-view :user-address="userAddress" />
                 </section>
             </div>

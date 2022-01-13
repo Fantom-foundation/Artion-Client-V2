@@ -1,9 +1,13 @@
 <template>
     <div class="accountsettings">
-        <aside class="accountsettings_sidebar">
-            <div class="accountsettings_title">{{ $t('accountsettings.title') }}</div>
-            <f-accordion-navigation iconset-component="app-iconset" :navigation="navigation" />
-        </aside>
+        <div class="accountsettings_sidebar">
+            <div class="accountsettings_title" aria-hidden="true">{{ $t('accountsettings.title') }}</div>
+            <f-accordion-navigation
+                iconset-component="app-iconset"
+                :navigation="navigation"
+                :aria-label="$t('accountsettings.navigation')"
+            />
+        </div>
         <div class="accountsettings_view">
             <router-view></router-view>
         </div>

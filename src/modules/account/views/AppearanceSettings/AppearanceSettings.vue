@@ -1,6 +1,6 @@
 <template>
-    <div class="appearancesettings">
-        <h1 class="mat-0" data-focus>{{ $t('appearancesettings.title') }}</h1>
+    <section class="appearancesettings" :aria-labelledby="id">
+        <h1 :id="id" class="mat-0" data-focus>{{ $t('appearancesettings.title') }}</h1>
 
         <p>
             <f-dark-theme-switch
@@ -15,7 +15,7 @@
                 :aria-label="$t('appearancesettings.autoDarkModeInfo')"
             />
         </p>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -23,6 +23,7 @@ import FDarkThemeSwitch from 'fantom-vue-components/src/components/FDarkThemeSwi
 import { mapState } from 'vuex';
 import { SET_AUTO_DARK_MODE, SET_THEME } from '@/modules/app/store/mutations.js';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
+import { getUniqueId } from 'fantom-vue-components/src/utils';
 
 const THEME_DARK = 'theme-dark';
 
@@ -33,6 +34,7 @@ export default {
 
     data() {
         return {
+            id: getUniqueId(),
             darkTheme: false,
             autoDarkThemeOn: false,
         };

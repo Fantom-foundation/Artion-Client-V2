@@ -116,7 +116,8 @@
         },
         "explore": {
             "title": "Browse NFT's",
-            "filters": "Filters"
+            "filters": "Filters",
+            "nftList": "List of NFTs"
         },
         "collectionCreate": {
             "title": "Create Collection"
@@ -585,7 +586,8 @@
         "filter": "Filter",
         "filters": "Filters",
         "bannedTokens": "Banned Tokens",
-        "collections": "Collections"
+        "collections": "Collections",
+        "accountContent": "Account content"
     },
 
     "accountsettings": {
@@ -593,7 +595,8 @@
         "profile": "@:profile",
         "notifications": "Notifications",
         "offers": "Offers",
-        "appearance": "Appearance"
+        "appearance": "Appearance",
+        "navigation": "Account settings navigation"
     },
 
     "notifications": {
