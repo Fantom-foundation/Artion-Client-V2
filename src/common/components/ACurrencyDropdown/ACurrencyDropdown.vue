@@ -11,7 +11,7 @@
         >
             <template #button-label="{ item }">
                 <div class="flex ali-center">
-                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
+                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" aria-hidden="true" />
                     <span>{{ item.label }}</span>
                 </div>
             </template>
@@ -26,7 +26,7 @@
             </template>
             <template #item="{ item }">
                 <div class="flex ali-center" style="column-gap: 8px;">
-                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" />
+                    <f-image v-if="item.img" size="24px" :src="item.img" :alt="item.label" aria-hidden="true" />
                     <span>{{ item.label }}</span>
                 </div>
             </template>
