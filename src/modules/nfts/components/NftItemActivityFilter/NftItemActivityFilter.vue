@@ -1,17 +1,24 @@
 <template>
     <div class="nftitemactivityfilter">
-        <f-button secondary :id="inputId" :label="$t('nftitemactivityfilter.filter')" @click.native="onInputClick" />
+        <f-button
+            secondary
+            size="large"
+            :id="buttonId"
+            :label="$t('nftitemactivityfilter.filter')"
+            @click.native="onInputClick"
+        />
         <f-popover
             v-if="showModal"
             ref="popover"
-            :attach-to="`#${inputId}`"
+            :attach-to="`#${buttonId}`"
             attach-position="auto-vertical-exact"
             :attach-margin="[0, 0, 0, 0]"
+            :prevent-focus="false"
             animation-in="scale-center-enter-active"
             animation-out="scale-center-leave-active"
             hide-on-document-mousedown
             width-as-attach
-            class="nftitemactivityfilter_window"
+            class="nftitemactivityfilter_window fdropdownlistbox_fwindow"
             @window-hide="$emit('window-hide', $event)"
         >
             <f-listbox
@@ -41,6 +48,7 @@ import { getUniqueId, defer } from 'fantom-vue-components/src/utils';
 
 export default {
     name: 'NftItemActivityFilter',
+
     components: { FListbox, FPopover },
 
     model: {
@@ -59,7 +67,7 @@ export default {
 
     data() {
         return {
-            inputId: getUniqueId(),
+            buttonId: getUniqueId(),
             showModal: true,
             selectedItems: [],
             data: ACTIVITY_TYPES(),

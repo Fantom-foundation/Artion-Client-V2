@@ -3,7 +3,7 @@
         <h1 class="not-visible" data-focus>{{ $t('page.accountActivity.title') }}</h1>
 
         <NftItemActivityFilter v-model="filters" />
-        <NftItemActivityFilterChips v-model="filters" />
+        <NftItemActivityFilterChips v-show="!isObjectEmpty(filters)" v-model="filters" />
 
         <account-activity-grid :filter="filters" :user-address="userAddress" />
     </div>
@@ -14,6 +14,8 @@ import AccountActivityGrid from '@/modules/account/components/AccountActivityGri
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 import NftItemActivityFilter from '@/modules/nfts/components/NftItemActivityFilter/NftItemActivityFilter';
 import NftItemActivityFilterChips from '@/modules/nfts/components/NftItemActivityFilterChips/NftItemActivityFilterChips';
+import { isObjectEmpty } from 'fantom-vue-components/src/utils';
+
 export default {
     name: 'AccountActivity',
 
@@ -36,6 +38,10 @@ export default {
     mounted() {
         focusElem(this.$el);
     },
+
+    methods: {
+        isObjectEmpty,
+    },
 };
 </script>
 
@@ -43,7 +49,7 @@ export default {
 .accountactivity {
     display: flex;
     flex-direction: column;
-    gap: var(--f-spacer-4);
+    gap: var(--f-spacer-3);
 
     .accountactivityfilter {
         max-width: 320px;

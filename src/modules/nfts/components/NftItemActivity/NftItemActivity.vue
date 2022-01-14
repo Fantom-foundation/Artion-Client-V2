@@ -1,7 +1,7 @@
 <template>
     <div class="nftitemactivity">
         <NftItemActivityFilter v-model="filters" />
-        <NftItemActivityFilterChips v-model="filters" />
+        <NftItemActivityFilterChips v-show="!isObjectEmpty(filters)" v-model="filters" />
         <f-data-grid
             ref="grid"
             infinite-scroll
@@ -51,7 +51,7 @@ import AAddress from '@/common/components/AAddress/AAddress.vue';
 import { getTokenActivity } from '@/modules/nfts/queries/token-activity.js';
 import { datetimeFormatter } from '@/utils/formatters.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
-import { objectEquals } from 'fantom-vue-components/src/utils';
+import { isObjectEmpty, objectEquals } from 'fantom-vue-components/src/utils';
 
 import NftItemActivityFilter from '@/modules/nfts/components/NftItemActivityFilter/NftItemActivityFilter.vue';
 import NftItemActivityFilterChips from '@/modules/nfts/components/NftItemActivityFilterChips/NftItemActivityFilterChips.vue';
@@ -169,6 +169,8 @@ export default {
                 this.$refs.grid.reload();
             }, 50);
         },
+
+        isObjectEmpty,
     },
 };
 </script>
