@@ -480,7 +480,7 @@
         "royaltyError": "Registering royalty transaction failed. The token was minted, but royalty was not set.",
         "scanWaiting": "Waiting for server-side token processing...",
         "success": "The token was successfully created.",
-        "messageFtm": "1 FTM are charged to create a new NFT."
+        "messageFtm": "2 FTM are charged to create a new NFT."
     },
 
     "nftredeem": {
