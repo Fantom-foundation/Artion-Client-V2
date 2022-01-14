@@ -34,7 +34,9 @@
                 </div>
                 <nft-filter-chips v-model="filters" />
             </section>
-            <section :aria-label="$t('page.explore.nftList')">
+            <section :aria-labelledby="id">
+                <h2 :id="id" class="not-visible">{{ $t('page.explore.nftList') }}</h2>
+
                 <nft-main-list :filters="filters" @tokens-count="onTokensCount" @loading="onNftMainListLoading" />
             </section>
         </div>
@@ -54,7 +56,7 @@ import { routeQueryMixin } from '@/common/mixins/route-query.js';
 import NftListFilters from '@/modules/nfts/components/NftListFilters/NftListFilters.vue';
 import NftFilterChips from '@/modules/nfts/components/NftFilterChips/NftFilterChips.vue';
 import NftMainList from '@/modules/nfts/components/NftMainList/NftMainList.vue';
-import { isArray } from 'fantom-vue-components/src/utils';
+import { getUniqueId, isArray } from 'fantom-vue-components/src/utils';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 export default {
@@ -66,6 +68,7 @@ export default {
 
     data() {
         return {
+            id: getUniqueId(),
             filters: {},
             results: -1,
             labels: {},
