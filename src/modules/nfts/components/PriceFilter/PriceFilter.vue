@@ -30,7 +30,7 @@
             </f-form-input>
         </div>
         <div class="tea-center">
-            <f-message v-if="errorMsg" type="error">{{ errorMsg }}</f-message>
+            <f-message v-if="errorMsg" type="error" alert>{{ errorMsg }}</f-message>
             <f-button type="submit" secondary :label="$t('pricefilter.apply')" />
         </div>
     </f-form>
@@ -122,6 +122,9 @@ export default {
 
             if (isNaN(price1) && isNaN(price2)) {
                 // this.errorMsg = 'Fill a value';
+                return false;
+            } else if (price1 < 0 || price2 < 0) {
+                this.errorMsg = this.$t('pricefilter.negativePriceError');
                 return false;
             } else if (!isNaN(price1) && !isNaN(price2) && price1 > price2) {
                 this.errorMsg = this.$t('pricefilter.minimumPriceError');

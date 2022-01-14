@@ -417,7 +417,8 @@
         "maximalPrice": "Maximum price",
         "to": "to",
         "apply": "Apply",
-        "minimumPriceError": "Minimum must be less than maximum"
+        "minimumPriceError": "Minimum must be less than maximum",
+        "negativePriceError": "Price must be greater than 0"
     },
 
     "addcategory": {
