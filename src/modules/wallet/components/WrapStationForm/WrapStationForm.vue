@@ -1,5 +1,5 @@
 <template>
-    <f-form class="wrapstationform">
+    <f-form class="wrapstationform" :aria-label="$t('wrapStation')">
         <a-b-price-field
             ref="priceFieldFrom"
             :value="value"

@@ -1,5 +1,10 @@
 <template>
-    <f-form class="nftmakeofferform grid" v-model="values" @submit="onSubmit">
+    <f-form
+        class="nftmakeofferform grid"
+        v-model="values"
+        @submit="onSubmit"
+        :aria-label="$t('nftMakeOfferForm.placeOffer')"
+    >
         <f-form-input
             ref="priceField"
             type="a-price-field"

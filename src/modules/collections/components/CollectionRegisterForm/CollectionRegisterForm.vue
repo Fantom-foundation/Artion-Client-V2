@@ -1,5 +1,5 @@
 <template>
-    <f-form class="collectionregisterform" v-model="values" @submit="onSubmit">
+    <f-form class="collectionregisterform" v-model="values" @submit="onSubmit" :aria-label="$t('registerCollection')">
         <div class="collectionregisterform_title">
             <h1 data-focus>{{ $t('collectionregisterform.registerCollection') }}</h1>
         </div>

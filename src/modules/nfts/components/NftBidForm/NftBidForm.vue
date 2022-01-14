@@ -1,5 +1,5 @@
 <template>
-    <f-form class="nftbidform grid gapr-9" v-model="values" @submit="onSubmit">
+    <f-form class="nftbidform grid gapr-9" v-model="values" @submit="onSubmit" :aria-label="$t('nftbid.placeBid')">
         <f-form-input
             ref="priceField"
             type="a-price-field"

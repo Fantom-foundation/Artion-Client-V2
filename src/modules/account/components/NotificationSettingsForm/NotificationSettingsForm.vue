@@ -1,5 +1,10 @@
 <template>
-    <f-form v-model="values" class="notificationsettingsform" @submit="onFormSubmit">
+    <f-form
+        v-model="values"
+        class="notificationsettingsform"
+        @submit="onFormSubmit"
+        :aria-label="$t('notificationsettings.title')"
+    >
         <div class="notificationsettingsform_lists">
             <div class="notificationsettingsform_list">
                 <f-form-input name="sNotification" type="checkbox" label="Your Activity Notifications" />

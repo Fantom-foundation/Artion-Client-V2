@@ -1,5 +1,10 @@
 <template>
-    <f-form v-model="values" class="accountprofileform" @submit="onSubmit">
+    <f-form
+        v-model="values"
+        class="accountprofileform"
+        @submit="onSubmit"
+        :aria-label="$t('accountsettingsprofile.title')"
+    >
         <div class="accountprofileform_wrap">
             <div class="accountprofileform_col">
                 <f-form-input

@@ -1,5 +1,5 @@
 <template>
-    <f-form v-model="values" class="nftcreate_form" @submit="onSubmit">
+    <f-form v-model="values" class="nftcreate_form" @submit="onSubmit" :aria-label="$t('page.nftCreate.title')">
         <div class="nftcreate_col">
             <div>
                 <a-upload-area @input="setTokenImage" class="auploadarea-nobackground">

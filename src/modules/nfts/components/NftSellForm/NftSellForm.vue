@@ -1,5 +1,5 @@
 <template>
-    <f-form class="nftsellform grid" v-model="values" @submit="onSubmit">
+    <f-form class="nftsellform grid" v-model="values" @submit="onSubmit" :aria-label="$t('nftsellwindow.sellItem')">
         <f-form-input
             ref="priceField"
             type="a-price-field"
