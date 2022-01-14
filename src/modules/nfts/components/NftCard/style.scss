@@ -14,6 +14,8 @@
     }
 
     a:not(.btn) {
+        display: flex;
+        flex-direction: column-reverse;
         color: inherit;
     }
 
@@ -96,6 +98,8 @@
     }
 
     &_itemName {
+        display: flex;
+        flex-direction: column-reverse;
         flex: 1;
         overflow: hidden;
         margin-right: 16px;
@@ -120,6 +124,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
         font-size: var(--f-font-size-3);
+        margin: 0;
     }
 
     &_price {

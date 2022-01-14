@@ -3,28 +3,14 @@
         <router-link
             :to="{ name: 'nft-detail', params: { tokenContract: nftData.contract, tokenId: nftData.tokenId } }"
         >
-            <div class="nftcard_header">
-                <button v-if="showBanButton" :data-tooltip="$t('nftcard.banUnban')" @click.prevent="onBanClick">
-                    <app-iconset icon="ban" size="16px" :color="dBanned ? '#f00' : ''" />
-                </button>
-                <button aria-label="Like" :data-tooltip="$t('nftcard.favorite')" @click.prevent="onLikeClick">
-                    <app-iconset :icon="liked ? 'liked' : 'like'" :class="{ 'icon-liked': liked }" size="20px" />
-                </button>
-                <span class="nftcard_counter">{{ tansformLikeCounter(likesCount) }}</span>
-            </div>
-            <div class="nftcard_image">
-                <div class="nftcard_box">
-                    <f-image size="100%" :src="getImageThumbUrl(nftData.imageThumb)" :alt="nftData.name" />
-                </div>
-            </div>
             <div class="nftcard_content">
                 <div class="nftcard_top">
                     <div class="nftcard_itemName">
+                        <h3 class="nftcard_name" :data-tooltip="nftData.name">{{ nftData.name }}</h3>
                         <div v-if="nftData.collection" class="nftcard_label" :data-tooltip="nftData.collection.name">
                             {{ nftData.collection.name }}
                             <!--                            <app-iconset icon="check" />-->
                         </div>
-                        <div class="nftcard_name" :data-tooltip="nftData.name">{{ nftData.name }}</div>
                     </div>
                     <div v-if="nftData.auctionReservePrice || nftData.auctionedPrice" class="nftcard_price">
                         <div class="nftcard_label">
@@ -91,6 +77,24 @@
                         </div>
                     </div>
                 </div>-->
+            </div>
+            <div class="nftcard_image">
+                <div class="nftcard_box">
+                    <f-image size="100%" :src="getImageThumbUrl(nftData.imageThumb)" :alt="nftData.name" />
+                </div>
+            </div>
+            <div class="nftcard_header">
+                <button v-if="showBanButton" :data-tooltip="$t('nftcard.banUnban')" @click.prevent="onBanClick">
+                    <app-iconset icon="ban" size="16px" :color="dBanned ? '#f00' : ''" />
+                </button>
+                <button
+                    :aria-label="`${$t('like')} ${nftData.name}`"
+                    :data-tooltip="$t('nftcard.favorite')"
+                    @click.prevent="onLikeClick"
+                >
+                    <app-iconset :icon="liked ? 'liked' : 'like'" :class="{ 'icon-liked': liked }" size="20px" />
+                </button>
+                <span class="nftcard_counter">{{ tansformLikeCounter(likesCount) }}</span>
             </div>
         </router-link>
     </div>
