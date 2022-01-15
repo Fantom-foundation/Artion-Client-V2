@@ -19,7 +19,7 @@
             animation-in="scale-center-enter-active"
             animation-out="scale-center-leave-active"
             hide-on-document-mousedown
-            class="asharebutton_window"
+            class="asharebutton_window fdropdownlistbox_fwindow"
             @window-hide="$emit('window-hide', $event)"
         >
             <f-listbox
@@ -30,10 +30,12 @@
                 @component-change="onListboxItemSelected"
             >
                 <template v-slot="{ item }">
-                    <div class="asharebutton_listitem" tabindex="0">
+                    <app-iconset size="24px" :icon="item.icon" original />
+                    {{ item.label }}
+                    <!--                    <div class="asharebutton_listitem" tabindex="0">
                         <app-iconset size="32px" :icon="item.icon" original />
                         {{ item.label }}
-                    </div>
+                    </div>-->
                 </template>
             </f-listbox>
         </f-popover>
@@ -75,7 +77,9 @@ export default {
                 {
                     label: this.$t('ashareButton.shareTwitter'),
                     icon: 'twitter',
-                    link: 'https://twitter.com/intent/tweet?u=',
+                    link: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                        this.$t('ashareButton.checkOutAccount')
+                    )}&url=`,
                 },
             ],
         };
@@ -105,6 +109,7 @@ export default {
 
         onListboxItemSelected(item) {
             const currentLink = window.location.href;
+
             if (item.link === false) {
                 this.copyToClickBoard(currentLink);
                 this.$notifications.add({
@@ -115,6 +120,7 @@ export default {
                 const newLink = item.link + currentLink;
                 window.open(newLink);
             }
+
             this.$refs.popover.hide();
         },
 
