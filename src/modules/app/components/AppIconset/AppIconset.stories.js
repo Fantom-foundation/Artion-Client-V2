@@ -40,6 +40,7 @@ export const Default = () => ({
                 'question',
                 'share',
                 'twitter',
+                'twitter-grey',
                 'facebook',
                 'logo',
                 'about',

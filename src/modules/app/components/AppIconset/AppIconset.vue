@@ -29,6 +29,7 @@ import IconCheck from '@/assets/vue-icons/IconCheck.vue';
 import IconQuestion from '@/assets/vue-icons/IconQuestion.vue';
 import IconShare from '@/assets/vue-icons/IconShare.vue';
 import IconTwitter from '@/assets/vue-icons/IconTwitter.vue';
+import IconTwitterGrey from '@/assets/vue-icons/IconTwitterGrey.vue';
 import IconFacebook from '@/assets/vue-icons/IconFacebook.vue';
 import IconLogo from '@/assets/vue-icons/IconLogo.vue';
 import IconAbout from '@/assets/vue-icons/IconAbout.vue';
@@ -96,6 +97,7 @@ export default {
         IconQuestion,
         IconShare,
         IconTwitter,
+        IconTwitterGrey,
         IconFacebook,
         IconLogo,
         IconAbout,

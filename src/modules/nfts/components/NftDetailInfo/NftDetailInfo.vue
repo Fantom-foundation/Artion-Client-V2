@@ -62,7 +62,7 @@
                         class="nftdetail_socialLink"
                         target="_blank"
                     >
-                        <app-iconset icon="twitter" />
+                        <app-iconset icon="twitter-grey" />
                     </a>
                     <a
                         v-if="info.collection.telegram"

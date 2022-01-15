@@ -102,7 +102,7 @@
                 no-label
             >
                 <template #prefix>
-                    <app-iconset icon="twitter" size="24px" />
+                    <app-iconset icon="twitter-grey" size="24px" />
                 </template>
             </f-form-input>
             <f-form-input
