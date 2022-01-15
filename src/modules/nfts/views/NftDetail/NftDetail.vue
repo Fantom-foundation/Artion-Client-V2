@@ -82,7 +82,7 @@
                         @tx-success="onNftDetailPriceTxSuccess"
                     />
 
-                    <a-share-button />
+                    <a-share-button :twitter-text="$t('ashareButton.checkOutItem')" />
                 </div>
             </div>
             <div class="nftdetail_data">

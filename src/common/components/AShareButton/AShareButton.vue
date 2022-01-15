@@ -59,6 +59,13 @@ export default {
         //    FNotifications,
     },
 
+    props: {
+        twitterText: {
+            type: String,
+            default: '',
+        },
+    },
+
     data() {
         return {
             buttonId: getUniqueId(),
@@ -78,7 +85,7 @@ export default {
                     label: this.$t('ashareButton.shareTwitter'),
                     icon: 'twitter',
                     link: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                        this.$t('ashareButton.checkOutAccount')
+                        this.twitterText || this.$t('ashareButton.checkOutAccount')
                     )}&url=`,
                 },
             ],
