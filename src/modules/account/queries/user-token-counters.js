@@ -6,22 +6,22 @@ export async function getUserTokenCounters(address = '', pagination = {}) {
         query: gql`
             query GetUserTokenCounters($address: Address!) {
                 user(address: $address) {
-                    ownerships(first: 1) {
+                    ownerships(first: 0) {
                         totalCount
                     }
-                    tokenLikes(first: 1) {
+                    tokenLikes(first: 0) {
                         totalCount
                     }
-                    createdTokens(first: 1) {
+                    createdTokens(first: 0) {
                         totalCount
                     }
-                    activities(first: 1) {
+                    activities(first: 0) {
                         totalCount
                     }
-                    offers(first: 1) {
+                    offers(first: 0) {
                         totalCount
                     }
-                    myOffers(first: 1) {
+                    myOffers(first: 0) {
                         totalCount
                     }
                 }

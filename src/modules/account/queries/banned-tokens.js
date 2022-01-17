@@ -74,7 +74,7 @@ export async function getBannedTokensCount(pagination = {}) {
     const query = {
         query: gql`
             query GetBannedTokensCount($first: Int, $after: Cursor, $last: Int, $before: Cursor) {
-                bannedTokens(first: $first, after: $after, last: $last, before: $before) {
+                bannedTokens(first: 0) {
                     totalCount
                 }
             }
