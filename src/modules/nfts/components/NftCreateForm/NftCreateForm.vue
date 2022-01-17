@@ -12,6 +12,7 @@
             <div class="nftcreate_wrap">
                 <div class="nftcreate_panel">
                     <f-form-input
+                        ref="collections"
                         type="a-dropdown-listbox"
                         name="collectionId"
                         :label="$t('nftcreate.collection')"
@@ -106,8 +107,8 @@
                     {{ $t('nftcreate.mint') }}
                 </a-button>
             </div>
-            <div class="nftcreate_info">
-                <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm') }}</f-message>
+            <div v-if="fee !== null" class="nftcreate_info">
+                <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm', { fee }) }}</f-message>
             </div>
             <a-sign-transaction :tx="txMint" @transaction-status="onMintTransactionStatus" />
         </div>
@@ -126,7 +127,7 @@ import { notifications } from 'fantom-vue-components/src/plugins/notifications';
 import AButton from '@/common/components/AButton/AButton';
 import { checkSignIn } from '@/modules/account/auth';
 import { setUnlockableContent } from '@/modules/nfts/mutations/unlockables';
-import { toHex } from '@/utils/big-number';
+import { bFromWei, toHex } from '@/utils/big-number';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
 import { estimateMintFeeGas } from '@/modules/nfts/queries/estimate-mint';
 import { getCollectionImageUrl } from '@/utils/url.js';
@@ -134,8 +135,11 @@ import { tokenExists } from '@/modules/nfts/queries/token';
 
 export default {
     name: 'NftCreateForm',
+
     mixins: [eventBusMixin],
+
     components: { AUploadArea, AButton, FMessage, AppIconset, ASignTransaction },
+
     data() {
         return {
             values: {
@@ -149,6 +153,7 @@ export default {
             tokenId: null,
             isLoading: false,
             waitingMsgId: '',
+            fee: null,
         };
     },
 
@@ -165,6 +170,17 @@ export default {
         });
     },
 
+    watch: {
+        ['values.collectionId']: {
+            handler() {
+                this.$nextTick(() => {
+                    this.$refs.collections.validate();
+                });
+            },
+            immediate: true,
+        },
+    },
+
     methods: {
         royaltyValidator(_value) {
             if (_value === '') return false;
@@ -173,13 +189,9 @@ export default {
         },
 
         async collectionValidator(_collectionId) {
-            const estimation = await estimateMintFeeGas(
-                this.$wallet.account || '0x0000000000000000000000000000000000000001',
-                _collectionId,
-                'https://minter.artion.io/default/access/minter/estimation.json',
-                0
-            );
+            const estimation = await this.getEstimation(_collectionId, this.getRoyalty());
             console.log('collectionValidator', _collectionId, 'estimation error:', estimation.error);
+            this.setFee(estimation.platformFee);
             return estimation.error != null;
         },
 
@@ -224,14 +236,9 @@ export default {
                 return;
             }
 
-            const royalty = Math.round(Number(this.values.royalty) * 100);
+            const royalty = this.getRoyalty();
 
-            const estimation = await estimateMintFeeGas(
-                this.$wallet.account,
-                val.collectionId,
-                'https://minter.artion.io/default/access/minter/estimation.json',
-                royalty
-            );
+            const estimation = await this.getEstimation(val.collectionId, royalty);
             console.log('estimation', estimation);
             if (estimation.error != null) {
                 console.error('estimateMintFeeGas (server estimation) fail', estimation);
@@ -347,12 +354,42 @@ export default {
             }
         },
 
+        async setFee(platformFee) {
+            if (platformFee) {
+                this.fee = bFromWei(platformFee).toNumber();
+            } else {
+                this.fee = null;
+            }
+        },
+
+        /**
+         * @param {string} collectionId
+         * @param {number} royalty
+         * @return {Promise<Object>}
+         */
+        getEstimation(collectionId, royalty = 0) {
+            return estimateMintFeeGas(
+                this.$wallet.account || '0x0000000000000000000000000000000000000001',
+                collectionId,
+                'https://minter.artion.io/default/access/minter/estimation.json',
+                royalty
+            );
+        },
+
         async getMintedTokenId(txHash) {
             const web3 = this.$wallet.wallet._web3;
             const receipt = await web3.eth.getTransactionReceipt(txHash);
+            console.log('??????', txHash, receipt);
             const tokenId = contracts.decodeMintedNftTokenId(receipt, web3);
             console.log('tokenId', tokenId, toHex(tokenId));
             return toHex(tokenId);
+        },
+
+        /**
+         * @return {number}
+         */
+        getRoyalty() {
+            return Math.round(Number(this.values.royalty || 0) * 100);
         },
 
         async checkWalletConnection() {
