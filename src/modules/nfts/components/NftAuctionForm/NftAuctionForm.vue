@@ -85,6 +85,9 @@ import { wallet } from '@/plugins/wallet/Wallet';
 import { isApprovedForAll } from '@/modules/nfts/queries/is-approved';
 import { getContractAddress } from '@/utils/artion-contract-addresses.js';
 
+/** Auction duration in seconds */
+const MAX_AUCTION_DURATION = 2592000;
+
 export default {
     name: 'NftAuctionForm',
 
@@ -181,7 +184,9 @@ export default {
         async loadAuction() {
             this.auction = (await getAuction(this.token.contract, this.token.tokenId)) || {};
 
-            this.setValues(this.auction, this.selectedPayToken);
+            if (this.selectedPayToken.decimals) {
+                this.setValues(this.auction, this.selectedPayToken);
+            }
         },
 
         /**
@@ -423,6 +428,10 @@ export default {
                 msg = this.$t('nftstartauctionform.endDateGreater');
             } else if (ts <= tsNow) {
                 msg = this.$t('nftstartauctionform.dateLowerNowPlus5');
+            } else if (!this.update && ts - tsStartTime > MAX_AUCTION_DURATION * 1000) {
+                msg = this.$t('nftstartauctionform.auctionTimeExceed', {
+                    numDays: parseInt(MAX_AUCTION_DURATION / 86400),
+                });
             }
 
             return msg;
@@ -432,10 +441,7 @@ export default {
          * @param {PayToken} token
          */
         onTokenSelected(token) {
-            if (!('decimals' in this.selectedPayToken)) {
-                this.setValues(this.auction, token);
-            }
-
+            this.setValues(this.auction, token);
             this.selectedPayToken = token;
         },
 

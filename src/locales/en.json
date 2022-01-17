@@ -309,6 +309,7 @@
         "dateLowerNow": "Date must greater than now",
         "dateLowerNowPlus5": "End date must be greater than now + 7 minutes",
         "endDateGreater": "End date must be greater than start date",
+        "auctionTimeExceed": "The duration of the auction may not exceed {numDays} days",
         "reservePriceDecreased": "Reserve price can only be decreased",
         "startSuccess": "You have successfully started the auction",
         "updatePriceSuccess": "You have successfully updated reserve price",
