@@ -15,6 +15,8 @@ export const dataPageMixin = {
 
     created() {
         this._usePageInfoPrev = false;
+        /** Timestamp. Helper */
+        this._ts = 0;
     },
 
     methods: {
@@ -67,11 +69,22 @@ export const dataPageMixin = {
          * @private
          */
         async _loadPage({ pagination = { first: this.perPage }, filterSort, dontSetItems = false } = {}) {
+            const ts = Date.now();
+
+            this._ts = ts;
+
             if (!dontSetItems) {
                 this.loading = true;
             }
 
-            const data = await this.loadPage(pagination, filterSort);
+            let data = await this.loadPage(pagination, filterSort);
+
+            // Check if the latest query has the same timestamp. If not, discard the data
+            if (ts < this._ts && this._ts !== 0) {
+                data = null;
+            }
+
+            // console.log(ts, this._ts, ts !== this._ts, ts < this._ts);
 
             if (data) {
                 this.totalItems = parseInt(data.totalCount, 16);
