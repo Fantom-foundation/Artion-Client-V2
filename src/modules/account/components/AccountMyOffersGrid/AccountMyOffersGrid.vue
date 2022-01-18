@@ -71,19 +71,19 @@ export default {
             columns: [
                 {
                     name: 'token',
-                    label: this.$t('accountmyoffersgrid.item'),
+                    label: this.$t('accountoffersgrid.item'),
                 },
                 {
                     name: 'unitPrice',
-                    label: this.$t('accountmyoffersgrid.price'),
+                    label: this.$t('accountoffersgrid.price'),
                 },
                 {
                     name: 'quantity',
-                    label: this.$t('accountmyoffersgrid.qty'),
+                    label: this.$t('accountoffersgrid.qty'),
                 },
                 {
                     name: 'deadline',
-                    label: this.$t('accountmyoffersgrid.date'),
+                    label: this.$t('accountoffersgrid.deadline'),
                     formatter(value) {
                         return datetimeFormatter(value);
                     },

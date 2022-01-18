@@ -2,9 +2,9 @@ let appConfig = {
     // app name - used in titles
     name: 'Artion',
     // app main title
-    title: 'Artion, NFT markteplace',
+    title: 'Artion, NFT marketplace',
     // app description
-    description: 'Artion, NFT markteplace',
+    description: 'Artion, NFT marketplace',
     // app keywords
     keywords: 'Artion, NFT, NFTs, Fantom',
     // app's favicon

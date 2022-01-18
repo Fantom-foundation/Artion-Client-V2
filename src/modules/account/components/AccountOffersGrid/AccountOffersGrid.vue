@@ -92,7 +92,7 @@ export default {
                 },
                 {
                     name: 'deadline',
-                    label: this.$t('accountoffersgrid.date'),
+                    label: this.$t('accountoffersgrid.deadline'),
                     formatter(value) {
                         return datetimeFormatter(value);
                     },

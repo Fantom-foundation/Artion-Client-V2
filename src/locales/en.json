@@ -672,7 +672,7 @@
         "price": "Price",
         "qty": "Quantity",
         "from": "From",
-        "date": "Date"
+        "deadline": "Deadline"
     },
 
     "accountfollow": {
@@ -684,13 +684,6 @@
         "unsubscribed": "You successfully cancel your subscription",
         "follows": "Follows",
         "followings": "Followings"
-    },
-
-    "accountmyoffersgrid": {
-        "item": "Item",
-        "price": "Price",
-        "qty": "Quantity",
-        "date": "Date"
     },
 
     "accountprofileform": {
