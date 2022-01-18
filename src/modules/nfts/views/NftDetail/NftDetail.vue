@@ -185,12 +185,11 @@ import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/N
 //import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
-import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { getImageThumbUrl } from '@/utils/url.js';
 import { getTokens } from '@/modules/nfts/queries/tokens.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
-import { getBearerToken, signIn } from '@/modules/account/auth.js';
+import { checkSignIn } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
 import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
 
@@ -219,8 +218,6 @@ import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 export default {
     name: 'NftDetail',
-
-    mixins: [eventBusMixin],
 
     components: {
         NftUpdateAuctionButton,
@@ -418,15 +415,6 @@ export default {
             return {};
         },
 
-        async checkWalletConnection() {
-            if (!this.$wallet.connected) {
-                const payload = {};
-                this._eventBus.emit('show-wallet-picker', payload);
-                let res = await payload.promise;
-                return res;
-            }
-        },
-
         async setListing() {
             const { token } = this;
 
@@ -457,11 +445,8 @@ export default {
         },
 
         async onLikeClick() {
-            let ok = true;
-            await this.checkWalletConnection();
-            if (!getBearerToken()) {
-                ok = await signIn();
-            }
+            let ok = await checkSignIn();
+
             if (ok) {
                 if (!this.liked) {
                     await likeToken(this.token);
@@ -480,11 +465,6 @@ export default {
                         text: `You successfully delete ${this.token.name} from your favorites`,
                     });
                 }
-            } else {
-                this.$notifications.add({
-                    type: 'error',
-                    text: 'Some problems',
-                });
             }
         },
 

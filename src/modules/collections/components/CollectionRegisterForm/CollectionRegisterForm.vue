@@ -168,13 +168,10 @@ import { notifications } from 'fantom-vue-components/src/plugins/notifications.j
 import { uploadCollection } from '@/utils/upload';
 import { checkSignIn } from '@/modules/account/auth';
 import AButton from '@/common/components/AButton/AButton';
-import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 
 export default {
     name: 'CollectionRegisterForm',
-
-    mixins: [eventBusMixin],
 
     components: { AUploadArea, AddCategory, AButton },
 
@@ -221,7 +218,6 @@ export default {
             const vals = _data.values;
             this.isLoading = true;
 
-            await this.checkWalletConnection();
             let signed = await checkSignIn();
             if (!signed) {
                 console.error('not signed');
@@ -264,14 +260,6 @@ export default {
                 text: this.$t('collectionregisterform.success'),
             });
             this.isLoading = false;
-        },
-
-        async checkWalletConnection() {
-            if (!this.$wallet.connected) {
-                const payload = {};
-                this._eventBus.emit('show-wallet-picker', payload);
-                await payload.promise;
-            }
         },
     },
 };

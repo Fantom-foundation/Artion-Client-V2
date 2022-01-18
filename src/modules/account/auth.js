@@ -6,6 +6,7 @@ import { login } from '@/modules/account/mutations/login.js';
 import { getUser, isLoggedUserModerator } from '@/modules/account/queries/user.js';
 import { router } from '@/main.js';
 import appConfig from '@/app.config.js';
+import { checkWallet } from '@/plugins/wallet/utils.js';
 
 function isBearerTokenValid(token) {
     try {
@@ -91,7 +92,7 @@ export async function setUser(account, logged) {
  */
 export async function checkSignIn(redirectToHomepage = false, checkModerator = false) {
     let redirect = false;
-    let ok = true;
+    let ok = await checkWallet();
 
     if (!getBearerToken()) {
         ok = await signIn();

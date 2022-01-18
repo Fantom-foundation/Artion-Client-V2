@@ -103,9 +103,8 @@
 <script>
 // import AppIconset from '@/modules/app/components/AppIconset/AppIconset.vue';
 import { getImageThumbUrl } from '@/utils/url.js';
-import { getBearerToken, signIn } from '@/modules/account/auth.js';
+import { checkSignIn } from '@/modules/account/auth.js';
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
-import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { toInt } from '@/utils/big-number.js';
 import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 import dayjs from 'dayjs';
@@ -116,8 +115,6 @@ export default {
     name: 'NftCard',
 
     components: { ATokenValue },
-
-    mixins: [eventBusMixin],
 
     props: {
         nftData: {
@@ -154,24 +151,13 @@ export default {
     },
 
     methods: {
-        async checkWalletConnection() {
-            if (!this.$wallet.connected) {
-                const payload = {};
-                this._eventBus.emit('show-wallet-picker', payload);
-                await payload.promise;
-            }
-        },
-
         tansformLikeCounter(value) {
             return toInt(value);
         },
 
         async onLikeClick() {
-            let ok = true;
-            await this.checkWalletConnection();
-            if (!getBearerToken()) {
-                ok = await signIn();
-            }
+            let ok = await checkSignIn();
+
             if (ok) {
                 if (!this.liked) {
                     let res = await likeToken(this.nftData);
@@ -194,11 +180,6 @@ export default {
                         text: `You successfully remove ${this.nftData.name} from your favorites`,
                     });
                 }
-            } else {
-                this.$notifications.add({
-                    type: 'error',
-                    text: 'Some problems',
-                });
             }
         },
 

@@ -68,13 +68,11 @@
 import { getNotificationSettings } from '@/modules/account/queries/notifications.js';
 import { updateNotificationSettings } from '@/modules/account/mutations/notifications.js';
 import { sNotifications, fNotifications } from '@/common/constants/notifications.js';
-import { getBearerToken, signIn } from '@/modules/account/auth.js';
-import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
+import { checkSignIn } from '@/modules/account/auth.js';
 import { clone, isObject } from 'fantom-vue-components/src/utils';
+
 export default {
     name: 'NotificationSettingsForm',
-
-    mixins: [eventBusMixin],
 
     data() {
         return {
@@ -129,20 +127,9 @@ export default {
             if (item) item.querySelector('.cr_check').click();
         },
 
-        async checkWalletConnection() {
-            if (!this.$wallet.connected) {
-                const payload = {};
-                this._eventBus.emit('show-wallet-picker', payload);
-                await payload.promise;
-            }
-        },
-
         async onFormSubmit(data) {
-            let ok = true;
-            await this.checkWalletConnection();
-            if (!getBearerToken()) {
-                ok = await signIn();
-            }
+            let ok = await checkSignIn();
+
             if (ok) {
                 console.log(data.values);
                 let values = {};

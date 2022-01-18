@@ -41,17 +41,15 @@ import AButton from '@/common/components/AButton/AButton.vue';
 import AccountFollowWindow from '@/modules/account/components/AccountFollowWindow/AccountFollowWindow.vue';
 import { getUserFollowers, getUserFollowing } from '@/modules/account/queries/subscription.js';
 import { followUser, unFollowUser } from '@/modules/account/mutations/subscription.js';
-import { getBearerToken, signIn } from '@/modules/account/auth.js';
+import { checkSignIn } from '@/modules/account/auth.js';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
-import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { toInt } from '@/utils/big-number.js';
 import { mapState } from 'vuex';
+
 export default {
     name: 'AccountFollow',
 
     components: { AButton, AccountFollowWindow },
-
-    mixins: [eventBusMixin],
 
     props: {
         userAddress: {
@@ -116,20 +114,9 @@ export default {
                 : (this.label = this.$t('accountfollow.follow'));
         },
 
-        async checkWalletConnection() {
-            if (!this.$wallet.connected) {
-                const payload = {};
-                this._eventBus.emit('show-wallet-picker', payload);
-                await payload.promise;
-            }
-        },
-
         async onClick() {
-            let ok = true;
-            await this.checkWalletConnection();
-            if (!getBearerToken()) {
-                ok = await signIn();
-            }
+            let ok = await checkSignIn();
+
             if (ok) {
                 this.loading = true;
                 if (!this.isFollwed) {
@@ -152,11 +139,6 @@ export default {
                     });
                 }
                 this.loading = false;
-            } else {
-                this.$notifications.add({
-                    type: 'error',
-                    text: 'Some problems',
-                });
             }
         },
 
