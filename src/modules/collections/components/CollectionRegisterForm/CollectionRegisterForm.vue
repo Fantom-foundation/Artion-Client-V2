@@ -225,6 +225,7 @@ export default {
                     type: 'error',
                     text: this.$t('collectionregisterform.signInFirst'),
                 });
+                this.isLoading = false;
                 return;
             }
 
