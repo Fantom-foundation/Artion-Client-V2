@@ -3,10 +3,10 @@
         <a-search-field
             id="appsearchbarwithwhisperer_input"
             field-size="large"
+            :value="searchTextValue"
             :aria-label="$t('appsearchbar.label')"
             :placeholder="$t('appsearchbar.placeholder')"
             no-label
-            v-model="searchText"
             :throttle-input-interval="250"
             :loading="loading"
             @focus="onSearchFieldFocus"
@@ -14,6 +14,7 @@
             @keyup.native.enter.prevent="onEnterKey"
             @keyup.native.down="onArrowDownKey"
             @delete-text="onDeleteText"
+            @input="onInput"
         />
 
         <f-popover
@@ -50,6 +51,7 @@ export default {
     data() {
         return {
             searchText: '',
+            searchTextValue: '',
             searchResults: [],
             loading: false,
             popoverOn: false,
@@ -67,29 +69,20 @@ export default {
     watch: {
         $route: {
             handler(value) {
-                this._ignoreTextChange = true;
-                this.searchText = value.query.search || '';
+                this.searchTextValue = value.query.search || '';
+                this.searchText = this.searchTextValue;
 
                 this.hidePopover();
             },
             immediate: true,
         },
-
-        searchText(value) {
-            if (!this._ignoreTextChange) {
-                this.$nextTick(() => {
-                    this.search(value);
-                });
-            }
-
-            this._ignoreTextChange = false;
-        },
     },
 
     created() {
-        this._ignoreTextChange = false;
         this._ignoreFocus = false;
         this._searchPhrase = '';
+        /** Timestamp. Helper */
+        this._ts = 0;
     },
 
     methods: {
@@ -101,29 +94,26 @@ export default {
             const phrase = text.trim();
 
             if (phrase && phrase.length >= SEARCH_AFTER_NUM_CHARS) {
-                if (!this.loading) {
-                    this.loading = true;
+                this.loading = true;
 
-                    try {
-                        const results = await textSearch(phrase, 15);
+                try {
+                    const ts = Date.now();
 
+                    this._ts = ts;
+
+                    const results = await textSearch(phrase, 15);
+
+                    if (ts === this._ts || this._ts === 0) {
                         this.searchResults = results || [];
 
                         this.showPopover();
 
                         this.loading = false;
-
-                        if (this._searchPhrase) {
-                            this.search(this._searchPhrase);
-                            this._searchPhrase = '';
-                        }
-                    } catch (error) {
-                        this.loading = false;
-                        this.hidePopover();
-                        throw error;
                     }
-                } else {
-                    this._searchPhrase = phrase;
+                } catch (error) {
+                    this.loading = false;
+                    this.hidePopover();
+                    throw error;
                 }
             } else {
                 this.hidePopover();
@@ -154,12 +144,23 @@ export default {
             }
         },
 
+        onInput(text) {
+            this.$nextTick(() => {
+                this.search(text);
+            });
+
+            this.searchText = text;
+        },
+
         onEnterKey() {
             const searchText = this.searchText.trim();
+            const route = { name: 'explore' };
 
             if (searchText) {
-                this.$router.push({ name: 'explore', query: { search: searchText } });
+                route.query = { search: searchText };
             }
+
+            this.$router.push(route);
         },
 
         onArrowDownKey() {
