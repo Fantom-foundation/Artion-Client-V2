@@ -154,6 +154,10 @@
 
 @include media.media-max(breakpoints.$breakpoint-md) {
     .explore {
+        &_nftlist {
+            padding-bottom: var(--f-spacer-8);
+        }
+
         &_filterButton {
             display: flex;
         }

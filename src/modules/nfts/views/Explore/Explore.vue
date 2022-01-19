@@ -34,7 +34,7 @@
                 </div>
                 <nft-filter-chips v-model="filters" />
             </section>
-            <section :aria-labelledby="id">
+            <section :aria-labelledby="id" class="explore_nftlist">
                 <h2 :id="id" class="not-visible">{{ $t('page.explore.nftList') }}</h2>
 
                 <nft-main-list :filters="filters" @tokens-count="onTokensCount" @loading="onNftMainListLoading" />
@@ -80,9 +80,13 @@ export default {
         filterNumber() {
             let counter = 0;
             let values = Object.values(this.filters);
+
             values.forEach(item => {
-                if (isArray(item) && item.length) counter += item.length;
-                else counter += 1;
+                if (isArray(item)) {
+                    counter += item.length;
+                } else {
+                    counter += 1;
+                }
             });
 
             return counter;
