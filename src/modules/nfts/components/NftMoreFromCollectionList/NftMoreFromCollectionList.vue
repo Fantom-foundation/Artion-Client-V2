@@ -1,6 +1,6 @@
 <template>
     <div class="nftmorefromcollectionlist">
-        <nft-list :tokens="items" :per-page="perPage" root-margin="400px 0px" />
+        <nft-list :tokens="items" :per-page="perPage" v-bind="$attrs" root-margin="400px 0px" />
     </div>
 </template>
 

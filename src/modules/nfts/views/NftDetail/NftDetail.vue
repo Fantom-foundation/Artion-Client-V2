@@ -166,7 +166,7 @@
                     </div>
                 </template>
                 <template>
-                    <nft-more-from-collection-list :token="token" />
+                    <nft-more-from-collection-list :token="token" horizontal />
                 </template>
             </a-details>
         </div>

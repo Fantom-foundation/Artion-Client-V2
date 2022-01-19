@@ -1,0 +1,7 @@
+.scrollsnap-horizontal {
+    scroll-snap-type: x proximity;
+
+    > * {
+        scroll-snap-align: start;
+    }
+}

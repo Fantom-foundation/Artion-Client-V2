@@ -1,6 +1,6 @@
 <template>
     <nav class="accountnavigation" :aria-label="$t('accountNav')">
-        <ul class="accountnavigation_list">
+        <ul class="accountnavigation_list scrollsnap-horizontal">
             <li v-for="item in dNavigation" :key="`accnav_${item.routeName}`" class="accountnavigation_item">
                 <router-link :to="{ name: item.routeName, params: item.routeParams || {}, query: { ...filters } }">
                     <app-iconset v-if="item.icon" :icon="item.icon" size="24px" />{{ item.label }}

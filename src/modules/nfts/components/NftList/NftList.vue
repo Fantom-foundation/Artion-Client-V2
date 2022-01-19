@@ -9,7 +9,7 @@
         :root-margin="rootMargin"
         v-on="$listeners"
     >
-        <div class="nftlist" :class="[`nftlist-density-${cDensity}`]">
+        <div class="nftlist" :class="[`nftlist-density-${cDensity}`, { 'scrollsnap-horizontal': horizontal }]">
             <nft-card
                 v-for="nft in tokens"
                 :nftData="nft"
@@ -44,6 +44,11 @@ export default {
             default: 'large',
         },
         loading: {
+            type: Boolean,
+            default: false,
+        },
+        /** Horizontal layout */
+        horizontal: {
             type: Boolean,
             default: false,
         },
