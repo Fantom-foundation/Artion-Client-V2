@@ -245,6 +245,11 @@ export default {
                     this.navigation = this.navigation.map(item => {
                         return { ...item, routeParams: { address: value } };
                     });
+                } else {
+                    this.navigation = this.navigation.map(item => {
+                        delete item.routeParams;
+                        return { ...item };
+                    });
                 }
             },
             immediate: true,
