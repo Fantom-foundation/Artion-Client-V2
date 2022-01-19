@@ -1,19 +1,27 @@
+:root {
+    --scrollbar-width: 6px;
+
+    .touch-device {
+        --scrollbar-width: 2px;
+    }
+}
+
 /* width */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
     background: var(--scrollbar-background-color);
-    border-radius: 6px;
+    border-radius: var(--scrollbar-width);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb-color);
-    border-radius: 6px;
+    border-radius: var(--scrollbar-width);
 }
 
 /* Handle on hover */

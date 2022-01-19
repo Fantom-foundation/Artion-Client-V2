@@ -33,6 +33,7 @@ import WalletPicker from '@/modules/wallet/components/WalletPicker/WalletPicker.
 import { getBearerToken, setUser } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
 import AppDarkTheme from '@/modules/app/components/AppDarkTheme/AppDarkTheme.vue';
+import { clientInfo } from 'fantom-vue-components/src/utils/client-info.js';
 
 // import AppLanguage from '@/modules/app/components/AppLanguage/AppLanguage.vue';
 
@@ -62,11 +63,12 @@ export default {
         },
     },
 
-    /*
     created() {
-        this.$root._appNode = this;
+        // this.$root._appNode = this;
+        if (clientInfo.mobile) {
+            document.body.classList.add('touch-device');
+        }
     },
-*/
 
     methods: {
         async setUser(account) {
