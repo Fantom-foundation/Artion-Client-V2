@@ -84,13 +84,15 @@
     }
 
     .faccordionnavigation {
-        color: var(--theme-dark-color-4);
+        //color: var(--theme-dark-color-4);
+        color: #fff;
     }
 
     .walletmenupopover {
         &_darkthemeswitch {
             .togglebtn_label {
-                color: var(--theme-dark-color-4);
+                //color: var(--theme-dark-color-4);
+                color: #fff;
             }
         }
     }
@@ -98,6 +100,10 @@
     .fnavigationnode {
         --fnavigationnode-item-color: var(--theme-dark-color-4);
         --fnavigationnode-active-item-color: #fff;
+
+        .fnavigationnode_item:focus {
+            background: var(--theme-dark-color-5);
+        }
     }
 
     .ftabs {
@@ -236,6 +242,7 @@
     }
 
     .agrid {
+        --agrid-background-color: var(--theme-dark-color-7);
         --agrid-header-background-color: var(--theme-dark-color-6);
         --fdatagrid-cell-hover-background-color: var(--theme-dark-color-6);
     }
@@ -287,7 +294,7 @@
     }
 
     .acurrencydropdown {
-        --acurrencydropdown-background: var(--theme-dark-color-9);
+        --acurrencydropdown-background: var(--theme-dark-color-7);
     }
 
     .afilterchips .fchips {

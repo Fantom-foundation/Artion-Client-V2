@@ -3,6 +3,7 @@
     --nftdetail-text-color: var(--f-color-grey-5);
     --nftdetail-desc-color: #121223;
     --nftdetail-border-color: var(--f-color-grey-3);
+
     &_main {
         margin-top: var(--f-spacer-7);
         display: grid;
@@ -266,7 +267,7 @@
             grid-column: 1;
         }
         &_data {
-            border-top: 1px solid var(--f-color-grey-3);
+            border-top: 1px solid var(--nftdetail-border-color);
         }
         &_info {
             grid-row-start: 3;
