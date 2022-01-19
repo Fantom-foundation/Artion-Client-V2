@@ -1,7 +1,7 @@
 <template>
     <div class="nftitemactivity">
         <NftItemActivityFilter v-model="filters" />
-        <NftItemActivityFilterChips v-show="!isObjectEmpty(filters)" v-model="filters" />
+        <NftItemActivityFilterChips v-show="filters.length > 0" v-model="filters" />
         <f-data-grid
             ref="grid"
             infinite-scroll
@@ -51,11 +51,12 @@ import AAddress from '@/common/components/AAddress/AAddress.vue';
 import { getTokenActivity } from '@/modules/nfts/queries/token-activity.js';
 import { datetimeFormatter } from '@/utils/formatters.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
-import { isObjectEmpty, objectEquals } from 'fantom-vue-components/src/utils';
+import { objectEquals } from 'fantom-vue-components/src/utils';
 
 import NftItemActivityFilter from '@/modules/nfts/components/NftItemActivityFilter/NftItemActivityFilter.vue';
 import NftItemActivityFilterChips from '@/modules/nfts/components/NftItemActivityFilterChips/NftItemActivityFilterChips.vue';
-import { ACTIVITY_TYPES } from '@/common/constants/activity-type-filters.js';
+// import { ACTIVITY_TYPES } from '@/common/constants/activity-type-filters.js';
+import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivity/filter-options.js';
 
 export default {
     name: 'NftItemActivity',
@@ -76,7 +77,9 @@ export default {
     data() {
         const _this = this;
         return {
-            filters: {},
+            // filters: {},
+            /** Values from ITEM_ACTIVITY_FILTER_OPTIONS */
+            filters: ['sales', 'transfers'],
             itemsColumns: [
                 {
                     name: 'type',
@@ -111,9 +114,20 @@ export default {
 
     computed: {
         dFilters() {
-            return Object.values(this.filters)
-                .flat()
-                .map(item => item.filter);
+            const filterOptions = ITEM_ACTIVITY_FILTER_OPTIONS();
+
+            return this.filters
+                .map(value => {
+                    const filterOption = filterOptions.find(option => option.value === value);
+                    let filters = [];
+
+                    if (filterOption) {
+                        filters = filterOption.filters;
+                    }
+
+                    return filters;
+                })
+                .flat();
         },
     },
 
@@ -138,18 +152,8 @@ export default {
     methods: {
         async loadPage(pagination = { first: this.perPage }) {
             const { token } = this;
-            let filters = this.dFilters;
 
-            // if no filter is picked
-            if (filters.length === 0) {
-                // show Sales and Transfers by default
-                const defaultFilter = /SOLD|RESOLVED|TRANSFER|MINT|BURN/;
-                filters = ACTIVITY_TYPES()
-                    .map(activity => activity.filter)
-                    .filter(activity => defaultFilter.test(activity));
-            }
-
-            return await getTokenActivity(token.contract, token.tokenId, pagination, this.filterToQuery(filters));
+            return await getTokenActivity(token.contract, token.tokenId, pagination, this.filterToQuery(this.dFilters));
         },
 
         async loadActivities() {
@@ -169,8 +173,6 @@ export default {
                 this.$refs.grid.reload();
             }, 50);
         },
-
-        isObjectEmpty,
     },
 };
 </script>

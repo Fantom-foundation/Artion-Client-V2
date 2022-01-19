@@ -3,9 +3,9 @@
         <h1 class="not-visible" data-focus>{{ $t('page.accountActivity.title') }}</h1>
 
         <NftItemActivityFilter v-model="filters" />
-        <NftItemActivityFilterChips v-show="!isObjectEmpty(filters)" v-model="filters" />
+        <NftItemActivityFilterChips v-show="filters.length > 0" v-model="filters" />
 
-        <account-activity-grid :filter="filters" :user-address="userAddress" />
+        <account-activity-grid :filters="filters" :user-address="userAddress" />
     </div>
 </template>
 
@@ -14,7 +14,6 @@ import AccountActivityGrid from '@/modules/account/components/AccountActivityGri
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 import NftItemActivityFilter from '@/modules/nfts/components/NftItemActivityFilter/NftItemActivityFilter';
 import NftItemActivityFilterChips from '@/modules/nfts/components/NftItemActivityFilterChips/NftItemActivityFilterChips';
-import { isObjectEmpty } from 'fantom-vue-components/src/utils';
 
 export default {
     name: 'AccountActivity',
@@ -31,16 +30,13 @@ export default {
 
     data() {
         return {
-            filters: {},
+            /** Values from ITEM_ACTIVITY_FILTER_OPTIONS */
+            filters: [],
         };
     },
 
     mounted() {
         focusElem(this.$el);
-    },
-
-    methods: {
-        isObjectEmpty,
     },
 };
 </script>

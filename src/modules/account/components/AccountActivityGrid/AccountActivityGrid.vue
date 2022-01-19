@@ -61,6 +61,7 @@ import { toInt } from '@/utils/big-number.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import { datetimeFormatter } from '@/utils/formatters.js';
 import { defer, objectEquals } from 'fantom-vue-components/src/utils';
+import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivity/filter-options.js';
 
 export default {
     name: 'AccountActivityGrid',
@@ -75,10 +76,10 @@ export default {
             default: '',
             required: true,
         },
-        filter: {
-            type: Object,
+        filters: {
+            type: Array,
             default() {
-                return {};
+                return [];
             },
         },
     },
@@ -137,7 +138,7 @@ export default {
             immediate: true,
         },
 
-        filter() {
+        filters() {
             this.update();
             this.loadActivities();
         },
@@ -154,15 +155,26 @@ export default {
 
         async loadActivities() {
             await this._loadPage({
-                filterSort: this.filterToQuery(this.filter),
+                filterSort: this.filterToQuery(this.filters),
             });
         },
 
-        filterToQuery(filter) {
-            if (filter && Object.keys(filter).length > 0) {
-                let filteredTypes = Object.values(filter)
-                    .flat()
-                    .map(item => item.filter);
+        filterToQuery(filters) {
+            if (filters.length > 0) {
+                const filterOptions = ITEM_ACTIVITY_FILTER_OPTIONS();
+                const filteredTypes = this.filters
+                    .map(value => {
+                        const filterOption = filterOptions.find(option => option.value === value);
+                        let filters = [];
+
+                        if (filterOption) {
+                            filters = filterOption.filters;
+                        }
+
+                        return filters;
+                    })
+                    .flat();
+
                 return { filter: { types: filteredTypes } };
             } else {
                 // show all by default
@@ -185,7 +197,7 @@ export default {
 
             const data = await this._loadPage({
                 pagination: this._getPaginationVariables(pagination),
-                filterSort: this.filterToQuery(this.filter),
+                filterSort: this.filterToQuery(this.filters),
                 dontSetItems: true,
             });
 

@@ -29,13 +29,7 @@
                 :focus-item-on-focus="true"
                 class="nftitemactivityfilter_flistbox"
                 @component-change="onListboxItemSelected"
-            >
-                <template v-slot="{ item }">
-                    <div class="nftitemactivityfilter_listitem" tabindex="0">
-                        {{ item.value }}
-                    </div>
-                </template>
-            </f-listbox>
+            />
         </f-popover>
     </div>
 </template>
@@ -45,6 +39,7 @@ import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue
 import FPopover from 'fantom-vue-components/src/components/FPopover/FPopover.vue';
 import { ACTIVITY_TYPES } from '@/common/constants/activity-type-filters.js';
 import { getUniqueId, defer } from 'fantom-vue-components/src/utils';
+import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivity/filter-options.js';
 
 export default {
     name: 'NftItemActivityFilter',
@@ -58,7 +53,7 @@ export default {
 
     props: {
         selected: {
-            type: Object,
+            type: Array,
             default() {
                 return [];
             },
@@ -69,36 +64,15 @@ export default {
         return {
             buttonId: getUniqueId(),
             showModal: true,
-            selectedItems: [],
+            selectedItems: this.selected,
             data: ACTIVITY_TYPES(),
-            options: [
-                {
-                    value: this.$t('nftitemactivityfilter.sales'),
-                    pattern: /SOLD|RESOLVED/,
-                },
-                {
-                    value: this.$t('nftitemactivityfilter.transfers'),
-                    pattern: /TRANSFER|MINT|BURN/,
-                },
-                {
-                    value: this.$t('nftitemactivityfilter.listings'),
-                    pattern: /LISTING/,
-                },
-                {
-                    value: this.$t('nftitemactivityfilter.offers'),
-                    pattern: /OFFER/,
-                },
-                {
-                    value: this.$t('nftitemactivityfilter.auctions'),
-                    pattern: /AUCTION/,
-                },
-            ],
+            options: ITEM_ACTIVITY_FILTER_OPTIONS(),
         };
     },
 
     watch: {
         selected(value) {
-            this.selectedItems = Object.keys(value);
+            this.selectedItems = value;
         },
     },
 
@@ -112,15 +86,12 @@ export default {
                 });
             });
         },
-        onListboxItemSelected(items) {
-            let filters = {};
-            items.forEach(item => {
-                let index = this.options.findIndex(filter => filter.value === item.value);
-                let types = ACTIVITY_TYPES().filter(type => this.options[index].pattern.test(type.filter));
-                filters[item.value] = types;
-            });
 
-            this.$emit('change', filters);
+        onListboxItemSelected(items) {
+            this.$emit(
+                'change',
+                items.map(item => item.value)
+            );
         },
     },
 };
