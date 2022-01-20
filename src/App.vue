@@ -52,12 +52,22 @@ export default {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
+        ...mapState('app', {
+            rtlDirection: 'rtlDirection',
+        }),
     },
 
     watch: {
         walletAddress: {
             handler(value) {
                 this.setUser(value);
+            },
+            immediate: true,
+        },
+
+        rtlDirection: {
+            handler(value) {
+                this.setTextDirection(value);
             },
             immediate: true,
         },
@@ -77,6 +87,10 @@ export default {
             }
 
             await setUser(account, !!getBearerToken());
+        },
+
+        setTextDirection(rtl = false) {
+            document.documentElement.dir = rtl ? 'rtl' : '';
         },
 
         setAppTheme() {

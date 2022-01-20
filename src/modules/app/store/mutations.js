@@ -3,6 +3,7 @@ export const SET_THEME = 'setTheme';
 export const SET_TX_STATUS = 'setTxStatus';
 export const SET_NFTS_DENSITY = 'setNftsDensity';
 export const SET_AUTO_DARK_MODE = 'setAutoDarkMode';
+export const SET_RTL_DIRECTION = 'setRTLDirection';
 
 export const mutations = {
     /**
@@ -39,5 +40,12 @@ export const mutations = {
      */
     [SET_AUTO_DARK_MODE](state, autoDarkTheme) {
         state.autoDarkTheme = autoDarkTheme;
+    },
+    /**
+     * @param {AppState} state
+     * @param {boolean} rtlDirection
+     */
+    [SET_RTL_DIRECTION](state, rtlDirection) {
+        state.rtlDirection = rtlDirection;
     },
 };

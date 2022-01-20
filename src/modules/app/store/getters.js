@@ -34,4 +34,11 @@ export const getters = {
     autoDarkTheme(state) {
         return state.autoDarkTheme;
     },
+    /**
+     * @param {AppState} state
+     * @return {boolean}
+     */
+    rtlDirection(state) {
+        return state.rtlDirection;
+    },
 };

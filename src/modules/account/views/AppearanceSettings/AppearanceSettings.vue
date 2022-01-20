@@ -15,6 +15,10 @@
                 :aria-label="$t('appearancesettings.autoDarkModeInfo')"
             />
         </p>
+
+        <p>
+            <a-text-direction-switch />
+        </p>
     </section>
 </template>
 
@@ -24,13 +28,14 @@ import { mapState } from 'vuex';
 import { SET_AUTO_DARK_MODE, SET_THEME } from '@/modules/app/store/mutations.js';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 import { getUniqueId } from 'fantom-vue-components/src/utils';
+import ATextDirectionSwitch from '@/common/components/ATextDirectionSwitch/ATextDirectionSwitch.vue';
 
 const THEME_DARK = 'theme-dark';
 
 export default {
     name: 'AppearanceSettings',
 
-    components: { FDarkThemeSwitch },
+    components: { ATextDirectionSwitch, FDarkThemeSwitch },
 
     data() {
         return {

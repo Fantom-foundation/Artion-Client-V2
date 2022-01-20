@@ -22,6 +22,7 @@ export const state = {
     txStatus: {},
     nftsDensity: 280,
     autoDarkTheme: false,
+    rtlDirection: false,
 };
 
-export const storeInLocalStorage = ['language', 'theme', 'nftsDensity', 'autoDarkTheme'];
+export const storeInLocalStorage = ['language', 'theme', 'nftsDensity', 'autoDarkTheme', 'rtlDirection'];
