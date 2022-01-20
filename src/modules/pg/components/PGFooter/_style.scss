@@ -12,7 +12,7 @@
         letter-spacing: -0.02em;
 
         &:not(:last-child) {
-            margin-right: var(--f-spacer-8);
+            margin-inline-end: var(--f-spacer-8);
         }
     }
 }

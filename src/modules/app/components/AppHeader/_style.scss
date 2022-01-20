@@ -54,7 +54,9 @@
         gap: var(--f-spacer-5);
     }
 
-    &_burger { display: none; }
+    &_burger {
+        display: none;
+    }
 
     img {
         display: block;
@@ -74,11 +76,10 @@
         gap: var(--f-spacer-9);
 
         &_logo {
-            padding-right: 160px;
+            padding-inline-end: 160px;
         }
     }
 }
-
 
 @include media.media-max(899px) {
     .appheader {
@@ -97,13 +98,15 @@
             width: 100%;
             flex-direction: column;
             align-items: flex-start;
-            transition: left .3s ease;
+            transition: left 0.3s ease, right 0.3s ease;
             &.show {
                 left: 0;
             }
         }
 
-        &_burger { display: block; }
+        &_burger {
+            display: block;
+        }
 
         .appsearchbar {
             padding: 0 var(--f-spacer-3);
@@ -116,6 +119,20 @@
 
             a {
                 padding: var(--f-spacer-3);
+            }
+        }
+    }
+
+    html[dir='rtl'],
+    body[dir='rtl'] {
+        .appheader {
+            &_mobile {
+                left: 0;
+                right: -100%;
+
+                &.show {
+                    right: 0;
+                }
             }
         }
     }

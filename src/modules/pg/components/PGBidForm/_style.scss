@@ -94,7 +94,7 @@
     }
 
     &__balance {
-        padding-left: 14px;
+        padding-inline-start: 14px;
     }
 
     &__balance-text {
@@ -153,7 +153,7 @@
 
         &__amount {
             display: block;
-            text-align: right;
+            text-align: end;
             max-width: 250px;
         }
 

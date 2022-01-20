@@ -101,6 +101,7 @@
 
     &_infoWrap {
         position: relative;
+
         .asharebutton {
             position: absolute;
             top: 0;
@@ -281,6 +282,18 @@
             flex-direction: column;
             column-gap: 0;
             row-gap: var(--f-spacer-2);
+        }
+    }
+}
+
+html[dir='rtl'],
+body[dir='rtl'] {
+    .nftdetail {
+        &_infoWrap {
+            .asharebutton {
+                right: initial;
+                left: 0;
+            }
         }
     }
 }

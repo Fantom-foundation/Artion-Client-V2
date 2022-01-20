@@ -1,7 +1,7 @@
 @use "fantom-vue-components/src/assets/scss/tools/media";
 .collectionregisterform {
 	max-width: 600px;
-	margin-left: 100px;
+	margin-inline-start: 100px;
 	padding-bottom: var(--f-spacer-6);
 	& > .fforminput,
 		&__desc,
@@ -24,7 +24,7 @@
 	&_categories_label {
 		margin-bottom: var(--f-spacer-3);
 	}
-	
+
 	&_group {
 		display: flex;
 		flex-direction: column;

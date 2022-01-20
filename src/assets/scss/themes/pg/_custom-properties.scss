@@ -99,7 +99,7 @@
     }
 
     .theme-pg-u-text-right {
-        text-align: right;
+        text-align: end;
     }
 
     .flistbox {
@@ -156,7 +156,7 @@
         }
 
         .fwindow_header_title > .h3 {
-            text-align: left;
+            text-align: start;
             font-weight: 600;
             font-size: var(--f-font-size-7);
             letter-spacing: -0.015em;

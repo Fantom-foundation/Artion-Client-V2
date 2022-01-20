@@ -17,7 +17,7 @@
 		}
 
 		&:last-child {
-			margin-left: var(--f-spacer-9);
+			margin-inline-start: var(--f-spacer-9);
 		}
 
 		.finput, .finput_inputcont {
@@ -122,7 +122,7 @@
 		&_col:last-child {
 			margin-top: 40px;
 			flex-direction: row;
-			margin-left: 0;
+			margin-inline-start: 0;
 			gap: var(--f-spacer-4);
 		}
 	}

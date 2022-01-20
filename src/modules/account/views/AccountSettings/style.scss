@@ -14,7 +14,7 @@
 
     &_title {
         margin: var(--f-spacer-2) 0;
-        padding-left: var(--f-spacer-4);
+        padding-inline-start: var(--f-spacer-4);
         text-transform: uppercase;
         font-weight: 700;
         color: var(--f-color-grey-6);
@@ -64,7 +64,7 @@
         }
 
         &_title {
-            padding-left: 0;
+            padding-inline-start: 0;
         }
 
         &_view {
