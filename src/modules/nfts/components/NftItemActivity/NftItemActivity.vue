@@ -56,7 +56,7 @@ import { objectEquals } from 'fantom-vue-components/src/utils';
 import NftItemActivityFilter from '@/modules/nfts/components/NftItemActivityFilter/NftItemActivityFilter.vue';
 import NftItemActivityFilterChips from '@/modules/nfts/components/NftItemActivityFilterChips/NftItemActivityFilterChips.vue';
 // import { ACTIVITY_TYPES } from '@/common/constants/activity-type-filters.js';
-import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivity/filter-options.js';
+import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivityFilter/filter-options.js';
 
 export default {
     name: 'NftItemActivity',

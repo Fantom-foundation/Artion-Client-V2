@@ -39,7 +39,7 @@ import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue
 import FPopover from 'fantom-vue-components/src/components/FPopover/FPopover.vue';
 import { ACTIVITY_TYPES } from '@/common/constants/activity-type-filters.js';
 import { getUniqueId, defer } from 'fantom-vue-components/src/utils';
-import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivity/filter-options.js';
+import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivityFilter/filter-options.js';
 
 export default {
     name: 'NftItemActivityFilter',

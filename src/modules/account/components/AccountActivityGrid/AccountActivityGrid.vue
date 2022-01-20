@@ -61,7 +61,7 @@ import { toInt } from '@/utils/big-number.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import { datetimeFormatter } from '@/utils/formatters.js';
 import { defer, objectEquals } from 'fantom-vue-components/src/utils';
-import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivity/filter-options.js';
+import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivityFilter/filter-options.js';
 
 export default {
     name: 'AccountActivityGrid',

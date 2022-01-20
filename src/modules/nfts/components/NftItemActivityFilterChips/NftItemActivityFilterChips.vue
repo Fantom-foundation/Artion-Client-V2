@@ -6,7 +6,7 @@
 
 <script>
 import AFilterChips from '@/common/components/AFilterChips/AFilterChips.vue';
-import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivity/filter-options.js';
+import { ITEM_ACTIVITY_FILTER_OPTIONS } from '@/modules/nfts/components/NftItemActivityFilter/filter-options.js';
 
 export default {
     name: 'NftItemActivityFilterChips',
