@@ -53,7 +53,7 @@
                             >
                                 <app-iconset :icon="liked ? 'liked' : 'like'" size="20px" />
                             </button>
-                            {{ $t('nftdetail.favorites') }}
+                            {{ toInt(token.likes) }} {{ $t('nftdetail.favorites') }}
                         </div>
                     </div>
 
