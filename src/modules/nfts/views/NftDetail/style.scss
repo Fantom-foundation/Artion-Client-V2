@@ -53,47 +53,6 @@
         font-size: var(--f-font-size-4);
     }
 
-    &_property {
-        font-size: var(--f-font-size-3);
-        &_item {
-            display: flex;
-            align-items: flex-end;
-            column-gap: var(--f-spacer-2);
-            span {
-                font-weight: bold;
-            }
-        }
-    }
-
-    &_about,
-    &_chainBlock {
-        font-size: var(--f-font-size-3);
-    }
-
-    &_socialBlock {
-        display: flex;
-        align-items: center;
-        column-gap: var(--f-spacer-3);
-        margin-top: var(--f-spacer-3);
-    }
-
-    &_socialLink {
-        svg {
-            max-width: var(--f-spacer-4);
-            max-height: var(--f-spacer-4);
-        }
-        color: var(--f-doc-color) !important;
-    }
-
-    &_chainLine {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        a {
-            max-width: 100px;
-        }
-    }
-
     &_product {
         overflow: hidden;
         width: 100%;

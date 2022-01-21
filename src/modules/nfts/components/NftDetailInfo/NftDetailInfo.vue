@@ -1,136 +1,98 @@
 <template>
-    <a-details-group class="nftdetail_info" rounded>
-        <a-details>
+    <a-details-group class="nftdetailinfo" rounded>
+        <a-details class="nftdetailinfo_block tes-3">
             <template #label>
                 <div class="nftdetail_details_wrap">
                     <h2><app-iconset icon="property" /> {{ $t('nftdetail.properties') }}</h2>
                 </div>
             </template>
             <template>
-                <div class="nftdetail_property">
-                    <div class="nftdetail_property_item">
-                        <span>{{ $t('nftdetail.symbol') }}:</span> {{ info.symbol }}
-                    </div>
-                    <div v-if="info.royalty" class="nftdetail_property_item">
-                        <span>{{ $t('nftdetail.royalty') }}:</span> {{ info.royalty / 100 }}%
-                    </div>
-                    <div v-if="info.feeRecipientUser" class="nftdetail_property_item">
-                        <span>{{ $t('nftdetail.recipient') }}:</span>
-                        <router-link :to="{ name: 'account', params: { address: info.feeRecipientUser.address } }">
-                            <a-address
-                                :address="info.feeRecipientUser.address"
-                                :name="info.feeRecipientUser.username"
-                                :image="info.feeRecipientUser.avatarThumb"
-                                is-account
-                            />
-                        </router-link>
-                    </div>
-                    <div class="nftdetail_property_item">
-                        <span>{{ $t('nftdetail.ipRights') }}:</span>
-                        <a v-if="info.ipRights" :href="info.ipRights">{{ info.ipRights }}</a>
-                        <span v-else>{{ $t('nftdetail.notAvailable') }}</span>
-                    </div>
-                    <div class="nftdetail_property_item">
-                        <span>{{ $t('nftdetail.collection') }}:</span>
-                        <nft-detail-collection :collection="info.collection" />
-                    </div>
+                <div class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.symbol') }}:</span><span>{{ info.symbol }}</span>
+                </div>
+                <div v-if="info.royalty" class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.royalty') }}:</span><span>{{ info.royalty / 100 }}%</span>
+                </div>
+                <div v-if="info.feeRecipientUser" class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.recipient') }}:</span>
+                    <router-link :to="{ name: 'account', params: { address: info.feeRecipientUser.address } }">
+                        <a-address
+                            :address="info.feeRecipientUser.address"
+                            :name="info.feeRecipientUser.username"
+                            :image="info.feeRecipientUser.avatarThumb"
+                            is-account
+                        />
+                    </router-link>
+                </div>
+                <div class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.ipRights') }}:</span>
+                    <a v-if="info.ipRights" :href="info.ipRights">{{ info.ipRights }}</a>
+                    <span v-else>{{ $t('nftdetail.notAvailable') }}</span>
+                </div>
+                <div class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.collection') }}:</span>
+                    <nft-detail-collection :collection="info.collection" />
                 </div>
             </template>
         </a-details>
-        <a-details class="title_wrap" v-if="info.collection">
+
+        <a-details class="nftdetailinfo_block tes-3" v-if="info.collection">
             <template #label>
                 <div class="nftdetail_details_wrap">
                     <h2><app-iconset icon="about" /> {{ $t('nftdetail.about') }} {{ info.collection.name }}</h2>
                 </div>
             </template>
             <template>
-                <div class="nftdetail_about">
+                <p>
                     {{ info.collection.description }}
-                </div>
-                <div class="nftdetail_socialBlock">
-                    <a
-                        v-if="info.collection.site"
-                        :href="info.collection.site"
-                        class="nftdetail_socialLink"
-                        target="_blank"
-                    >
+                </p>
+                <p class="nftdetailinfo_socials">
+                    <a v-if="info.collection.site" :href="info.collection.site" target="_blank">
                         <app-iconset icon="web" />
                     </a>
-                    <a
-                        v-if="info.collection.twitter"
-                        :href="info.collection.twitter"
-                        class="nftdetail_socialLink"
-                        target="_blank"
-                    >
+                    <a v-if="info.collection.twitter" :href="info.collection.twitter" target="_blank">
                         <app-iconset icon="twitter-grey" />
                     </a>
-                    <a
-                        v-if="info.collection.telegram"
-                        :href="info.collection.telegram"
-                        class="nftdetail_socialLink"
-                        target="_blank"
-                    >
+                    <a v-if="info.collection.telegram" :href="info.collection.telegram" target="_blank">
                         <app-iconset icon="telegram" />
                     </a>
-                    <a
-                        v-if="info.collection.discord"
-                        :href="info.collection.discord"
-                        class="nftdetail_socialLink"
-                        target="_blank"
-                    >
+                    <a v-if="info.collection.discord" :href="info.collection.discord" target="_blank">
                         <app-iconset icon="discord" />
                     </a>
-                    <a
-                        v-if="info.collection.medium"
-                        :href="info.collection.medium"
-                        class="nftdetail_socialLink"
-                        target="_blank"
-                    >
+                    <a v-if="info.collection.medium" :href="info.collection.medium" target="_blank">
                         <app-iconset icon="medium" />
                     </a>
-                    <a
-                        v-if="info.collection.instagram"
-                        :href="info.collection.instagram"
-                        class="nftdetail_socialLink"
-                        target="_blank"
-                    >
+                    <a v-if="info.collection.instagram" :href="info.collection.instagram" target="_blank">
                         <app-iconset icon="instagram" />
                     </a>
-                </div>
+                </p>
             </template>
         </a-details>
-        <a-details>
+
+        <a-details class="nftdetailinfo_block tes-3">
             <template #label>
                 <div class="nftdetail_details_wrap">
                     <h2><app-iconset icon="chain" /> {{ $t('nftdetail.chainInfo') }}</h2>
                 </div>
             </template>
             <template>
-                <div class="nftdetail_chainBlock">
-                    <div class="nftdetail_chainLine">
-                        <span>{{ $t('nftdetail.collection') }}</span>
-                        <router-link
-                            :to="{ name: 'explore', query: { collections: this.$route.params.tokenContract } }"
-                        >
-                            <f-ellipsis
-                                :text="this.$route.params.tokenContract"
-                                :fixed-chars-count="7"
-                                overflow="middle"
-                            />
-                        </router-link>
-                    </div>
-                    <div class="nftdetail_chainLine">
-                        <span>{{ $t('nftdetail.tokenId') }}</span>
-                        <span>{{ toInt(info.tokenId) }} / {{ info.tokenId }}</span>
-                    </div>
-                    <div class="nftdetail_chainLine">
-                        <span>{{ $t('nftdetail.network') }}</span>
-                        <span>{{ $t('nftdetail.fantomOpera') }}</span>
-                    </div>
-                    <div class="nftdetail_chainLine">
-                        <span>{{ $t('nftdetail.chainId') }}</span>
-                        <span>250</span>
-                    </div>
+                <div class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.collection') }}</span>
+                    <router-link :to="{ name: 'explore', query: { collections: this.$route.params.tokenContract } }">
+                        <f-ellipsis :text="this.$route.params.tokenContract" :fixed-chars-count="7" overflow="middle" />
+                    </router-link>
+                </div>
+                <div class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.tokenId') }}</span>
+                    <span>{{ toInt(info.tokenId) }} / {{ info.tokenId }}</span>
+                </div>
+                <div class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.network') }}</span>
+                    <span>{{ $t('nftdetail.fantomOpera') }}</span>
+                </div>
+                <div class="nftdetailinfo_row">
+                    <span>{{ $t('nftdetail.chainId') }}</span>
+                    <span>250</span>
                 </div>
             </template>
         </a-details>
@@ -168,4 +130,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@use "style";
+</style>
