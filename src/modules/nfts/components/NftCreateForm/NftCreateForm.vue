@@ -186,9 +186,9 @@ export default {
         },
 
         async collectionValidator(_collectionId) {
-            const estimation = await this.getEstimation(_collectionId, this.getRoyalty());
+            const estimation = await this.getEstimation(_collectionId, 1000);
             console.log('collectionValidator', _collectionId, 'estimation error:', estimation.error);
-            this.setFee(estimation.platformFee);
+            await this.setFee(estimation.platformFee);
             return estimation.error != null;
         },
 
@@ -375,7 +375,10 @@ export default {
         async getMintedTokenId(txHash) {
             const web3 = this.$wallet.wallet._web3;
             const receipt = await web3.eth.getTransactionReceipt(txHash);
-            console.log('??????', txHash, receipt);
+            console.log('mint getTransactionReceipt', txHash, receipt);
+            if (receipt === null) {
+                throw 'getTransactionReceipt return null receipt for ' + txHash;
+            }
             const tokenId = contracts.decodeMintedNftTokenId(receipt, web3);
             console.log('tokenId', tokenId, toHex(tokenId));
             return toHex(tokenId);
