@@ -372,6 +372,12 @@
         "canWithdrawIn": "You can withdraw your bid {in}"
     },
 
+    "nftunlockable": {
+        "title": "This item has unlockable content",
+        "reveal": "Reveal Content",
+        "signInFirst": "You need to sign-in first"
+    },
+
     "nftbid": {
         "placeBid": "Place Bid"
     },

@@ -49,6 +49,7 @@ export async function getToken(contract = '', id = '') {
                     hasOffer
                     hasAuction
                     hasBids
+                    hasUnlockable
                     lastListing
                     lastTrade
                     lastOffer

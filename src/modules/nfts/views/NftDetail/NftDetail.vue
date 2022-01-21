@@ -95,6 +95,8 @@
                     @auction-time-up="update"
                 />
 
+                <nft-unlockable v-if="token.hasUnlockable" :token="token" :user-owns-token="userOwnsToken" />
+
                 <a-details strategy="create">
                     <template #label>
                         <div class="nftdetail_details_wrap">
@@ -214,11 +216,13 @@ import NftUpdateAuctionButton from '@/modules/nfts/components/NftUpdateAuctionBu
 import NftItemActivity from '@/modules/nfts/components/NftItemActivity/NftItemActivity';
 import { documentMeta } from '@/modules/app/DocumentMeta.js';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
+import NftUnlockable from '@/modules/nfts/components/NftUnlockable/NftUnlockable';
 
 export default {
     name: 'NftDetail',
 
     components: {
+        NftUnlockable,
         NftUpdateAuctionButton,
         NftDetailInfo,
         NftDetailCollection,
