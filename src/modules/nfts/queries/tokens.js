@@ -22,7 +22,6 @@ export async function getTokens(pagination = {}, filterSort = {}) {
                     last: $last
                     before: $before
                 ) {
-                    totalCount
                     pageInfo {
                         startCursor
                         endCursor
@@ -70,6 +69,25 @@ export async function getTokens(pagination = {}, filterSort = {}) {
                             }
                         }
                     }
+                }
+            }
+        `,
+        variables: {
+            ...pagination,
+            ...filterSort,
+        },
+        fetchPolicy: 'network-only',
+    };
+
+    return gqlQuery(query, 'tokens');
+}
+
+export async function getTokensCount(pagination = {}, filterSort = {}) {
+    const query = {
+        query: gql`
+            query GetTokensCount($filter: TokenFilter, $sortBy: TokenSorting, $sortDir: SortingDirection) {
+                tokens(filter: $filter, sortBy: $sortBy, sortDir: $sortDir, first: 0) {
+                    totalCount
                 }
             }
         `,

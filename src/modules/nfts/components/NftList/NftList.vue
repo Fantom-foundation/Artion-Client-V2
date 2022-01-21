@@ -4,6 +4,7 @@
         :total-items="totalItems"
         :per-page="perPage"
         :curr-page="currPage"
+        :has-next-page="hasNextPage"
         :loading="loading"
         :root="root"
         :root-margin="rootMargin"
@@ -51,6 +52,10 @@ export default {
         horizontal: {
             type: Boolean,
             default: false,
+        },
+        hasNextPage: {
+            type: Boolean,
+            default: true,
         },
         /** Total amount of items (FPagination prop) */
         totalItems: { ...FPagination.props.totalItems },

@@ -7,7 +7,6 @@ export async function getUserFavoriteTokens(address = '', pagination = {}) {
             query GetUserFavoriteTokens($address: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
                 user(address: $address) {
                     tokenLikes(first: $first, after: $after, last: $last, before: $before) {
-                        totalCount
                         pageInfo {
                             startCursor
                             endCursor

@@ -7,7 +7,6 @@ export async function getUserCreatedTokens(address = '', pagination = {}) {
             query GetUserCreatedTokens($address: Address!, $first: Int, $after: Cursor, $last: Int, $before: Cursor) {
                 user(address: $address) {
                     createdTokens(first: $first, after: $after, last: $last, before: $before) {
-                        totalCount
                         pageInfo {
                             startCursor
                             endCursor

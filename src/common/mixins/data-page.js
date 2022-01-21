@@ -8,6 +8,7 @@ export const dataPageMixin = {
             totalItems: 0,
             loading: false,
             gridItemsSet: false,
+            hasNextPage: true,
             pageInfo: {},
             pageInfoPrev: {},
         };
@@ -128,6 +129,12 @@ export const dataPageMixin = {
                 pagination: this._getPaginationVariables(pagination),
                 dontSetItems: true,
             });
+
+            this.hasNextPage = this.pageInfo.hasNextPage;
+
+            if (isNaN(this.totalItems) && !this.pageInfo.hasNextPage) {
+                pagination.isLastPage = true;
+            }
 
             if ((this.pageInfo.hasNextPage || pagination.isLastPage) && data && data.edges && data.edges.length > 0) {
                 const items = this._getItemsFromData(data);

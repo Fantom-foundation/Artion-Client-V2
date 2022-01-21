@@ -4,6 +4,7 @@
             :tokens="items"
             :loading="loading"
             :total-items="totalItems"
+            :has-next-page="hasNextPage"
             :per-page="perPage"
             :density="density"
             root-margin="400px 0px"

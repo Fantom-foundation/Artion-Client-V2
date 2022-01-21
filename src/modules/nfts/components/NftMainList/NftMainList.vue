@@ -6,6 +6,7 @@
             :loading="loading"
             :total-items="totalItems"
             :per-page="perPage"
+            :has-next-page="hasNextPage"
             :curr-page="currPage"
             :density="density"
             root-margin="400px 0px"
@@ -68,7 +69,7 @@ export default {
                         pagination = meta.NftMainList.lastVariables;
                         this.currPage = meta.NftMainList.currPage;
                         this.page = this.currPage;
-                        this.totalItems = meta.NftMainList.totalItems;
+                        this.totalItems = parseInt(meta.NftMainList.totalItems);
 
                         this.pageInfo = clone(meta.NftMainList.pageInfo);
                         this.pageInfoPrev = clone(meta.NftMainList.pageInfo);

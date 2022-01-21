@@ -22,11 +22,11 @@
         <div>
             <section :aria-label="$t('page.explore.filters')">
                 <div class="explore_nftlist_header">
-                    <div class="explore_results">
+                    <!--                    <div class="explore_results">
                         <a-placeholder block :content-loaded="results > -1" replacement-text="1000 results">
                             {{ results }} {{ $t('results') }}
                         </a-placeholder>
-                    </div>
+                    </div>-->
                     <div class="explore_nftlist_header_endcol">
                         <nft-list-filters v-model="filters" />
                         <density-switch />
