@@ -186,7 +186,6 @@ import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/N
 import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { getImageThumbUrl } from '@/utils/url.js';
-import { getTokens } from '@/modules/nfts/queries/tokens.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
 import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
 import { checkSignIn } from '@/modules/account/auth.js';
@@ -249,8 +248,6 @@ export default {
             token: {},
             likesCount: 7,
             liked: false,
-            // token is created by user
-            userCreatedToken: false,
             userOwnsToken: false,
             inEscrow: false,
             listing: {},
@@ -283,8 +280,6 @@ export default {
 
         tokenOwnerName() {
             const { tokenOwner } = this;
-
-            console.log(tokenOwner.username);
 
             return tokenOwner
                 ? compareAddresses(tokenOwner.address, this.walletAddress)
@@ -363,8 +358,6 @@ export default {
         async onWalletAddressChange() {
             const { $wallet } = this;
 
-            this.userCreatedToken = await this.checkUserCreatedToken(this.token);
-
             if ($wallet.connected && $wallet.account) {
                 this.userOwnsToken = compareAddresses(this.tokenOwner.address, $wallet.account);
             } else {
@@ -375,27 +368,6 @@ export default {
                 await this.$refs.nftDetailPrice.update();
                 await this.setListing();
             }
-        },
-
-        /**
-         * Checks, if user created the token
-         *
-         * @param {Object} token
-         * @return {Promise<boolean>}
-         */
-        async checkUserCreatedToken(token) {
-            let created = false;
-
-            if (this.$wallet.connected && this.$wallet.account) {
-                const tokens = await getTokens({}, { filter: { createdBy: this.$wallet.account } });
-
-                created =
-                    tokens.edges.findIndex(
-                        edge => edge.node.tokenId === token.tokenId && edge.node.contract === token.contract
-                    ) > -1;
-            }
-
-            return created;
         },
 
         /**
