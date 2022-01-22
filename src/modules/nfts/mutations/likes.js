@@ -33,5 +33,5 @@ export async function unlikeToken({ contract = '', tokenId = '' }) {
         variables: { contract, tokenId: toHex(tokenId) },
     };
 
-    return gqlMutation(mutation, 'likeToken');
+    return gqlMutation(mutation, 'unlikeToken');
 }

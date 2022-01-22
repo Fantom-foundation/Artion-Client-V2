@@ -355,6 +355,11 @@
         "itemActivity": "Item Activity"
     },
 
+    "nftlike": {
+        "likeAdded": "You successfully added {token} to your favorites",
+        "likeRemoved": "You successfully removed {token} from your favorites"
+    },
+
     "nftdetailprice": {
         "currentPrice": "Current Price",
         "buyNow": "Buy Now",

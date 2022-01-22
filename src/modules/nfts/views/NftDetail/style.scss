@@ -128,7 +128,7 @@
     }
 
     &_favorites {
-        &.color-clicked {
+        .color-clicked {
             color: var(--f-color-primary-5);
         }
 

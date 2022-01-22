@@ -45,15 +45,8 @@
                             <app-iconset icon="view" />
                             {{ toInt(token.views) }} {{ $t('nftdetail.views') }}
                         </div>
-                        <div class="nftdetail_favorites" :class="{ 'color-clicked': liked }">
-                            <button
-                                aria-label="Like"
-                                :data-tooltip="$t('nftcard.favorite')"
-                                @click.prevent="onLikeClick"
-                            >
-                                <app-iconset :icon="liked ? 'liked' : 'like'" size="20px" />
-                            </button>
-                            {{ toInt(token.likes) }} {{ $t('nftdetail.favorites') }}
+                        <div class="nftdetail_favorites">
+                            <nft-like :token="token" :label="$t('nftdetail.favorites')" />
                         </div>
                     </div>
 
@@ -142,10 +135,6 @@
             <nft-detail-info :info="token" />
         </div>
 
-        <!-- <div class="nftdetail_filter">
-            <nft-trade-history-grid :token="token" />
-        </div> -->
-
         <div class="nftdetail_collection">
             <a-details strategy="create" open>
                 <template #label>
@@ -154,7 +143,6 @@
                     </div>
                 </template>
                 <template>
-                    <!-- <nft-trade-history-grid :token="token" /> -->
                     <nft-item-activity :token="token" />
                 </template>
             </a-details>
@@ -184,13 +172,10 @@ import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftDetailInfo from '@/modules/nfts/components/NftDetailInfo/NftDetailInfo.vue';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
 import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
-//import NftTradeHistoryGrid from '@/modules/nfts/components/NftTradeHistoryGrid/NftTradeHistoryGrid';
 import { toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { getImageThumbUrl } from '@/utils/url.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
-import { likeToken, unlikeToken } from '@/modules/nfts/mutations/likes.js';
-import { checkSignIn } from '@/modules/account/auth.js';
 import { mapState } from 'vuex';
 import NftAuction from '@/modules/nfts/components/NftAuction/NftAuction.vue';
 
@@ -217,6 +202,7 @@ import NftItemActivity from '@/modules/nfts/components/NftItemActivity/NftItemAc
 import { documentMeta } from '@/modules/app/DocumentMeta.js';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 import NftUnlockable from '@/modules/nfts/components/NftUnlockable/NftUnlockable';
+import NftLike from '@/modules/nfts/components/NftLike/NftLike';
 
 export default {
     name: 'NftDetail',
@@ -240,18 +226,16 @@ export default {
         AShareButton,
         NftListingsGrid,
         NftDirectOffersGrid,
-        //NftTradeHistoryGrid,
         NftMoreFromCollectionList,
         AVideo,
         NftPriceHistory,
         NftItemActivity,
+        NftLike,
     },
 
     data() {
         return {
             token: {},
-            likesCount: 7,
-            liked: false,
             userOwnsToken: false,
             inEscrow: false,
             listing: {},
@@ -259,7 +243,6 @@ export default {
             auction: {},
             tokenOwner: {},
             tx: {},
-            likedNftIds: [],
         };
     },
 
@@ -296,7 +279,6 @@ export default {
     watch: {
         walletAddress(value) {
             this.onWalletAddressChange(value);
-            // this.getFavoriteNfts(value);
         },
 
         $route() {
@@ -341,7 +323,6 @@ export default {
 
             focusElem(this.$el);
 
-            this.liked = this.token.isLiked;
             this.token._inEscrow = this.inEscrow;
 
             if (this.auction.contract) {
@@ -417,30 +398,6 @@ export default {
                 }
             } else if (code === 'buy') {
                 this.update();
-            }
-        },
-
-        async onLikeClick() {
-            let ok = await checkSignIn();
-
-            if (ok) {
-                if (!this.liked) {
-                    await likeToken(this.token);
-                    this.liked = true;
-                    this.$emit('nft-like');
-                    this.$notifications.add({
-                        type: 'success',
-                        text: `You successfully added ${this.token.name} to your favorites`,
-                    });
-                } else {
-                    await unlikeToken(this.token);
-                    this.liked = false;
-                    this.$emit('nft-unlike');
-                    this.$notifications.add({
-                        type: 'success',
-                        text: `You successfully delete ${this.token.name} from your favorites`,
-                    });
-                }
             }
         },
 
