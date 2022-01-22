@@ -1,5 +1,5 @@
 <template>
-    <div class="nftdetailcollection">
+    <div v-if="collection" class="nftdetailcollection">
         <a-placeholder :content-loaded="!!collection.contract" :replacement-num-chars="15">
             <router-link :to="{ name: 'explore', query: { collections: collection.contract } }">
                 {{ collection.name }}
