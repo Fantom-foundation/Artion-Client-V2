@@ -15,8 +15,18 @@
 
                     <div class="nftdetail_name">
                         <h1 data-focus>
-                            <a-placeholder block :content-loaded="!!token.tokenId" replacement-text="token name">
-                                {{ token.name }} <small class="nftdetail_tokenid">#{{ toInt(token.tokenId) }}</small>
+                            <a-placeholder
+                                block
+                                :content-loaded="!!token.tokenId"
+                                replacement-text="token name"
+                                class="nftdetail_tokenname"
+                            >
+                                <span>{{ token.name }}</span>
+                                <f-ellipsis
+                                    :text="`#${toBigNumber(token.tokenId).toString(10)}`"
+                                    overflow="middle"
+                                    class="nftdetail_tokenid"
+                                />
                             </a-placeholder>
                         </h1>
                     </div>
@@ -172,7 +182,7 @@ import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftDetailInfo from '@/modules/nfts/components/NftDetailInfo/NftDetailInfo.vue';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
 import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
-import { toHex, toInt } from '@/utils/big-number.js';
+import { toBigNumber, toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { getImageThumbUrl } from '@/utils/url.js';
 import { getToken } from '@/modules/nfts/queries/token.js';
@@ -203,6 +213,7 @@ import { documentMeta } from '@/modules/app/DocumentMeta.js';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 import NftUnlockable from '@/modules/nfts/components/NftUnlockable/NftUnlockable';
 import NftLike from '@/modules/nfts/components/NftLike/NftLike';
+import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 
 export default {
     name: 'NftDetail',
@@ -231,6 +242,7 @@ export default {
         NftPriceHistory,
         NftItemActivity,
         NftLike,
+        FEllipsis,
     },
 
     data() {
@@ -402,6 +414,7 @@ export default {
         },
 
         toInt,
+        toBigNumber,
         getImageThumbUrl,
         compareAddresses,
     },

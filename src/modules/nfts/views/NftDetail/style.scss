@@ -191,8 +191,17 @@
         }
     }
 
+    &_tokenname {
+        display: flex;
+        align-items: center;
+        gap: var(--f-spacer-2);
+    }
+
     &_tokenid {
         color: var(--nftdetail-text-color);
+        font-size: var(--f-font-size-7);
+        width: 100%;
+        overflow: hidden;
     }
 }
 
