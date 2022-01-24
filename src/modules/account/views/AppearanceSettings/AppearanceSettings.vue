@@ -4,9 +4,10 @@
 
         <p>
             <f-dark-theme-switch
-                v-model="darkTheme"
                 :disabled="autoDarkThemeOn"
                 :label="$t('appearancesettings.darkMode')"
+                :model-value="darkTheme"
+                @change="onDarkThemeSwitchChange"
             />
             <f-toggle-button
                 v-model="autoDarkThemeOn"
@@ -53,12 +54,12 @@ export default {
     },
 
     watch: {
-        darkTheme(value) {
-            this.$store.commit(`app/${SET_THEME}`, value ? THEME_DARK : 'theme-default');
-        },
-
         autoDarkThemeOn(value) {
             this.$store.commit(`app/${SET_AUTO_DARK_MODE}`, value);
+        },
+
+        theme(value) {
+            this.darkTheme = value === THEME_DARK;
         },
     },
 
@@ -69,6 +70,12 @@ export default {
 
     mounted() {
         focusElem(this.$el);
+    },
+
+    methods: {
+        onDarkThemeSwitchChange(value) {
+            this.$store.commit(`app/${SET_THEME}`, value ? THEME_DARK : 'theme-default');
+        },
     },
 };
 </script>

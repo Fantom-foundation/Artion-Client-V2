@@ -13,7 +13,11 @@
     >
         <f-accordion-navigation ref="navigation" :navigation="navigation" @node-selected="onNavigationNodeSelected" />
         <div class="walletmenupopover_darkthemeswitch">
-            <f-dark-theme-switch v-model="darkTheme" :label="$t('appearancesettings.darkMode')" />
+            <f-dark-theme-switch
+                :model-value="darkTheme"
+                :label="$t('appearancesettings.darkMode')"
+                @change="onDarkThemeSwitchChange"
+            />
         </div>
     </f-popover>
 </template>
@@ -61,8 +65,8 @@ export default {
     },
 
     watch: {
-        darkTheme(value) {
-            this.$store.commit(`app/${SET_THEME}`, value ? THEME_DARK : 'theme-default');
+        theme(value) {
+            this.darkTheme = value === THEME_DARK;
         },
     },
 
@@ -89,6 +93,10 @@ export default {
             this.$refs.popover.hide();
 
             this.$emit('wallet-menu', clone(node));
+        },
+
+        onDarkThemeSwitchChange(value) {
+            this.$store.commit(`app/${SET_THEME}`, value ? THEME_DARK : 'theme-default');
         },
     },
 };
