@@ -84,7 +84,11 @@
                 </div>
                 <div class="nftdetailinfo_row">
                     <span>{{ $t('nftdetail.tokenId') }}</span>
-                    <span>{{ toInt(info.tokenId) }} / {{ info.tokenId }}</span>
+                    <span class="nftdetailinfo_tokenid">
+                        <f-ellipsis :text="toBigNumber(info.tokenId).toString(10)" overflow="middle" />
+                        <span>/</span>
+                        <f-ellipsis :text="info.tokenId" overflow="middle" />
+                    </span>
                 </div>
                 <div class="nftdetailinfo_row">
                     <span>{{ $t('nftdetail.network') }}</span>
@@ -104,8 +108,9 @@ import ADetailsGroup from '@/common/components/ADetailsGroup/ADetailsGroup';
 import ADetails from '@/common/components/ADetails/ADetails';
 import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/NftDetailCollection.vue';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
-import { toInt } from '@/utils/big-number.js';
+import { toInt, toBigNumber } from '@/utils/big-number.js';
 import AAddress from '@/common/components/AAddress/AAddress';
+
 export default {
     name: 'NftDetailInfo',
 
@@ -126,6 +131,7 @@ export default {
 
     methods: {
         toInt,
+        toBigNumber,
     },
 };
 </script>

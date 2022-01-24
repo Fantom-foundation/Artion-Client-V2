@@ -30,4 +30,13 @@
             --fsvgicon-color: var(--f-doc-color);
         }
     }
+
+    &_tokenid {
+        display: flex;
+        gap: var(--f-spacer-1);
+
+        .f-ellipsis {
+            max-width: 100px;
+        }
+    }
 }
