@@ -109,9 +109,13 @@ export default {
 
                     // console.log('TX: ', tx);
 
-                    const txHash = await $wallet.signTransaction(tx, true);
+                    const trx = await $wallet.signTransaction(tx, true);
 
-                    this.setStatus('success', txHash);
+                    if (trx.ok) {
+                        this.setStatus('success', trx.txHash);
+                    } else {
+                        this.setStatus('error', { message: `Transaction ${trx.txHash} has failed.` });
+                    }
                 } catch (error) {
                     this.setStatus('error', error);
                     console.error(error);

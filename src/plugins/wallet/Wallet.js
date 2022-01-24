@@ -72,16 +72,20 @@ export class Wallet {
     async signTransaction(tx, waitUntilVerified = false, address) {
         // return this.wallet ? await this.wallet.signTransaction(tx, address) : '';
         let txHash = '';
+        let ok = false;
 
         if (this.wallet) {
             txHash = await this.wallet.signTransaction(clone(tx), address);
 
             if (txHash && waitUntilVerified) {
-                await this._verifyTransaction(txHash);
+                ok = await this._verifyTransaction(txHash);
             }
         }
 
-        return txHash;
+        return {
+            txHash,
+            ok,
+        };
     }
 
     /**
@@ -328,20 +332,44 @@ export class Wallet {
         return estimateGas;
     }
 
+    async getTransactionReceipt(txHash, maxRetry = 5) {
+        const { wallet } = this;
+        let receipt = null;
+        let c = 0;
+
+        if (wallet) {
+            receipt = await wallet._web3.eth.getTransactionReceipt(txHash);
+
+            while (receipt === null && c < maxRetry) {
+                await delay(350);
+                receipt = await wallet._web3.eth.getTransactionReceipt(txHash);
+                console.log('getTransactionReceipt next try');
+                c += 1;
+            }
+        }
+
+        return receipt;
+    }
+
     /**
      * @param {string} txHash
-     * @return {Promise<void>}
+     * @return {Promise<boolean>}
      * @private
      */
     async _verifyTransaction(txHash) {
-        let status = '';
+        let status = null;
+        let ok = false;
 
         if (txHash) {
-            while (!status) {
+            while (status === null) {
                 status = await this._getTransactionStatus(txHash);
                 await delay(400);
             }
+
+            ok = parseInt(status, 16) === 1;
         }
+
+        return ok;
     }
 
     /**
