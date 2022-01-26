@@ -61,10 +61,13 @@
     &_infoWrap {
         position: relative;
 
-        .asharebutton {
+        .topcornerbuttons {
             position: absolute;
             top: 0;
             right: 0;
+        }
+        .topcornerbuttons div {
+            display: inline-block;
         }
     }
 
@@ -258,7 +261,7 @@ html[dir='rtl'],
 body[dir='rtl'] {
     .nftdetail {
         &_infoWrap {
-            .asharebutton {
+            .topcornerbuttons {
                 right: initial;
                 left: 0;
             }

@@ -397,6 +397,14 @@
         "placeBidSuccessful": "You have successfully placed a bid"
     },
 
+    "nfttransfer": {
+        "transfer": "Transfer",
+        "address": "Address",
+        "invalidAddress": "The address is not valid",
+        "transferSuccessful": "You have successfully transferred the token",
+        "inEscrow": "The token is listed or in an auction - please cancel the listing/auction before the transfer"
+    },
+
     "ashareButton": {
         "copy": "Copy Link",
         "shareFacebook": "Share on Facebook",

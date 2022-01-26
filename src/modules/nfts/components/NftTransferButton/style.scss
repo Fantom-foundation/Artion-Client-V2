@@ -1,0 +1,10 @@
+.nfttransferbutton {
+    --asharebutton-border-color: #eaeaf1;
+
+    button {
+        border: 1px solid var(--asharebutton-border-color);
+        border-radius: var(--f-border-radius-2);
+        color: var(--f-doc-background-color);
+        padding: var(--f-spacer-2);
+    }
+}

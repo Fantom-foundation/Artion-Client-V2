@@ -47,9 +47,55 @@ function erc721Approve(erc721Address, approveTo, tokenId) {
     };
 }
 
+/**
+ * erc721Transfer creates a transaction to transfer an ERC-721 token to a different owner.
+ *
+ * @param {string} erc721Address
+ * @param {string} transferFrom
+ * @param {string} transferTo
+ * @param {string|{BN}} tokenId
+ * @return {{data: string, chainId: string, to: string, value: string}}
+ */
+function erc721TransferFrom(erc721Address, transferFrom, transferTo, tokenId) {
+    // create web3.js instance
+    const web3 = new Web3();
+    // make the transaction
+    return {
+        to: erc721Address,
+        value: ZERO_AMOUNT,
+        data: web3.eth.abi.encodeFunctionCall(
+            {
+                constant: false,
+                inputs: [
+                    {
+                        name: '_from',
+                        type: 'address',
+                    },
+                    {
+                        name: '_to',
+                        type: 'address',
+                    },
+                    {
+                        name: '_tokenId',
+                        type: 'uint256',
+                    },
+                ],
+                name: 'transferFrom',
+                outputs: [],
+                payable: true,
+                stateMutability: 'payable',
+                type: 'function',
+            },
+            [transferFrom, transferTo, tokenId]
+        ),
+        chainId: OPERA_CHAIN_ID,
+    };
+}
+
 // what we export here
 export default {
     erc721Approve,
+    erc721TransferFrom,
     OPERA_CHAIN_ID,
     TESTNET_CHAIN_ID,
 };

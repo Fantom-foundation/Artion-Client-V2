@@ -87,12 +87,6 @@ export default {
         };
     },
 
-    computed: {
-        isFormValid() {
-            return !this.priceValidator(this.values.price) && !this.deadlineValidator(this.values.deadline);
-        },
-    },
-
     watch: {
         /**
          * @param {PayToken} token

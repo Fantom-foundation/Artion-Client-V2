@@ -73,10 +73,6 @@ export default {
         ...mapState('wallet', {
             walletAddress: 'account',
         }),
-
-        isFormValid() {
-            return !this.priceValidator(this.values.price);
-        },
     },
 
     watch: {

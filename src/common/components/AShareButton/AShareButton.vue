@@ -3,7 +3,7 @@
         <f-button
             secondary
             :id="buttonId"
-            @click.native="onButtinClick"
+            @click.native="onButtonClick"
             :data-tooltip="$t('ashareButton.share')"
             :aria-label="$t('ashareButton.share')"
         >
@@ -102,7 +102,7 @@ export default {
     },
 
     methods: {
-        onButtinClick() {
+        onButtonClick() {
             //this.$refs.popover.toggle();
             //if(this.$refs.popover) this.$refs.listbox.focus();
             this.$nextTick(() => {

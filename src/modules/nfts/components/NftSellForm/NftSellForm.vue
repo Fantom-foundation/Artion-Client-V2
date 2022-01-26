@@ -91,16 +91,6 @@ export default {
         };
     },
 
-    computed: {
-        isFormValid() {
-            return (
-                !this.priceValidator(this.values.price) &&
-                !this.startingTimeValidator(this.values.startingTime) &&
-                !this.quantityValidator(this.values.quantity)
-            );
-        },
-    },
-
     created() {
         this.init();
     },

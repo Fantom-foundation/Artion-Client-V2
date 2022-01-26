@@ -85,7 +85,10 @@
                         @tx-success="onNftDetailPriceTxSuccess"
                     />
 
-                    <a-share-button :twitter-text="$t('ashareButton.checkOutItem')" />
+                    <div class="topcornerbuttons">
+                        <nft-transfer-button v-if="userOwnsToken" :token="token" />
+                        <a-share-button :twitter-text="$t('ashareButton.checkOutItem')" />
+                    </div>
                 </div>
             </div>
             <div class="nftdetail_data">
@@ -214,6 +217,7 @@ import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
 import NftUnlockable from '@/modules/nfts/components/NftUnlockable/NftUnlockable';
 import NftLike from '@/modules/nfts/components/NftLike/NftLike';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
+import NftTransferButton from '@/modules/nfts/components/NftTransferButton/NftTransferButton';
 
 export default {
     name: 'NftDetail',
@@ -242,6 +246,7 @@ export default {
         NftPriceHistory,
         NftItemActivity,
         NftLike,
+        NftTransferButton,
         FEllipsis,
     },
 
