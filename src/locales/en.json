@@ -399,7 +399,7 @@
 
     "nfttransfer": {
         "transfer": "Transfer",
-        "address": "Address",
+        "address": "Address of new owner",
         "invalidAddress": "The address is not valid",
         "transferSuccessful": "You have successfully transferred the token",
         "inEscrow": "The token is listed or in an auction - please cancel the listing/auction before the transfer"

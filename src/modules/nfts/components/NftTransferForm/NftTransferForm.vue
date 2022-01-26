@@ -57,9 +57,6 @@ export default {
             if (!Web3.utils.isHexStrict(_address) || !Web3.utils.isAddress(_address)) {
                 return this.$t('nfttransfer.invalidAddress');
             }
-            if (this.token._inEscrow) {
-                return this.$t('nfttransfer.inEscrow');
-            }
             return '';
         },
 

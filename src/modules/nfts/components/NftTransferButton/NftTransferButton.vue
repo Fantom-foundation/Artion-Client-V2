@@ -50,7 +50,14 @@ export default {
 
     methods: {
         onButtonClick() {
-            this.$refs.window.show();
+            if (this.token._inEscrow) {
+                this.$notifications.add({
+                    type: 'warning',
+                    text: this.$t('nfttransfer.inEscrow'),
+                });
+            } else {
+                this.$refs.window.show();
+            }
         },
 
         onTransactionStatus(payload) {
