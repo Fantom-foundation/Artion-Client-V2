@@ -76,6 +76,7 @@ export const Default = () => ({
                 'ban',
                 'thumb-up',
                 'thumb-down',
+                'present',
             ],
         };
     },
