@@ -4,6 +4,7 @@
             name="address"
             :label="$t('nfttransfer.address')"
             :validator="addressValidator"
+            field-size="large"
             validate-on-input
         />
 

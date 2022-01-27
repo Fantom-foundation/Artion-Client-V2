@@ -7,7 +7,7 @@
             :data-tooltip="$t('ashareButton.share')"
             :aria-label="$t('ashareButton.share')"
         >
-            <app-iconset icon="share" />
+            <app-iconset icon="share" original />
         </f-button>
         <f-popover
             v-if="showModal"

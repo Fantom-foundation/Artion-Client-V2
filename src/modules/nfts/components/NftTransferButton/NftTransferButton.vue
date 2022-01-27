@@ -5,8 +5,9 @@
             @click.native="onButtonClick"
             :data-tooltip="$t('nfttransfer.transfer')"
             :aria-label="$t('nfttransfer.transfer')"
+            class="btn-norightradius"
         >
-            <app-iconset icon="bear" />
+            <app-iconset icon="present" original style="opacity: 0.35" />
         </f-button>
 
         <a-tx-window ref="window" :title="$t('nfttransfer.transfer')" v-slot="{ onTxStatus }">
