@@ -102,8 +102,8 @@
             <div v-if="fileError" class="pat-5 flex juc-center">
                 <f-message type="error" with-icon>{{ fileError }}</f-message>
             </div>
-            <div v-if="progressMessage" class="pat-5 flex juc-center">
-                <f-message type="success" with-icon>{{ progressMessage }}</f-message>
+            <div v-if="progressMessage" class="pat-5 flex juc-center progress-message">
+                <f-message type="info" with-icon>{{ progressMessage }}</f-message>
             </div>
             <div class="nftcreate_btn">
                 <a-button type="submit" size="large" :loading="isLoading">
@@ -245,6 +245,7 @@ export default {
                     type: 'error',
                     text: this.$t('nftcreate.collectionErr') + ' ' + estimation.error,
                 });
+                this.progressMessage = '';
                 this.isLoading = false;
                 return;
             }
@@ -259,6 +260,7 @@ export default {
                     type: 'error',
                     text: this.$t('nftcreate.wasntUploaded') + err,
                 });
+                this.progressMessage = '';
                 this.isLoading = false;
                 return;
             }
@@ -288,6 +290,7 @@ export default {
                     type: 'error',
                     text: this.$t('nftcreate.mintingError'),
                 });
+                this.progressMessage = '';
                 this.isLoading = false;
                 return;
             }
@@ -306,6 +309,7 @@ export default {
                     type: 'error',
                     text: this.$t('nftcreate.noNewTokenId'),
                 });
+                this.progressMessage = '';
                 this.isLoading = false;
                 return;
             }

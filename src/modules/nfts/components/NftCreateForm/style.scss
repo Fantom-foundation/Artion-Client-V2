@@ -56,7 +56,9 @@
 		}
 	}
 
-
+    .progress-message .fmessage-info {
+        color: var(--f-color-primary-5);
+    }
 }
 
 @include media.media-max(1150px) {
