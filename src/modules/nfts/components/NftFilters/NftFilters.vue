@@ -12,7 +12,7 @@
             strategy="render"
             id="test_nftfilters_collections"
         >
-            <collections-filter :collections="collections" v-model="dFilters.collections" />
+            <collections-filter v-model="dFilters.collections" />
         </a-details>
         <a-details :label="$t('categories')" :open="categoryOpen" strategy="render" id="test_nftfilters_categories">
             <categories-filter :categories="categories" v-model="dFilters.category" />
@@ -30,8 +30,6 @@ import StatusFilter from '@/modules/nfts/components/StatusFilter/StatusFilter.vu
 import PriceFilter from '@/modules/nfts/components/PriceFilter/PriceFilter';
 
 import { getCategories } from '@/modules/nfts/queries/categories.js';
-import { getCollections } from '@/modules/collections/queries/collections.js';
-import { getCollectionImageUrl } from '@/utils/url.js';
 
 export default {
     name: 'NftFilters',
@@ -63,7 +61,6 @@ export default {
         return {
             dFilters: { ...this.filters },
             categories: [],
-            collections: [],
             statusOpen: false,
             priceOpen: false,
             collectionsOpen: false,
@@ -116,14 +113,6 @@ export default {
     methods: {
         async init() {
             this.categories = await getCategories();
-            let collections = await getCollections();
-            this.collections = collections.edges.map(edge => {
-                return {
-                    label: edge.node.name,
-                    value: edge.node.contract,
-                    img: getCollectionImageUrl(edge.node.contract),
-                };
-            });
         },
     },
 };

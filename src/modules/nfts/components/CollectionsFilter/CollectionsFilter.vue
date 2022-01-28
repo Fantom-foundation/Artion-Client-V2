@@ -26,7 +26,6 @@
 <script>
 import FListbox from 'fantom-vue-components/src/components/FListbox/FListbox.vue';
 import FImage from 'fantom-vue-components/src/components/FImage/FImage.vue';
-import { collectionsData } from '@/common/constants/dummy/collections-data.js';
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import { getCollections } from '@/modules/collections/queries/collections.js';
 import { getCollectionImageUrl } from '@/utils/url.js';
@@ -44,13 +43,6 @@ export default {
     },
 
     props: {
-        /** @type {Category[]} */
-        collections: {
-            type: Array,
-            default() {
-                return collectionsData();
-            },
-        },
         selected: {
             type: [Array, String],
             default() {
