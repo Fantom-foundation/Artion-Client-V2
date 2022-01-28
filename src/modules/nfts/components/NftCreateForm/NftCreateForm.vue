@@ -102,6 +102,9 @@
             <div v-if="fileError" class="pat-5 flex juc-center">
                 <f-message type="error" with-icon>{{ fileError }}</f-message>
             </div>
+            <div v-if="progressMessage" class="pat-5 flex juc-center">
+                <f-message type="success" with-icon>{{ progressMessage }}</f-message>
+            </div>
             <div class="nftcreate_btn">
                 <a-button type="submit" size="large" :loading="isLoading">
                     {{ $t('nftcreate.mint') }}
@@ -110,7 +113,7 @@
             <div v-if="fee !== null" class="nftcreate_info">
                 <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm', { fee }) }}</f-message>
             </div>
-            <a-sign-transaction :tx="txMint" @transaction-status="onMintTransactionStatus" />
+            <a-sign-transaction :tx="tx" @transaction-status="onMintTransactionStatus" />
         </div>
     </f-form>
 </template>
@@ -146,10 +149,10 @@ export default {
             collection: {},
             imageFile: null,
             fileError: '',
-            txMint: {},
+            progressMessage: '',
+            tx: {},
             tokenId: null,
             isLoading: false,
-            waitingMsgId: '',
             fee: null,
         };
     },
@@ -232,8 +235,8 @@ export default {
                 return;
             }
 
+            this.progressMessage = this.$t('nftcreate.estimatingFeeGas');
             const royalty = this.getRoyalty();
-
             const estimation = await this.getEstimation(val.collectionId, royalty);
             console.log('estimation', estimation);
             if (estimation.error != null) {
@@ -246,6 +249,7 @@ export default {
                 return;
             }
 
+            this.progressMessage = this.$t('nftcreate.uploading');
             let tokenUri;
             try {
                 tokenUri = await uploadTokenData(_metadata, this.imageFile);
@@ -259,12 +263,13 @@ export default {
                 return;
             }
 
+            this.progressMessage = this.$t('nftcreate.signMint');
             notifications.add({
                 type: 'info',
                 text: this.$t('nftcreate.signMint'),
             });
             const web3 = new Web3();
-            this.txMint = contracts.createNFTWithRoyalty(
+            this.tx = contracts.createNFTWithRoyalty(
                 this.$wallet.account, // owner of the created token
                 tokenUri,
                 estimation.platformFee,
@@ -287,67 +292,71 @@ export default {
                 return;
             }
             if (payload.status === 'success') {
-                console.log('txHash', payload.data);
-                try {
-                    this.tokenId = await this.getMintedTokenId(payload.data);
-                } catch (e) {
-                    console.error('getMintedTokenId failed', e);
-                    notifications.add({
-                        type: 'error',
-                        text: this.$t('nftcreate.noNewTokenId'),
-                    });
-                    this.isLoading = false;
-                    return;
-                }
-
-                if (this.values.unlockContentToogle) {
-                    try {
-                        let res = await setUnlockableContent(
-                            this.collection.value,
-                            this.tokenId,
-                            this.values.unlockContent
-                        );
-                        console.log('setUnlockableContent', res);
-                    } catch (e) {
-                        console.error('setUnlockableContent failed', e);
-                        notifications.add({
-                            type: 'error',
-                            text: this.$t('nftcreate.unlockableNotAttached'),
-                        });
-                    }
-                }
-
-                notifications.add({
-                    type: 'success',
-                    text: this.$t('nftcreate.success'),
-                });
-                await this.redirectOrWait();
+                console.log('minting transaction succeed - txHash', payload.data);
+                await this.waitForTokenIdAndFinish(payload.data);
             }
         },
 
-        async redirectOrWait() {
-            console.log('redirectOrWait');
-            let exists = await tokenExists(this.collection.value, this.tokenId);
-            if (exists) {
-                if (this.waitingMsgId) {
-                    notifications.hide(this.waitingMsgId);
-                }
-
-                await this.$router.push({
-                    name: 'nft-detail',
-                    params: { tokenContract: this.collection.value, tokenId: this.tokenId },
+        async waitForTokenIdAndFinish(txHash) {
+            try {
+                this.tokenId = await this.getMintedTokenId(txHash);
+            } catch (e) {
+                console.error('getMintedTokenId failed', e);
+                notifications.add({
+                    type: 'error',
+                    text: this.$t('nftcreate.noNewTokenId'),
                 });
-            } else {
-                if (!this.waitingMsgId) {
-                    this.waitingMsgId = notifications.add({
-                        type: 'info',
-                        text: this.$t('nftcreate.scanWaiting'),
-                        hideAfter: 10000000,
+                this.isLoading = false;
+                return;
+            }
+            if (this.tokenId === null) {
+                // token receipt/tokenId not available yet
+                this.progressMessage = this.$t('nftcreate.waitingForTokenId');
+                // repeat later again
+                setTimeout(() => this.waitForTokenIdAndFinish(txHash), 1000);
+                return;
+            }
+
+            // tokedId loaded
+            if (this.values.unlockContentToogle) {
+                try {
+                    let res = await setUnlockableContent(
+                        this.collection.value,
+                        this.tokenId,
+                        this.values.unlockContent
+                    );
+                    console.log('setUnlockableContent', res);
+                } catch (e) {
+                    console.error('setUnlockableContent failed', e);
+                    notifications.add({
+                        type: 'error',
+                        text: this.$t('nftcreate.unlockableNotAttached'),
                     });
                 }
-
-                setTimeout(() => this.redirectOrWait(), 1000);
             }
+
+            notifications.add({
+                type: 'success',
+                text: this.$t('nftcreate.success'),
+            });
+            await this.waitForScanAndRedirect();
+        },
+
+        async waitForScanAndRedirect() {
+            console.log('waiting for scanning token', this.collection.value, this.tokenId);
+            let exists = await tokenExists(this.collection.value, this.tokenId);
+            if (!exists) {
+                // token not scanned by the server yet
+                this.progressMessage = this.$t('nftcreate.scanWaiting');
+                setTimeout(() => this.waitForScanAndRedirect(), 1000);
+                return;
+            }
+
+            // new token scanned by the server
+            await this.$router.push({
+                name: 'nft-detail',
+                params: { tokenContract: this.collection.value, tokenId: this.tokenId },
+            });
         },
 
         async setFee(platformFee) {
@@ -377,7 +386,8 @@ export default {
             const receipt = await web3.eth.getTransactionReceipt(txHash);
             console.log('mint getTransactionReceipt', txHash, receipt);
             if (receipt === null) {
-                throw 'getTransactionReceipt return null receipt for ' + txHash;
+                console.log('getTransactionReceipt return null receipt for ' + txHash + ' - not in chain yet?');
+                return null;
             }
             const tokenId = contracts.decodeMintedNftTokenId(receipt, web3);
             console.log('tokenId', tokenId, toHex(tokenId));

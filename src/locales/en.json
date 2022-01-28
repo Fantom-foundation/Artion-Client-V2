@@ -493,17 +493,20 @@
         "linkToIpPlaceholder": "Enter Link",
         "unlockContent": "Unlockable Content",
         "mint": "Mint",
-        "fileError": "Pick a file please",
+        "fileError": "Pick an image/video file please",
         "signInFirst": "You need to sign-in first",
-        "signMint": "Please confirm minting in your wallet...",
+        "signMint": "Please confirm the minting transaction in your wallet...",
         "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded: ",
         "noNewTokenId": "Sorry, something went wrong. The token was minted, but unable to get new token id.",
         "unlockableNotAttached": "Sorry, something went wrong. The token was minted, but the unlockable content was not attached.",
         "mintingError": "Minting transaction failed. The token was not minted.",
         "royaltyError": "Registering royalty transaction failed. The token was minted, but royalty was not set.",
-        "scanWaiting": "Waiting for server-side token processing...",
+        "scanWaiting": "The token was successfully minted. Waiting for server-side token processing - this can take a while...",
         "success": "The token was successfully created.",
-        "messageFtm": "{fee} FTM are charged to create a new NFT."
+        "messageFtm": "{fee} FTM are charged to create a new NFT.",
+        "estimatingFeeGas": "Estimating necessary fee for minting and the transaction...",
+        "uploading": "Uploading file and token data into IPFS...",
+        "waitingForTokenId": "Waiting for the minting transaction receipt with the token ID..."
     },
 
     "nftredeem": {
