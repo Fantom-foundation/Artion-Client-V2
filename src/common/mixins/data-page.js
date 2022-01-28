@@ -213,6 +213,7 @@ export const dataPageMixin = {
             this.pageInfo = {};
             this.items = [];
             this.totalItems = 0;
+            this.hasNextPage = true;
         },
     },
 };
