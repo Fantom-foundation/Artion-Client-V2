@@ -63,8 +63,7 @@
                         v-if="canResultAuction"
                         :token="token"
                         :auction="auction"
-                        :in-escrow-auction-is-failed="inEscrowAuctionIsFailed"
-                        :user-is-auction-winner="userIsAuctionWinner"
+                        :user-is-last-bidder="userIsLastBidder"
                         @tx-success="onTxSuccess"
                     />
                     <nft-bid-button
@@ -73,18 +72,12 @@
                         :auction="auction"
                         @tx-success="onTxSuccess"
                     />
-                    <div v-if="showWithdrawBidButton" class="flex gap-3 ali-center">
-                        <nft-withdraw-bid-button
-                            :disabled="withdrawBidButtonDisabled"
-                            :token="token"
-                            :auction="auction"
-                            @tx-success="onTxSuccess"
-                        />
-
-                        <span v-if="withdrawBidButtonDisabled"
-                            >({{ $t('nftauction.canWithdrawIn', { in: withdrawBidTime }) }})</span
-                        >
-                    </div>
+                    <nft-withdraw-bid-button
+                        v-if="showWithdrawBidButton"
+                        :token="token"
+                        :auction="auction"
+                        @tx-success="onTxSuccess"
+                    />
                 </template>
             </div>
         </a-details>
@@ -182,39 +175,22 @@ export default {
 
         canResultAuction() {
             return (
-                (this.auctionHasFinished && this.dAuction.lastBidder && this.userOwnsToken && !this.auctionIsFailed) ||
-                // (this.userOwnsToken && !this.auctionIsFailed) ||
-                (this.userIsAuctionWinner && this.inEscrowAuctionIsFailed)
-                // (this.userOwnsToken || (this.userIsAuctionWinner && !this.inEscrowAuctionIsFailed))
+                // seller can result an auction which has finished and has some winner + for now it also need to be above the reservePrice
+                (this.userOwnsToken &&
+                    this.auctionHasFinished &&
+                    this.dAuction.lastBidder &&
+                    !this.lastBidIsBelowReservePrice) ||
+                // winner can result an auction which has finished above the reservePrice
+                (this.userIsLastBidder && this.auctionHasFinished && !this.lastBidIsBelowReservePrice)
             );
         },
 
         showWithdrawBidButton() {
-            return this.auctionHasFinished && this.userIsAuctionWinner;
+            return this.auctionHasFinished && this.userIsLastBidder;
         },
 
-        userIsAuctionWinner() {
+        userIsLastBidder() {
             return compareAddresses(this.dAuction.lastBidder, this.walletAddress);
-        },
-
-        auctionIsFailed() {
-            return this.auctionHasFinished && this.lastBidIsBelowReservePrice;
-        },
-
-        inEscrowAuctionIsFailed() {
-            return this.token._inEscrow && this.auctionIsFailed;
-        },
-
-        withdrawBidButtonDisabled() {
-            return dayjs().diff(this.dAuction.endTime, 'hours') < 12;
-        },
-
-        withdrawBidTime() {
-            return datetimeFormatter(
-                dayjs(this.dAuction.endTime)
-                    .add(12, 'hours')
-                    .valueOf()
-            );
         },
 
         showStartCountdown() {

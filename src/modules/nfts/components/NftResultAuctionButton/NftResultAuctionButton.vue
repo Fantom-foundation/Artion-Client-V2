@@ -1,11 +1,7 @@
 <template>
     <div class="nftresultauctionbutton">
         <a-button
-            :label="
-                inEscrowAuctionIsFailed || userIsAuctionWinner
-                    ? $t('nftresultauction.resultAuction')
-                    : $t('nftresultauction.acceptBid')
-            "
+            :label="userIsLastBidder ? $t('nftresultauction.resultAuction') : $t('nftresultauction.acceptBid')"
             :loading="txStatus === 'pending'"
             @click.native="onButtonClick"
         />
@@ -39,11 +35,7 @@ export default {
                 return {};
             },
         },
-        inEscrowAuctionIsFailed: {
-            type: Boolean,
-            default: false,
-        },
-        userIsAuctionWinner: {
+        userIsLastBidder: {
             type: Boolean,
             default: false,
         },
@@ -60,21 +52,12 @@ export default {
         resultAuction() {
             const web3 = new Web3();
             const { token } = this;
-            let tx = null;
 
             if (!token || !token.contract) {
                 return;
             }
 
-            if (this.inEscrowAuctionIsFailed) {
-                tx = contracts.resultFailedAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
-                tx._code = 'result_failed_auction';
-            } else {
-                tx = contracts.resultAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
-                tx._code = 'result_auction';
-            }
-
-            this.tx = tx;
+            this.tx = contracts.resultAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
         },
 
         onButtonClick() {
@@ -83,16 +66,14 @@ export default {
 
         onTransactionStatus(payload) {
             console.log('transaction status', payload);
-            const txCode = payload.code;
 
             this.txStatus = payload.status;
 
             if (this.txStatus === 'success') {
                 this.$notifications.add({
-                    text:
-                        txCode === 'result_auction'
-                            ? this.$t('nftresultauction.acceptBidSuccessful')
-                            : this.$t('nftresultauction.resultSuccessful'),
+                    text: this.userIsLastBidder
+                        ? this.$t('nftresultauction.resultSuccessful')
+                        : this.$t('nftresultauction.acceptBidSuccessful'),
                     type: 'success',
                 });
 

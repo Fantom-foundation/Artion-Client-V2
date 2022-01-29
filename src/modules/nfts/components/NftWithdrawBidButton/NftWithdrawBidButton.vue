@@ -1,13 +1,16 @@
 <template>
-    <div class="nftwithdrawbidbutton">
-        <a-button
-            :label="$t('nftwithdrawbid.withdrawBid')"
-            :loading="txStatus === 'pending'"
-            :disabled="disabled"
-            @click.native="onButtonClick"
-        />
+    <div class="flex gap-3 ali-center">
+        <div class="nftwithdrawbidbutton">
+            <a-button
+                :label="$t('nftwithdrawbid.withdrawBid')"
+                :loading="txStatus === 'pending'"
+                :disabled="withdrawBidButtonDisabled"
+                @click.native="onButtonClick"
+            />
 
-        <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
+            <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
+        </div>
+        <span v-if="withdrawBidButtonDisabled"> ({{ $t('nftauction.canWithdrawIn', { in: withdrawBidTime }) }}) </span>
     </div>
 </template>
 
@@ -16,6 +19,9 @@ import AButton from '@/common/components/AButton/AButton.vue';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
+import dayjs from 'dayjs';
+import { datetimeFormatter } from '@/utils/formatters';
+import { toBigNumber } from '@/utils/big-number';
 
 export default {
     name: 'NftWithdrawBidButton',
@@ -36,10 +42,6 @@ export default {
                 return {};
             },
         },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
     },
 
     data() {
@@ -47,6 +49,38 @@ export default {
             tx: {},
             txStatus: '',
         };
+    },
+
+    computed: {
+        withdrawBidButtonDisabled() {
+            return !this.canWithdrawRegularBid && !this.canResultFailedAuction;
+        },
+
+        canWithdrawRegularBid() {
+            return dayjs().diff(this.auction.endTime, 'hours') >= 12;
+        },
+
+        canResultFailedAuction() {
+            return this.lastBidIsBelowReservePrice && this.token._inEscrow;
+        },
+
+        withdrawBidTime() {
+            return datetimeFormatter(
+                dayjs(this.auction.endTime)
+                    .add(12, 'hours')
+                    .valueOf()
+            );
+        },
+
+        lastBidIsBelowReservePrice() {
+            const { lastBid } = this.auction;
+
+            if (lastBid) {
+                return toBigNumber(lastBid).isLessThan(this.auction.reservePrice);
+            }
+
+            return true;
+        },
     },
 
     methods: {
@@ -58,7 +92,13 @@ export default {
                 return;
             }
 
-            this.tx = contracts.withdrawAuctionBid(token.contract, token.tokenId, web3, this.auction.auctionHall);
+            if (this.canResultFailedAuction) {
+                // when the bid is less then the reserve price, bidder can cancel the finished auction
+                this.tx = contracts.resultFailedAuction(token.contract, token.tokenId, web3, this.auction.auctionHall);
+            } else {
+                // regular bid can be withdraw only 12 hours after end of the auction
+                this.tx = contracts.withdrawAuctionBid(token.contract, token.tokenId, web3, this.auction.auctionHall);
+            }
         },
 
         onButtonClick() {
