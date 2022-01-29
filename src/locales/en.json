@@ -374,7 +374,8 @@
         "saleEnded": "Sale ended",
         "saleStarts": "Sale starts",
         "highestBid": "Highest Bid",
-        "canWithdrawIn": "You can withdraw your bid {in}"
+        "canWithdrawIn": "You can withdraw your bid {in}",
+        "reserveNotMetCanWithdrawAnytime": "Reserve not met - you can withdraw anytime"
     },
 
     "nftunlockable": {

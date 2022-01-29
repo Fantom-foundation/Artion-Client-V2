@@ -11,6 +11,7 @@
             <a-sign-transaction :tx="tx" @transaction-status="onTransactionStatus" />
         </div>
         <span v-if="withdrawBidButtonDisabled"> ({{ $t('nftauction.canWithdrawIn', { in: withdrawBidTime }) }}) </span>
+        <span v-if="canResultFailedAuction"> ({{ $t('nftauction.reserveNotMetCanWithdrawAnytime') }}) </span>
     </div>
 </template>
 
