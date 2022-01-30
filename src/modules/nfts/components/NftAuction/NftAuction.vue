@@ -180,8 +180,11 @@ export default {
                     this.auctionHasFinished &&
                     this.dAuction.lastBidder &&
                     !this.lastBidIsBelowReservePrice) ||
-                // winner can result an auction which has finished above the reservePrice
-                (this.userIsLastBidder && this.auctionHasFinished && !this.lastBidIsBelowReservePrice)
+                // winner can result an auction which has finished above the reservePrice (but not on older auction contract)
+                (this.userIsLastBidder &&
+                    this.auctionHasFinished &&
+                    !this.lastBidIsBelowReservePrice &&
+                    this.token._inEscrow)
             );
         },
 
