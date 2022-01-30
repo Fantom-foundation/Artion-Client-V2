@@ -11,7 +11,7 @@
                 no-label
                 :aria-label="$t('pricefilter.minimalPrice')"
             >
-                <template #suffix><span class="pricefilter_currency">$</span></template>
+                <template #prefix><span class="pricefilter_currency">$</span></template>
             </f-form-input>
 
             <span>{{ $t('pricefilter.to') }}</span>
@@ -26,7 +26,7 @@
                 no-label
                 :aria-label="$t('pricefilter.maximalPrice')"
             >
-                <template #suffix><span class="pricefilter_currency">$</span></template>
+                <template #prefix><span class="pricefilter_currency">$</span></template>
             </f-form-input>
         </div>
         <div class="tea-center">

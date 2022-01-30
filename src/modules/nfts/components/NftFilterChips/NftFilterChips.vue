@@ -127,12 +127,12 @@ export default {
                 return true;
             });
 
-            chips = this.transormPriceChip(chips);
+            chips = this.transformPriceChip(chips);
 
             return chips;
         },
 
-        transormPriceChip(filters) {
+        transformPriceChip(filters) {
             let priceFilters = filters.filter(chip => chip.filterName === 'price');
             if (priceFilters.length) {
                 let min = priceFilters[0].value;
@@ -141,11 +141,11 @@ export default {
                 let label;
 
                 if (min && max) {
-                    label = `${min}$ - ${max}$`;
+                    label = `$${min} - $${max}`;
                 } else if (min && max === null) {
-                    label = `> ${min}$`;
+                    label = `> $${min}`;
                 } else {
-                    label = `< ${max}$`;
+                    label = `< $${max}`;
                 }
 
                 let priceChip = { label, filterName: priceFilters[0].filterName };
