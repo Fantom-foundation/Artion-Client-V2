@@ -128,7 +128,7 @@ export async function getUserAllowanceTx({
 
     console.log('increasing payToken allowence by ', value, ' = ', bValue);
 
-    if (!bAllowance || !bAllowance.isGreaterThan(bValue.multipliedBy(1000000))) {
+    if (!bAllowance || bValue.isGreaterThan(bAllowance)) {
         const tx = !approve
             ? erc20Utils.erc20IncreaseAllowanceTx(tokenAddress, contract, toHex(bValue.plus(10)))
             : erc20Utils.erc20ApproveTx(tokenAddress, contract, toHex(bValue.plus(10)));
