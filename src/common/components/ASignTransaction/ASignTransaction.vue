@@ -98,8 +98,8 @@ export default {
                     tx.chainId = $wallet.chainId;
                     tx.nonce = await $wallet.getNonce($wallet.account, true);
                     // tx.from = $wallet.account;
-                    tx.gasLimit = await $wallet.estimateGas(tx, this.silent);
                     tx.gasPrice = await $wallet.getGasPrice(true);
+                    tx.gasLimit = await $wallet.estimateGas(tx, this.silent);
 
                     tx.gasLimit = toHex(toBigNumber(tx.gasLimit).plus(2000));
 
