@@ -375,6 +375,7 @@
         "saleStarts": "Sale starts",
         "highestBid": "Highest Bid",
         "youAreTopBidder": "You are the top bidder",
+        "topBidder": "Top Bidder",
         "canWithdrawIn": "You can withdraw your bid {in}",
         "reserveNotMetCanWithdrawAnytime": "Reserve not met - you can withdraw anytime"
     },

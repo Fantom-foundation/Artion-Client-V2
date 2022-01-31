@@ -29,7 +29,11 @@ export async function getAuction(contract = '', tokenId = '') {
                         lastBid
                         lastBidPlaced
                         lastBidder
-                        winner
+                        lastBidderUser {
+                            address
+                            username
+                            avatarThumb
+                        }
                         resolved
                         isActive
                         withdrawSince
@@ -72,7 +76,7 @@ export async function getAuction(contract = '', tokenId = '') {
  * @property {string} lastBid
  * @property {string} lastBidPlaced
  * @property {string} lastBidder
- * @property {string} winner
+ * @property {Object} lastBidderUser
  * @property {string} resolved
  * @property {boolean} isActive
  * @property {string} withdrawSince

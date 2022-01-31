@@ -60,6 +60,17 @@
                         <span v-else>-</span>
                         <span v-if="userIsLastBidder">({{ $t('nftauction.youAreTopBidder') }})</span>
                     </div>
+                    <div class="flex gap-3 ali-center" v-if="dAuction.lastBid">
+                        <span>{{ $t('nftauction.topBidder') }}:</span>
+                        <router-link :to="{ name: 'account', params: { address: dAuction.lastBidderUser.address } }">
+                            <a-address
+                                :address="dAuction.lastBidderUser.address"
+                                :name="dAuction.lastBidderUser.username"
+                                :image="dAuction.lastBidderUser.avatarThumb"
+                                is-account
+                            />
+                        </router-link>
+                    </div>
                     <nft-result-auction-button
                         v-if="canResultAuction"
                         :token="token"
@@ -100,13 +111,22 @@ import FCountdown from 'fantom-vue-components/src/components/FCountdown/FCountdo
 import { pollingMixin } from '@/common/mixins/polling.js';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { compareAddresses } from '@/utils/address.js';
+import AAddress from '@/common/components/AAddress/AAddress';
 
 const UPDATE_AUCTION = 'update-auction';
 
 export default {
     name: 'NftAuction',
 
-    components: { NftWithdrawBidButton, NftResultAuctionButton, NftBidButton, ATokenValue, ADetails, FCountdown },
+    components: {
+        NftWithdrawBidButton,
+        NftResultAuctionButton,
+        NftBidButton,
+        ATokenValue,
+        ADetails,
+        FCountdown,
+        AAddress,
+    },
 
     mixins: [pollingMixin],
 
