@@ -46,6 +46,9 @@
                 <div class="flex gap-3 ali-center">
                     <span>{{ $t('nftauction.reservePrice') }}:</span>
                     <a-token-value :value="dAuction.reservePrice" :token="payToken" no-symbol :fraction-digits="1" />
+                    <span v-if="dAuction.lastBid && !dAuction.reservePriceExceeded"
+                        >({{ $t('nftauction.reserveNotMet') }})</span
+                    >
                 </div>
                 <template v-if="auctionHasStarted">
                     <div class="flex gap-3 ali-center">

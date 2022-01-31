@@ -370,6 +370,7 @@
 
     "nftauction": {
         "reservePrice": "@:reservePrice",
+        "reserveNotMet": "Reserve price not met",
         "saleEnds": "Sale ends",
         "saleEnded": "Sale ended",
         "saleStarts": "Sale starts",
