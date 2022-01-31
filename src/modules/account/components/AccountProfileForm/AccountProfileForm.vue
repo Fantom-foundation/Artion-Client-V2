@@ -216,19 +216,12 @@ export default {
 
     methods: {
         async onSubmit(event) {
-            const {
-                username,
-                bio,
-                email,
-                fullname,
-                phone,
-                street,
-                apartment,
-                city,
-                state,
-                country,
-                zip,
-            } = event.values;
+            let { username, bio, email, fullname, phone, street, apartment, city, state, country, zip } = event.values;
+
+            // transform null to empty string
+            if (!username) username = '';
+            if (!bio) bio = '';
+            if (!email) email = '';
 
             const userData = { username, bio, email };
             const shippingAddressData = {
@@ -281,7 +274,7 @@ export default {
         },
 
         emailValidator(value) {
-            if (value === '') return false;
+            if (!value) return false;
             let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return !re.test(value);
         },
