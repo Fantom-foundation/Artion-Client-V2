@@ -70,6 +70,7 @@
                         validate-on-change
                         validate-on-input
                         :error-message="$t('nftcreate.royaltyErr')"
+                        @input.native="onRoyaltyInput"
                         type="number"
                         name="royalty"
                         field-size="large"
@@ -403,6 +404,18 @@ export default {
          */
         getRoyalty() {
             return Math.round(Number(this.values.royalty || 0) * 100);
+        },
+
+        /**
+         * @param {InputEvent} event
+         */
+        onRoyaltyInput(event) {
+            const { value } = event.target;
+
+            // allow max 4 characters
+            if (value.length > 4) {
+                event.target.value = value.slice(0, 4);
+            }
         },
     },
 };
