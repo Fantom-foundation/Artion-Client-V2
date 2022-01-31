@@ -32,7 +32,7 @@
             <template #column-actions="{ item }">
                 <template v-if="actionExists(item)">
                     <a-button
-                        v-if="canAccept()"
+                        v-if="canAccept(item)"
                         :loading="txStatus === 'pending' && pickedAddress === item.proposedBy"
                         :label="$t('nftDirectOffersGrid.accept')"
                         :disabled="tokenHasAuction"
@@ -164,8 +164,8 @@ export default {
         },
 
         userOwnsToken: {
-            handler() {
-                if (this.canAccept()) {
+            handler(ownsToken) {
+                if (ownsToken) {
                     this.startPolling();
                 } else {
                     this.stopPolling();
@@ -264,8 +264,9 @@ export default {
         /**
          * @return {Boolean}
          */
-        canAccept() {
-            return this.userOwnsToken;
+        canAccept(offer) {
+            const isProposer = this.compareAddresses(offer.proposedBy, this.walletAddress);
+            return this.userOwnsToken && !isProposer;
         },
 
         /**
