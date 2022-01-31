@@ -58,6 +58,7 @@
                             :fraction-digits="1"
                         />
                         <span v-else>-</span>
+                        <span v-if="userIsLastBidder">({{ $t('nftauction.youAreTopBidder') }})</span>
                     </div>
                     <nft-result-auction-button
                         v-if="canResultAuction"
@@ -99,7 +100,6 @@ import FCountdown from 'fantom-vue-components/src/components/FCountdown/FCountdo
 import { pollingMixin } from '@/common/mixins/polling.js';
 import { getAuction } from '@/modules/nfts/queries/auction.js';
 import { compareAddresses } from '@/utils/address.js';
-import { toBigNumber } from '@/utils/big-number.js';
 
 const UPDATE_AUCTION = 'update-auction';
 
@@ -175,16 +175,16 @@ export default {
 
         canResultAuction() {
             return (
-                // seller can result an auction which has finished and has some winner + for now it also need to be above the reservePrice
+                // seller can result an auction which has finished and has some winner + for some auctions it also need to be above the reservePrice
                 (this.userOwnsToken &&
                     this.auctionHasFinished &&
                     this.dAuction.lastBidder &&
-                    !this.lastBidIsBelowReservePrice) ||
+                    (this.dAuction.reservePriceExceeded || this.dAuction.props.sellerCanResultUnderpriced)) ||
                 // winner can result an auction which has finished above the reservePrice (but not on older auction contract)
                 (this.userIsLastBidder &&
                     this.auctionHasFinished &&
-                    !this.lastBidIsBelowReservePrice &&
-                    this.token._inEscrow)
+                    this.dAuction.reservePriceExceeded &&
+                    this.dAuction.props.winnerCanResult)
             );
         },
 
@@ -202,16 +202,6 @@ export default {
 
         showEndCountdown() {
             return this.auctionHasStarted && dayjs(this.dAuction.endTime).diff(dayjs(), 'days') < 3;
-        },
-
-        lastBidIsBelowReservePrice() {
-            const { lastBid } = this.auction;
-
-            if (lastBid) {
-                return toBigNumber(lastBid).isLessThan(this.dAuction.reservePrice);
-            }
-
-            return true;
         },
     },
 

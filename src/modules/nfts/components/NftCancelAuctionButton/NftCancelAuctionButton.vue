@@ -17,7 +17,6 @@ import AButton from '@/common/components/AButton/AButton.vue';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
-import { toBigNumber } from '@/utils/big-number.js';
 
 export default {
     name: 'NftCancelAuctionButton',
@@ -49,17 +48,7 @@ export default {
 
     computed: {
         canCancelAuction() {
-            return !this.token._inEscrow || this.lastBidIsBelowReservePrice;
-        },
-
-        lastBidIsBelowReservePrice() {
-            const { lastBid } = this.auction;
-
-            if (lastBid) {
-                return toBigNumber(lastBid).isLessThan(this.auction.reservePrice);
-            }
-
-            return true;
+            return !this.auction.reservePriceExceeded || this.auction.props.canCancelSuccessful;
         },
     },
 

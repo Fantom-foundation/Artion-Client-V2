@@ -20,6 +20,7 @@ export async function getAuction(contract = '', tokenId = '') {
                         quantity
                         payToken
                         reservePrice
+                        reservePriceExceeded
                         minBidAmount
                         created
                         startTime
@@ -31,6 +32,13 @@ export async function getAuction(contract = '', tokenId = '') {
                         winner
                         resolved
                         isActive
+                        withdrawSince
+                        props {
+                            winnerCanResult
+                            sellerCanResultUnderpriced
+                            canCancelSuccessful
+                            hasResultFailed
+                        }
                     }
                 }
             }
@@ -51,9 +59,11 @@ export async function getAuction(contract = '', tokenId = '') {
  * @property {string} contract
  * @property {string} tokenId
  * @property {string} owner
+ * @property {string} auctionHall
  * @property {string} quantity
  * @property {string} payToken
  * @property {string} reservePrice
+ * @property {boolean} reservePriceExceeded
  * @property {string} minBidAmount
  * @property {string} created
  * @property {string} startTime
@@ -64,4 +74,16 @@ export async function getAuction(contract = '', tokenId = '') {
  * @property {string} lastBidder
  * @property {string} winner
  * @property {string} resolved
+ * @property {boolean} isActive
+ * @property {string} withdrawSince
+ * @property {AuctionProps} props
+ */
+
+/**
+ * Auction props object.
+ * @typedef {Object} AuctionProps
+ * @property {boolean} winnerCanResult
+ * @property {boolean} sellerCanResultUnderpriced
+ * @property {boolean} canCancelSuccessful
+ * @property {boolean} hasResultFailed
  */

@@ -22,7 +22,6 @@ import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
 import dayjs from 'dayjs';
 import { datetimeFormatter } from '@/utils/formatters';
-import { toBigNumber } from '@/utils/big-number';
 
 export default {
     name: 'NftWithdrawBidButton',
@@ -54,33 +53,16 @@ export default {
 
     computed: {
         withdrawBidButtonDisabled() {
-            return !this.canWithdrawRegularBid && !this.canResultFailedAuction;
+            return dayjs().isBefore(this.auction.withdrawSince);
         },
 
-        canWithdrawRegularBid() {
-            return dayjs().diff(this.auction.endTime, 'hours') >= 12;
-        },
-
+        // can withdraw an underpriced bid using resultFailedAuction() call
         canResultFailedAuction() {
-            return this.lastBidIsBelowReservePrice && this.token._inEscrow;
+            return !this.auction.reservePriceExceeded && this.auction.props.hasResultFailed;
         },
 
         withdrawBidTime() {
-            return datetimeFormatter(
-                dayjs(this.auction.endTime)
-                    .add(12, 'hours')
-                    .valueOf()
-            );
-        },
-
-        lastBidIsBelowReservePrice() {
-            const { lastBid } = this.auction;
-
-            if (lastBid) {
-                return toBigNumber(lastBid).isLessThan(this.auction.reservePrice);
-            }
-
-            return true;
+            return datetimeFormatter(dayjs(this.auction.withdrawSince).valueOf());
         },
     },
 
