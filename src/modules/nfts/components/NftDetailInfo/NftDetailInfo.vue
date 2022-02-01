@@ -62,7 +62,12 @@
                     <a v-if="info.collection.medium" :href="info.collection.medium" target="_blank" rel="noopener">
                         <app-iconset icon="medium" />
                     </a>
-                    <a v-if="info.collection.instagram" :href="info.collection.instagram" target="_blank" rel="noopener">
+                    <a
+                        v-if="info.collection.instagram"
+                        :href="info.collection.instagram"
+                        target="_blank"
+                        rel="noopener"
+                    >
                         <app-iconset icon="instagram" />
                     </a>
                 </p>

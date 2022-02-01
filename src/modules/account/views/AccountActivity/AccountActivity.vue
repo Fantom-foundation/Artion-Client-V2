@@ -1,6 +1,6 @@
 <template>
     <div class="accountactivity">
-        <h1 class="not-visible" data-focus>{{ $t('page.accountActivity.title') }}</h1>
+        <h2 class="not-visible" data-focus>{{ $t('page.accountActivity.title') }}</h2>
 
         <NftItemActivityFilter v-model="filters" />
         <NftItemActivityFilterChips v-show="filters.length > 0" v-model="filters" />

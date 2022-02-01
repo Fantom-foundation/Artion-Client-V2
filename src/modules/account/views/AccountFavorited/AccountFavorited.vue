@@ -1,6 +1,6 @@
 <template>
     <div class="accountfavorited">
-        <h1 class="not-visible" data-focus>{{ $t('page.accountFavorited.title') }}</h1>
+        <h2 class="not-visible" data-focus>{{ $t('page.accountFavorited.title') }}</h2>
 
         <user-favorited-nft-list :user-address="userAddress" v-on="$listeners" />
     </div>

@@ -81,7 +81,7 @@
                     </template>
                 </f-form-input>
 
-                <h5 class="h5 mat-6">{{ $t('accountprofileform.address') }}</h5>
+                <h2 class="h5 mat-6">{{ $t('accountprofileform.address') }}</h2>
                 <div class="accountprofileform_address">
                     <f-form-input
                         type="text"

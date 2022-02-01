@@ -1,6 +1,6 @@
 <template>
     <div class="accountbannedtokens">
-        <h1 class="not-visible" data-focus>{{ $t('page.accountBannedTokens.title') }}</h1>
+        <h2 class="not-visible" data-focus>{{ $t('page.accountBannedTokens.title') }}</h2>
 
         <banned-token-list :user-address="userAddress" v-on="$listeners" />
     </div>

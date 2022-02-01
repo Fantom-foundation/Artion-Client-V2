@@ -1,6 +1,6 @@
 <template>
     <div class="accountoffers">
-        <h1 class="not-visible" data-focus>{{ $t('page.accountOffers.title') }}</h1>
+        <h2 class="not-visible" data-focus>{{ $t('page.accountOffers.title') }}</h2>
 
         <account-offers-grid :user-address="userAddress" />
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="accountsingleitems">
-        <h1 class="not-visible" data-focus>{{ $t('page.accountSingleItems.title') }}</h1>
+        <h2 class="not-visible" data-focus>{{ $t('page.accountSingleItems.title') }}</h2>
 
         <user-collected-list :user-address="userAddress" v-on="$listeners" />
     </div>

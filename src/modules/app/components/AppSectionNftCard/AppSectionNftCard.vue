@@ -7,11 +7,11 @@
                     {{ nft.collection }}
                 </a-placeholder>
             </div>
-            <h3 class="appsectionnftcard_title">
+            <h2 class="appsectionnftcard_title h3">
                 <a-placeholder :content-loaded="!!nft.title" block>
                     {{ nft.title }}
                 </a-placeholder>
-            </h3>
+            </h2>
         </div>
     </div>
 </template>

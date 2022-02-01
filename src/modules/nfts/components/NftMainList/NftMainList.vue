@@ -130,8 +130,6 @@ export default {
         },
 
         async onPageChange(pagination) {
-            console.log('PICO!', this._ignorePageChange);
-
             if (this._ignorePageChange) {
                 this._ignorePageChange = false;
                 return;

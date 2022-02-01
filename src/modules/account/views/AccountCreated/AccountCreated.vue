@@ -1,6 +1,6 @@
 <template>
     <div class="accountcreated">
-        <h1 class="not-visible" data-focus>{{ $t('page.accountCreated.title') }}</h1>
+        <h2 class="not-visible" data-focus>{{ $t('page.accountCreated.title') }}</h2>
 
         <user-created-nft-list :user-address="userAddress" v-on="$listeners" />
     </div>
