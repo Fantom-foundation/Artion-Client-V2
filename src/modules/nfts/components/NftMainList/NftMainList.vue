@@ -79,7 +79,7 @@ export default {
 
                         delete meta.NftMainList;
 
-                        this._ignorePageChange = true;
+                        this._ignorePageChange = this.page !== 1;
                     } else {
                         this.$refs.nftList.goToPageNum(1);
                     }
@@ -130,6 +130,8 @@ export default {
         },
 
         async onPageChange(pagination) {
+            console.log('PICO!', this._ignorePageChange);
+
             if (this._ignorePageChange) {
                 this._ignorePageChange = false;
                 return;
