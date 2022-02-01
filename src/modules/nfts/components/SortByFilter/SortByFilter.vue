@@ -5,6 +5,7 @@
         select-mode
         readonly
         :inline-autocomplete="false"
+        :aria-label="$t('nftlistfilters.sortbyFilters')"
         field-size="large"
         attach-position="bottom"
         hide-on-document-resize

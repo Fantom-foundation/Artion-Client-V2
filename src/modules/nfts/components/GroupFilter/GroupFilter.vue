@@ -5,6 +5,7 @@
         select-mode
         readonly
         :inline-autocomplete="false"
+        :aria-label="$t('nftlistfilters.groupFilters')"
         field-size="large"
         class="groupfilter"
     />
