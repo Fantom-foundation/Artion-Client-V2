@@ -67,6 +67,8 @@ export default {
 
                     if (meta.backButton && meta?.prevRoute?.name === 'nft-detail' && meta.NftMainList) {
                         pagination = meta.NftMainList.lastVariables;
+
+                        this.hasNextPage = meta.NftMainList.pageInfo.hasNextPage;
                         this.currPage = meta.NftMainList.currPage;
                         this.page = this.currPage;
                         this.totalItems = parseInt(meta.NftMainList.totalItems);

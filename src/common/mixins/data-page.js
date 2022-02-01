@@ -211,9 +211,11 @@ export const dataPageMixin = {
 
         _resetData() {
             this.pageInfo = {};
+            this.pageInfoPrev = {};
             this.items = [];
             this.totalItems = 0;
             this.hasNextPage = true;
+            this._usePageInfoPrev = false;
         },
     },
 };
