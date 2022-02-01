@@ -1,0 +1,244 @@
+@use "fantom-vue-components/src/assets/scss/tools/media";
+@use "fantom-vue-components/src/assets/scss/elements/links/tools" as linkTools;
+
+@mixin column-flex-gap($gap) {
+    > *:not(:last-child) {
+        margin-inline-end: #{$gap};
+    }
+}
+
+.no-flexgap {
+    .afilterchips,
+    .agrid_price,
+    .agrid_link,
+    .appheader {
+        @include column-flex-gap(var(--f-spacer-2));
+    }
+
+    .appheader {
+        &_col,
+        &_mobile {
+            @include column-flex-gap(var(--f-spacer-5));
+        }
+
+        &_logo {
+            @include column-flex-gap(10px);
+        }
+    }
+
+    .nftdetail {
+        &_main {
+            @include column-flex-gap(var(--f-spacer-6));
+        }
+
+        &_owner,
+        &_details_wrap,
+        &_owneractions,
+        &_tokenname {
+            @include column-flex-gap(var(--f-spacer-2));
+        }
+
+        &_status {
+            @include column-flex-gap(var(--f-spacer-4));
+        }
+    }
+
+    .aaddress {
+        @include column-flex-gap(var(--f-spacer-1));
+    }
+
+    .abpricefield_balance {
+        @include column-flex-gap(var(--f-spacer-3));
+    }
+
+    .acurrencydropdown {
+        & .adropdownlistbox .fdropdownlistbox_button {
+            span {
+                @include column-flex-gap(var(--f-spacer-2));
+
+                &.fdropdownlistbox_button_label {
+                    div {
+                        @include column-flex-gap(var(--f-spacer-2));
+                    }
+                }
+            }
+        }
+        .flex.ali-center {
+            @include column-flex-gap(var(--f-spacer-2));
+        }
+    }
+
+    .asharebutton {
+        &_flistbox {
+            .flistbox_list_item {
+                @include column-flex-gap(var(--f-spacer-3));
+            }
+        }
+    }
+
+    .atokenvalue {
+        &,
+        .fplaceholder {
+            @include column-flex-gap(var(--f-spacer-2));
+        }
+    }
+
+    .accountcollectionsgrid {
+        &_header {
+            @include column-flex-gap(var(--f-spacer-2));
+        }
+
+        &_item {
+            @include column-flex-gap(var(--f-spacer-4));
+        }
+    }
+
+    .accountfollowwindow {
+        &_item {
+            @include column-flex-gap(var(--f-spacer-3));
+        }
+    }
+
+    .accountfollow {
+        @include column-flex-gap(var(--f-spacer-3));
+    }
+
+    .appsectionnft {
+        @include column-flex-gap(var(--f-spacer-9));
+
+        &_links {
+            @include column-flex-gap(var(--f-spacer-3));
+        }
+    }
+
+    .nftcreate {
+        &_form {
+            @include column-flex-gap(var(--f-spacer-5));
+        }
+
+        &_wrap {
+            @include column-flex-gap(var(--f-spacer-4));
+        }
+    }
+
+    .accountnavigation {
+        @include linkTools.links() {
+            @include column-flex-gap(var(--f-spacer-2));
+        }
+    }
+
+    .accountprofileform {
+        &_address {
+            @include column-flex-gap(var(--f-spacer-3));
+        }
+    }
+
+    .apptextsearchresults {
+        &_item {
+            @include column-flex-gap(var(--f-spacer-4));
+        }
+    }
+
+    .account {
+        &_sidebar {
+            &_label {
+                @include column-flex-gap(var(--f-spacer-2));
+            }
+        }
+
+        &_view {
+            &_filters {
+                @include column-flex-gap(var(--f-spacer-2));
+
+                &_list {
+                    @include column-flex-gap(var(--f-spacer-2));
+                }
+            }
+        }
+    }
+
+    .nftcard {
+        &_header {
+            @include column-flex-gap(var(--f-spacer-1));
+        }
+
+        .atokenvalue {
+            .fplaceholder {
+                @include column-flex-gap(var(--f-spacer-1));
+            }
+        }
+
+        &_offerprice {
+            @include column-flex-gap(var(--f-spacer-1));
+        }
+
+        &_lastprice {
+            @include column-flex-gap(var(--f-spacer-1));
+        }
+    }
+
+    .nftdetailinfo {
+        &_socials {
+            @include column-flex-gap(var(--f-spacer-3));
+        }
+
+        &_tokenid {
+            @include column-flex-gap(var(--f-spacer-1));
+        }
+    }
+
+    .explore_nftlist_header,
+    .explore_nftlist_header_endcol,
+    .explore_sidebar_label {
+        @include column-flex-gap(var(--f-spacer-2));
+    }
+
+    .notificationsettingsform {
+        &_lists {
+            @include column-flex-gap(var(--f-spacer-5));
+        }
+    }
+
+    .nftlist {
+        @include column-flex-gap(var(--main-lr-padding));
+    }
+
+    .tradehistoryswitcher {
+        &_listitem {
+            @include column-flex-gap(var(--f-spacer-4));
+        }
+    }
+
+    .walletbutton {
+        .fbutton {
+            @include column-flex-gap(var(--f-spacer-1));
+        }
+
+    }
+}
+
+@include media.media-min(900px) {
+    .no-flexgap {
+        .appheader {
+            @include column-flex-gap(var(--f-spacer-5));
+        }
+    }
+}
+
+@include media.media-min(1200px) {
+    .no-flexgap {
+        .appheader {
+            @include column-flex-gap(var(--f-spacer-9));
+        }
+    }
+}
+
+@include media.media-max(899px) {
+    .no-flexgap {
+        .appheader {
+            .appmenu {
+                @include column-flex-gap(0);
+            }
+        }
+    }
+}

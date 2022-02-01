@@ -20,4 +20,13 @@
         }
     }
 
+    .no-flexgap {
+        .#{$className} {
+            &_item {
+                > *:not(:last-child) {
+                    margin-inline-end: var(--f-spacer-4);
+                }
+            }
+        }
+    }
 }

@@ -35,7 +35,7 @@
                     </div>
                     <div class="nftdetail_status">
                         <div class="nftdetail_owner">
-                            {{ $t('nftdetail.owned') }}
+                            <span>{{ $t('nftdetail.owned') }}</span>
                             <router-link
                                 :to="{
                                     name: 'account',
