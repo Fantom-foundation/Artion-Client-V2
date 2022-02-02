@@ -4,6 +4,7 @@
     "scripts": {
         "serve": "vue-cli-service serve --mode development",
         "serve.pg": "VUE_APP_FANTOM_MODULE=pg vue-cli-service serve --mode development",
+        "serve.production": "vue-cli-service serve --mode production",
         "build": "vue-cli-service build",
         "build.pg": "VUE_APP_FANTOM_MODULE=pg vue-cli-service build",
         "lint": "vue-cli-service lint",
