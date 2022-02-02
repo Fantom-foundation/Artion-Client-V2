@@ -35,15 +35,16 @@
         }
 	}
 
-	&_content {
-		flex: 1;
-		&:hover { cursor: pointer; }
-	}
-
 	&_checkbox {
-		.cr_check {
-			//border-radius: var(--f-border-radius-3);
-		}
+        .foption {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+
+            .cr_label {
+                padding-inline-start: var(--f-spacer-5);
+            }
+        }
 	}
 
 	&_price {
@@ -56,10 +57,12 @@
 	}
 
 	&_title {
+        display: block;
 		font-weight: 600;
 	}
 
 	&_desc {
+        display: block;
 		color: var(--f-color-grey-4);
 	}
 

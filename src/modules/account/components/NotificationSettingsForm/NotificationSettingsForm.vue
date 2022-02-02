@@ -14,13 +14,17 @@
                         v-for="(value, name, index) in myNotifications"
                         :key="index + name"
                     >
-                        <div class="notificationsettingsform_checkbox">
-                            <f-form-input :name="name" type="checkbox" :disabled="!yourActivity" />
-                        </div>
-                        <div class="notificationsettingsform_content" @click="onNotificationClick">
-                            <div class="notificationsettingsform_title">{{ $t(`notifications.${name}`) }}</div>
-                            <div class="notificationsettingsform_desc">{{ $t(`notifications.${name}` + 'Desc') }}</div>
-                        </div>
+                        <f-form-input
+                            :name="name"
+                            type="checkbox"
+                            :disabled="!yourActivity"
+                            class="notificationsettingsform_checkbox"
+                        >
+                            <span class="notificationsettingsform_title">{{ $t(`notifications.${name}`) }}</span>
+                            <span class="notificationsettingsform_desc">
+                                {{ $t(`notifications.${name}` + 'Desc') }}
+                            </span>
+                        </f-form-input>
                     </div>
                 </div>
             </div>
@@ -33,13 +37,17 @@
                         v-for="(value, name, index) in followerNotifications"
                         :key="index + name"
                     >
-                        <div class="notificationsettingsform_checkbox">
-                            <f-form-input :name="name" type="checkbox" :disabled="!followerActivity" />
-                        </div>
-                        <div class="notificationsettingsform_content" @click="onNotificationClick">
-                            <div class="notificationsettingsform_title">{{ $t(`notifications.${name}`) }}</div>
-                            <div class="notificationsettingsform_desc">{{ $t(`notifications.${name}` + 'Desc') }}</div>
-                        </div>
+                        <f-form-input
+                            :name="name"
+                            type="checkbox"
+                            :disabled="!followerActivity"
+                            class="notificationsettingsform_checkbox"
+                        >
+                            <span class="notificationsettingsform_title">{{ $t(`notifications.${name}`) }}</span>
+                            <span class="notificationsettingsform_desc">
+                                {{ $t(`notifications.${name}` + 'Desc') }}
+                            </span>
+                        </f-form-input>
                     </div>
                 </div>
             </div>
@@ -121,11 +129,6 @@ export default {
 
         //     return '';
         // },
-
-        onNotificationClick(e) {
-            const item = e.target.closest('.notificationsettingsform_item');
-            if (item) item.querySelector('.cr_check').click();
-        },
 
         async onFormSubmit(data) {
             let ok = await checkSignIn();
