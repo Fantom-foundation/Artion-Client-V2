@@ -1,6 +1,6 @@
 <template>
     <f-svg-icon v-bind="$attrs">
-        <component :is="componentName" />
+        <component :is="componentName" :aria-label="ariaLabel || null" />
     </f-svg-icon>
 </template>
 
@@ -143,6 +143,11 @@ export default {
             type: String,
             default: '',
             required: true,
+        },
+        /** Aria label for svg */
+        ariaLabel: {
+            type: String,
+            default: '',
         },
     },
 

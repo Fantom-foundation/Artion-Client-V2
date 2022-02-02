@@ -37,9 +37,13 @@
         >
             <template #label>
                 {{ $t('collectionregisterform.royalty') }}
-                <button class="label_btn" :data-tooltip="$t('collectionregisterform.royaltyTooltip')">
-                    <app-iconset icon="question" />
-                </button>
+                <span class="label_btn" :data-tooltip="$t('collectionregisterform.royaltyTooltip')">
+                    <app-iconset
+                        icon="question"
+                        :aria-hidden="false"
+                        :aria-label="$t('collectionregisterform.royaltyTooltip')"
+                    />
+                </span>
             </template>
         </f-form-input>
         <f-form-input
@@ -51,9 +55,13 @@
         >
             <template #label>
                 {{ $t('collectionregisterform.feeRecipient') }}
-                <button class="label_btn" :data-tooltip="$t('collectionregisterform.feesTooltip')">
-                    <app-iconset icon="question" />
-                </button>
+                <span class="label_btn" :data-tooltip="$t('collectionregisterform.feesTooltip')">
+                    <app-iconset
+                        icon="question"
+                        :aria-hidden="false"
+                        :aria-label="$t('collectionregisterform.feesTooltip')"
+                    />
+                </span>
             </template>
         </f-form-input>
         <div class="collectionregisterform_categories">
@@ -148,9 +156,13 @@
         >
             <template #label>
                 {{ $t('collectionregisterform.contactEmail') }}
-                <button class="label_btn" :data-tooltip="$t('collectionregisterform.emailTooltip')">
-                    <app-iconset icon="question" />
-                </button>
+                <span class="label_btn" :data-tooltip="$t('collectionregisterform.emailTooltip')">
+                    <app-iconset
+                        icon="question"
+                        :aria-hidden="false"
+                        :aria-label="$t('collectionregisterform.emailTooltip')"
+                    />
+                </span>
             </template>
         </f-form-input>
         <div class="collectionregisterform_btn">

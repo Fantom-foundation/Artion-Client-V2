@@ -77,17 +77,25 @@
                     >
                         <template #label>
                             {{ $t('nftcreate.royalty') }}
-                            <button class="label_btn" :data-tooltip="$t('nftcreate.royaltyTooltip')">
-                                <app-iconset icon="question" />
-                            </button>
+                            <span class="label_btn" :data-tooltip="$t('nftcreate.royaltyTooltip')">
+                                <app-iconset
+                                    icon="question"
+                                    :aria-hidden="false"
+                                    :aria-label="$t('nftcreate.royaltyTooltip')"
+                                />
+                            </span>
                         </template>
                     </f-form-input>
                     <f-form-input field-size="large" type="text" name="linkToIp">
                         <template #label>
                             {{ $t('nftcreate.linkToIp') }}
-                            <button class="label_btn" :data-tooltip="$t('nftcreate.linkToIpTooltip')">
-                                <app-iconset icon="question" />
-                            </button>
+                            <span class="label_btn" :data-tooltip="$t('nftcreate.linkToIpTooltip')">
+                                <app-iconset
+                                    icon="question"
+                                    :aria-hidden="false"
+                                    :aria-label="$t('nftcreate.linkToIpTooltip')"
+                                />
+                            </span>
                         </template>
                     </f-form-input>
                     <f-form-input type="toggle" :label="$t('nftcreate.unlockContent')" name="unlockContentToogle" />

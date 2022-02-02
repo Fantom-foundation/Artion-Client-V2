@@ -19,12 +19,11 @@
         >
             <template #label>
                 {{ $t('nftstartauctionform.reservePrice') }}
-                <!--                <button
+                <!--                <span
                     class="btn-nostyle"
                     :data-tooltip="$t('nftstartauctionform.reservePriceInfo')"
-                    :aria-label="$t('nftstartauctionform.reservePriceInfo')"
                 >
-                    <app-iconset icon="question" />
+                    <app-iconset icon="question" :aria-hidden="false" :aria-label="$t('nftstartauctionform.reservePriceInfo')" />
                 </button>-->
             </template>
         </f-form-input>
