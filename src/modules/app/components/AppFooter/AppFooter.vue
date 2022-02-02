@@ -1,7 +1,9 @@
 <template>
     <div class="appfooter">
         <div class="appfooter_item">
-            <router-link to="/"><img src="artion-logo-white.svg" height="35px" alt="artion logo"/></router-link>
+            <router-link to="/">
+                <img src="artion-logo-white.svg" width="138px" height="35px" alt="artion logo" />
+            </router-link>
         </div>
         <div class="appfooter_item">
             <a
@@ -36,7 +38,7 @@
                 href="https://fantom.foundation/?__cf_chl_jschl_tk__=pmd_E1oHTDXhwdz0vcFL0YFXwPOHh90x0.2yXjcuNnnha8E-1632371438-0-gqNtZGzNAdCjcnBszQyl"
                 rel="noopener"
             >
-                <img src="fantom_logo.svg" height="35px" alt="fantom logo" />
+                <img src="fantom_logo.svg" width="135px" height="35px" alt="fantom logo" />
             </a>
         </div>
     </div>

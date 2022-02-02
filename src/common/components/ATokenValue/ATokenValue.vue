@@ -5,7 +5,7 @@
             :content-loaded="!!dToken.label || contentLoaded"
             :replacement-text="replacementText"
         >
-            <img v-if="dToken.img" :src="dToken.img" :alt="tokenSymbol" />
+            <img v-if="dToken.img" :src="dToken.img" :alt="tokenSymbol" :width="imageSize" :height="imageSize" />
             <span class="atokenvalue_value">
                 {{ tokenValue }}
             </span>
@@ -14,7 +14,7 @@
         </a-placeholder>
 
         <template v-else>
-            <img v-if="dToken.img" :src="dToken.img" :alt="tokenSymbol" />
+            <img v-if="dToken.img" :src="dToken.img" :alt="tokenSymbol" :width="imageSize" :height="imageSize" />
             <span class="atokenvalue_value">
                 {{ tokenValue }}
             </span>
@@ -83,6 +83,11 @@ export default {
         fractionDigits: {
             type: Number,
             default: 0,
+        },
+        /** Size of token image */
+        imageSize: {
+            type: String,
+            default: '24px',
         },
     },
 

@@ -20,6 +20,7 @@
                             <a-token-value
                                 :token="nftData.auctionReservePrice.payToken"
                                 :value="nftData.auctionReservePrice.amount"
+                                image-size="16px"
                                 no-symbol
                             />
                         </div>
@@ -27,6 +28,7 @@
                             <a-token-value
                                 :token="nftData.auctionedPrice.payToken"
                                 :value="nftData.auctionedPrice.amount"
+                                image-size="16px"
                                 no-symbol
                             />
                         </div>
@@ -43,6 +45,7 @@
                             <a-token-value
                                 :token="nftData.listingPrice.payToken"
                                 :value="nftData.listingPrice.amount"
+                                image-size="16px"
                                 no-symbol
                             />
                         </div>
@@ -51,6 +54,7 @@
                             <a-token-value
                                 :token="nftData.offeredPrice.payToken"
                                 :value="nftData.offeredPrice.amount"
+                                image-size="16px"
                                 no-symbol
                             />
                         </div>
@@ -59,6 +63,7 @@
                             <a-token-value
                                 :token="nftData.lastTradePrice.payToken"
                                 :value="nftData.lastTradePrice.amount"
+                                image-size="16px"
                                 no-symbol
                             />
                         </div>
