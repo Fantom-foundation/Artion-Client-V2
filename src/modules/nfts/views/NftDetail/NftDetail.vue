@@ -6,7 +6,7 @@
                     <a-video :src="token.image" :poster="getImageThumbUrl(token.imageThumb)" loop />
                 </div>
                 <div v-else class="nftdetail_img">
-                    <f-image :src="token.image" :alt="token.name" />
+                    <f-image :src="token.image" :alt="token.name" :lazy-loading="false" />
                 </div>
             </div>
             <div class="nftdetail_product">

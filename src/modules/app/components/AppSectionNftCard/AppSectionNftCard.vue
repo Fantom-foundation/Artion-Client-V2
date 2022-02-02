@@ -1,6 +1,6 @@
 <template>
     <div class="appsectionnftcard _flex _flex-column">
-        <f-image :src="nft.img" :alt="nft.title" />
+        <f-image :src="nft.img" :alt="nft.title" :lazy-loading="false" />
         <div class="appsectionnftcard_text">
             <div class="appsectionnftcard_collection">
                 <a-placeholder :content-loaded="!!nft.collection" block>
