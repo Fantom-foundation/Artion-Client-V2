@@ -33,6 +33,7 @@
     "items": "Items",
     "like": "Like",
     "rtlDirection": "Right-to-left direction",
+    "selectedFilters": "Selected filters",
 
     "navigation": {
         "explore": "@:explore",

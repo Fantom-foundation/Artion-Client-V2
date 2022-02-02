@@ -1,6 +1,14 @@
 <template>
     <div class="afilterchips">
-        <f-chips :data="dData" removable size="large" focus-item-on-focus v-bind="$attrs" @change="onChange">
+        <f-chips
+            :data="dData"
+            removable
+            size="large"
+            focus-item-on-focus
+            v-bind="$attrs"
+            :aria-label="$t('selectedFilters')"
+            @change="onChange"
+        >
             <template #remove-button>
                 <span class="flistbox_list_item_removebutton" aria-hidden="true">
                     <app-iconset size="12px" icon="close" />
