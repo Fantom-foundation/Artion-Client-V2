@@ -5,10 +5,10 @@
             infinite-scroll
             strategy="remote"
             no-header
-            max-height="400px"
             sticky-head
+            __max-height="400px"
+            __infinite-scroll-root=".nfttmpgrid .fdatagrid_table"
             class="agrid nfttmpgrid"
-            infinite-scroll-root=".nfttmpgrid .fdatagrid_table"
             :items="items"
             :columns="columns"
             :total-items="totalItems"

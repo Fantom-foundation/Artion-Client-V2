@@ -58,7 +58,7 @@
 
     //--color-light: var(--f-color-grey-5);
     //--color-light-hover: var(--f-color-grey-5);
-    --curr-sticky-top: 0px;
+    --curr-sticky-top: var(--appheader-height);
     //--font-family-headings: 'proxima-nova', sans-serif, Helvetica;
 
     --hover-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
