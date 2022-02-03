@@ -15,7 +15,23 @@
             :validator="priceValidator"
             validate-on-input
             @token-selected="onTokenSelected"
-        />
+        >
+            <template #bottom="{ validationState, errorMsgId, infoTextId }">
+                <div class="fform_errwithinfo">
+                    <f-error-messages :errors="validationState.errors" :errors-cont-id="errorMsgId" />
+                    <f-info-text :info-text-id="infoTextId">
+                        <span>{{ $t('balance') }}:</span>
+                        <a-token-value
+                            :token="{ ...selectedPayToken, img: '' }"
+                            :value="toHex(bAccountBalance)"
+                            :fraction-digits="2"
+                            :is-pay-token="false"
+                            :use-placeholder="false"
+                        />
+                    </f-info-text>
+                </div>
+            </template>
+        </f-form-input>
         <f-form-input
             type="datetime"
             name="deadline"
@@ -39,7 +55,7 @@
 <script>
 import Web3 from 'web3';
 import contracts from '@/utils/artion-contracts-utils.js';
-import { bFromTokenValue, bToTokenValue, toHex } from '@/utils/big-number.js';
+import { bFromTokenValue, bToTokenValue, toBigNumber, toHex } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
 import { getErc20TokenBalance } from '@/modules/wallet/queries/erc20-token-balance.js';
 import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
@@ -49,11 +65,14 @@ import AButton from '@/common/components/AButton/AButton.vue';
 import { getUserAllowanceTx } from '@/plugins/wallet/utils.js';
 import { getPayToken } from '@/utils/pay-tokens.js';
 import { getContractAddress } from '@/utils/artion-contract-addresses.js';
+import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
+import FErrorMessages from 'fantom-vue-components/src/components/FErrorMessages/FErrorMessages.vue';
+import FInfoText from 'fantom-vue-components/src/components/FInfoText/FInfoText.vue';
 
 export default {
     name: 'NftMakeOfferForm',
 
-    components: { AButton, ASignTransaction },
+    components: { ATokenValue, AButton, ASignTransaction, FErrorMessages, FInfoText },
 
     props: {
         token: {
@@ -81,6 +100,7 @@ export default {
             payTokens: [],
             selectedPayToken: null,
             accountBalance: 0,
+            bAccountBalance: null,
             tx: {},
             txStatus: '',
             storedValues: {},
@@ -96,6 +116,7 @@ export default {
         async selectedPayToken(token, oldValue) {
             const balance = await getErc20TokenBalance(this.$wallet.account, token.address);
 
+            this.bAccountBalance = toBigNumber(balance);
             this.accountBalance = bFromTokenValue(balance, token.decimals).toNumber();
 
             if (oldValue !== null) {
@@ -248,6 +269,7 @@ export default {
 
         datetimeInFormatterTimestamp,
         dateOutFormatterTimestamp,
+        toHex,
     },
 };
 </script>

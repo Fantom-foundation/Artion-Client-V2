@@ -73,4 +73,19 @@
     &.grid {
         --f-row-gap: var(--f-spacer-5);
     }
+
+    &_errwithinfo {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .finfotext {
+            display: flex;
+            gap: var(--f-spacer-2);
+        }
+
+        .atokenvalue {
+            gap: var(--f-spacer-1);
+        }
+    }
 }

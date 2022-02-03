@@ -12,7 +12,23 @@
             :validator="priceValidator"
             validate-on-input
             @token-selected="onTokenSelected"
-        />
+        >
+            <template #bottom="{ validationState, errorMsgId, infoTextId }">
+                <div class="fform_errwithinfo">
+                    <f-error-messages :errors="validationState.errors" :errors-cont-id="errorMsgId" />
+                    <f-info-text :info-text-id="infoTextId">
+                        <span>{{ $t('balance') }}:</span>
+                        <a-token-value
+                            :token="{ ...payToken, img: '' }"
+                            :value="toHex(userBalanceB)"
+                            :fraction-digits="2"
+                            :is-pay-token="false"
+                            :use-placeholder="false"
+                        />
+                    </f-info-text>
+                </div>
+            </template>
+        </f-form-input>
 
         <div class="fform_buttons">
             <a-button type="submit" size="large" :loading="txStatus === 'pending'">
@@ -32,11 +48,14 @@ import { PAY_TOKENS_WITH_PRICES } from '@/common/constants/pay-tokens.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { getUserAllowanceTx, getUserBalance } from '@/plugins/wallet/utils.js';
 import { mapState } from 'vuex';
+import FErrorMessages from 'fantom-vue-components/src/components/FErrorMessages/FErrorMessages.vue';
+import FInfoText from 'fantom-vue-components/src/components/FInfoText/FInfoText.vue';
+import ATokenValue from '@/common/components/ATokenValue/ATokenValue.vue';
 
 export default {
     name: 'NftBidForm',
 
-    components: { AButton, ASignTransaction },
+    components: { ATokenValue, AButton, ASignTransaction, FErrorMessages, FInfoText },
 
     props: {
         token: {
@@ -231,6 +250,8 @@ export default {
 
             this.$emit('transaction-status', payload);
         },
+
+        toHex,
     },
 };
 </script>

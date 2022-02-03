@@ -215,6 +215,16 @@
         }
 
     }
+
+    .fform_errwithinfo {
+        .finfotext {
+            @include column-flex-gap(var(--f-spacer-2));
+        }
+
+        .atokenvalue {
+            @include column-flex-gap(var(--f-spacer-1));
+        }
+    }
 }
 
 @include media.media-min(900px) {
