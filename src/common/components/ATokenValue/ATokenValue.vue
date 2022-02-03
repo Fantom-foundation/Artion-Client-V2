@@ -6,20 +6,24 @@
             :replacement-text="replacementText"
         >
             <img v-if="dToken.img" :src="dToken.img" :alt="tokenSymbol" :width="imageSize" :height="imageSize" />
-            <span class="atokenvalue_value">
+            <span class="atokenvalue_value" :data-tooltip="tokenValue">
                 {{ tokenValue }}
             </span>
             <span v-if="!noSymbol" class="atokenvalue_symbol">{{ tokenSymbol }}</span>
-            <span v-if="withPrice" class="atokenvalue_price">({{ tokenPrice$ }})</span>
+            <span v-if="withPrice" class="atokenvalue_price" :data-tooltip="tokenPrice$">
+                (
+                <span>{{ tokenPrice$ }}</span>
+                )
+            </span>
         </a-placeholder>
 
         <template v-else>
             <img v-if="dToken.img" :src="dToken.img" :alt="tokenSymbol" :width="imageSize" :height="imageSize" />
-            <span class="atokenvalue_value">
+            <span class="atokenvalue_value" :data-tooltip="tokenValue">
                 {{ tokenValue }}
             </span>
             <span v-if="!noSymbol" class="currency">{{ tokenSymbol }}</span>
-            <span v-if="withPrice" class="atokenvalue_price">({{ tokenPrice$ }})</span>
+            <span v-if="withPrice" class="atokenvalue_price" :data-tooltip="tokenPrice$">({{ tokenPrice$ }})</span>
         </template>
     </span>
 </template>

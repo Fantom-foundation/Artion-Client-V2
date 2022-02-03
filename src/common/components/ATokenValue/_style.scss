@@ -1,9 +1,25 @@
 .atokenvalue {
+    --atokenvalue-max-value-width: 120px;
+
+    display: flex;
+
     &,
     .fplaceholder {
         display: flex;
         align-items: center;
         column-gap: var(--f-spacer-2);
+    }
+
+    &_price > span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    &_value, &_price > span {
+        max-width: var(--atokenvalue-max-value-width);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     img {

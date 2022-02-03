@@ -87,6 +87,7 @@
     &_bottom {
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
     }
 
     &_label {
