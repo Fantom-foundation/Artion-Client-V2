@@ -28,6 +28,25 @@ export const WFTMContract = '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83';
 let PT = [];
 
 /**
+ * @param {PayToken} token
+ * @return {number}
+ */
+function getTokenFractionDigits(token) {
+    const tokenPrice = token.price || 0;
+    let decimals = 1;
+
+    if (tokenPrice < 5 && tokenPrice >= 0) {
+        decimals = 1;
+    } else if (tokenPrice < 100) {
+        decimals = 2;
+    } else if (tokenPrice < 1000) {
+        decimals = 5;
+    }
+
+    return decimals;
+}
+
+/**
  * @return {PayToken[]}
  */
 async function fetchPayTokens() {
@@ -47,6 +66,8 @@ async function fetchPayTokens() {
             origPrice: t.price,
             value: symbolLC,
         };
+
+        payToken.fractionDigits = getTokenFractionDigits(payToken);
 
         payTokens.push(payToken);
     });

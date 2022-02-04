@@ -34,11 +34,12 @@ export function formatNumberByLocale(
     return new Intl.NumberFormat(localeOptions.currLocale, options).format(_number);
 }
 
-export function formatTokenValue(value, tokenPriceDecimals = 18, _fractionDigits, _currency) {
+export function formatTokenValue(value, tokenPriceDecimals = 18, _fractionDigits, _currency, _variableFDigits = false) {
     return formatNumberByLocale(
         bFromTokenValue(value, tokenPriceDecimals).toNumber(),
         _fractionDigits,
-        _currency ? localeOptions.currency : ''
+        _currency ? localeOptions.currency : '',
+        _variableFDigits
     );
 }
 

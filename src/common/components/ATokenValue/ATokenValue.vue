@@ -86,7 +86,7 @@ export default {
         /** Number of fraction digits */
         fractionDigits: {
             type: Number,
-            default: 0,
+            default: -1,
         },
         /** Size of token image */
         imageSize: {
@@ -100,6 +100,7 @@ export default {
             dToken: {
                 label: '',
                 decimals: 18,
+                fractionDigits: 0,
             },
         };
     },
@@ -109,7 +110,15 @@ export default {
             const { value } = this;
 
             if (typeof value === 'string' && value.indexOf('0x') === 0) {
-                return formatTokenValue(value, this.dToken.decimals, this.fractionDigits);
+                let fractionDigits = 0;
+
+                if (this.fractionDigits > -1) {
+                    fractionDigits = this.fractionDigits;
+                } else if (this.dToken.fractionDigits > 0) {
+                    fractionDigits = this.dToken.fractionDigits;
+                }
+
+                return formatTokenValue(value, this.dToken.decimals, fractionDigits, '', true);
             }
 
             return value;
