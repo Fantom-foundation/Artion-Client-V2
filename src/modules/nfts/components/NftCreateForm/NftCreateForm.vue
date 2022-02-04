@@ -119,13 +119,13 @@
             <div v-if="progressMessage" class="pat-5 flex juc-center progress-message">
                 <f-message type="info" with-icon>{{ progressMessage }}</f-message>
             </div>
+            <div v-if="fee !== null" class="nftcreate_info">
+                <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm', { fee }) }}</f-message>
+            </div>
             <div class="nftcreate_btn">
                 <a-button type="submit" size="large" :loading="isLoading">
                     {{ $t('nftcreate.mint') }}
                 </a-button>
-            </div>
-            <div v-if="fee !== null" class="nftcreate_info">
-                <f-message type="info" with-icon>{{ $t('nftcreate.messageFtm', { fee }) }}</f-message>
             </div>
             <a-sign-transaction :tx="tx" @transaction-status="onMintTransactionStatus" />
         </div>
