@@ -146,13 +146,25 @@
                     <div class="accountprofileform_label">
                         {{ $t('accountprofileform.profileImg') }}
                     </div>
-                    <AUploadArea :initial-preview="avatar" @input="uploadUserAvatar" />
+                    <AUploadArea
+                        :initial-preview="avatar"
+                        @input="uploadUserAvatar"
+                        :max-file-size="maxNFTSize"
+                        :validator="imageValidator"
+                        strict
+                    />
                 </div>
                 <div class="accountprofileform_banner">
                     <div class="accountprofileform_label">
                         {{ $t('accountprofileform.profileBanner') }}
                     </div>
-                    <AUploadArea :initial-preview="banner" @input="uploadUserBanner" />
+                    <AUploadArea
+                        :initial-preview="banner"
+                        @input="uploadUserBanner"
+                        :max-file-size="maxNFTSize"
+                        :validator="imageValidator"
+                        strict
+                    />
                 </div>
             </div>
         </div>
@@ -173,6 +185,8 @@ import { updateShippingAddress } from '../../mutations/update-shipping-address';
 import { signIn, getBearerToken } from '@/modules/account/auth.js';
 import { getImageThumbUrl, getIPFSUrl } from '@/utils/url.js';
 import { uploadUserFile } from '@/utils/upload.js';
+import appConfig from '@/app.config.js';
+import { imageValidator } from '@/common/components/AUploadArea/validators.js';
 
 export default {
     name: 'AccountProfileForm',
@@ -184,6 +198,7 @@ export default {
             values: {},
             avatar: null,
             banner: null,
+            maxNFTSize: appConfig.settings.maxNFTSize,
         };
     },
 
@@ -278,6 +293,8 @@ export default {
             let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return !re.test(value);
         },
+
+        imageValidator,
     },
 };
 </script>

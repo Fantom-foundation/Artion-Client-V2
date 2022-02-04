@@ -47,6 +47,21 @@ export default {
             type: String,
             default: 'image/*',
         },
+        /** Maximum file size in bytes */
+        maxFileSize: {
+            type: Number,
+            default: -1,
+        },
+        /** Validator of file type */
+        validator: {
+            type: Function,
+            default: null,
+        },
+        /** If true and validations failed, don't trigger 'input' event */
+        strict: {
+            type: Boolean,
+            default: false,
+        },
         multiple: {
             type: Boolean,
             default: false,
@@ -86,8 +101,35 @@ export default {
                 // console.log('empty');
                 return;
             }
-            this.imagePreview = URL.createObjectURL(files[0]);
-            this.$emit('input', files);
+
+            const file = files[0];
+            const valid = this.validate(file);
+
+            if (valid) {
+                this.imagePreview = URL.createObjectURL(file);
+            }
+
+            if (!this.strict || valid) {
+                this.$emit('input', files);
+            }
+        },
+
+        /**
+         * @param {File} file
+         * @return {boolean}
+         */
+        validate(file) {
+            let ok = true;
+
+            if (file) {
+                ok = this.maxFileSize === -1 || file.size < this.maxFileSize;
+
+                if (ok && typeof this.validator === 'function') {
+                    ok = this.validator(file);
+                }
+            }
+
+            return ok;
         },
 
         deleteImage() {

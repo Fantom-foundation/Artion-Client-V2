@@ -86,6 +86,7 @@ let appConfig = {
         defaultLanguage: 'en',
         mobileViewBreakpoint: '64em', // set also variable $breakpoint-mw in assets/scss/_variables.scss
         themes: ['default', 'theme-dark'],
+        maxNFTSize: 15000000,
     },
     // progressive web application
     usePWA: true,

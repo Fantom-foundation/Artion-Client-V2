@@ -34,6 +34,8 @@
     "like": "Like",
     "rtlDirection": "Right-to-left direction",
     "selectedFilters": "Selected filters",
+    "maxFileSizeReached": "Max file size reached",
+    "badFileType": "Bad file type",
 
     "navigation": {
         "explore": "@:explore",
@@ -498,7 +500,7 @@
         "linkToIpPlaceholder": "Enter Link",
         "unlockContent": "Unlockable Content",
         "mint": "Mint",
-        "fileError": "Pick an image/video file please",
+        "fileError": "Pick an image file please",
         "signInFirst": "You need to sign-in first",
         "signMint": "Please confirm the minting transaction in your wallet...",
         "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded: ",

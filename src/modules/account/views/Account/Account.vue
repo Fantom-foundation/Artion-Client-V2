@@ -7,6 +7,9 @@
                 :initial-preview="banner"
                 @input="uploadUserBanner"
                 :disabled="userAddress !== walletAddress"
+                :max-file-size="maxNFTSize"
+                :validator="imageValidator"
+                strict
             />
         </div>
         <div class="account_header">
@@ -15,6 +18,9 @@
                     :initial-preview="avatar"
                     @input="uploadUserAvatar"
                     :disabled="userAddress !== walletAddress"
+                    :max-file-size="maxNFTSize"
+                    :validator="imageValidator"
+                    strict
                     class="auploadarea-nobackground"
                 />
                 <div v-if="!avatar" v-html="getJazzicon(userAddress, 118)" class="account_avatar_jazzicon"></div>
@@ -107,6 +113,8 @@ import { getBannedTokensCount } from '@/modules/account/queries/banned-tokens.js
 import { compareAddresses } from '@/utils/address.js';
 import { documentMeta } from '@/modules/app/DocumentMeta.js';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
+import appConfig from '@/app.config.js';
+import { imageValidator } from '@/common/components/AUploadArea/validators.js';
 
 const onlyModeratorRoutes = [
     {
@@ -148,6 +156,7 @@ export default {
             user: {},
             avatar: null,
             banner: null,
+            maxNFTSize: appConfig.settings.maxNFTSize,
             navigation: [
                 {
                     routeName: 'account-single-items',
@@ -418,6 +427,7 @@ export default {
         },
 
         getJazzicon,
+        imageValidator,
     },
 };
 </script>

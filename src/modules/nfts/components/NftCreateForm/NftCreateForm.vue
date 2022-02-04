@@ -2,7 +2,12 @@
     <f-form v-model="values" class="nftcreate_form" @submit="onSubmit" :aria-label="$t('page.nftCreate.title')">
         <div class="nftcreate_col">
             <div>
-                <a-upload-area @input="setTokenImage" class="auploadarea-nobackground">
+                <a-upload-area
+                    @input="setTokenImage"
+                    :max-file-size="maxNFTSize"
+                    :validator="imageValidator"
+                    class="auploadarea-nobackground"
+                >
                     Drop files here or browse <br />
                     JPG, PNG, BMP, GIF Max 15mb.
                 </a-upload-area>
@@ -143,6 +148,8 @@ import { bFromWei, toHex } from '@/utils/big-number';
 import { estimateMintFeeGas } from '@/modules/nfts/queries/estimate-mint';
 import { getCollectionImageUrl } from '@/utils/url.js';
 import { tokenExists } from '@/modules/nfts/queries/token';
+import appConfig from '@/app.config.js';
+import { imageValidator } from '@/common/components/AUploadArea/validators.js';
 
 export default {
     name: 'NftCreateForm',
@@ -163,6 +170,7 @@ export default {
             tokenId: null,
             isLoading: false,
             fee: null,
+            maxNFTSize: appConfig.settings.maxNFTSize,
         };
     },
 
@@ -205,7 +213,22 @@ export default {
         },
 
         setTokenImage(_files) {
-            this.imageFile = _files[0] || null;
+            let file = _files[0] || null;
+            let fileError = '';
+
+            if (file) {
+                if (file.size > this.maxNFTSize) {
+                    fileError = this.$t('maxFileSizeReached');
+                    file = null;
+                } else if (!imageValidator(file)) {
+                    fileError = this.$t('badFileType');
+                    file = null;
+                }
+            }
+
+            this.fileError = fileError;
+
+            this.imageFile = file;
         },
 
         async onSubmit(_data) {
@@ -425,6 +448,8 @@ export default {
                 event.target.value = value.slice(0, 4);
             }
         },
+
+        imageValidator,
     },
 };
 </script>
