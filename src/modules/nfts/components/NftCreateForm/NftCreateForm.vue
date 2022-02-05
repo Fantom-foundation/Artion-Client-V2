@@ -9,7 +9,7 @@
                     class="auploadarea-nobackground"
                 >
                     Drop files here or browse <br />
-                    JPG, PNG, BMP, GIF Max 15mb.
+                    JPG, PNG, BMP, GIF, SVG, Max 15mb.
                 </a-upload-area>
             </div>
         </div>

@@ -3,5 +3,5 @@
  * @return {boolean}
  */
 export function imageValidator(file) {
-    return file && file.type.indexOf('image/') > -1 && file.type !== 'image/svg+xml';
+    return file && file.type.indexOf('image/') > -1;
 }
