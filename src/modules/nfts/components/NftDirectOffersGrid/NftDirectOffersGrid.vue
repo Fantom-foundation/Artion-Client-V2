@@ -103,7 +103,7 @@ export default {
                 {
                     name: 'proposedByUser',
                     label: this.$t('nftDirectOffersGrid.from'),
-                    width: '110px',
+                    width: '160px',
                 },
                 {
                     name: 'unitPrice',

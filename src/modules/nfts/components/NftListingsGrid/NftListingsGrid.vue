@@ -91,7 +91,7 @@ export default {
                 {
                     name: 'ownerUser',
                     label: this.$t('nftlistingsgrid.from'),
-                    // width: '110px',
+                    width: '160px',
                 },
                 {
                     name: 'unitPrice',
