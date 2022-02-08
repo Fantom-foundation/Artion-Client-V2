@@ -149,7 +149,8 @@ export default {
 
             if (
                 !isNaN(value) &&
-                bToTokenValue(value, this.token.decimals).isGreaterThan(this.maxBalance || this.balance)
+                bToTokenValue(value, this.token.decimals).isGreaterThan(this.maxBalance || this.balance) &&
+                (!this.maxBalance || value !== this.fromTokenValue(this.maxBalance))
             ) {
                 errorMessage =
                     this.maxBalance !== this.balance
