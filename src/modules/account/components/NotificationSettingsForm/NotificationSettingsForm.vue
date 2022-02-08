@@ -17,8 +17,9 @@
                         <f-form-input
                             :name="name"
                             type="checkbox"
-                            :disabled="!yourActivity"
+                            :disabled="!yourActivity || isItemDisabled(name)"
                             class="notificationsettingsform_checkbox"
+                            :class="{ 'foption-disabled': !yourActivity || isItemDisabled(name) }"
                         >
                             <span class="notificationsettingsform_title">{{ $t(`notifications.${name}`) }}</span>
                             <span class="notificationsettingsform_desc">
@@ -40,8 +41,9 @@
                         <f-form-input
                             :name="name"
                             type="checkbox"
-                            :disabled="!followerActivity"
+                            :disabled="!followerActivity || isItemDisabled(name)"
                             class="notificationsettingsform_checkbox"
+                            :class="{ 'foption-disabled': !followerActivity || isItemDisabled(name) }"
                         >
                             <span class="notificationsettingsform_title">{{ $t(`notifications.${name}`) }}</span>
                             <span class="notificationsettingsform_desc">
@@ -78,6 +80,8 @@ import { updateNotificationSettings } from '@/modules/account/mutations/notifica
 import { sNotifications, fNotifications } from '@/common/constants/notifications.js';
 import { checkSignIn } from '@/modules/account/auth.js';
 import { clone, isObject } from 'fantom-vue-components/src/utils';
+
+const DISABLE_BUNDLES = true;
 
 export default {
     name: 'NotificationSettingsForm',
@@ -116,6 +120,10 @@ export default {
             if (notifications !== null && isObject(notifications)) {
                 this.values = clone(notifications);
             }
+        },
+
+        isItemDisabled(name) {
+            return DISABLE_BUNDLES && name.indexOf('Bundle') > -1;
         },
 
         // priceValidator(value) {

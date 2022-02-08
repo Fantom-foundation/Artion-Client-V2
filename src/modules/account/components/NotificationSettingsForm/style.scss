@@ -1,73 +1,81 @@
 .notificationsettingsform {
-	--notification-border: 1px solid var(--f-color-primary-3);
+    --notification-border: 1px solid var(--f-color-primary-3);
     --notification-focus-background-color: var(--f-color-primary-2);
 
-	margin-top: var(--f-spacer-5);
+    margin-top: var(--f-spacer-5);
 
-	&_lists {
-		display: flex;
-		gap: var(--f-spacer-5);
-		align-items: flex-start;
-		flex-wrap: wrap;
-	}
+    &_lists {
+        display: flex;
+        gap: var(--f-spacer-5);
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
 
-	&_list {
-		display: flex;
-		flex-direction: column;
-	}
+    &_list {
+        display: flex;
+        flex-direction: column;
+    }
 
-	&_wrap {
-		margin-top: var(--f-spacer-4);
-		border: var(--notification-border);
-		border-radius: var(--f-border-radius-3);
-	}
+    &_wrap {
+        margin-top: var(--f-spacer-4);
+        border: var(--notification-border);
+        border-radius: var(--f-border-radius-3);
+    }
 
-	&_item {
-		display: flex;
-		align-items: center;
-		padding: var(--f-spacer-4) var(--f-spacer-6);
-		& + & {
-			border-top: var(--notification-border);
-		}
+    &_item {
+        display: flex;
+        align-items: center;
+        padding: var(--f-spacer-4) var(--f-spacer-6);
+        & + & {
+            border-top: var(--notification-border);
+        }
 
         &:focus-within {
             background: var(--notification-focus-background-color);
         }
-	}
+    }
 
-	&_checkbox {
+    &_checkbox {
         .foption {
             display: flex;
             align-items: center;
-            cursor: pointer;
 
             .cr_label {
                 padding-inline-start: var(--f-spacer-5);
             }
         }
-	}
 
-	&_price {
-		margin-top: var(--f-spacer-5);
-		&_title { font-weight: 600; }
-		&_desc { color: var(--f-color-grey-4); }
-		div + div {
-			margin-top: var(--f-spacer-2);
-		}
-	}
+        &:not(.foption-disabled) {
+            .foption {
+                cursor: pointer;
+            }
+        }
+    }
 
-	&_title {
+    &_price {
+        margin-top: var(--f-spacer-5);
+        &_title {
+            font-weight: 600;
+        }
+        &_desc {
+            color: var(--f-color-grey-4);
+        }
+        div + div {
+            margin-top: var(--f-spacer-2);
+        }
+    }
+
+    &_title {
         display: block;
-		font-weight: 600;
-	}
+        font-weight: 600;
+    }
 
-	&_desc {
+    &_desc {
         display: block;
-		color: var(--f-color-grey-4);
-	}
+        color: var(--f-color-grey-4);
+    }
 
-	&_btn {
-		margin-top: var(--f-spacer-5);
-
-	}
+    &_btn {
+        margin-top: var(--f-spacer-5);
+    }
 }
