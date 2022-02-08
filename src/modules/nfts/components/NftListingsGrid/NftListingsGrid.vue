@@ -35,10 +35,10 @@
                         v-if="!userOwnsToken && listingStarted(item)"
                         :loading="txStatus === 'pending'"
                         :label="$t('nftlistingsgrid.buy')"
-                        @click.native="onBuytButtonClick(item)"
+                        @click.native="onBuyButtonClick(item)"
                     />
                     <template v-else-if="!listingStarted(item)">
-                        {{ listingStartedIn(item) }}
+                        {{ listingStartsAt(item) }}
                     </template>
                 </template>
             </template>
@@ -101,8 +101,12 @@ export default {
                 {
                     name: 'closed',
                     label: this.$t('nftlistingsgrid.status'),
-                    formatter(value) {
-                        return value ? i18n.t('itemstatuses.closed') : '';
+                    formatter(value, item) {
+                        return value
+                            ? i18n.t('itemstatuses.closed')
+                            : !item.isActive
+                            ? i18n.t('itemstatuses.inactive')
+                            : '';
                     },
                     // width: '80px',
                 },
@@ -232,11 +236,11 @@ export default {
             return dayjs(listing.startTime).diff(dayjs(), 'seconds') < 0;
         },
 
-        listingStartedIn(listing) {
+        listingStartsAt(listing) {
             return `${this.$t('nftlistingsgrid.saleStarts')} ${dayjs(listing.startTime).fromNow()}`;
         },
 
-        onBuytButtonClick(listing) {
+        onBuyButtonClick(listing) {
             this.buyItem(listing);
         },
 

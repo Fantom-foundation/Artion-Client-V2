@@ -607,7 +607,8 @@
 
     "itemstatuses": {
         "closed": "Closed",
-        "expired": "Expired"
+        "expired": "Expired",
+        "inactive": "Inactive"
     },
 
     "account": {
