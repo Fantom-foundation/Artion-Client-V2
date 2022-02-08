@@ -52,6 +52,7 @@ export async function getTokenActivity(contract = '', id = '', pagination = {}, 
                                 }
                                 marketplace
                                 auctionHall
+                                trxHash
                             }
                         }
                     }

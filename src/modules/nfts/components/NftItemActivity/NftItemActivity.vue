@@ -36,9 +36,15 @@
                     <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" is-account />
                 </router-link>
             </template>
-            <template #column-time="{ value }">
+            <template #column-time="{ item, value }">
                 <div>
-                    {{ value }}
+                    <a
+                        :href="'https://ftmscan.com/tx/' + item.trxHash"
+                        :title="$t('nfthistorygrid.showTx')"
+                        target="_blank"
+                    >
+                        {{ value }}
+                    </a>
                 </div>
             </template>
         </f-data-grid>

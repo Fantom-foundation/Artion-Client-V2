@@ -240,6 +240,7 @@
         "from": "From",
         "to": "To",
         "date": "Date",
+        "showTx": "Show transaction in FTMScan",
         "types": {
             "LISTING_SOLD": "Sold in listing",
             "LISTING_CREATED": "Listing created",
