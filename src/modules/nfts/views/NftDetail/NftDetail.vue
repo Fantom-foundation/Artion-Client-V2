@@ -86,7 +86,7 @@
                     />
 
                     <div class="topcornerbuttons">
-                        <nft-transfer-button v-if="userOwnsToken" :token="token" />
+                        <nft-transfer-button v-if="userOwnsToken" :token="token" @tx-success="update" />
                         <a-share-button
                             :twitter-text="$t('ashareButton.checkOutItem')"
                             :class="{ 'btn-noleftradius': userOwnsToken }"
