@@ -41,6 +41,12 @@
                         {{ listingStartsAt(item) }}
                     </template>
                 </template>
+                <!-- <a-button
+                    v-if="!item.closed && compareAddresses(walletAddress, item.owner)"
+                    :loading="txStatus === 'pending'"
+                    :label="$t('nftlistingsgrid.cancel')"
+                    @click.native="onCancelButtonClick(item)"
+                /> -->
             </template>
         </f-data-grid>
 
@@ -198,6 +204,19 @@ export default {
             }
         },
 
+        async cancelListing(listing) {
+            const web3 = new Web3();
+
+            if (!listing.contract) {
+                return;
+            }
+
+            const tx = contracts.cancelListing(listing.contract, listing.tokenId, web3, listing.marketplace);
+            tx._code = 'cancel_listing';
+
+            this.tx = tx;
+        },
+
         getPayTokenLabel(address) {
             const token = this.payTokens.find(token => compareAddresses(token.address, address));
 
@@ -244,10 +263,20 @@ export default {
             this.buyItem(listing);
         },
 
-        onTxSuccess() {
+        onCancelButtonClick(listing) {
+            this.cancelListing(listing);
+        },
+
+        onTxSuccess(code = '') {
+            const text = this.$t('nftlistingsgrid.successfulBuy');
+
+            if (code === 'cancel_listing') {
+                this.$t('nftlistingsgrid.successfulCancel');
+            }
+
             this.$notifications.add({
                 type: 'success',
-                text: this.$t('nftlistingsgrid.buySuccess'),
+                text,
             });
 
             this.update();
@@ -262,8 +291,8 @@ export default {
             if (this.txStatus === 'success') {
                 if (txCode === 'buy_allowance') {
                     this.setBuyTx(this.pickedListing);
-                } else if (txCode === 'buy') {
-                    this.onTxSuccess();
+                } else if (txCode === 'buy' || txCode === 'cancel_listing') {
+                    this.onTxSuccess(txCode);
                 }
             } else if (this.txStatus === 'error') {
                 if (txCode === 'buy_allowance' && payload.error.indexOf('execution reverted') > -1) {
@@ -271,6 +300,8 @@ export default {
                 }
             }
         },
+
+        compareAddresses,
     },
 };
 </script>

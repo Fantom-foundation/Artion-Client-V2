@@ -603,6 +603,9 @@
         "price": "@:price",
         "status": "@:status",
         "buy": "Buy",
+        "cancel": "Cancel",
+        "successfulBuy": "You have successfully bought an item",
+        "successfulCancel": "You have successfully canceled the listing",
         "saleStarts": "The sale starts"
     },
 
