@@ -16,7 +16,7 @@ import { copyMethods } from 'fantom-vue-components/src/utils/vue-helpers.js';
 import { mapState } from 'vuex';
 import { eventBusMixin } from 'fantom-vue-components/src/mixins/event-bus.js';
 import { isObject } from 'fantom-vue-components/src/utils/index.js';
-import { clientInfo } from 'fantom-vue-components/src/utils/client-info.js';
+// import { clientInfo } from 'fantom-vue-components/src/utils/client-info.js';
 
 export default {
     name: 'WalletPicker',
@@ -56,7 +56,7 @@ export default {
         async onWalletPick(wallet) {
             this._walletPicked = true;
 
-            if (wallet.id === 'metamask' && clientInfo.mobile) {
+            /* if (wallet.id === 'metamask' && clientInfo.mobile) {
                 this.callResolve();
 
                 const url = new URL(window.location.href);
@@ -66,11 +66,11 @@ export default {
                 } else {
                     window.location.href = `https://metamask.app.link/dapp/${url.host}/`;
                 }
-            } else {
-                const walletSet = await this.$wallet.setWallet(wallet.id, true);
+            } else { */
+            const walletSet = await this.$wallet.setWallet(wallet.id, true);
 
-                this.callResolve({ wallet, walletSet });
-            }
+            this.callResolve({ wallet, walletSet });
+            //}
 
             this._walletPicked = false;
         },
