@@ -35,3 +35,16 @@ export function getIPFSUrl(hash) {
 
     return `https://cloudflare-ipfs.com/ipfs/${hash}`;
 }
+
+/**
+ * @param {string} contract
+ * @param {string} tokenId
+ * @return {string}
+ */
+export function getTokenJsonMetadataUrl(contract, tokenId) {
+    if (!contract || !tokenId) {
+        return '';
+    }
+
+    return `${artionFApolloClient.getCurrentHttpProviderOrigin()}/metadata/token/${contract}/${tokenId}`;
+}

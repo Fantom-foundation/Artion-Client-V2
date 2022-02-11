@@ -66,6 +66,7 @@ import IconBan from '@/assets/vue-icons/IconBan.vue';
 import IconThumbUp from '@/assets/vue-icons/IconThumbUp.vue';
 import IconThumbDown from '@/assets/vue-icons/IconThumbDown.vue';
 import IconPresent from '@/assets/vue-icons/IconPresent.vue';
+import IconTableList from '@/assets/vue-icons/IconTableList.vue';
 
 /**
  * Icon set of default icons (from `icons` directory).
@@ -135,6 +136,7 @@ export default {
         IconThumbUp,
         IconThumbDown,
         IconPresent,
+        IconTableList,
     },
 
     props: {

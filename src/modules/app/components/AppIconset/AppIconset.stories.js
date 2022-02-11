@@ -77,6 +77,7 @@ export const Default = () => ({
                 'thumb-up',
                 'thumb-down',
                 'present',
+                'table-list',
             ],
         };
     },

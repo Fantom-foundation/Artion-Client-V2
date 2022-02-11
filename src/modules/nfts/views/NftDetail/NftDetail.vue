@@ -120,6 +120,16 @@
                 <a-details open class="adetails_p0">
                     <template #label>
                         <div class="nftdetail_details_wrap">
+                            <h2><app-iconset icon="table-list" /> {{ $t('nftdetail.attributes') }}</h2>
+                        </div>
+                    </template>
+                    <template>
+                        <nft-attributes-grid />
+                    </template>
+                </a-details>
+                <a-details open class="adetails_p0">
+                    <template #label>
+                        <div class="nftdetail_details_wrap">
                             <h2><app-iconset icon="tag" /> {{ $t('nftdetail.listings') }}</h2>
                         </div>
                     </template>
@@ -187,6 +197,7 @@ import ADetails from '@/common/components/ADetails/ADetails';
 import AShareButton from '@/common/components/AShareButton/AShareButton';
 import NftDetailInfo from '@/modules/nfts/components/NftDetailInfo/NftDetailInfo.vue';
 import NftListingsGrid from '@/modules/nfts/components/NftListingsGrid/NftListingsGrid.vue';
+import NftAttributesGrid from '@/modules/nfts/components/NftAttributesGrid/NftAttributesGrid.vue';
 import NftDirectOffersGrid from '@/modules/nfts/components/NftDirectOffersGrid/NftDirectOffersGrid';
 import { toBigNumber, toHex, toInt } from '@/utils/big-number.js';
 import ASignTransaction from '@/common/components/ASignTransaction/ASignTransaction.vue';
@@ -243,6 +254,7 @@ export default {
         AppIconset,
         AShareButton,
         NftListingsGrid,
+        NftAttributesGrid,
         NftDirectOffersGrid,
         NftMoreFromCollectionList,
         AVideo,

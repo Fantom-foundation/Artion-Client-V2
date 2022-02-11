@@ -356,7 +356,14 @@
         "fantomOpera": "Fantom Opera",
         "chainId": "Chain ID",
         "fromCollection": "More from this collection",
-        "itemActivity": "Item Activity"
+        "itemActivity": "Item Activity",
+        "attributes": "Attributes"
+    },
+
+    "nftattributesgrid": {
+        "type": "Type",
+        "value": "Value",
+        "frequency": "Frequency"
     },
 
     "nftlike": {
