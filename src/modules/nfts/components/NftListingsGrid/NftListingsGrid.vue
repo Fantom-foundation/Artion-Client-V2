@@ -9,6 +9,7 @@
             sticky-head
             class="agrid nfttmpgrid"
             infinite-scroll-root=".nfttmpgrid .fdatagrid_table"
+            :caption="$t('nftdetail.listings')"
             :items="items"
             :columns="columns"
             :total-items="totalItems"
