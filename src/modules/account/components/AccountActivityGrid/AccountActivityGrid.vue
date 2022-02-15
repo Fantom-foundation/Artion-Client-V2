@@ -9,6 +9,7 @@
             __max-height="400px"
             __infinite-scroll-root=".nfttmpgrid .fdatagrid_table"
             class="agrid nfttmpgrid"
+            :caption="$t('page.accountActivity.title')"
             :items="items"
             :columns="columns"
             :total-items="totalItems"

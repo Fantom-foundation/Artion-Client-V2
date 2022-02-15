@@ -15,6 +15,7 @@
             sticky-head
             class="agrid accountfollowwindow agrid-mobileview-nolabel"
             infinite-scroll-root=".accountfollowwindow .fdatagrid_table"
+            :caption="title"
             :items="items"
             :columns="columns"
             :total-items="totalItems"
