@@ -53,7 +53,7 @@ export default {
             const response = await fetch(url);
             if (response.status === 200) {
                 const data = await response.json();
-                if(data.attributes && data.attributes.length) this.items = data.attributes;
+                if (data.attributes && data.attributes.length) this.items = data.attributes;
             } else {
                 console.error(response.status, response.statusText);
             }
