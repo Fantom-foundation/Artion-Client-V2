@@ -1,0 +1,15 @@
+.collectionlist {
+	&_cards {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+		gap: var(--f-spacer-4);
+	}
+
+	&_search {
+		display: flex;
+		justify-content: center;
+		gap: var(--f-spacer-4);
+		align-items: center;
+		padding: var(--f-spacer-4) 0;
+	}
+}

@@ -21,6 +21,10 @@ export default {
                     label: this.$t('navigation.explore'),
                 },
                 {
+                    route: 'collections',
+                    label: this.$t('navigation.collections'),
+                },
+                {
                     route: 'nft-create',
                     label: this.$t('navigation.create'),
                 },
