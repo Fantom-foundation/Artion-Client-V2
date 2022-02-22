@@ -144,11 +144,11 @@ export const dataPageMixin = {
                 } else {
                     this.items = this.items.concat(items);
                 }
-
-                defer(() => {
-                    this.loading = false;
-                });
             }
+
+            defer(() => {
+                this.loading = false;
+            });
         },
 
         /**
