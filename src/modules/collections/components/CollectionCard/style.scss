@@ -1,0 +1,21 @@
+.collectioncard {
+	position: relative;
+	& a {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+
+	&_name {
+		padding-top: var(--f-spacer-4);
+		width: 100%;
+		text-align: center;
+		color: var(--f-doc-color);
+	}
+
+	&_cont {
+		overflow: hidden;
+		border-radius: var(--f-border-radius-5);
+	}
+}

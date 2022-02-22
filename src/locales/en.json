@@ -39,6 +39,7 @@
 
     "navigation": {
         "explore": "@:explore",
+        "collections": "@:collections",
         "create": "@:create",
         "drop": "The Drop",
         "nfts": "The NFTs",
@@ -492,6 +493,11 @@
         "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded: ",
         "success": "The collection registration was requested successfully .",
         "signInFirst": "You need to sign-in first"
+    },
+
+    "collectionlist": {
+        "label": "Search collections...",
+        "placeholder": "Search collections..."
     },
 
     "nftcreate": {
