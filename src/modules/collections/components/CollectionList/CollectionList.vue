@@ -1,5 +1,21 @@
 <template>
     <div class="collectionlist">
+        <div class="collectionlist_search">
+            <a-search-field
+                id="collectionlistsearch_input"
+                field-size="large"
+                no-label
+                :value="searchTextValue"
+                :aria-label="$t('collectionlist.label')"
+                :placeholder="$t('collectionlist.placeholder')"
+                :throttle-input-interval="250"
+                :loading="loading"
+                @input="onInput"
+            />
+            <a-placeholder block :content-loaded="totalItems > 0" replacement-text="1000 results">
+                {{ totalItems }} {{ $t('results') }}
+            </a-placeholder>
+        </div>
         <f-infinite-scroll
             ref="infScroll"
             :total-items="totalItems"
@@ -11,22 +27,6 @@
             :root-margin="rootMargin"
             v-on="$listeners"
         >
-            <div class="collectionlist_search">
-                <a-search-field
-                    id="collectionlistsearch_input"
-                    field-size="large"
-                    no-label
-                    :value="searchTextValue"
-                    :aria-label="$t('collectionlist.label')"
-                    :placeholder="$t('collectionlist.placeholder')"
-                    :throttle-input-interval="250"
-                    :loading="loading"
-                    @input="onInput"
-                />
-                <a-placeholder block :content-loaded="totalItems > 0" replacement-text="1000 results">
-                    {{ totalItems }} {{ $t('results') }}
-                </a-placeholder>
-            </div>
             <div class="collectionlist_cards">
                 <collection-card
                     v-for="(collection, index) in collections"
