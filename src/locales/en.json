@@ -492,7 +492,9 @@
         "submit": "Submit",
         "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded: ",
         "success": "The collection registration was requested successfully .",
-        "signInFirst": "You need to sign-in first"
+        "signInFirst": "You need to sign-in first",
+        "invalidAddress": "Invalid address",
+        "invalidEmail": "Invalid email"
     },
 
     "collectionlist": {

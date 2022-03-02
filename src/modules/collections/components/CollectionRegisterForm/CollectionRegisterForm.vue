@@ -6,9 +6,13 @@
         <div class="collectionregisterform__desc">
             {{ $t('collectionregisterform.useOwnerAddressOfCollection') }}
         </div>
-        <a-upload-area @input="setTokenImage" class="auploadarea-nobackground">
+        <a-upload-area :validator="imageValidator" @input="setTokenImage" class="auploadarea-nobackground">
             {{ $t('collectionregisterform.alsoBeUsedForNavigation') }}
         </a-upload-area>
+        <div v-if="fileError" class="pat-5 flex juc-center">
+            <f-message type="error" with-icon>{{ fileError }}</f-message>
+        </div>
+
         <f-form-input
             type="text"
             field-size="large"
@@ -16,6 +20,7 @@
             :label="$t('collectionregisterform.name')"
             :placeholder="$t('collectionregisterform.collectionName')"
             required
+            validate-on-input
         />
         <f-form-input
             :label="$t('collectionregisterform.description')"
@@ -24,6 +29,7 @@
             name="description"
             :placeholder="$t('collectionregisterform.provideYourDescription')"
             required
+            validate-on-input
             rows="5"
         />
         <f-form-input
@@ -52,6 +58,8 @@
             field-size="large"
             :placeholder="$t('collectionregisterform.feeRecipient')"
             required
+            validate-on-input
+            :validator="addressValidator"
         >
             <template #label>
                 {{ $t('collectionregisterform.feeRecipient') }}
@@ -75,6 +83,8 @@
                 :placeholder="$t('collectionregisterform.enterCollection')"
                 name="contract"
                 no-label
+                validate-on-input
+                :validator="addressValidator"
             >
                 <template #prefix>
                     <app-iconset icon="nft" size="24px" />
@@ -153,6 +163,8 @@
             field-size="large"
             :placeholder="$t('collectionregisterform.emailAddress')"
             required
+            validate-on-input
+            :validator="emailValidator"
         >
             <template #label>
                 {{ $t('collectionregisterform.contactEmail') }}
@@ -165,8 +177,11 @@
                 </span>
             </template>
         </f-form-input>
+        <div v-if="fileError" class="pat-5 flex juc-center">
+            <f-message type="error" with-icon>{{ fileError }}</f-message>
+        </div>
         <div class="collectionregisterform_btn">
-            <a-button type="submit" :disabled="isDisabled" :loading="isLoading">
+            <a-button type="submit" :loading="isLoading">
                 {{ $t('collectionregisterform.submit') }}
             </a-button>
         </div>
@@ -181,11 +196,14 @@ import { uploadCollection } from '@/utils/upload';
 import { checkSignIn } from '@/modules/account/auth';
 import AButton from '@/common/components/AButton/AButton';
 import { focusElem } from 'fantom-vue-components/src/utils/aria.js';
+import { imageValidator } from '@/common/components/AUploadArea/validators.js';
+import FMessage from 'fantom-vue-components/src/components/FMessage/FMessage.vue';
+import Web3 from 'web3';
 
 export default {
     name: 'CollectionRegisterForm',
 
-    components: { AUploadArea, AddCategory, AButton },
+    components: { AUploadArea, AddCategory, AButton, FMessage },
 
     data() {
         return {
@@ -194,6 +212,8 @@ export default {
             },
             imageFile: null,
             isLoading: false,
+            fileError: '',
+            emailRE: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         };
     },
 
@@ -221,13 +241,40 @@ export default {
             return !(_value >= 1 && _value <= 100);
         },
 
+        addressValidator(_value) {
+            return !(Web3.utils.isHexStrict(_value) && Web3.utils.isAddress(_value))
+                ? this.$t('collectionregisterform.invalidAddress')
+                : '';
+        },
+
+        emailValidator(_value) {
+            return !this.emailRE.test(_value) ? this.$t('collectionregisterform.invalidEmail') : '';
+        },
+
         setTokenImage(_files) {
             this.imageFile = _files[0] || null;
+
+            if (this.imageFile) {
+                if (!imageValidator(this.imageFile)) {
+                    this.fileError = this.$t('badFileType');
+                    this.imageFile = null;
+                } else {
+                    this.fileError = '';
+                }
+            }
         },
 
         async onSubmit(_data) {
             console.log('onSubmit', _data);
             const vals = _data.values;
+
+            if (!this.imageFile) {
+                this.fileError = this.$t('nftcreate.fileError');
+                return;
+            } else {
+                this.fileError = '';
+            }
+
             this.isLoading = true;
 
             let signed = await checkSignIn();
@@ -274,6 +321,8 @@ export default {
             });
             this.isLoading = false;
         },
+
+        imageValidator,
     },
 };
 </script>
