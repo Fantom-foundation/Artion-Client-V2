@@ -77,7 +77,7 @@
 
             <template #column-actions="{ item }">
                 <a-button
-                    v-if="filter === '__NULL__'"
+                    v-if="filter === 'enabled'"
                     :loading="item._loading"
                     :disabled="item._disabled"
                     @click.native="onBanButtonClick(item)"
