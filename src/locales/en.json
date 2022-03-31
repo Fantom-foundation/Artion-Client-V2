@@ -793,6 +793,8 @@
         "feeRecipient": "Royalty recipient",
         "social": "Social",
         "contract": "Contract",
+        "createdTime": "Registered",
+        "changedTime": "Changed",
         "actions": "Actions",
         "filterEnabled": "Enabled Collections",
         "filterInReview": "Collections in Review",

@@ -99,6 +99,8 @@ export async function getCollectionsMod(pagination = { first: 5000 }, search = n
                             discord
                             medium
                             instagram
+                            createdTime
+                            changedTime
                         }
                     }
                 }
@@ -151,6 +153,8 @@ export async function getBannedCollections(pagination = { first: 5000 }, search 
                             discord
                             medium
                             instagram
+                            createdTime
+                            changedTime
                         }
                     }
                 }
@@ -202,6 +206,8 @@ export async function getCollectionsInReview(pagination = { first: 5000 }, searc
                             discord
                             medium
                             instagram
+                            createdTime
+                            changedTime
                         }
                     }
                 }

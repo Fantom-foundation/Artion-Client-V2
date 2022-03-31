@@ -55,7 +55,8 @@
                     {{ item.name }}
                 </router-link>
             </template>
-            <template #column-social="{ item }">
+            <template #column-description="{ value, item }">
+                {{ value }}
                 <social :info="item" />
             </template>
             <template #column-ownerUser="{ value }">
@@ -130,6 +131,7 @@ import { approveCollection, declineCollection } from '@/modules/collections/muta
 import AAddress from '@/common/components/AAddress/AAddress';
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis';
 import Social from '@/modules/nfts/components/SocialLinks/SocialLinks';
+import { datetimeFormatter } from '@/utils/formatters.js';
 
 export default {
     name: 'AccountCollectionsGrid',
@@ -165,11 +167,6 @@ export default {
                     width: '300px',
                 },
                 {
-                    name: 'social',
-                    label: this.$t('accountcollectionsgrid.social'),
-                    width: '180px',
-                },
-                {
                     name: 'royalty',
                     label: this.$t('accountcollectionsgrid.royalty'),
                     width: '80px',
@@ -177,7 +174,23 @@ export default {
                 {
                     name: 'feeRecipientUser',
                     label: this.$t('accountcollectionsgrid.feeRecipient'),
+                    width: '180px',
+                },
+                {
+                    name: 'createdTime',
+                    label: this.$t('accountcollectionsgrid.createdTime'),
+                    width: '180px',
+                    formatter(value) {
+                        return datetimeFormatter(value);
+                    },
+                },
+                {
+                    name: 'changedTime',
+                    label: this.$t('accountcollectionsgrid.changedTime'),
                     width: '200px',
+                    formatter(value) {
+                        return datetimeFormatter(value);
+                    },
                 },
                 {
                     name: 'contract',
