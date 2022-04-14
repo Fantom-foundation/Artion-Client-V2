@@ -80,9 +80,9 @@
 
     &_name h1 {
         margin-inline-end: 100px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        //overflow: hidden;
+        //text-overflow: ellipsis;
+        //white-space: nowrap;
     }
 
     &_description {
@@ -195,9 +195,9 @@
     }
 
     &_tokenname {
-        display: flex;
-        align-items: center;
-        gap: var(--f-spacer-2);
+        //display: flex;
+        //align-items: center;
+        //gap: var(--f-spacer-2);
     }
 
     &_tokenid {
@@ -253,6 +253,11 @@
             flex-direction: column;
             column-gap: 0;
             row-gap: var(--f-spacer-2);
+        }
+
+        &_name h1 {
+            margin-top: var(--f-spacer-5);
+            margin-inline-end: 0;
         }
     }
 }
