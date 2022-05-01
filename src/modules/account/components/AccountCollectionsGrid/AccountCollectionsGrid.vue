@@ -47,7 +47,7 @@
                     class="accountcollectionsgrid_item"
                 >
                     <f-image
-                        size="32px"
+                        size="70px"
                         :src="getCollectionImageUrl(item.contract)"
                         :alt="item.name"
                         aria-hidden="true"
@@ -55,15 +55,35 @@
                     {{ item.name }}
                 </router-link>
             </template>
+            <template #column-description="{ value, item }">
+                {{ value }}
+                <social :info="item" />
+            </template>
+            <template #column-ownerUser="{ value }">
+                <router-link :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" is-account />
+                </router-link>
+            </template>
+            <template #column-contract="{ value }">
+                <a :href="`https://ftmscan.com/address/${value}`" target="_blank">
+                    <f-ellipsis :text="value" overflow="middle" />
+                </a>
+            </template>
+            <template #column-royalty="{ value }"> {{ value }}% </template>
+            <template #column-feeRecipientUser="{ value }">
+                <router-link :to="{ name: 'account', params: { address: value.address } }">
+                    <a-address :address="value.address" :name="value.username" :image="value.avatarThumb" is-account />
+                </router-link>
+            </template>
 
             <template #column-actions="{ item }">
                 <a-button
-                    v-if="filter === '__NULL__'"
+                    v-if="filter === 'enabled'"
                     :loading="item._loading"
                     :disabled="item._disabled"
                     @click.native="onBanButtonClick(item)"
                 >
-                    <app-iconset icon="ban" size="16px" /> {{ $t('accountcollectionsgrid.ban') }}
+                    <app-iconset icon="ban" size="16px" /> {{ $t('accountcollectionsgrid.ban.button') }}
                 </a-button>
                 <a-button
                     v-if="filter === 'banned'"
@@ -71,7 +91,7 @@
                     :disabled="item._disabled"
                     @click.native="onUnbanButtonClick(item)"
                 >
-                    <app-iconset icon="thumb-up" size="16px" /> {{ $t('accountcollectionsgrid.unban') }}
+                    <app-iconset icon="thumb-up" size="16px" /> {{ $t('accountcollectionsgrid.unban.button') }}
                 </a-button>
                 <template v-else-if="filter === 'inReview'">
                     <a-button
@@ -79,14 +99,14 @@
                         :disabled="item._disabled"
                         @click.native="onApproveButtonClick(item)"
                     >
-                        <app-iconset icon="thumb-up" size="16px" /> {{ $t('accountcollectionsgrid.approve') }}
+                        <app-iconset icon="thumb-up" size="16px" /> {{ $t('accountcollectionsgrid.approve.button') }}
                     </a-button>
                     <a-button
                         :loading="item._loading"
                         :disabled="item._disabled"
                         @click.native="onDeclineButtonClick(item)"
                     >
-                        <app-iconset icon="thumb-down" size="16px" /> {{ $t('accountcollectionsgrid.decline') }}
+                        <app-iconset icon="thumb-down" size="16px" /> {{ $t('accountcollectionsgrid.decline.button') }}
                     </a-button>
                 </template>
             </template>
@@ -101,18 +121,22 @@ import FSearchField from 'fantom-vue-components/src/components/FSearchField/FSea
 import { dataPageMixin } from '@/common/mixins/data-page.js';
 import {
     getBannedCollections,
-    getCollections,
+    getCollectionsMod,
     getCollectionsInReview,
 } from '@/modules/collections/queries/collections.js';
 import { getCollectionImageUrl } from '@/utils/url.js';
 import AButton from '@/common/components/AButton/AButton.vue';
 import { banCollection, unbanCollection } from '@/modules/collections/mutations/ban-unban.js';
 import { approveCollection, declineCollection } from '@/modules/collections/mutations/approve-decline.js';
+import AAddress from '@/common/components/AAddress/AAddress';
+import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis';
+import Social from '@/modules/nfts/components/SocialLinks/SocialLinks';
+import { datetimeFormatter } from '@/utils/formatters.js';
 
 export default {
     name: 'AccountCollectionsGrid',
 
-    components: { AButton, FDataGrid, FImage, FSearchField },
+    components: { Social, AButton, FDataGrid, FImage, FSearchField, AAddress, FEllipsis },
 
     mixins: [dataPageMixin],
 
@@ -130,7 +154,48 @@ export default {
                 {
                     name: 'name',
                     label: this.$t('accountcollectionsgrid.name'),
-                    width: '360px',
+                    width: '250px',
+                },
+                {
+                    name: 'ownerUser',
+                    label: this.$t('accountcollectionsgrid.owner'),
+                    width: '200px',
+                },
+                {
+                    name: 'description',
+                    label: this.$t('accountcollectionsgrid.description'),
+                    width: '300px',
+                },
+                {
+                    name: 'royalty',
+                    label: this.$t('accountcollectionsgrid.royalty'),
+                    width: '80px',
+                },
+                {
+                    name: 'feeRecipientUser',
+                    label: this.$t('accountcollectionsgrid.feeRecipient'),
+                    width: '180px',
+                },
+                {
+                    name: 'createdTime',
+                    label: this.$t('accountcollectionsgrid.createdTime'),
+                    width: '180px',
+                    formatter(value) {
+                        return datetimeFormatter(value);
+                    },
+                },
+                {
+                    name: 'changedTime',
+                    label: this.$t('accountcollectionsgrid.changedTime'),
+                    width: '200px',
+                    formatter(value) {
+                        return datetimeFormatter(value);
+                    },
+                },
+                {
+                    name: 'contract',
+                    label: this.$t('accountcollectionsgrid.contract'),
+                    width: '150px',
                 },
                 {
                     name: 'actions',
@@ -138,9 +203,9 @@ export default {
                 },
             ],
             searchText: '',
-            filter: '__NULL__',
+            filter: 'enabled',
             filterData: [
-                { value: '__NULL__', label: this.$t('accountcollectionsgrid.filterAll') },
+                { value: 'enabled', label: this.$t('accountcollectionsgrid.filterEnabled') },
                 { value: 'banned', label: this.$t('accountcollectionsgrid.filterBanned') },
                 { value: 'inReview', label: this.$t('accountcollectionsgrid.filterInReview') },
             ],
@@ -170,7 +235,7 @@ export default {
          * @return {Promise<number|string|*|undefined|null>}
          */
         async loadPage(pagination = { first: this.perPage }) {
-            return await this.getQueryByFilter(this.filter, this.searchText, pagination);
+            return await this.getCollectionsByFilter(this.filter, this.searchText, pagination);
         },
 
         async loadCollections() {
@@ -183,18 +248,18 @@ export default {
          * @param {Object} pagination
          * @return {Promise<number|string|*|undefined|null>}
          */
-        async getQueryByFilter(filter = '__NULL__', searchText = '', pagination = {}) {
-            let query = null;
+        async getCollectionsByFilter(filter, searchText = '', pagination = {}) {
+            let collections = null;
 
             if (filter === 'inReview') {
-                query = getCollectionsInReview(pagination, searchText);
+                collections = getCollectionsInReview(pagination, searchText);
             } else if (filter === 'banned') {
-                query = getBannedCollections(pagination, searchText);
+                collections = getBannedCollections(pagination, searchText);
             } else {
-                query = getCollections(pagination, searchText);
+                collections = getCollectionsMod(pagination, searchText);
             }
 
-            return query;
+            return collections;
         },
 
         reset() {
@@ -223,27 +288,29 @@ export default {
         /**
          * @param {function} mutation Has to return promise
          * @param {Collection} collection
-         * @param {string} successMessage
+         * @param {string} message
          * @return {Promise<void>}
          */
-        async action(mutation, collection, successMessage) {
-            this.updateGridRow({ ...collection, _loading: true });
+        async action(mutation, collection, message) {
+            if (confirm(this.$t('accountcollectionsgrid.' + message + '.confirm', collection))) {
+                this.updateGridRow({ ...collection, _loading: true });
 
-            try {
-                const ok = await mutation(collection.contract);
+                try {
+                    const ok = await mutation(collection.contract);
 
-                this.updateGridRow({ ...collection, _loading: false });
+                    this.updateGridRow({ ...collection, _loading: false });
 
-                if (ok) {
-                    this.$notifications.add({
-                        type: 'success',
-                        text: successMessage,
-                    });
-                    this.removeGridRow(collection.contract);
+                    if (ok) {
+                        this.$notifications.add({
+                            type: 'success',
+                            text: this.$t('accountcollectionsgrid.' + message + '.success'),
+                        });
+                        this.removeGridRow(collection.contract);
+                    }
+                } catch (error) {
+                    this.updateGridRow({ ...collection, _loading: false });
+                    console.error(error);
                 }
-            } catch (error) {
-                this.updateGridRow({ ...collection, _loading: false });
-                console.error(error);
             }
         },
 
@@ -251,28 +318,28 @@ export default {
          * @param {Collection} collection
          */
         onBanButtonClick(collection) {
-            this.action(banCollection, collection, this.$t('accountcollectionsgrid.banSuccess'));
+            this.action(banCollection, collection, 'ban');
         },
 
         /**
          * @param {Collection} collection
          */
         onUnbanButtonClick(collection) {
-            this.action(unbanCollection, collection, this.$t('accountcollectionsgrid.unbanSuccess'));
+            this.action(unbanCollection, collection, 'unban');
         },
 
         /**
          * @param {Collection} collection
          */
         onApproveButtonClick(collection) {
-            this.action(approveCollection, collection, this.$t('accountcollectionsgrid.approveSuccess'));
+            this.action(approveCollection, collection, 'approve');
         },
 
         /**
          * @param {Collection} collection
          */
         onDeclineButtonClick(collection) {
-            this.action(declineCollection, collection, this.$t('accountcollectionsgrid.declineSuccess'));
+            this.action(declineCollection, collection, 'decline');
         },
 
         getCollectionImageUrl,

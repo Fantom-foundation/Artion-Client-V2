@@ -1,0 +1,10 @@
+.social-links {
+    display: flex;
+    align-items: center;
+    column-gap: var(--f-spacer-3);
+
+    .fsvgicon {
+        --fsvgicon-size: var(--f-spacer-4);
+        --fsvgicon-color: var(--f-doc-color);
+    }
+}

@@ -176,11 +176,11 @@ export const dataPageMixin = {
                 } else {
                     this.gridItemsSet = false;
                 }
-
-                defer(() => {
-                    this.loading = false;
-                });
             }
+
+            defer(() => {
+                this.loading = false;
+            });
         },
 
         /**
@@ -202,11 +202,11 @@ export const dataPageMixin = {
                 if (!objectEquals(this.items, this._getItemsFromData(data))) {
                     this.items = items;
                 }
-
-                defer(() => {
-                    this.loading = false;
-                });
             }
+
+            defer(() => {
+                this.loading = false;
+            });
         },
 
         _resetData() {

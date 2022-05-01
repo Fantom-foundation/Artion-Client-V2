@@ -49,6 +49,74 @@ export async function getCollections(pagination = { first: 5000 }, search = null
     return gqlQuery(query, 'collections');
 }
 
+export async function getCollectionsMod(pagination = { first: 5000 }, search = null, mintableBy = null) {
+    const query = {
+        query: gql`
+            query GetCollections(
+                $search: String
+                $mintableBy: Address
+                $first: Int
+                $after: Cursor
+                $last: Int
+                $before: Cursor
+            ) {
+                collections(
+                    search: $search
+                    mintableBy: $mintableBy
+                    first: $first
+                    after: $after
+                    last: $last
+                    before: $before
+                ) {
+                    totalCount
+                    pageInfo {
+                        startCursor
+                        endCursor
+                        hasNextPage
+                        hasPreviousPage
+                    }
+                    edges {
+                        cursor
+                        node {
+                            contract
+                            name
+                            image
+                            description
+                            ownerUser {
+                                address
+                                username
+                                avatar
+                            }
+                            feeRecipientUser {
+                                address
+                                username
+                                avatar
+                            }
+                            royalty
+                            site
+                            twitter
+                            telegram
+                            discord
+                            medium
+                            instagram
+                            createdTime
+                            changedTime
+                        }
+                    }
+                }
+            }
+        `,
+        variables: {
+            search,
+            mintableBy,
+            ...pagination,
+        },
+        fetchPolicy: 'network-only',
+    };
+
+    return gqlQuery(query, 'collections');
+}
+
 export async function getBannedCollections(pagination = { first: 5000 }, search = null) {
     const query = {
         query: gql`
@@ -67,6 +135,26 @@ export async function getBannedCollections(pagination = { first: 5000 }, search 
                             contract
                             name
                             image
+                            description
+                            ownerUser {
+                                address
+                                username
+                                avatar
+                            }
+                            feeRecipientUser {
+                                address
+                                username
+                                avatar
+                            }
+                            royalty
+                            site
+                            twitter
+                            telegram
+                            discord
+                            medium
+                            instagram
+                            createdTime
+                            changedTime
                         }
                     }
                 }
@@ -100,6 +188,26 @@ export async function getCollectionsInReview(pagination = { first: 5000 }, searc
                             contract
                             name
                             image
+                            description
+                            ownerUser {
+                                address
+                                username
+                                avatar
+                            }
+                            feeRecipientUser {
+                                address
+                                username
+                                avatar
+                            }
+                            royalty
+                            site
+                            twitter
+                            telegram
+                            discord
+                            medium
+                            instagram
+                            createdTime
+                            changedTime
                         }
                     }
                 }
@@ -114,34 +222,3 @@ export async function getCollectionsInReview(pagination = { first: 5000 }, searc
 
     return gqlQuery(query, 'collectionsInReview');
 }
-
-/*
-export async function getCollections() {
-    const query = {
-        query: gql`
-            query GetCollections {
-                collections(first: 5000) {
-                    totalCount
-                    pageInfo {
-                        startCursor
-                        endCursor
-                        hasNextPage
-                        hasPreviousPage
-                    }
-                    edges {
-                        cursor
-                        node {
-                            contract
-                            name
-                            image
-                        }
-                    }
-                }
-            }
-        `,
-        fetchPolicy: 'network-only',
-    };
-
-    return gqlQuery(query, 'collections');
-}
-*/

@@ -46,31 +46,7 @@
                 <p>
                     {{ info.collection.description }}
                 </p>
-                <p class="nftdetailinfo_socials">
-                    <a v-if="info.collection.site" :href="info.collection.site" target="_blank" rel="noopener">
-                        <app-iconset icon="web" />
-                    </a>
-                    <a v-if="info.collection.twitter" :href="info.collection.twitter" target="_blank" rel="noopener">
-                        <app-iconset icon="twitter-grey" />
-                    </a>
-                    <a v-if="info.collection.telegram" :href="info.collection.telegram" target="_blank" rel="noopener">
-                        <app-iconset icon="telegram" />
-                    </a>
-                    <a v-if="info.collection.discord" :href="info.collection.discord" target="_blank" rel="noopener">
-                        <app-iconset icon="discord" />
-                    </a>
-                    <a v-if="info.collection.medium" :href="info.collection.medium" target="_blank" rel="noopener">
-                        <app-iconset icon="medium" />
-                    </a>
-                    <a
-                        v-if="info.collection.instagram"
-                        :href="info.collection.instagram"
-                        target="_blank"
-                        rel="noopener"
-                    >
-                        <app-iconset icon="instagram" />
-                    </a>
-                </p>
+                <social-links :info="info.collection" />
             </template>
         </a-details>
 
@@ -115,6 +91,7 @@ import NftDetailCollection from '@/modules/nfts/components/NftDetailCollection/N
 import FEllipsis from 'fantom-vue-components/src/components/FEllipsis/FEllipsis.vue';
 import { toInt, toBigNumber } from '@/utils/big-number.js';
 import AAddress from '@/common/components/AAddress/AAddress';
+import SocialLinks from '@/modules/nfts/components/SocialLinks/SocialLinks';
 
 export default {
     name: 'NftDetailInfo',
@@ -127,6 +104,7 @@ export default {
     },
 
     components: {
+        SocialLinks,
         ADetailsGroup,
         ADetails,
         NftDetailCollection,

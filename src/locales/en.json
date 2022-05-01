@@ -492,7 +492,9 @@
         "submit": "Submit",
         "wasntUploaded": "Sorry, something went wrong. Data of your token wasn't uploaded: ",
         "success": "The collection registration was requested successfully .",
-        "signInFirst": "You need to sign-in first"
+        "signInFirst": "You need to sign-in first",
+        "invalidAddress": "Invalid address",
+        "invalidEmail": "Invalid email"
     },
 
     "collectionlist": {
@@ -785,19 +787,39 @@
 
     "accountcollectionsgrid": {
         "name": "@:name",
+        "owner": "Owner",
+        "description": "Description",
+        "royalty": "Royalty",
+        "feeRecipient": "Royalty recipient",
+        "social": "Social",
+        "contract": "Contract",
+        "createdTime": "Registered",
+        "changedTime": "Changed",
         "actions": "Actions",
-        "filterAll": "---",
+        "filterEnabled": "Enabled Collections",
         "filterInReview": "Collections in Review",
         "filterBanned": "Banned Collections",
         "search": "Search Collections",
-        "ban": "Ban",
-        "unban": "Unban",
-        "approve": "Approve",
-        "decline": "Decline",
-        "banSuccess": "Collection banned",
-        "unbanSuccess": "Collection unbanned",
-        "approveSuccess": "Collection approved",
-        "declineSuccess": "Collection declined",
+        "ban": {
+            "button": "Ban",
+            "confirm": "Are you sure you want to ban {name}?",
+            "success": "Collection banned"
+        },
+        "unban": {
+            "button": "Unban",
+            "confirm": "Are you sure you want to unban {name}?",
+            "success": "Collection unbanned"
+        },
+        "approve": {
+            "button": "Approve",
+            "confirm": "Are you sure you want to approve {name}?",
+            "success": "Collection approved"
+        },
+        "decline": {
+            "button": "Decline",
+            "confirm": "Are you sure you want to decline {name}? This will permanently remove the registration request.",
+            "success": "Collection declined"
+        },
         "filter": "Collections filter"
     },
 
