@@ -197,42 +197,42 @@
     },
 
     "appsectioncategories": {
-        "title": "Browse by category",
-        "allCategories": "Explore All NFTs"
+        "title": "Explorar por Categorías",
+        "allCategories": "Explorar todos los NFTs"
     },
 
     "appsearchbar": {
-        "label": "Search items, collections and accounts",
-        "placeholder": "Search items, collections and accounts"
+        "label": "Buscar por items,artículos y colecciones",
+        "placeholder": "Buscar por items,artículos y colecciones"
     },
 
     "apptextsearchresults": {
-        "collections": "Collections",
-        "accounts": "Accounts",
-        "items": "@:items"
+        "collections": "Colecciones",
+        "accounts": "Cuentas",
+        "items": "@:artículos"
     },
 
     "walletbutton": {
-        "connectWallet": "Connect Wallet"
+        "connectWallet": "Conectar Wallet"
     },
 
     "walletpicker": {
-        "connectToWallet": "Connect to a wallet"
+        "connectToWallet": "Conectar Wallet"
     },
 
     "nftcard": {
-        "favorite": "Favorite",
-        "offerFor": "Offer for",
-        "price": "Price",
-        "lastPrice": "Last Price",
-        "minBid": "Min Bid",
-        "topBid": "Top Bid",
-        "left": "left",
-        "banUnban": "Ban/Unban"
+        "favorite": "Favoritos",
+        "offerFor": "Ofrece por",
+        "price": "Precio",
+        "lastPrice": "Último Precio",
+        "minBid": "Puja Mínima",
+        "topBid": "Puja Máxima",
+        "left": "Izquierda",
+        "banUnban": "Banear/No Banear"
     },
 
     "nfttradehistorygrid": {
-        "tradeHistory": "Trade History"
+        "tradeHistory": "Historia de Trades"
     },
 
     "nfthistorygrid": {
@@ -737,22 +737,22 @@
     },
 
     "accountprofileform": {
-        "username": "Username",
-        "enterUsername": "Enter username",
+        "username": "Usuario",
+        "enterUsername": "Ingrese nombre de usuario",
         "bio": "Bio",
-        "enterBio": "Enter Bio!",
-        "email": "Email Address",
-        "enterEmail": "Enter Email",
-        "emailInvalid": "Entered email is not valid!",
+        "enterBio": "Ingresa Bio!",
+        "email": "Email",
+        "enterEmail": "Ingrese Email",
+        "emailInvalid": "El email no es válido",
         "enterTwitter": "YourTwitterHandle",
         "enterInst": "YourInstagramHandle",
         "enterWeb": "yoursite.io",
         "wallet": "Wallet Address",
-        "profileImg": "Profile Image",
-        "profileBanner": "Profile Banner",
+        "profileImg": "Imagen de Perfil",
+        "profileBanner": "Imagen de Portada",
         "address": "Token redemption address",
-        "fullname": "Full name",
-        "phone": "Phone (for delivery)",
+        "fullname": "Nombre Completa",
+        "phone": "Número de contacto (for delivery)",
         "street": "Address - 1th line",
         "apartment": "Address - 2nd line",
         "city": "City",
