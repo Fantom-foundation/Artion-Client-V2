@@ -1,41 +1,41 @@
 {
-    "explore": "Explore",
-    "create": "Create",
-    "home": "Home",
-    "categories": "Categories",
-    "collections": "Collections",
-    "status": "Status",
-    "results": "results",
-    "your_profile": "Your Profile",
-    "nonZeroPrice": "Price must be non zero value",
+    "explore": "Explorar",
+    "create": "Crear",
+    "home": "Inicio",
+    "categories": "Categorias",
+    "collections": "Colecciones",
+    "status": "Estado",
+    "results": "Resultados",
+    "your_profile": "Tu Perfil",
+    "nonZeroPrice": "El precio no puede ser cero",
     "insufficientBalance": "Insufficient balance",
     "insufficientTokenBalance": "Insufficient {token} Balance",
-    "startAuction": "Start Auction",
-    "updateAuction": "Update Auction",
-    "profile": "Profile",
-    "reservePrice": "Reserve Price",
-    "redeem": "Redeem",
-    "price": "Price",
-    "from": "From",
-    "unnamed": "Unnamed",
-    "balance": "Balance",
+    "startAuction": "Iniciar Subasta",
+    "updateAuction": "Actualizar Subasta",
+    "profile": "Perfil",
+    "reservePrice": "Precio de Reserva",
+    "redeem": "Canjear",
+    "price": "Precio",
+    "from": "Desde",
+    "unnamed": "Sin Nombre",
+    "balance": "Saldo",
     "wrapStation": "FTM / WFTM Station",
-    "notice": "Notice",
-    "aproveSuccess": "Successfully approved",
-    "me": "Me",
+    "notice": "Notificacion",
+    "aproveSuccess": "Aprobado!",
+    "me": "Yo",
     "nftBanned": "NFT banned",
     "nftUnbanned": "NFT unbanned",
-    "name": "Name",
-    "skipToContent": "Skip to content",
-    "mainNav": "Main",
-    "accountNav": "Account",
-    "registerCollection": "Register Collection",
+    "name": "Nombre",
+    "skipToContent": "Seguir al contenido",
+    "mainNav": "Principal",
+    "accountNav": "Cuenta",
+    "registerCollection": "Registrar Colección",
     "items": "Items",
-    "like": "Like",
+    "like": "Me gusta",
     "rtlDirection": "Right-to-left direction",
     "selectedFilters": "Selected filters",
-    "maxFileSizeReached": "Max file size reached",
-    "badFileType": "Bad file type",
+    "maxFileSizeReached": "Se ha alcanzado el tamaño maximo de archivo",
+    "badFileType": "Archivo Incorrecto",
 
     "navigation": {
         "explore": "@:explore",
@@ -43,16 +43,16 @@
         "create": "@:create",
         "drop": "The Drop",
         "nfts": "The NFTs",
-        "myNfts": "My NFTs"
+        "myNfts": "Mis NFTs"
     },
 
     "category": {
-        "art": "Art",
-        "collectibles": "Collectibles",
-        "sports": "Sports",
-        "utility": "Utility",
-        "trading_cards": "Trading Cards",
-        "virtual_worlds": "Virtual Worlds",
+        "art": "Arte",
+        "collectibles": "Colleccionables",
+        "sports": "Deportes",
+        "utility": "Utilitarios",
+        "trading_cards": "Tarjetas de Intercambio",
+        "virtual_worlds": "Mundos Virtuales",
         "domain_names": "Domain Names"
     },
 
@@ -62,10 +62,10 @@
     },
 
     "statuses": {
-        "buy_now": "Buy Now",
-        "has_bids": "Has Bids",
-        "has_offers": "Has Offers",
-        "on_auction": "On Auction"
+        "buy_now": "Listado para Compra",
+        "has_bids": "Listado para Subasta",
+        "has_offers": "Con Ofertas",
+        "on_auction": "En subasta Ahora"
     },
 
     "group": {
@@ -172,8 +172,8 @@
     },
 
     "appsectionnft": {
-        "title": "Trade without platform fees on Artion",
-        "text": "Artion is an NFT marketplace built on Fantom. Create and trade NFTs instantly with low network costs."
+        "title": "N-efti.com",
+        "text": "Este es un NFT Marketplace con costos reducidos para artistas."
     },
 
     "appsectionabout": {
@@ -197,42 +197,42 @@
     },
 
     "appsectioncategories": {
-        "title": "Browse by category",
-        "allCategories": "Explore All NFTs"
+        "title": "Explorar por Categorías",
+        "allCategories": "Explorar todos los NFTs"
     },
 
     "appsearchbar": {
-        "label": "Search items, collections and accounts",
-        "placeholder": "Search items, collections and accounts"
+        "label": "Buscar por items,artículos y colecciones",
+        "placeholder": "Buscar por items,artículos y colecciones"
     },
 
     "apptextsearchresults": {
-        "collections": "Collections",
-        "accounts": "Accounts",
-        "items": "@:items"
+        "collections": "Colecciones",
+        "accounts": "Cuentas",
+        "items": "@:artículos"
     },
 
     "walletbutton": {
-        "connectWallet": "Connect Wallet"
+        "connectWallet": "Conectar Wallet"
     },
 
     "walletpicker": {
-        "connectToWallet": "Connect to a wallet"
+        "connectToWallet": "Conectar Wallet"
     },
 
     "nftcard": {
-        "favorite": "Favorite",
-        "offerFor": "Offer for",
-        "price": "Price",
-        "lastPrice": "Last Price",
-        "minBid": "Min Bid",
-        "topBid": "Top Bid",
-        "left": "left",
-        "banUnban": "Ban/Unban"
+        "favorite": "Favoritos",
+        "offerFor": "Ofrece por",
+        "price": "Precio",
+        "lastPrice": "Último Precio",
+        "minBid": "Puja Mínima",
+        "topBid": "Puja Máxima",
+        "left": "Izquierda",
+        "banUnban": "Banear/No Banear"
     },
 
     "nfttradehistorygrid": {
-        "tradeHistory": "Trade History"
+        "tradeHistory": "Historia de Trades"
     },
 
     "nfthistorygrid": {
@@ -737,38 +737,38 @@
     },
 
     "accountprofileform": {
-        "username": "Username",
-        "enterUsername": "Enter username",
+        "username": "Usuario",
+        "enterUsername": "Ingrese nombre de usuario",
         "bio": "Bio",
-        "enterBio": "Enter Bio!",
-        "email": "Email Address",
-        "enterEmail": "Enter Email",
-        "emailInvalid": "Entered email is not valid!",
+        "enterBio": "Ingresa Bio!",
+        "email": "Email",
+        "enterEmail": "Ingrese Email",
+        "emailInvalid": "El email no es válido",
         "enterTwitter": "YourTwitterHandle",
         "enterInst": "YourInstagramHandle",
         "enterWeb": "yoursite.io",
         "wallet": "Wallet Address",
-        "profileImg": "Profile Image",
-        "profileBanner": "Profile Banner",
+        "profileImg": "Imagen de Perfil",
+        "profileBanner": "Imagen de Portada",
         "address": "Token redemption address",
-        "fullname": "Full name",
-        "phone": "Phone (for delivery)",
-        "street": "Address - 1th line",
-        "apartment": "Address - 2nd line",
-        "city": "City",
-        "country": "Country",
-        "state": "State / Province / Region",
-        "zip": "ZIP / Postal code",
-        "enterFullname": "Full name",
-        "enterPhone": "Phone number",
-        "enterStreet": "Street address or PO box",
-        "enterCity": "City",
-        "enterApartment": "Apt, building, floor, etc.",
-        "enterState": "State / Province / Region",
-        "enterCountry": "Country",
-        "enterZip": "ZIP / Postal code",
-        "save": "Save",
-        "saveOk": "Profile saved successfully"
+        "fullname": "Nombre Completo",
+        "phone": "Número de contacto (for delivery)",
+        "street": "Dirección Linea 1",
+        "apartment": "Dirección Linea 2",
+        "city": "Ciudad",
+        "country": "País",
+        "state": "Estado / Provincia/ Región",
+        "zip": "ZIP / Código Postal",
+        "enterFullname": "Nombre Completo",
+        "enterPhone": "Contacto",
+        "enterStreet": "PBOX",
+        "enterCity": "Ciudad",
+        "enterApartment": "Piso,Oficina,Edificio",
+        "enterState": "Estado / Provincia / Región",
+        "enterCountry": "País",
+        "enterZip": "ZIP / Código Postal",
+        "save": "Guardar",
+        "saveOk": "Perfil Guardado Exitosamente"
     },
 
     "accountshippingaddressform": {

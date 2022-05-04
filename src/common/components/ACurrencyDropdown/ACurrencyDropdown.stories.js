@@ -27,15 +27,15 @@ export const Currencies = () => ({
         return {
             currencies: [
                 {
-                    address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+                    address: '0x05885C6Bbc268D54950D7200c513EeBa29302fA8',
                     label: 'wFTM',
                     img: '/img/WFTM.png',
                     price: 2.23,
                     value: 'wftm',
                 },
                 {
-                    address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
-                    label: 'DAI',
+                    address: '0x05885C6Bbc268D54950D7200c513EeBa29302fA8',
+                    label: 'YANA',
                     img: '',
                     price: 1,
                     value: 'day',
@@ -65,15 +65,15 @@ export const TokenSelected = () => ({
         return {
             currencies: [
                 {
-                    address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+                    address: '0x05885C6Bbc268D54950D7200c513EeBa29302fA8',
                     label: 'wFTM',
                     img: '/img/WFTM.png',
                     price: 2.23,
                     value: 'wftm',
                 },
                 {
-                    address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
-                    label: 'DAI',
+                    address: '0x05885C6Bbc268D54950D7200c513EeBa29302fA8',
+                    label: 'YANA',
                     img: '',
                     price: 1,
                     value: 'day',
