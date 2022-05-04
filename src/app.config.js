@@ -146,6 +146,7 @@ if (appConfig.module === 'pg') {
         auctionStart: 1634738400000,
         // specifies if setting page is on/off
         settingsOn: true,
+        routerHashMode: true,
     };
 }
 

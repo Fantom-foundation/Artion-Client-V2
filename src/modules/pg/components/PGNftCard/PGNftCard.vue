@@ -221,7 +221,7 @@ export default {
             minutes: null,
             seconds: null,
             walletConnected: false,
-            auctionHasEnded: false,
+            auctionHasEnded: true,
             modalDisabled: false,
             txStatus: '',
             buyTx: {},

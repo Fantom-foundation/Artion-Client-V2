@@ -1,5 +1,8 @@
 <template>
     <div class="pg-hero">
+        <div class="pg-hero__banner">
+            <a href="https://gasly.infinitynft.net/" class="btn btn-lg">Check out the latest Pierre's NFT drop!</a>
+        </div>
         <svg
             class="pg-hero__logo"
             width="144"
@@ -56,7 +59,7 @@
         </div>
 
         <span class="pg-hero__button" @click="$router.push({ path: $route.path, hash: 'nfts' })">
-            <f-button size="large" label="Discover the NFTs" />
+            <f-button size="large" label="Discover the NFTs" secondary />
         </span>
     </div>
 </template>

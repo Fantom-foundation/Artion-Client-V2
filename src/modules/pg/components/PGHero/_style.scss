@@ -7,13 +7,22 @@
     align-items: center;
     flex-direction: column;
 
+    &__banner {
+        margin-top: -60px;
+        margin-bottom: 100px;
+
+        a {
+            font-size: 24px;
+        }
+    }
+
     &__logo {
         width: 52px;
         height: 30px;
     }
 
     &__header {
-        font-family: "Violet sans", Helvetica, sans-serif;
+        font-family: 'Violet sans', Helvetica, sans-serif;
         text-transform: uppercase;
         margin: 23px 0 0 0;
     }
