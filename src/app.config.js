@@ -119,6 +119,7 @@ let appConfig = {
     // feature flags
     flags: {
         moderatorFunctions: true,
+        advertisedCollection: false,
     },
 };
 

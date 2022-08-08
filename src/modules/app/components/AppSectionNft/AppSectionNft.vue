@@ -17,7 +17,13 @@
             </div>
         </div>
         <div class="appsectionnft_col">
-            <app-section-nft-card :nft="nft" />
+            <router-link
+                v-if="nft.collectionContract"
+                :to="{ name: 'explore', query: { collections: nft.collectionContract } }"
+            >
+                <app-section-nft-card :nft="nft" />
+            </router-link>
+            <app-section-nft-card v-else :nft="nft" />
         </div>
     </section>
 </template>
