@@ -15,7 +15,7 @@ import gql from 'graphql-tag';
 import { gqlQuery } from '@/utils/gql.js';
 import { Metamask } from '@/plugins/wallet/metamask/Metamask.js';
 import { Coinbase } from '@/plugins/wallet/coinbase/Coinbase.js';
-import { WalletConnect } from '@/plugins/wallet/walletconnect/WalletConnect.js';
+import { WalletConnect } from '@/plugins/wallet/walletconnect/WalletConnect20.js';
 import { clone, defer } from 'fantom-vue-components/src/utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { fantomApolloClient } from '@/plugins/apollo/apollo-provider.js';

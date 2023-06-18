@@ -9,6 +9,8 @@ module.exports = {
     publicPath: appConfig.routerHashMode ? '' : '/',
     outputDir: appConfig.build.outputDir,
 
+    transpileDependencies: ['@walletconnect', '@web3modal'],
+
     /*
     css: {
         loaderOptions: {

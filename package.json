@@ -11,14 +11,12 @@
         "lint-ci": "vue-cli-service lint --no-fix --max-warnings 0",
         "test": "jest",
         "test:watch": "jest --watch",
-        "test:updatesnapshots": "jest -u",
-        "storybook": "start-storybook -s ./.storybook/public -p 6006 --no-manager-cache",
-        "build-storybook": "build-storybook -s ./.storybook/public",
-        "deploy-storybook": "storybook-to-ghpages"
+        "test:updatesnapshots": "jest -u"
     },
     "dependencies": {
         "@metamask/detect-provider": "^1.2.0",
-        "@walletconnect/web3-provider": "^1.6.6",
+        "@walletconnect/universal-provider": "^2.8.0",
+        "@web3modal/standalone": "^2.4.3",
         "apexcharts": "^3.30.0",
         "apollo-cache-inmemory": "^1.6.6",
         "apollo-client": "^2.6.10",
@@ -48,16 +46,6 @@
         "web3": "^1.5.2"
     },
     "devDependencies": {
-        "@storybook/addon-a11y": "^6.3.8",
-        "@storybook/addon-actions": "^6.3.8",
-        "@storybook/addon-docs": "^6.3.8",
-        "@storybook/addon-knobs": "^6.3.1",
-        "@storybook/addon-links": "^6.3.8",
-        "@storybook/addon-storysource": "^6.3.8",
-        "@storybook/addon-viewport": "^6.3.8",
-        "@storybook/addons": "^6.3.8",
-        "@storybook/storybook-deployer": "^2.8.10",
-        "@storybook/vue": "^6.3.8",
         "@vue/cli-plugin-babel": "~4.5.13",
         "@vue/cli-plugin-eslint": "^3.1.1",
         "@vue/cli-plugin-pwa": "~4.5.13",
@@ -77,9 +65,6 @@
         "prettier": "^1.19.1",
         "sass": "^1.39.2",
         "sass-loader": "^10.1.1",
-        "storybook-addon-themes": "^6.1.0",
-        "storybook-rtl-addon": "^0.3.3",
-        "storybook-vue-router": "^1.0.7",
         "vue-template-compiler": "^2.6.14"
     },
     "lint-staged": {
