@@ -72,7 +72,12 @@ export class WalletConnect {
             return transactionHash;
         } catch (error) {
             this.hideNotification(msgId);
-            throw new Error('User cancelled the transaction');
+
+            if (error.message.indexOf('User rejected') > -1) {
+                throw new Error('User cancelled the transaction');
+            } else {
+                console.error(error);
+            }
         }
     }
 
