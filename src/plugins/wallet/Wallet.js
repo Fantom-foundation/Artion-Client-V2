@@ -20,7 +20,7 @@ import { clone, defer } from 'fantom-vue-components/src/utils';
 import { notifications } from 'fantom-vue-components/src/plugins/notifications.js';
 import { fantomApolloClient } from '@/plugins/apollo/apollo-provider.js';
 import { delay } from 'fantom-vue-components/src/utils/function.js';
-import { toBigNumber, toHex } from '@/utils/big-number.js';
+import { toBigNumber, toHex, toInt } from '@/utils/big-number.js';
 import { compareAddresses } from '@/utils/address.js';
 
 // import Web3 from 'web3';
@@ -108,7 +108,7 @@ export class Wallet {
      * @return {boolean}
      */
     isCorrectChainId() {
-        return this.wallet ? this.wallet.getChainId() === OPERA_CHAIN_ID : false;
+        return this.wallet ? toInt(this.wallet.getChainId()) === toInt(OPERA_CHAIN_ID) : false;
     }
 
     /**
